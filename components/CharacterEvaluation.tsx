@@ -88,25 +88,25 @@ export default function CharacterEvaluation({
   return (
     <div className='min-h-screen flex items-center justify-center p-8 relative'>
       {/* Background */}
-      <div className='absolute inset-0 overflow-hidden'>
-        <div className='absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse' />
-        <div className='absolute bottom-1/4 right-1/4 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl animate-pulse delay-1000' />
+      <div className='absolute inset-0 overflow-hidden bg-black'>
+        <div className='absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl animate-pulse' />
+        <div className='absolute bottom-1/4 right-1/4 w-96 h-96 bg-indigo-500/5 rounded-full blur-3xl animate-pulse delay-1000' />
       </div>
 
       <div className='relative z-10 max-w-3xl mx-auto w-full'>
         {/* Progress Bar */}
         <div className='mb-12'>
           <div className='flex justify-between items-center mb-4'>
-            <span className='text-purple-300 text-sm font-medium'>
+            <span className='text-gray-400 text-sm font-medium'>
               Pitanje {currentQuestion + 1} od {questions.length}
             </span>
-            <span className='text-purple-300 text-sm font-medium'>
+            <span className='text-gray-400 text-sm font-medium'>
               {Math.round(progress)}%
             </span>
           </div>
-          <div className='w-full bg-purple-900/30 rounded-full h-2 overflow-hidden'>
+          <div className='w-full bg-gray-900/50 rounded-full h-2 overflow-hidden'>
             <div
-              className='bg-gradient-to-r from-purple-500 to-indigo-500 h-full rounded-full transition-all duration-500 ease-out'
+              className='bg-gradient-to-r from-purple-600 to-indigo-600 h-full rounded-full transition-all duration-500 ease-out'
               style={{ width: `${progress}%` }}
             />
           </div>
@@ -114,12 +114,12 @@ export default function CharacterEvaluation({
 
         {/* Question Card */}
         <div
-          className={`bg-white/5 backdrop-blur-lg rounded-2xl p-8 md:p-12 border border-white/10 shadow-2xl transition-all duration-500 ${
+          className={`bg-gray-900/40 backdrop-blur-lg rounded-2xl p-8 md:p-12 border border-gray-800/50 shadow-2xl transition-all duration-500 ${
             isTransitioning
               ? 'opacity-0 translate-y-4'
               : 'opacity-100 translate-y-0'
           }`}>
-          <h2 className='text-3xl md:text-4xl font-bold mb-8 text-center bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent'>
+          <h2 className='text-3xl md:text-4xl font-bold mb-8 text-center bg-gradient-to-r from-gray-200 to-purple-400 bg-clip-text text-transparent'>
             {questions[currentQuestion].question}
           </h2>
 
@@ -128,12 +128,12 @@ export default function CharacterEvaluation({
               <button
                 key={index}
                 onClick={() => handleAnswer(option.value)}
-                className='w-full text-left p-6 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-purple-400/50 transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg group'>
+                className='w-full text-left p-6 rounded-xl bg-gray-900/30 hover:bg-gray-800/40 border border-gray-800/50 hover:border-purple-600/50 transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg group'>
                 <div className='flex items-center space-x-4'>
-                  <div className='w-6 h-6 rounded-full border-2 border-purple-400 group-hover:border-purple-300 flex items-center justify-center transition-colors'>
-                    <div className='w-3 h-3 rounded-full bg-purple-400 opacity-0 group-hover:opacity-100 transition-opacity' />
+                  <div className='w-6 h-6 rounded-full border-2 border-purple-600 group-hover:border-purple-500 flex items-center justify-center transition-colors'>
+                    <div className='w-3 h-3 rounded-full bg-purple-600 opacity-0 group-hover:opacity-100 transition-opacity' />
                   </div>
-                  <span className='text-lg text-white/90 group-hover:text-white transition-colors'>
+                  <span className='text-lg text-gray-300 group-hover:text-gray-200 transition-colors'>
                     {option.text}
                   </span>
                 </div>
@@ -146,10 +146,10 @@ export default function CharacterEvaluation({
         {currentQuestion === questions.length - 1 &&
           answers.length === questions.length && (
             <div className='mt-8 text-center animate-fade-in'>
-              <p className='text-xl text-purple-200 italic'>
-                "Neispitan život nije vredan življenja."
+              <p className='text-xl text-gray-300 italic'>
+                &ldquo;Neispitan život nije vredan življenja.&rdquo;
               </p>
-              <p className='text-sm text-purple-400 mt-2'>— Sokrat</p>
+              <p className='text-sm text-gray-500 mt-2'>— Sokrat</p>
             </div>
           )}
       </div>

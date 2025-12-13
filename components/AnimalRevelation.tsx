@@ -54,9 +54,9 @@ export default function AnimalRevelation({ choice }: AnimalRevelationProps) {
     <div className='min-h-screen flex items-center justify-center p-8 relative overflow-hidden'>
       {/* Animated background */}
       <div className='absolute inset-0'>
-        <div className='absolute top-0 left-0 w-full h-full bg-gradient-to-br from-slate-900 via-red-900 to-slate-900' />
-        <div className='absolute top-1/4 left-1/4 w-96 h-96 bg-red-500/20 rounded-full blur-3xl animate-pulse' />
-        <div className='absolute bottom-1/4 right-1/4 w-96 h-96 bg-orange-500/20 rounded-full blur-3xl animate-pulse delay-1000' />
+        <div className='absolute top-0 left-0 w-full h-full bg-gradient-to-br from-black via-slate-950 to-black' />
+        <div className='absolute top-1/4 left-1/4 w-96 h-96 bg-red-600/10 rounded-full blur-3xl animate-pulse' />
+        <div className='absolute bottom-1/4 right-1/4 w-96 h-96 bg-orange-600/10 rounded-full blur-3xl animate-pulse delay-1000' />
       </div>
 
       <div className='relative z-10 max-w-4xl mx-auto w-full'>
@@ -65,11 +65,11 @@ export default function AnimalRevelation({ choice }: AnimalRevelationProps) {
           className={`text-center space-y-8 transition-all duration-1000 ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}>
-          <h1 className='text-5xl md:text-7xl font-bold mb-8 bg-gradient-to-r from-white via-red-200 to-orange-200 bg-clip-text text-transparent'>
+          <h1 className='text-5xl md:text-7xl font-bold mb-8 bg-gradient-to-r from-gray-300 via-red-400 to-orange-400 bg-clip-text text-transparent'>
             {sections[currentSection].title}
           </h1>
 
-          <p className='text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed'>
+          <p className='text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed'>
             {sections[currentSection].content}
           </p>
 
@@ -80,8 +80,8 @@ export default function AnimalRevelation({ choice }: AnimalRevelationProps) {
                 key={index}
                 className={`h-2 rounded-full transition-all duration-500 ${
                   index <= currentSection
-                    ? 'bg-gradient-to-r from-red-500 to-orange-500 w-8'
-                    : 'bg-white/20 w-2'
+                    ? 'bg-gradient-to-r from-red-600 to-orange-600 w-8'
+                    : 'bg-gray-700/50 w-2'
                 }`}
               />
             ))}
@@ -91,15 +91,15 @@ export default function AnimalRevelation({ choice }: AnimalRevelationProps) {
         {/* Call to action - appears after all sections */}
         {currentSection === sections.length - 1 && (
           <div className='mt-16 text-center animate-fade-in'>
-            <div className='bg-white/5 backdrop-blur-lg rounded-2xl p-8 md:p-12 border border-white/10 shadow-2xl max-w-2xl mx-auto'>
-              <h2 className='text-3xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent'>
+            <div className='bg-gray-900/40 backdrop-blur-lg rounded-2xl p-8 md:p-12 border border-gray-800/50 shadow-2xl max-w-2xl mx-auto'>
+              <h2 className='text-3xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-green-500 to-emerald-500 bg-clip-text text-transparent'>
                 Spreman/na da saznaš više?
               </h2>
-              <p className='text-lg text-white/80 mb-8'>
+              <p className='text-lg text-gray-300 mb-8'>
                 Otkrij kako možeš živeti u skladu sa svojim vrednostima i
                 napraviti razliku.
               </p>
-              <button className='px-8 py-4 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full text-white font-semibold text-lg hover:from-green-400 hover:to-emerald-400 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl'>
+              <button className='px-8 py-4 bg-gradient-to-r from-green-600 to-emerald-600 rounded-full text-white font-semibold text-lg hover:from-green-500 hover:to-emerald-500 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl'>
                 Nastavi svoje putovanje
               </button>
             </div>
