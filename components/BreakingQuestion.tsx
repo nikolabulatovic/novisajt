@@ -38,8 +38,8 @@ export default function BreakingQuestion({
         <div className='text-center space-y-12'>
           {/* Question */}
           <h1 className='text-3xl md:text-5xl font-light text-gray-200 leading-relaxed max-w-3xl mx-auto'>
-            Šta ako danas postoji ogromna nepravda u kojoj skoro sigurno
-            učestvuješ – a da to ignorišeš jer je lakše?
+            Šta ako danas postoji ogromna nepravda u kojoj učestvuješ – a da to
+            ignorišeš jer je lakše?
           </h1>
 
           {/* Sub-question */}

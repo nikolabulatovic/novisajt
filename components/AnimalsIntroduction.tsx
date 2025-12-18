@@ -26,10 +26,6 @@ export default function AnimalsIntroduction({
       size: 'text-3xl md:text-4xl lg:text-5xl',
     },
     {
-      line: 'Životinje imaju nervni sistem.',
-      size: 'text-3xl md:text-4xl lg:text-5xl',
-    },
-    {
       line: 'Ljudi su takođe životinje.',
       size: 'text-4xl md:text-5xl lg:text-6xl',
     },
