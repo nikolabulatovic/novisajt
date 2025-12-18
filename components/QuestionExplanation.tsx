@@ -12,13 +12,10 @@ export default function QuestionExplanation({
   const [visibleWordCount, setVisibleWordCount] = useState(0);
   const [showButton, setShowButton] = useState(false);
 
-  const text = [
-    'Ovo nije test.',
-    'Ovo je za ljude kojima je stalo da budu dosledni sebi.',
-    'Ovo važi samo ako želiš da znaš istinu o sebi.',
-  ];
+  const text =
+    'Ovo nije test. Ovo je za ljude kojima je stalo da budu dosledni sebi. Ovo važi samo ako želiš da znaš istinu o sebi.';
 
-  const allWords = text.flatMap((sentence) => sentence.split(' '));
+  const allWords = text.split(' ');
   const totalWords = allWords.length;
 
   useEffect(() => {
@@ -31,9 +28,9 @@ export default function QuestionExplanation({
         clearInterval(interval);
         setTimeout(() => {
           setShowButton(true);
-        }, 800);
+        }, 1200);
       }
-    }, 120);
+    }, 100);
 
     return () => clearInterval(interval);
   }, [totalWords]);
@@ -47,48 +44,29 @@ export default function QuestionExplanation({
         <div className='absolute top-1/2 left-1/2 w-96 h-96 bg-gray-800/5 rounded-full blur-3xl animate-pulse' />
       </div>
 
-      <div className='relative z-10 max-w-4xl mx-auto w-full'>
-        <div className='text-center space-y-8'>
-          <div className='bg-gray-900/40 backdrop-blur-lg rounded-2xl p-8 md:p-12 border border-gray-800/50 shadow-2xl'>
-            <div className='space-y-6 text-left md:text-center'>
-              {text.map((sentence, sentenceIndex) => {
-                const sentenceWords = sentence.split(' ');
-                let wordStartIndex = 0;
-                for (let i = 0; i < sentenceIndex; i++) {
-                  wordStartIndex += text[i].split(' ').length;
-                }
+      <div className='relative z-10 max-w-3xl mx-auto w-full'>
+        <div className='text-center'>
+          <p className='text-3xl md:text-4xl lg:text-5xl leading-relaxed font-light text-gray-200 px-8'>
+            {allWords.map((word, wordIndex) => {
+              const isVisible = wordIndex < visibleWordCount;
 
-                return (
-                  <p
-                    key={sentenceIndex}
-                    className='text-2xl md:text-3xl lg:text-4xl leading-relaxed font-light text-gray-200'>
-                    {sentenceWords.map((word, wordIndex) => {
-                      const currentWordIndex = wordStartIndex + wordIndex;
-                      const isVisible = currentWordIndex < visibleWordCount;
-
-                      return (
-                        <span
-                          key={wordIndex}
-                          className={`transition-all duration-700 ease-out ${
-                            isVisible
-                              ? 'opacity-100 translate-y-0'
-                              : 'opacity-0 translate-y-4'
-                          }`}
-                          style={{
-                            transitionDelay: isVisible
-                              ? `${currentWordIndex * 20}ms`
-                              : '0ms',
-                          }}>
-                          {word}
-                          {wordIndex < sentenceWords.length - 1 ? ' ' : ''}
-                        </span>
-                      );
-                    })}
-                  </p>
-                );
-              })}
-            </div>
-          </div>
+              return (
+                <span
+                  key={wordIndex}
+                  className={`inline-block transition-all duration-500 ease-in-out ${
+                    isVisible
+                      ? 'opacity-100 translate-y-0'
+                      : 'opacity-0 translate-y-8'
+                  }`}
+                  style={{
+                    transitionDelay: isVisible ? `${wordIndex * 15}ms` : '0ms',
+                  }}>
+                  {word}
+                  {wordIndex < allWords.length - 1 ? ' ' : ''}
+                </span>
+              );
+            })}
+          </p>
 
           {showButton && (
             <div className='mt-12 animate-fade-in'>

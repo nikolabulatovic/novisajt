@@ -9,6 +9,7 @@ interface RedPillIntroProps {
 export default function RedPillIntro({ onComplete }: RedPillIntroProps) {
   const [visibleWordCount, setVisibleWordCount] = useState(0);
   const [showButton, setShowButton] = useState(false);
+  const [imageVisible, setImageVisible] = useState(false);
 
   const text = [
     'Izabrao/la si da vidiš.',
@@ -22,6 +23,11 @@ export default function RedPillIntro({ onComplete }: RedPillIntroProps) {
   const totalWords = allWords.length;
 
   useEffect(() => {
+    // Fade in image after a short delay
+    setTimeout(() => {
+      setImageVisible(true);
+    }, 300);
+
     let currentIndex = 0;
     const interval = setInterval(() => {
       if (currentIndex < totalWords) {
@@ -46,12 +52,14 @@ export default function RedPillIntro({ onComplete }: RedPillIntroProps) {
     <div className='min-h-screen flex items-center justify-center p-8 relative overflow-hidden bg-black'>
       {/* SLIKA: Minimalistička, možda apstraktna forma ili tekstura koja sugerira refleksiju */}
       {/* Opciono: Subtle abstract background suggesting reflection/introspection */}
-      {/* <div
-        className='absolute inset-0 opacity-10 bg-cover bg-center bg-no-repeat'
+      <div
+        className={`absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-[2000ms] ease-in-out ${
+          imageVisible ? 'opacity-20' : 'opacity-0'
+        }`}
         style={{
-          backgroundImage: "url('/images/intro-reflection.png')",
+          backgroundImage: "url('/images/intro-reflection.jpeg')",
         }}
-      /> */}
+      />
 
       {/* Animated background */}
       <div className='absolute inset-0 overflow-hidden'>

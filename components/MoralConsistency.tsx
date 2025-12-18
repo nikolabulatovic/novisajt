@@ -9,35 +9,29 @@ interface MoralConsistencyProps {
 export default function MoralConsistency({
   onComplete,
 }: MoralConsistencyProps) {
-  const [visibleWordCount, setVisibleWordCount] = useState(0);
+  const [visibleLines, setVisibleLines] = useState<number[]>([]);
   const [showButton, setShowButton] = useState(false);
 
   const text = [
-    'Ne bismo ih oslepeli.',
-    'Ne bismo im sekli grkljan.',
-    'Činjenica da ih pojedemo kasnije ne opravdava čin.',
-    'Možemo da živimo bez ovoga.',
+    { line: 'Ne bismo ih oslepeli.', bold: false },
+    { line: 'Ne bismo im sekli grkljan.', bold: false },
+    { line: 'Činjenica da ih pojedemo kasnije ne opravdava čin.', bold: true },
+    { line: 'Možemo da živimo bez ovoga.', bold: false },
   ];
 
-  const allWords = text.flatMap((sentence) => sentence.split(' '));
-  const totalWords = allWords.length;
-
   useEffect(() => {
-    let currentIndex = 0;
-    const interval = setInterval(() => {
-      if (currentIndex < totalWords) {
-        setVisibleWordCount(currentIndex + 1);
-        currentIndex++;
-      } else {
-        clearInterval(interval);
-        setTimeout(() => {
-          setShowButton(true);
-        }, 1000);
-      }
-    }, 120);
-
-    return () => clearInterval(interval);
-  }, [totalWords]);
+    text.forEach((_, index) => {
+      setTimeout(() => {
+        setVisibleLines((prev) => [...prev, index]);
+        if (index === text.length - 1) {
+          setTimeout(() => {
+            setShowButton(true);
+          }, 1200);
+        }
+      }, index * 500);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className='min-h-screen flex items-center justify-center p-8 relative bg-black'>
@@ -48,59 +42,32 @@ export default function MoralConsistency({
         <div className='absolute top-1/2 left-1/2 w-96 h-96 bg-gray-800/5 rounded-full blur-3xl animate-pulse' />
       </div>
 
-      <div className='relative z-10 max-w-4xl mx-auto w-full'>
-        <div className='text-center space-y-8'>
-          <div className='bg-gray-900/40 backdrop-blur-lg rounded-2xl p-8 md:p-12 border border-gray-800/50 shadow-2xl'>
-            <div className='space-y-6 text-left md:text-center'>
-              {text.map((sentence, sentenceIndex) => {
-                const sentenceWords = sentence.split(' ');
-                let wordStartIndex = 0;
-                for (let i = 0; i < sentenceIndex; i++) {
-                  wordStartIndex += text[i].split(' ').length;
-                }
-
-                return (
-                  <p
-                    key={sentenceIndex}
-                    className='text-2xl md:text-3xl lg:text-4xl leading-relaxed font-light text-gray-200'>
-                    {sentenceWords.map((word, wordIndex) => {
-                      const currentWordIndex = wordStartIndex + wordIndex;
-                      const isVisible = currentWordIndex < visibleWordCount;
-
-                      return (
-                        <span
-                          key={wordIndex}
-                          className={`inline-block transition-all duration-700 ease-out ${
-                            isVisible
-                              ? 'opacity-100 translate-y-0'
-                              : 'opacity-0 translate-y-4'
-                          }`}
-                          style={{
-                            transitionDelay: isVisible
-                              ? `${currentWordIndex * 20}ms`
-                              : '0ms',
-                          }}>
-                          {word}
-                          {wordIndex < sentenceWords.length - 1 ? ' ' : ''}
-                        </span>
-                      );
-                    })}
-                  </p>
-                );
-              })}
-            </div>
-          </div>
-
-          {showButton && (
-            <div className='mt-12 animate-fade-in'>
-              <button
-                onClick={onComplete}
-                className='px-10 py-5 bg-gray-800/50 hover:bg-gray-700/50 rounded-full text-white font-light text-xl transition-all duration-300 border border-gray-700/50 hover:border-gray-600/50'>
-                Nastavi
-              </button>
-            </div>
-          )}
+      <div className='relative z-10 max-w-3xl mx-auto w-full'>
+        <div className='space-y-4 md:space-y-6 text-center'>
+          {text.map((item, index) => (
+            <p
+              key={index}
+              className={`text-xl md:text-2xl lg:text-3xl leading-relaxed text-gray-200 transition-all duration-700 ease-out ${
+                item.bold ? 'font-medium' : 'font-light'
+              } ${
+                visibleLines.includes(index)
+                  ? 'opacity-100 translate-y-0'
+                  : 'opacity-0 translate-y-4'
+              }`}>
+              {item.line}
+            </p>
+          ))}
         </div>
+
+        {showButton && (
+          <div className='mt-12 text-center animate-fade-in'>
+            <button
+              onClick={onComplete}
+              className='px-10 py-5 bg-gray-800/50 hover:bg-gray-700/50 rounded-full text-white font-light text-xl transition-all duration-300 border border-gray-700/50 hover:border-gray-600/50'>
+              Nastavi
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
