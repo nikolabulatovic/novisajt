@@ -74,9 +74,20 @@ export default function CharacterEvaluation({
   const progress = ((currentQuestion + 1) / questions.length) * 100;
 
   return (
-    <div className='min-h-screen flex items-center justify-center p-8 relative'>
+    <div className='min-h-screen flex items-center justify-center p-8 relative bg-black'>
+      {/* SLIKA: Minimalistička, tamna - apstraktna forma koja sugerira introspekciju i samopreispitivanje */}
+      {/* Opciono: Dark, abstract background suggesting introspection/self-reflection */}
+      {/* Primeri: Apstraktne forme koje sugerišu ogledalo, dubinu, ili unutrašnji prostor */}
+      {/* Fajl: character-introspection.png ili self-reflection.png */}
+      <div
+        className='absolute inset-0 opacity-35 bg-cover bg-center bg-no-repeat transition-opacity duration-[2000ms] ease-in-out'
+        style={{
+          backgroundImage: "url('/images/character-introspection.jpeg')",
+        }}
+      />
+
       {/* Background */}
-      <div className='absolute inset-0 overflow-hidden bg-black'>
+      <div className='absolute inset-0 overflow-hidden'>
         <div className='absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl animate-pulse' />
         <div className='absolute bottom-1/4 right-1/4 w-96 h-96 bg-indigo-500/5 rounded-full blur-3xl animate-pulse delay-1000' />
       </div>
