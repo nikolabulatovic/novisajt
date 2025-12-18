@@ -12,10 +12,8 @@ export default function RedPillIntro({ onComplete }: RedPillIntroProps) {
   const [imageVisible, setImageVisible] = useState(false);
 
   const text = [
-    'Izabrao/la si da vidiš.',
-    'To zahteva hrabrost.',
-    'Neće biti prijatno.',
-    'Ali će biti iskreno.',
+    'Tvoj izbor je da vidiš istinu i to zahteva hrabrost.',
+    'Neće biti prijatno. Ali će biti iskreno.',
   ];
 
   // Flatten all words with their positions
@@ -117,7 +115,7 @@ export default function RedPillIntro({ onComplete }: RedPillIntroProps) {
             <div className='mt-12 animate-fade-in'>
               <button
                 onClick={handleContinue}
-                className='cursor-pointer px-10 py-5 bg-gradient-to-r from-red-600 via-orange-600 to-red-600 rounded-full text-white font-semibold text-xl hover:from-red-500 hover:via-orange-500 hover:to-red-500 transform hover:scale-105 transition-all duration-300 shadow-2xl hover:shadow-red-500/50 relative overflow-hidden group'>
+                className='cursor-pointer px-10 py-5 bg-gradient-to-r from-red-500 via-red-550 to-red-500 rounded-full text-white font-semibold text-xl hover:from-red-400 hover:via-red-450 hover:to-red-400 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-red-500/30 relative overflow-hidden group'>
                 <span className='relative z-10'>Nastavi</span>
                 <div className='absolute inset-0 bg-gradient-to-r from-red-700 via-orange-700 to-red-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300' />
               </button>
