@@ -3,8 +3,9 @@
 import { useState } from 'react';
 import CharacterEvaluation from '@/components/CharacterEvaluation';
 import AnimalRevelation from '@/components/AnimalRevelation';
+import RedPillIntro from '@/components/RedPillIntro';
 
-type Stage = 'choice' | 'evaluation' | 'revelation';
+type Stage = 'choice' | 'intro' | 'evaluation' | 'revelation';
 
 export default function Home() {
   const [stage, setStage] = useState<Stage>('choice');
@@ -13,8 +14,16 @@ export default function Home() {
   const handlePillChoice = (pill: 'red' | 'blue') => {
     setChoice(pill);
     setTimeout(() => {
-      setStage('evaluation');
+      if (pill === 'red') {
+        setStage('intro');
+      } else {
+        setStage('evaluation');
+      }
     }, 800);
+  };
+
+  const handleIntroComplete = () => {
+    setStage('evaluation');
   };
 
   const handleEvaluationComplete = () => {
@@ -24,6 +33,7 @@ export default function Home() {
   return (
     <main className='min-h-screen bg-gradient-to-br bg-[#1a1a1a] from-black via-slate-950 to-black text-white overflow-hidden'>
       {stage === 'choice' && <ChoiceStage onPillChoice={handlePillChoice} />}
+      {stage === 'intro' && <RedPillIntro onComplete={handleIntroComplete} />}
       {stage === 'evaluation' && (
         <CharacterEvaluation onComplete={handleEvaluationComplete} />
       )}
