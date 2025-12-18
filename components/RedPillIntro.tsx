@@ -111,16 +111,17 @@ export default function RedPillIntro({ onComplete }: RedPillIntroProps) {
           </div>
 
           {/* Continue button */}
-          {showButton && (
-            <div className='mt-12 animate-fade-in'>
-              <button
-                onClick={handleContinue}
-                className='cursor-pointer px-10 py-5 bg-gradient-to-r from-red-500 via-red-550 to-red-500 rounded-full text-white font-semibold text-xl hover:from-red-400 hover:via-red-450 hover:to-red-400 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-red-500/30 relative overflow-hidden group'>
-                <span className='relative z-10'>Nastavi</span>
-                <div className='absolute inset-0 bg-gradient-to-r from-red-700 via-orange-700 to-red-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300' />
-              </button>
-            </div>
-          )}
+          <div
+            className={`mt-12 transition-opacity duration-500 ${
+              showButton ? 'opacity-100' : 'opacity-0 pointer-events-none'
+            }`}>
+            <button
+              onClick={handleContinue}
+              className='cursor-pointer px-10 py-5 bg-gradient-to-r from-red-500 via-red-550 to-red-500 rounded-full text-white font-semibold text-xl hover:from-red-400 hover:via-red-450 hover:to-red-400 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-red-500/30 relative overflow-hidden group'>
+              <span className='relative z-10'>Nastavi</span>
+              <div className='absolute inset-0 bg-gradient-to-r from-red-700 via-orange-700 to-red-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300' />
+            </button>
+          </div>
         </div>
       </div>
     </div>

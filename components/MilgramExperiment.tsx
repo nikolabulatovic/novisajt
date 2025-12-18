@@ -64,15 +64,16 @@ export default function MilgramExperiment({
           ))}
         </div>
 
-        {showButton && (
-          <div className='mt-12 text-center animate-fade-in'>
-            <button
-              onClick={onComplete}
-              className='px-10 py-5 bg-gray-800/50 hover:bg-gray-700/50 rounded-full text-white font-light text-xl transition-all duration-300 border border-gray-700/50 hover:border-gray-600/50'>
-              Nastavi
-            </button>
-          </div>
-        )}
+        <div
+          className={`mt-12 text-center transition-opacity duration-500 ${
+            showButton ? 'opacity-100' : 'opacity-0 pointer-events-none'
+          }`}>
+          <button
+            onClick={onComplete}
+            className='px-10 py-5 bg-gray-800/50 hover:bg-gray-700/50 rounded-full text-white font-light text-xl transition-all duration-300 border border-gray-700/50 hover:border-gray-600/50'>
+            Nastavi
+          </button>
+        </div>
       </div>
     </div>
   );

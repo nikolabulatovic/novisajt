@@ -93,15 +93,16 @@ export default function CallToAction({ onComplete }: CallToActionProps) {
             </div>
           </div>
 
-          {showButton && (
-            <div className='mt-12 animate-fade-in'>
-              <button
-                onClick={onComplete}
-                className='px-12 py-6 bg-gray-700/70 hover:bg-gray-600/70 rounded-full text-white font-medium text-2xl transition-all duration-300 border-2 border-gray-600/50 hover:border-gray-500/50 transform hover:scale-105'>
-                Izaberi DOBRO
-              </button>
-            </div>
-          )}
+          <div
+            className={`mt-12 transition-opacity duration-500 ${
+              showButton ? 'opacity-100' : 'opacity-0 pointer-events-none'
+            }`}>
+            <button
+              onClick={onComplete}
+              className='px-12 py-6 bg-gray-700/70 hover:bg-gray-600/70 rounded-full text-white font-medium text-2xl transition-all duration-300 border-2 border-gray-600/50 hover:border-gray-500/50 transform hover:scale-105'>
+              Izaberi DOBRO
+            </button>
+          </div>
         </div>
       </div>
     </div>
