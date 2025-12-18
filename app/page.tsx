@@ -1,131 +1,193 @@
 'use client';
 
 import { useState } from 'react';
+import ChoiceStage from '@/components/ChoiceStage';
 import CharacterEvaluation from '@/components/CharacterEvaluation';
-import AnimalRevelation from '@/components/AnimalRevelation';
 import RedPillIntro from '@/components/RedPillIntro';
+import QuestionExplanation from '@/components/QuestionExplanation';
+import HistoricalInjustices from '@/components/HistoricalInjustices';
+import MilgramExperiment from '@/components/MilgramExperiment';
+import PersonalQuestion from '@/components/PersonalQuestion';
+import BreakingQuestion from '@/components/BreakingQuestion';
+import AnimalsIntroduction from '@/components/AnimalsIntroduction';
+import FactsNumbers from '@/components/FactsNumbers';
+import DomesticationReproduction from '@/components/DomesticationReproduction';
+import MoralConsistency from '@/components/MoralConsistency';
+import FinalChoice from '@/components/FinalChoice';
+import Mirror from '@/components/Mirror';
+import CallToAction from '@/components/CallToAction';
+import AfterChoice from '@/components/AfterChoice';
 
-type Stage = 'choice' | 'intro' | 'evaluation' | 'revelation';
+type Stage =
+  | 'choice'
+  | 'intro'
+  | 'evaluation'
+  | 'explanation'
+  | 'historical'
+  | 'milgram'
+  | 'personal-question'
+  | 'breaking-question'
+  | 'animals-intro'
+  | 'facts'
+  | 'domestication'
+  | 'moral-consistency'
+  | 'final-choice'
+  | 'mirror'
+  | 'call-to-action'
+  | 'after-choice';
 
 export default function Home() {
   const [stage, setStage] = useState<Stage>('choice');
-  const [choice, setChoice] = useState<'red' | 'blue' | null>(null);
+  const [answers, setAnswers] = useState<Record<string, string>>({});
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   const handlePillChoice = (pill: 'red' | 'blue') => {
-    setChoice(pill);
+    // ChoiceStage handles its own fade out, so we just need to wait a bit
     setTimeout(() => {
       if (pill === 'red') {
-        setStage('intro');
+        setIsTransitioning(true);
+        setTimeout(() => {
+          setStage('intro');
+          setIsTransitioning(false);
+        }, 50);
       } else {
-        setStage('evaluation');
+        // Plava pilula - neutralni izlaz (može se implementirati kasnije)
+        setStage('choice');
       }
-    }, 800);
+    }, 600);
+  };
+
+  const transitionToStage = (newStage: Stage) => {
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setStage(newStage);
+      // Small delay before fade in starts
+      setTimeout(() => {
+        setIsTransitioning(false);
+      }, 50);
+    }, 400);
   };
 
   const handleIntroComplete = () => {
-    setStage('evaluation');
+    transitionToStage('evaluation');
   };
 
-  const handleEvaluationComplete = () => {
-    setStage('revelation');
+  const handleEvaluationComplete = (userAnswers: Record<string, string>) => {
+    setAnswers(userAnswers);
+    transitionToStage('explanation');
+  };
+
+  const handleExplanationComplete = () => {
+    transitionToStage('historical');
+  };
+
+  const handleHistoricalComplete = () => {
+    transitionToStage('milgram');
+  };
+
+  const handleMilgramComplete = () => {
+    transitionToStage('personal-question');
+  };
+
+  const handlePersonalQuestionComplete = () => {
+    transitionToStage('breaking-question');
+  };
+
+  const handleBreakingQuestionComplete = (answer: string) => {
+    if (answer === 'Ne') {
+      // Tihi izlaz - možemo vratiti na početak ili prikazati poruku
+      transitionToStage('choice');
+    } else {
+      transitionToStage('animals-intro');
+    }
+  };
+
+  const handleAnimalsIntroComplete = () => {
+    transitionToStage('facts');
+  };
+
+  const handleFactsComplete = () => {
+    transitionToStage('domestication');
+  };
+
+  const handleDomesticationComplete = () => {
+    transitionToStage('moral-consistency');
+  };
+
+  const handleMoralConsistencyComplete = () => {
+    transitionToStage('final-choice');
+  };
+
+  const handleFinalChoiceComplete = () => {
+    transitionToStage('mirror');
+  };
+
+  const handleMirrorComplete = () => {
+    transitionToStage('call-to-action');
+  };
+
+  const handleCallToActionComplete = () => {
+    transitionToStage('after-choice');
   };
 
   return (
-    <main className='min-h-screen bg-gradient-to-br bg-[#1a1a1a] from-black via-slate-950 to-black text-white overflow-hidden'>
-      {stage === 'choice' && <ChoiceStage onPillChoice={handlePillChoice} />}
-      {stage === 'intro' && <RedPillIntro onComplete={handleIntroComplete} />}
-      {stage === 'evaluation' && (
-        <CharacterEvaluation onComplete={handleEvaluationComplete} />
-      )}
-      {stage === 'revelation' && <AnimalRevelation choice={choice} />}
-    </main>
-  );
-}
-
-function ChoiceStage({
-  onPillChoice,
-}: {
-  onPillChoice: (pill: 'red' | 'blue') => void;
-}) {
-  return (
-    <div className='min-h-screen flex items-center justify-center p-8 relative'>
-      {/* Background image with transparency */}
+    <main className='min-h-screen bg-black text-white overflow-hidden relative'>
+      {/* Fade overlay for transitions */}
       <div
-        className='absolute inset-0 opacity-35 bg-cover bg-center bg-no-repeat'
-        style={{
-          backgroundImage: "url('/images/red-pill-blue-pill-cover-ai.png')",
-        }}
+        className={`absolute inset-0 bg-black z-50 pointer-events-none transition-opacity duration-[400ms] ease-in-out ${
+          isTransitioning ? 'opacity-100' : 'opacity-0'
+        }`}
       />
 
-      {/* Animated background */}
-      <div className='absolute inset-0 overflow-hidden'>
-        <div className='absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse' />
-        <div className='absolute bottom-1/4 right-1/4 w-96 h-96 bg-red-500/10 rounded-full blur-3xl animate-pulse delay-1000' />
+      {/* Stage content with fade in */}
+      <div
+        className={`transition-opacity duration-[600ms] ease-in-out ${
+          isTransitioning ? 'opacity-0' : 'opacity-100'
+        }`}>
+        {stage === 'choice' && <ChoiceStage onPillChoice={handlePillChoice} />}
+        {stage === 'intro' && <RedPillIntro onComplete={handleIntroComplete} />}
+        {stage === 'evaluation' && (
+          <CharacterEvaluation
+            onComplete={handleEvaluationComplete}
+            answers={answers}
+          />
+        )}
+        {stage === 'explanation' && (
+          <QuestionExplanation onComplete={handleExplanationComplete} />
+        )}
+        {stage === 'historical' && (
+          <HistoricalInjustices onComplete={handleHistoricalComplete} />
+        )}
+        {stage === 'milgram' && (
+          <MilgramExperiment onComplete={handleMilgramComplete} />
+        )}
+        {stage === 'personal-question' && (
+          <PersonalQuestion onComplete={handlePersonalQuestionComplete} />
+        )}
+        {stage === 'breaking-question' && (
+          <BreakingQuestion onComplete={handleBreakingQuestionComplete} />
+        )}
+        {stage === 'animals-intro' && (
+          <AnimalsIntroduction onComplete={handleAnimalsIntroComplete} />
+        )}
+        {stage === 'facts' && <FactsNumbers onComplete={handleFactsComplete} />}
+        {stage === 'domestication' && (
+          <DomesticationReproduction onComplete={handleDomesticationComplete} />
+        )}
+        {stage === 'moral-consistency' && (
+          <MoralConsistency onComplete={handleMoralConsistencyComplete} />
+        )}
+        {stage === 'final-choice' && (
+          <FinalChoice onComplete={handleFinalChoiceComplete} />
+        )}
+        {stage === 'mirror' && (
+          <Mirror answers={answers} onComplete={handleMirrorComplete} />
+        )}
+        {stage === 'call-to-action' && (
+          <CallToAction onComplete={handleCallToActionComplete} />
+        )}
+        {stage === 'after-choice' && <AfterChoice />}
       </div>
-
-      <div className='relative z-10 max-w-4xl mx-auto text-center space-y-12 animate-fade-in'>
-        <div className='space-y-6'>
-          <h1 className='text-5xl md:text-7xl font-bold mb-4 bg-gradient-to-r from-gray-300 via-purple-400 to-gray-300 bg-clip-text text-transparent animate-gradient'>
-            Izbor
-          </h1>
-          <p className='text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto leading-relaxed'>
-            Stojiš na raskrsnici. Svaki izbor koji napraviš određuje ko si.
-            <br />
-            <span className='text-lg text-gray-400 mt-4 block'>
-              Kakva osoba želiš da budeš?
-            </span>
-          </p>
-        </div>
-
-        <div className='flex flex-row md:flex-row items-center justify-center gap-12 md:gap-16 mt-16'>
-          {/* Blue Pill */}
-          {/* To use your own image, replace the div below with: 
-              <Image src="/pills-image.png" alt="Blue pill" width={256} height={256} className="..." />
-              Or use a single image with both pills and position them with CSS */}
-          <div className='flex flex-col items-center space-y-6'>
-            <button
-              onClick={() => onPillChoice('blue')}
-              className='group relative flex flex-col items-center space-y-6 cursor-pointer'>
-              <div className='relative w-32 h-16 md:w-40 md:h-20 transform transition-all duration-500 group-hover:scale-110 group-hover:rotate-3'>
-                <div className='absolute inset-0 bg-blue-600 rounded-full blur-xl opacity-30 group-hover:opacity-50 transition-opacity' />
-                <div className='relative w-full h-full bg-gradient-to-br from-blue-600 to-blue-800 rounded-full flex items-center justify-center shadow-2xl border-4 border-blue-700 group-hover:border-blue-600 transition-all'></div>
-              </div>
-            </button>
-            <div className='text-center space-y-2'>
-              <p className='text-2xl md:text-3xl font-semibold text-gray-300'>
-                Ostani
-              </p>
-              <p className='text-sm md:text-base text-gray-400 max-w-xs'>
-                Nastavi kao što jesi - udoban u poznatom.
-              </p>
-            </div>
-          </div>
-
-          {/* Red Pill */}
-          <div className='flex flex-col items-center space-y-6'>
-            <button
-              onClick={() => onPillChoice('red')}
-              className='group relative flex flex-col items-center space-y-6 cursor-pointer'>
-              <div className='relative w-32 h-16 md:w-40 md:h-20 transform transition-all duration-500 group-hover:scale-110 group-hover:-rotate-3'>
-                <div className='absolute inset-0 bg-red-600 rounded-full blur-xl opacity-30 group-hover:opacity-50 transition-opacity' />
-                <div className='relative w-full h-full bg-gradient-to-br from-red-600 to-red-800 rounded-full flex items-center justify-center shadow-2xl border-4 border-red-700 group-hover:border-red-600 transition-all'></div>
-              </div>
-            </button>
-            <div className='text-center space-y-2'>
-              <p className='text-2xl md:text-3xl font-semibold text-gray-300'>
-                Vidi
-              </p>
-              <p className='text-sm md:text-base text-gray-400 max-w-xs'>
-                Otvori oči. Otkrij istinu o sebi i svetu.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <p className='text-sm text-gray-500 mt-12 italic'>
-          Klikni na pilulu da započneš svoje putovanje
-        </p>
-      </div>
-    </div>
+    </main>
   );
 }

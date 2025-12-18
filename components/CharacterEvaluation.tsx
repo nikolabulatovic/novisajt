@@ -3,70 +3,58 @@
 import { useState } from 'react';
 
 interface CharacterEvaluationProps {
-  onComplete: () => void;
+  onComplete: (answers: Record<string, string>) => void;
+  answers?: Record<string, string>;
 }
 
 const questions = [
   {
     id: 1,
-    question: 'Kada vidiš nekoga u bolu, šta je tvoj prvi instinkt?',
+    question: 'Kako definišeš svoj karakter?',
     options: [
-      { text: 'Okrenem pogled i pravim se da se ništa ne dešava', value: 0 },
-      { text: 'Osećam nelagodu, ali ne preduzimam ništa', value: 1 },
-      { text: 'Osećam empatiju i želim da pomognem', value: 2 },
-      {
-        text: 'Preduzimam akciju da pomognem, čak i ako je to nezgodno',
-        value: 3,
-      },
+      { text: 'Trudim se da budem pravedan', value: 'pravedan' },
+      { text: 'Bitno mi je da ne nanosim nepravdu drugima', value: 'nepravda' },
+      { text: 'Otvoren sam da menjam stavove', value: 'otvoren' },
+      { text: 'Smatram sebe dobrom osobom', value: 'dobra' },
     ],
   },
   {
     id: 2,
-    question: 'Kako definišeš svoj karakter?',
+    question: 'Kada saznaš nešto neprijatno o sebi, ti:',
     options: [
-      { text: 'Ja sam ono što jesam i ne treba mi da se menjam', value: 0 },
-      { text: 'Uglavnom sam dobar, sa nekim manama', value: 1 },
+      { text: 'Razmislim i pokušam da se popravim', value: 'popravim' },
       {
-        text: 'Pokušavam da budem saosećajan i da radim pravu stvar',
-        value: 2,
+        text: 'Oduprem se u početku, ali poslušam argumente',
+        value: 'oduprem',
       },
-      {
-        text: 'Aktivno radim da uskladim svoje postupke sa svojim vrednostima',
-        value: 3,
-      },
+      { text: 'Više volim istinu nego utehu', value: 'istina' },
+      { text: 'Teško mi je, ali ne ignorišem', value: 'tesko' },
     ],
   },
   {
     id: 3,
-    question: 'Kada saznaš nešto neprijatno o sebi, ti:',
-    options: [
-      { text: 'Ignorišeš to i nastavljaš kao ranije', value: 0 },
-      { text: 'Priznaš to, ali praviš izgovore', value: 1 },
-      { text: 'Osećaš se konfliktno i nisi siguran šta da radiš', value: 2 },
-      { text: 'Duboko razmišljaš i razmatraš promenu', value: 3 },
-    ],
-  },
-  {
-    id: 4,
     question: 'Šta ti je najvažnije?',
     options: [
-      { text: 'Moj komfor i udobnost', value: 0 },
-      { text: 'Pridržavanje društvenih normi i uklapanje', value: 1 },
-      { text: 'Biti dobra osoba na svoj način', value: 2 },
-      { text: 'Živeti u skladu sa svojim najdubljim vrednostima', value: 3 },
+      { text: 'Pravednost', value: 'pravednost' },
+      { text: 'Odgovornost', value: 'odgovornost' },
+      { text: 'Doslednost', value: 'doslednost' },
+      { text: 'Istina, čak i kada boli', value: 'istina-boli' },
     ],
   },
 ];
 
 export default function CharacterEvaluation({
   onComplete,
+  answers: existingAnswers = {},
 }: CharacterEvaluationProps) {
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [answers, setAnswers] = useState<number[]>([]);
+  const [answers, setAnswers] =
+    useState<Record<string, string>>(existingAnswers);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
-  const handleAnswer = (value: number) => {
-    const newAnswers = [...answers, value];
+  const handleAnswer = (value: string) => {
+    const questionId = `q${questions[currentQuestion].id}`;
+    const newAnswers = { ...answers, [questionId]: value };
     setAnswers(newAnswers);
     setIsTransitioning(true);
 
@@ -77,7 +65,7 @@ export default function CharacterEvaluation({
       } else {
         // All questions answered
         setTimeout(() => {
-          onComplete();
+          onComplete(newAnswers);
         }, 1000);
       }
     }, 500);
@@ -106,7 +94,7 @@ export default function CharacterEvaluation({
           </div>
           <div className='w-full bg-gray-900/50 rounded-full h-2 overflow-hidden'>
             <div
-              className='bg-gradient-to-r from-purple-600 to-indigo-600 h-full rounded-full transition-all duration-500 ease-out'
+              className='bg-gray-600 h-full rounded-full transition-all duration-500 ease-out'
               style={{ width: `${progress}%` }}
             />
           </div>
@@ -119,7 +107,7 @@ export default function CharacterEvaluation({
               ? 'opacity-0 translate-y-4'
               : 'opacity-100 translate-y-0'
           }`}>
-          <h2 className='text-3xl md:text-4xl font-bold mb-8 text-center bg-gradient-to-r from-gray-200 to-purple-400 bg-clip-text text-transparent'>
+          <h2 className='text-3xl md:text-4xl font-light mb-8 text-center text-gray-200'>
             {questions[currentQuestion].question}
           </h2>
 
@@ -128,10 +116,10 @@ export default function CharacterEvaluation({
               <button
                 key={index}
                 onClick={() => handleAnswer(option.value)}
-                className='w-full text-left p-6 rounded-xl bg-gray-900/30 hover:bg-gray-800/40 border border-gray-800/50 hover:border-purple-600/50 transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg group'>
+                className='w-full text-left p-6 rounded-xl bg-gray-900/30 hover:bg-gray-800/40 border border-gray-800/50 hover:border-gray-600/50 transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg group'>
                 <div className='flex items-center space-x-4'>
-                  <div className='w-6 h-6 rounded-full border-2 border-purple-600 group-hover:border-purple-500 flex items-center justify-center transition-colors'>
-                    <div className='w-3 h-3 rounded-full bg-purple-600 opacity-0 group-hover:opacity-100 transition-opacity' />
+                  <div className='w-6 h-6 rounded-full border-2 border-gray-600 group-hover:border-gray-400 flex items-center justify-center transition-colors'>
+                    <div className='w-3 h-3 rounded-full bg-gray-400 opacity-0 group-hover:opacity-100 transition-opacity' />
                   </div>
                   <span className='text-lg text-gray-300 group-hover:text-gray-200 transition-colors'>
                     {option.text}
@@ -141,17 +129,6 @@ export default function CharacterEvaluation({
             ))}
           </div>
         </div>
-
-        {/* Reflection Text */}
-        {currentQuestion === questions.length - 1 &&
-          answers.length === questions.length && (
-            <div className='mt-8 text-center animate-fade-in'>
-              <p className='text-xl text-gray-300 italic'>
-                &ldquo;Neispitan život nije vredan življenja.&rdquo;
-              </p>
-              <p className='text-sm text-gray-500 mt-2'>— Sokrat</p>
-            </div>
-          )}
       </div>
     </div>
   );

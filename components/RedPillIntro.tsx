@@ -11,13 +11,10 @@ export default function RedPillIntro({ onComplete }: RedPillIntroProps) {
   const [showButton, setShowButton] = useState(false);
 
   const text = [
-    'Čestitamo.',
-    'Izabrao/la si da vidiš šta se zaista dešava.',
-    'Ali istina nije za sve.',
-    'Neki ljudi nisu spremni da čuju ono što mora biti rečeno.',
-    'Zato ćemo ti postaviti tri pitanja.',
-    'Odgovori iskreno—kako god bilo.',
-    'Ako si spreman/na da saznaš istinu, nastavi dalje.',
+    'Izabrao/la si da vidiš.',
+    'To zahteva hrabrost.',
+    'Neće biti prijatno.',
+    'Ali će biti iskreno.',
   ];
 
   // Flatten all words with their positions
@@ -34,9 +31,9 @@ export default function RedPillIntro({ onComplete }: RedPillIntroProps) {
         clearInterval(interval);
         setTimeout(() => {
           setShowButton(true);
-        }, 800);
+        }, 1000);
       }
-    }, 100); // Adjust speed here (lower = faster)
+    }, 180); // Slower, smoother pace
 
     return () => clearInterval(interval);
   }, [totalWords]);
@@ -46,12 +43,20 @@ export default function RedPillIntro({ onComplete }: RedPillIntroProps) {
   };
 
   return (
-    <div className='min-h-screen flex items-center justify-center p-8 relative overflow-hidden'>
+    <div className='min-h-screen flex items-center justify-center p-8 relative overflow-hidden bg-black'>
+      {/* SLIKA: Minimalistička, možda apstraktna forma ili tekstura koja sugerira refleksiju */}
+      {/* Opciono: Subtle abstract background suggesting reflection/introspection */}
+      {/* <div
+        className='absolute inset-0 opacity-10 bg-cover bg-center bg-no-repeat'
+        style={{
+          backgroundImage: "url('/images/intro-reflection.png')",
+        }}
+      /> */}
+
       {/* Animated background */}
       <div className='absolute inset-0 overflow-hidden'>
-        <div className='absolute top-1/4 left-1/4 w-96 h-96 bg-red-500/10 rounded-full blur-3xl animate-pulse' />
-        <div className='absolute bottom-1/4 right-1/4 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl animate-pulse delay-1000' />
-        <div className='absolute top-1/2 left-1/2 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl animate-pulse delay-500' />
+        <div className='absolute top-1/4 left-1/4 w-96 h-96 bg-red-500/5 rounded-full blur-3xl animate-pulse' />
+        <div className='absolute bottom-1/4 right-1/4 w-96 h-96 bg-orange-500/5 rounded-full blur-3xl animate-pulse delay-1000' />
       </div>
 
       <div className='relative z-10 max-w-4xl mx-auto w-full'>
@@ -78,14 +83,14 @@ export default function RedPillIntro({ onComplete }: RedPillIntroProps) {
                       return (
                         <span
                           key={wordIndex}
-                          className={`inline-block transition-all duration-700 ease-out ${
+                          className={`transition-all duration-3000 ease-in-out ${
                             isVisible
                               ? 'opacity-100 translate-y-0'
-                              : 'opacity-0 translate-y-4'
+                              : 'opacity-0 translate-y-6'
                           }`}
                           style={{
                             transitionDelay: isVisible
-                              ? `${currentWordIndex * 20}ms`
+                              ? `${currentWordIndex * 15}ms`
                               : '0ms',
                           }}>
                           {word}
@@ -104,7 +109,7 @@ export default function RedPillIntro({ onComplete }: RedPillIntroProps) {
             <div className='mt-12 animate-fade-in'>
               <button
                 onClick={handleContinue}
-                className='px-10 py-5 bg-gradient-to-r from-red-600 via-orange-600 to-red-600 rounded-full text-white font-semibold text-xl hover:from-red-500 hover:via-orange-500 hover:to-red-500 transform hover:scale-105 transition-all duration-300 shadow-2xl hover:shadow-red-500/50 relative overflow-hidden group'>
+                className='cursor-pointer px-10 py-5 bg-gradient-to-r from-red-600 via-orange-600 to-red-600 rounded-full text-white font-semibold text-xl hover:from-red-500 hover:via-orange-500 hover:to-red-500 transform hover:scale-105 transition-all duration-300 shadow-2xl hover:shadow-red-500/50 relative overflow-hidden group'>
                 <span className='relative z-10'>Nastavi</span>
                 <div className='absolute inset-0 bg-gradient-to-r from-red-700 via-orange-700 to-red-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300' />
               </button>
