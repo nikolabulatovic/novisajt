@@ -40,59 +40,67 @@ export default function ChoiceStage({ onPillChoice }: ChoiceStageProps) {
         <div className='absolute bottom-1/4 right-1/4 w-96 h-96 bg-red-500/5 rounded-full blur-3xl animate-pulse delay-1000' />
       </div>
 
-      <div className='relative z-10 max-w-4xl mx-auto text-center space-y-16'>
-        {/* Centrirano pitanje - bez objašnjenja */}
-        <div className='space-y-8'>
-          <h1 className='text-4xl md:text-6xl font-light text-gray-200 leading-relaxed max-w-3xl mx-auto'>
-            Želiš li da saznaš istinu – ili da nastaviš kao do sada?
+      <div className='relative z-10 max-w-4xl mx-auto text-center space-y-12 animate-fade-in'>
+        <div className='space-y-6'>
+          <h1 className='text-5xl md:text-7xl font-bold mb-4 bg-gradient-to-r from-gray-300 via-purple-400 to-gray-300 bg-clip-text text-transparent animate-gradient'>
+            Izbor
           </h1>
+          <h2 className='text-2xl md:text-4xl text-gray-300 max-w-2xl mx-auto leading-relaxed'>
+            Želiš li da saznaš istinu – ili da nastaviš kao do sada?
+          </h2>
         </div>
 
         {/* Dva dugmeta - pilule */}
-        <div className='flex flex-row items-center justify-center gap-16 md:gap-24 mt-20'>
+        <div className='flex flex-row md:flex-row items-center justify-center gap-12 md:gap-16 mt-16'>
           {/* Plava pilula */}
-          <div className='flex flex-col items-center space-y-8'>
+          <div className='flex flex-col items-center space-y-6'>
             <button
               onClick={() => handlePillClick('blue')}
               disabled={isFadingOut}
-              className={`group relative flex flex-col items-center space-y-6 cursor-pointer transition-all duration-300 ${
-                isFadingOut && selectedPill !== 'blue'
-                  ? 'opacity-30'
-                  : 'hover:opacity-80'
+              className={`group relative flex flex-col items-center space-y-6 cursor-pointer ${
+                isFadingOut && selectedPill !== 'blue' ? 'opacity-30' : ''
               } ${isFadingOut ? 'pointer-events-none' : ''}`}>
-              <div className='relative w-32 h-16 md:w-40 md:h-20 transform transition-all duration-500 group-hover:scale-105'>
-                <div className='absolute inset-0 bg-blue-600 rounded-full blur-xl opacity-20 group-hover:opacity-30 transition-opacity' />
-                <div className='relative w-full h-full bg-gradient-to-br from-blue-500 to-blue-700 rounded-full flex items-center justify-center shadow-lg border-2 border-blue-600/50 group-hover:border-blue-500 transition-all'></div>
+              <div className='relative w-32 h-16 md:w-40 md:h-20 transform transition-all duration-500 group-hover:scale-110 group-hover:rotate-3'>
+                <div className='absolute inset-0 bg-blue-600 rounded-full blur-xl opacity-30 group-hover:opacity-50 transition-opacity' />
+                <div className='relative w-full h-full bg-gradient-to-br from-blue-600 to-blue-800 rounded-full flex items-center justify-center shadow-2xl border-4 border-blue-700 group-hover:border-blue-600 transition-all'></div>
               </div>
             </button>
-            <p className='text-xl md:text-2xl font-light text-gray-400'>
-              🔵 Plava pilula
-            </p>
+            <div className='text-center space-y-2'>
+              <p className='text-2xl md:text-3xl font-semibold text-gray-300'>
+                Ostani
+              </p>
+              <p className='text-md md:text-lg text-gray-400 max-w-xs'>
+                Nastavi kao što jesi - udoban u poznatom.
+              </p>
+            </div>
           </div>
 
           {/* Crvena pilula */}
-          <div className='flex flex-col items-center space-y-8'>
+          <div className='flex flex-col items-center space-y-6'>
             <button
               onClick={() => handlePillClick('red')}
               disabled={isFadingOut}
-              className={`group relative flex flex-col items-center space-y-6 cursor-pointer transition-all duration-300 ${
-                isFadingOut && selectedPill !== 'red'
-                  ? 'opacity-30'
-                  : 'hover:opacity-80'
+              className={`group relative flex flex-col items-center space-y-6 cursor-pointer ${
+                isFadingOut && selectedPill !== 'red' ? 'opacity-30' : ''
               } ${isFadingOut ? 'pointer-events-none' : ''}`}>
               <div
                 className={`relative w-32 h-16 md:w-40 md:h-20 transform transition-all duration-500 ${
                   selectedPill === 'red' && isFadingOut
-                    ? 'scale-110'
-                    : 'group-hover:scale-105'
+                    ? 'scale-110 -rotate-3'
+                    : 'group-hover:scale-110 group-hover:-rotate-3'
                 }`}>
-                <div className='absolute inset-0 bg-red-600 rounded-full blur-xl opacity-20 group-hover:opacity-30 transition-opacity' />
-                <div className='relative w-full h-full bg-gradient-to-br from-red-500 to-red-700 rounded-full flex items-center justify-center shadow-lg border-2 border-red-600/50 group-hover:border-red-500 transition-all'></div>
+                <div className='absolute inset-0 bg-red-600 rounded-full blur-xl opacity-30 group-hover:opacity-50 transition-opacity' />
+                <div className='relative w-full h-full bg-gradient-to-br from-red-600 to-red-800 rounded-full flex items-center justify-center shadow-2xl border-4 border-red-700 group-hover:border-red-600 transition-all'></div>
               </div>
             </button>
-            <p className='text-xl md:text-2xl font-light text-gray-400'>
-              🔴 Crvena pilula
-            </p>
+            <div className='text-center space-y-2'>
+              <p className='text-2xl md:text-3xl font-semibold text-gray-300'>
+                Vidi
+              </p>
+              <p className='text-md md:text-lg text-gray-400 max-w-xs w-60'>
+                Otvori oči. Otkrij istinu o sebi i svetu.
+              </p>
+            </div>
           </div>
         </div>
       </div>
