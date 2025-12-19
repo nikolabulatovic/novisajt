@@ -130,7 +130,7 @@ export default function CharacterEvaluation({
               <button
                 key={index}
                 onClick={() => handleAnswer(option.value)}
-                className='w-full text-left p-6 rounded-xl bg-gray-900/30 hover:bg-gray-800/40 border border-gray-800/50 hover:border-gray-600/50 transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg group'>
+                className='cursor-pointer w-full text-left p-6 rounded-xl bg-gray-900/30 hover:bg-gray-800/40 border border-gray-800/50 hover:border-gray-600/50 transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg group'>
                 <div className='flex items-center space-x-4'>
                   <div className='w-6 h-6 rounded-full border-2 border-gray-600 group-hover:border-gray-400 flex items-center justify-center transition-colors'>
                     <div className='w-3 h-3 rounded-full bg-gray-400 opacity-0 group-hover:opacity-100 transition-opacity' />

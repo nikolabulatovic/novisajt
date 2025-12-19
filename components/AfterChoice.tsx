@@ -22,7 +22,7 @@ export default function AfterChoice() {
           <div className='flex justify-center space-x-4 mb-8'>
             <button
               onClick={() => setActiveSection('communities')}
-              className={`px-8 py-4 rounded-full transition-all duration-300 ${
+              className={`cursor-pointer px-8 py-4 rounded-full transition-all duration-300 ${
                 activeSection === 'communities'
                   ? 'bg-gray-800/60 border-2 border-gray-600 text-gray-200'
                   : 'bg-gray-900/30 border border-gray-800/50 text-gray-400 hover:bg-gray-800/40'
@@ -31,7 +31,7 @@ export default function AfterChoice() {
             </button>
             <button
               onClick={() => setActiveSection('education')}
-              className={`px-8 py-4 rounded-full transition-all duration-300 ${
+              className={`cursor-pointer px-8 py-4 rounded-full transition-all duration-300 ${
                 activeSection === 'education'
                   ? 'bg-gray-800/60 border-2 border-gray-600 text-gray-200'
                   : 'bg-gray-900/30 border border-gray-800/50 text-gray-400 hover:bg-gray-800/40'

@@ -106,7 +106,7 @@ export default function FactsNumbers({ onComplete }: FactsNumbersProps) {
             }`}>
             <button
               onClick={handleNext}
-              className='px-10 py-5 bg-gray-800/50 hover:bg-gray-700/50 rounded-full text-white font-light text-xl transition-all duration-300 border border-gray-700/50 hover:border-gray-600/50'>
+              className='cursor-pointer px-10 py-5 bg-gray-800/50 hover:bg-gray-700/50 rounded-full text-white font-light text-xl transition-all duration-300 border border-gray-700/50 hover:border-gray-600/50'>
               {currentFact < facts.length - 1 ? 'Dalje' : 'Nastavi'}
             </button>
           </div>

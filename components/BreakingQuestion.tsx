@@ -54,7 +54,7 @@ export default function BreakingQuestion({
                 <button
                   key={index}
                   onClick={() => handleAnswer(option)}
-                  className={`w-full text-left p-6 rounded-xl transition-all duration-300 transform hover:scale-[1.02] ${
+                  className={`w-full text-left p-6 rounded-xl transition-all duration-300 transform hover:scale-[1.02] cursor-pointer ${
                     selected === option
                       ? 'bg-gray-800/60 border-2 border-gray-600'
                       : 'bg-gray-900/30 border border-gray-800/50 hover:bg-gray-800/40 hover:border-gray-700/50'
@@ -74,7 +74,7 @@ export default function BreakingQuestion({
             }`}>
             <button
               onClick={handleContinue}
-              className='px-10 py-5 bg-gray-800/50 hover:bg-gray-700/50 rounded-full text-white font-light text-xl transition-all duration-300 border border-gray-700/50 hover:border-gray-600/50'>
+              className='cursor-pointer px-10 py-5 bg-gray-800/50 hover:bg-gray-700/50 rounded-full text-white font-light text-xl transition-all duration-300 border border-gray-700/50 hover:border-gray-600/50'>
               Nastavi
             </button>
           </div>

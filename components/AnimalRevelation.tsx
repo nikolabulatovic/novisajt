@@ -99,7 +99,7 @@ export default function AnimalRevelation({ choice }: AnimalRevelationProps) {
                 Otkrij kako možeš živeti u skladu sa svojim vrednostima i
                 napraviti razliku.
               </p>
-              <button className='px-8 py-4 bg-gradient-to-r from-green-600 to-emerald-600 rounded-full text-white font-semibold text-lg hover:from-green-500 hover:to-emerald-500 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl'>
+              <button className='cursor-pointer px-8 py-4 bg-gradient-to-r from-green-600 to-emerald-600 rounded-full text-white font-semibold text-lg hover:from-green-500 hover:to-emerald-500 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl'>
                 Nastavi svoje putovanje
               </button>
             </div>
