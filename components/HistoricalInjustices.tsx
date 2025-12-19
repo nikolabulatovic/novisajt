@@ -16,22 +16,20 @@ const intro = [
 
 const injustices = {
   left: {
-    title: 'Robovlasništvo',
     content: [
       'Robovlasništvo je bilo normalno.',
-      'Podržavano. Zakonito.',
-      'Trajalo je vekovima.',
-      'Većina ljudi nije imala loše namere.',
+      'Zakonito.',
+      'Trajalo je milenijumima.',
+      'Većina ljudi je to podržavalo ili barem prihvatalo.',
       'Samo su „živeli normalno“.',
     ],
   },
   right: {
-    title: 'Nacizam',
     content: [
-      'Bilo je normalno.',
-      'Bilo je prihvaćeno.',
-      'Trajalo je godinama.',
-      'Većina ljudi nije imala loše namere.',
+      'Hitler. Staljin. Mao.',
+      'Vojnici i policajci su izvršavali naredbe.',
+      'Milioni su stradali ne zato što su svi bili zli - već zato što su slušali, ćutali i prilagođavali se.',
+      'Nepravda je bila prihvaćena.',
     ],
   },
 };
@@ -46,10 +44,10 @@ export default function HistoricalInjustices({
   const [showButton, setShowButton] = useState(false);
 
   const slaveryWords = injustices.left.content.flatMap((sentence) =>
-    sentence.split(' '),
+    sentence.trim() === '' ? [] : sentence.split(' '),
   );
   const nazismWords = injustices.right.content.flatMap((sentence) =>
-    sentence.split(' '),
+    sentence.trim() === '' ? [] : sentence.split(' '),
   );
   const slaveryTotalWords = slaveryWords.length;
   const nazismTotalWords = nazismWords.length;
@@ -168,16 +166,13 @@ export default function HistoricalInjustices({
                   className='absolute inset-0 bg-cover bg-center bg-no-repeat'
                   style={{
                     backgroundImage: "url('/images/robovi.jpg')",
-                    maskImage:
-                      'linear-gradient(to top right, black 0%, black 40%, white 60%, transparent 85%)',
-                    WebkitMaskImage:
-                      'linear-gradient(to top right, black 0%, black 40%, white 60%, transparent 85%)',
                   }}
                 />
                 {/* Blur effect on edges */}
                 <div className='absolute inset-0 bg-gradient-to-tr from-transparent via-transparent to-black/60 pointer-events-none blur-xl' />
-                {/* Gradient overlay - fade out where text is (top right corner) */}
-                <div className='absolute inset-0 bg-gradient-to-tr from-transparent via-black/60 to-black/100 pointer-events-none' />
+                {/* Gradient overlays - square fade in top right corner */}
+                <div className='absolute inset-0 bg-gradient-to-t from-transparent via-black/50 to-black/100 pointer-events-none' />
+                <div className='absolute inset-0 bg-gradient-to-r from-transparent via-black/50 to-black/100 pointer-events-none' />
               </div>
 
               {/* Content overlay */}
@@ -187,24 +182,26 @@ export default function HistoricalInjustices({
 
                 {/* Text - right side */}
                 <div className='flex-1 space-y-6 pt-4'>
-                  <h2 className='text-3xl md:text-4xl font-light text-gray-200 mb-4 text-right'>
-                    {injustices.left.title}
-                  </h2>
-                  <div className='w-16 h-0.5 bg-gray-600 mb-6 ml-auto' />
-
                   <div className='space-y-4 text-right'>
                     {injustices.left.content.map((sentence, sentenceIndex) => {
+                      // Handle empty lines
+                      if (sentence.trim() === '') {
+                        return <div key={sentenceIndex} className='h-6' />;
+                      }
+
                       const sentenceWords = sentence.split(' ');
                       let wordStartIndex = 0;
                       for (let i = 0; i < sentenceIndex; i++) {
-                        wordStartIndex +=
-                          injustices.left.content[i].split(' ').length;
+                        if (injustices.left.content[i].trim() !== '') {
+                          wordStartIndex +=
+                            injustices.left.content[i].split(' ').length;
+                        }
                       }
 
                       return (
                         <p
                           key={sentenceIndex}
-                          className='text-lg md:text-xl lg:text-2xl leading-relaxed font-light text-gray-300'>
+                          className='text-xl md:text2xl lg:text-3xl leading-relaxed font-light text-gray-300'>
                           {sentenceWords.map((word, wordIndex) => {
                             const currentWordIndex = wordStartIndex + wordIndex;
                             const isVisible =
@@ -260,16 +257,13 @@ export default function HistoricalInjustices({
                   className='absolute inset-0 bg-cover bg-center bg-no-repeat'
                   style={{
                     backgroundImage: "url('/images/nacizam.jpg')",
-                    maskImage:
-                      'linear-gradient(to top left, black 0%, black 40%, black 60%, transparent 85%)',
-                    WebkitMaskImage:
-                      'linear-gradient(to top left, black 0%, black 40%, black 60%, transparent 85%)',
                   }}
                 />
                 {/* Blur effect on edges */}
                 <div className='absolute inset-0 bg-gradient-to-tl from-transparent via-transparent to-black/60 pointer-events-none blur-xl' />
-                {/* Gradient overlay - fade out where text is (top left corner) */}
-                <div className='absolute inset-0 bg-gradient-to-tl from-transparent via-black/60 to-black/100 pointer-events-none' />
+                {/* Gradient overlays - square fade in top left corner */}
+                <div className='absolute inset-0 bg-gradient-to-t from-transparent via-black/50 to-black/100 pointer-events-none' />
+                <div className='absolute inset-0 bg-gradient-to-l from-transparent via-black/50 to-black/100 pointer-events-none' />
               </div>
 
               {/* Content overlay */}
@@ -279,24 +273,26 @@ export default function HistoricalInjustices({
 
                 {/* Text - left side */}
                 <div className='flex-1 space-y-6 pt-4'>
-                  <h2 className='text-3xl md:text-4xl font-light text-gray-200 mb-4'>
-                    {injustices.right.title}
-                  </h2>
-                  <div className='w-16 h-0.5 bg-gray-600 mb-6' />
-
                   <div className='space-y-4 text-left'>
                     {injustices.right.content.map((sentence, sentenceIndex) => {
+                      // Handle empty lines
+                      if (sentence.trim() === '') {
+                        return <div key={sentenceIndex} className='h-6' />;
+                      }
+
                       const sentenceWords = sentence.split(' ');
                       let wordStartIndex = 0;
                       for (let i = 0; i < sentenceIndex; i++) {
-                        wordStartIndex +=
-                          injustices.right.content[i].split(' ').length;
+                        if (injustices.right.content[i].trim() !== '') {
+                          wordStartIndex +=
+                            injustices.right.content[i].split(' ').length;
+                        }
                       }
 
                       return (
                         <p
                           key={sentenceIndex}
-                          className='text-lg md:text-xl lg:text-2xl leading-relaxed font-light text-gray-300'>
+                          className='text-xl md:text-2xl lg:text-3xl leading-relaxed font-light text-gray-300'>
                           {sentenceWords.map((word, wordIndex) => {
                             const currentWordIndex = wordStartIndex + wordIndex;
                             const isVisible =
