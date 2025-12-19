@@ -12,33 +12,36 @@ const questions = [
     id: 1,
     question: 'Kako definišeš svoj karakter?',
     options: [
-      { text: 'Trudim se da budem pravedan', value: 'pravedan' },
-      { text: 'Bitno mi je da ne nanosim nepravdu drugima', value: 'nepravda' },
-      { text: 'Otvoren sam da menjam stavove', value: 'otvoren' },
-      { text: 'Smatram sebe dobrom osobom', value: 'dobra' },
+      { text: 'Ja sam ono što jesam i ne treba mi da se menjam', value: 0 },
+      { text: 'Uglavnom sam dobar, sa nekim manama', value: 1 },
+      {
+        text: 'Pokušavam da budem saosećajan i da radim pravu stvar',
+        value: 2,
+      },
+      {
+        text: 'Aktivno radim da uskladim svoje postupke sa svojim vrednostima',
+        value: 3,
+      },
     ],
   },
   {
     id: 2,
     question: 'Kada saznaš nešto neprijatno o sebi, ti:',
     options: [
-      { text: 'Razmislim i pokušam da se popravim', value: 'popravim' },
-      {
-        text: 'Oduprem se u početku, ali poslušam argumente',
-        value: 'oduprem',
-      },
-      { text: 'Više volim istinu nego utehu', value: 'istina' },
-      { text: 'Teško mi je, ali ne ignorišem', value: 'tesko' },
+      { text: 'Ignorišeš to i nastavljaš kao ranije', value: 0 },
+      { text: 'Priznaš to, ali praviš izgovore', value: 1 },
+      { text: 'Osećaš se konfliktno i nisi siguran šta da radiš', value: 2 },
+      { text: 'Duboko razmišljaš i razmatraš promenu', value: 3 },
     ],
   },
   {
     id: 3,
     question: 'Šta ti je najvažnije?',
     options: [
-      { text: 'Pravednost', value: 'pravednost' },
-      { text: 'Odgovornost', value: 'odgovornost' },
-      { text: 'Doslednost', value: 'doslednost' },
-      { text: 'Istina, čak i kada boli', value: 'istina-boli' },
+      { text: 'Moj komfor i udobnost', value: 0 },
+      { text: 'Pridržavanje društvenih normi i uklapanje', value: 1 },
+      { text: 'Biti dobra osoba na svoj način', value: 2 },
+      { text: 'Živeti u skladu sa svojim najdubljim vrednostima', value: 3 },
     ],
   },
 ];
@@ -52,9 +55,9 @@ export default function CharacterEvaluation({
     useState<Record<string, string>>(existingAnswers);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
-  const handleAnswer = (value: string) => {
+  const handleAnswer = (value: number) => {
     const questionId = `q${questions[currentQuestion].id}`;
-    const newAnswers = { ...answers, [questionId]: value };
+    const newAnswers = { ...answers, [questionId]: value.toString() };
     setAnswers(newAnswers);
     setIsTransitioning(true);
 
