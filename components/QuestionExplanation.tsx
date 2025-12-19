@@ -29,14 +29,14 @@ export default function QuestionExplanation({
           bold: false,
           italic: false,
         },
-        { text: 'dosledni sebi', bold: true, italic: false },
+        { text: 'iskreni prema sebi', bold: true, italic: false },
         { text: '.', bold: false, italic: false },
       ],
     },
     {
       line: [
         {
-          text: 'Ako želiš da se vidiš onakvim kakav jesi — ',
+          text: 'Ako želiš da se vidiš onakvim kakav jesi - ',
           bold: false,
           italic: false,
         },
@@ -100,7 +100,7 @@ export default function QuestionExplanation({
             return (
               <p
                 key={itemIndex}
-                className='text-2xl md:text-3xl lg:text-4xl leading-relaxed px-8 font-light text-gray-200'>
+                className='text-2xl md:text-3xl lg:text-4xl leading-relaxed px-2 font-light text-gray-200'>
                 {item.line.map((segment, segmentIndex) => {
                   const segmentWords = segment.text.split(' ');
                   return segmentWords.map((word: string, wordIndex: number) => {

@@ -14,6 +14,7 @@ export default function RedPillIntro({ onComplete }: RedPillIntroProps) {
   const text = [
     'Tvoj izbor je da vidiš istinu i to zahteva hrabrost.',
     'Neće biti prijatno. Ali će biti iskreno.',
+    'Prvo ćemo ti postaviti tri pitanja.',
   ];
 
   // Flatten all words with their positions
