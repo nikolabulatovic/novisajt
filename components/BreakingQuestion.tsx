@@ -10,19 +10,18 @@ export default function BreakingQuestion({
   onComplete,
 }: BreakingQuestionProps) {
   const [selected, setSelected] = useState<string | null>(null);
-  const [showButton, setShowButton] = useState(false);
-
-  const handleAnswer = (value: string) => {
-    setSelected(value);
-    setTimeout(() => {
-      setShowButton(true);
-    }, 500);
-  };
 
   const handleContinue = () => {
     if (selected) {
       onComplete(selected);
     }
+  };
+
+  const handleAnswer = (value: string) => {
+    setSelected(value);
+    setTimeout(() => {
+      handleContinue();
+    }, 500);
   };
 
   return (
@@ -59,24 +58,12 @@ export default function BreakingQuestion({
                       ? 'bg-gray-800/60 border-2 border-gray-600'
                       : 'bg-gray-900/30 border border-gray-800/50 hover:bg-gray-800/40 hover:border-gray-700/50'
                   }`}>
-                  <span className='text-lg md:text-xl text-gray-300'>
+                  <span className='text-lg md:text-xl lg:text-2xl text-gray-300 font-light'>
                     {option}
                   </span>
                 </button>
               ))}
             </div>
-          </div>
-
-          {/* Continue button */}
-          <div
-            className={`mt-8 transition-opacity duration-500 ${
-              showButton ? 'opacity-100' : 'opacity-0 pointer-events-none'
-            }`}>
-            <button
-              onClick={handleContinue}
-              className='cursor-pointer px-10 py-5 bg-gray-800/50 hover:bg-gray-700/50 rounded-full text-white font-light text-xl transition-all duration-300 border border-gray-700/50 hover:border-gray-600/50'>
-              Nastavi
-            </button>
           </div>
         </div>
       </div>

@@ -135,7 +135,7 @@ export default function CharacterEvaluation({
                   <div className='w-6 h-6 rounded-full border-2 border-gray-600 group-hover:border-gray-400 flex items-center justify-center transition-colors'>
                     <div className='w-3 h-3 rounded-full bg-gray-400 opacity-0 group-hover:opacity-100 transition-opacity' />
                   </div>
-                  <span className='text-lg text-gray-300 group-hover:text-gray-200 transition-colors'>
+                  <span className='text-lg md:text-xl lg:text-2xl text-gray-300 group-hover:text-gray-200 transition-colors font-light'>
                     {option.text}
                   </span>
                 </div>

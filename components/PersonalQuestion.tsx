@@ -83,7 +83,7 @@ export default function PersonalQuestion({
                           ? 'opacity-50 cursor-not-allowed'
                           : 'bg-gray-900/30 border border-gray-800/50 hover:bg-gray-800/40 hover:border-gray-700/50 cursor-pointer'
                       }`}>
-                      <span className='text-lg md:text-xl text-gray-300'>
+                      <span className='text-lg md:text-xl lg:text-2xl text-gray-300 font-light'>
                         {option}
                       </span>
                     </button>

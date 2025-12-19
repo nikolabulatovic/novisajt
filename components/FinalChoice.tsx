@@ -62,7 +62,7 @@ export default function FinalChoice({ onComplete }: FinalChoiceProps) {
                       ? 'bg-gray-800/60 border-2 border-gray-600'
                       : 'bg-gray-900/30 border border-gray-800/50 hover:bg-gray-800/40 hover:border-gray-700/50'
                   }`}>
-                  <span className='text-lg md:text-xl text-gray-300'>
+                  <span className='text-lg md:text-xl lg:text-2xl text-gray-300 font-light'>
                     {option}
                   </span>
                 </button>
