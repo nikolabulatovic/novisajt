@@ -13,10 +13,24 @@ export default function MilgramExperiment({
   const [showButton, setShowButton] = useState(false);
 
   const text = [
-    { line: 'Milgramov eksperiment.', delay: 0 },
-    { line: 'Ljudi čine zlo kada autoritet kaže da je to u redu.', delay: 800 },
-    { line: 'Ne zato što su zli.', delay: 2000 },
-    { line: 'Već zato što ne preispituju.', delay: 2800 },
+    { line: 'Milgramov eksperiment, 1961.', delay: 0 },
+    {
+      line: 'Istraživač naređuje učesniku da daje električne šokove „učeniku".',
+      delay: 1000,
+    },
+    { line: 'Učenik je zapravo glumac. Šokovi su lažni.', delay: 2500 },
+    { line: 'Ali učesnik to ne zna.', delay: 4000 },
+    { line: '', delay: 5000 },
+    { line: 'Kada autoritet kaže da je nešto u redu,', delay: 6000 },
+    { line: 'većina ljudi posluša.', delay: 7500 },
+    { line: '', delay: 8500 },
+    { line: 'Čak i kada to povređuje druge.', delay: 9500 },
+    { line: 'Čak i kada osećaju da nešto nije u redu.', delay: 11000 },
+    { line: '', delay: 12000 },
+    { line: 'Poslušnost često pobedi savest.', delay: 13000 },
+    { line: '', delay: 14000 },
+    { line: '65% učesnika je nastavilo do kraja.', delay: 15000 },
+    { line: 'Samo zato što im je autoritet rekao da nastave.', delay: 16500 },
   ];
 
   useEffect(() => {
@@ -41,38 +55,51 @@ export default function MilgramExperiment({
   }, []);
 
   return (
-    <div className='min-h-screen flex items-center justify-center p-8 relative bg-black'>
-      {/* SLIKA: Minimalistička, možda apstraktna forma koja sugerira autoritet ili sistem */}
-      {/* Opciono: Abstract background suggesting authority/system/control */}
-
-      <div className='absolute inset-0 overflow-hidden'>
-        <div className='absolute top-1/2 left-1/2 w-96 h-96 bg-gray-800/5 rounded-full blur-3xl animate-pulse' />
+    <div className='min-h-screen flex items-start justify-center pt-16 md:pt-24 relative bg-black'>
+      {/* Full background image */}
+      <div className='absolute inset-0 w-full h-full overflow-hidden'>
+        <div
+          className='absolute inset-0 bg-cover bg-center bg-no-repeat'
+          style={{
+            backgroundImage: "url('/images/milgram.jpeg')",
+          }}
+        />
+        {/* Dark overlay for text visibility */}
+        <div className='absolute inset-0 bg-black/70 pointer-events-none' />
       </div>
 
-      <div className='relative z-10 max-w-3xl mx-auto w-full'>
-        <div className='space-y-8 md:space-y-12'>
-          {text.map((item, index) => (
-            <p
-              key={index}
-              className={`text-2xl md:text-3xl lg:text-4xl font-light text-gray-200 text-center transition-all duration-1000 ease-out ${
-                visibleLines.includes(index)
-                  ? 'opacity-100 translate-y-0'
-                  : 'opacity-0 translate-y-6'
-              }`}>
-              {item.line}
-            </p>
-          ))}
-        </div>
+      <div className='relative z-10 max-w-3xl mx-auto w-full p-6 md:p-8'>
+        {/* Text container with backdrop for better visibility */}
+        <div className='bg-gray-900/60 backdrop-blur-md rounded-2xl p-6 md:p-8 border border-gray-800/50 shadow-2xl'>
+          <div className='space-y-3 md:space-y-4'>
+            {text.map((item, index) => {
+              if (item.line === '') {
+                return <div key={index} className='h-2' />;
+              }
+              return (
+                <p
+                  key={index}
+                  className={`text-lg md:text-xl lg:text-2xl font-light text-gray-200 text-center leading-relaxed transition-all duration-1000 ease-out ${
+                    visibleLines.includes(index)
+                      ? 'opacity-100 translate-y-0'
+                      : 'opacity-0 translate-y-6'
+                  }`}>
+                  {item.line}
+                </p>
+              );
+            })}
+          </div>
 
-        <div
-          className={`mt-12 text-center transition-opacity duration-500 ${
-            showButton ? 'opacity-100' : 'opacity-0 pointer-events-none'
-          }`}>
-          <button
-            onClick={onComplete}
-            className='px-10 py-5 bg-gray-800/50 hover:bg-gray-700/50 rounded-full text-white font-light text-xl transition-all duration-300 border border-gray-700/50 hover:border-gray-600/50'>
-            Nastavi
-          </button>
+          <div
+            className={`mt-8 text-center transition-opacity duration-500 ${
+              showButton ? 'opacity-100' : 'opacity-0 pointer-events-none'
+            }`}>
+            <button
+              onClick={onComplete}
+              className='cursor-pointer px-10 py-5 bg-gray-800/80 hover:bg-gray-700/80 rounded-full text-white font-light text-xl transition-all duration-300 border border-gray-700/50 hover:border-gray-600/50'>
+              Nastavi
+            </button>
+          </div>
         </div>
       </div>
     </div>

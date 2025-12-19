@@ -24,7 +24,6 @@ type Stage =
   | 'evaluation'
   | 'explanation'
   | 'historical'
-  | 'milgram'
   | 'personal-question'
   | 'breaking-question'
   | 'animals-intro'
@@ -82,10 +81,6 @@ export default function Home() {
   };
 
   const handleHistoricalComplete = () => {
-    transitionToStage('milgram');
-  };
-
-  const handleMilgramComplete = () => {
     transitionToStage('personal-question');
   };
 
@@ -157,9 +152,6 @@ export default function Home() {
         )}
         {stage === 'historical' && (
           <HistoricalInjustices onComplete={handleHistoricalComplete} />
-        )}
-        {stage === 'milgram' && (
-          <MilgramExperiment onComplete={handleMilgramComplete} />
         )}
         {stage === 'personal-question' && (
           <PersonalQuestion onComplete={handlePersonalQuestionComplete} />
