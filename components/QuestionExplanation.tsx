@@ -76,9 +76,9 @@ export default function QuestionExplanation({
       {/* Primeri: Apstraktne forme koje sugerišu ogledalo, autentičnost, ili suprotnost između stvarnog i željenog sebe */}
       {/* Fajl: explanation-background.png ili self-examination.png */}
       <div
-        className='absolute inset-0 opacity-5 bg-cover bg-center bg-no-repeat transition-opacity duration-[2000ms] ease-in-out'
+        className='absolute inset-0 opacity-35 bg-cover bg-center bg-no-repeat transition-opacity duration-[2000ms] ease-in-out'
         style={{
-          backgroundImage: "url('/images/explanation-background-2.jpeg')",
+          backgroundImage: "url('/images/ogledalo.png')",
         }}
       />
 
@@ -119,7 +119,7 @@ export default function QuestionExplanation({
                           isVisible
                             ? 'opacity-100 translate-y-0'
                             : 'opacity-0 translate-y-8'
-                        } ${segment.bold ? 'font-medium' : ''} ${
+                        } ${segment.bold ? 'font-bold' : ''} ${
                           segment.italic ? 'italic' : ''
                         }`}
                         style={{
