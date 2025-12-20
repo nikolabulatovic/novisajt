@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Pill from './ui/Pill';
 
 interface ChoiceStageProps {
   onPillChoice: (pill: 'red' | 'blue') => void;
@@ -54,27 +55,13 @@ export default function ChoiceStage({ onPillChoice }: ChoiceStageProps) {
         <div className='flex flex-row md:flex-row items-center justify-center gap-12 md:gap-16 mt-16'>
           {/* Plava pilula */}
           <div className='flex flex-col items-center space-y-6'>
-            <button
+            <Pill
+              color='blue'
               onClick={() => handlePillClick('blue')}
               disabled={isFadingOut}
-              className={`group relative flex flex-col items-center space-y-6 cursor-pointer ${
-                isFadingOut && selectedPill !== 'blue' ? 'opacity-30' : ''
-              } ${isFadingOut ? 'pointer-events-none' : ''}`}>
-              <div className='relative w-32 h-16 md:w-40 md:h-20 transform transition-all duration-500 group-hover:scale-110 group-hover:rotate-3'>
-                {/* Shadow at bottom for 3D effect */}
-                <div className='absolute inset-0 rounded-full bg-black/50 blur-md translate-y-2'></div>
-                {/* Pill with top-to-bottom gradient */}
-                <div
-                  className='relative w-full h-full rounded-full flex items-center justify-center shadow-2xl'
-                  style={{
-                    background:
-                      'linear-gradient(to bottom, rgb(35, 60, 145) 0%, rgb(60, 95, 200) 15%, rgb(23, 37, 84) 90%, rgb(18, 28, 55) 95%, rgb(15, 22, 45) 98%, rgb(12, 18, 38) 100%)',
-                  }}>
-                  {/* Subtle highlight at top */}
-                  <div className='absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-1/4 bg-gradient-to-b from-blue-800/20 to-transparent rounded-t-full'></div>
-                </div>
-              </div>
-            </button>
+              isSelected={selectedPill === 'blue'}
+              isFadingOut={isFadingOut}
+            />
             <div className='text-center space-y-2'>
               <p className='text-2xl md:text-3xl font-semibold text-gray-300'>
                 Ostani
@@ -87,32 +74,13 @@ export default function ChoiceStage({ onPillChoice }: ChoiceStageProps) {
 
           {/* Crvena pilula */}
           <div className='flex flex-col items-center space-y-6'>
-            <button
+            <Pill
+              color='red'
               onClick={() => handlePillClick('red')}
               disabled={isFadingOut}
-              className={`group relative flex flex-col items-center space-y-6 cursor-pointer ${
-                isFadingOut && selectedPill !== 'red' ? 'opacity-30' : ''
-              } ${isFadingOut ? 'pointer-events-none' : ''}`}>
-              <div
-                className={`relative w-32 h-16 md:w-40 md:h-20 transform transition-all duration-500 ${
-                  selectedPill === 'red' && isFadingOut
-                    ? 'scale-110 -rotate-3'
-                    : 'group-hover:scale-110 group-hover:-rotate-3'
-                }`}>
-                {/* Shadow at bottom for 3D effect */}
-                <div className='absolute inset-0 rounded-full bg-black/50 blur-md translate-y-2'></div>
-                {/* Pill with top-to-bottom gradient */}
-                <div
-                  className='relative w-full h-full rounded-full flex items-center justify-center shadow-2xl'
-                  style={{
-                    background:
-                      'linear-gradient(to bottom, rgb(140, 35, 35) 0%, rgb(220, 60, 60) 15%, rgb(69, 10, 10) 90%, rgb(55, 11, 11) 95%, rgb(48, 9, 9) 98%, rgb(42, 8, 8) 100%)',
-                  }}>
-                  {/* Subtle highlight at top */}
-                  <div className='absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-1/4 bg-gradient-to-b from-red-800/20 to-transparent rounded-t-full'></div>
-                </div>
-              </div>
-            </button>
+              isSelected={selectedPill === 'red'}
+              isFadingOut={isFadingOut}
+            />
             <div className='text-center space-y-2'>
               <p className='text-2xl md:text-3xl font-semibold text-gray-300'>
                 Vidi
