@@ -68,7 +68,7 @@ export default function ChoiceStage({ onPillChoice }: ChoiceStageProps) {
                   className='relative w-full h-full rounded-full flex items-center justify-center shadow-2xl'
                   style={{
                     background:
-                      'linear-gradient(to bottom, rgb(30, 58, 138) 0%, rgb(23, 37, 84) 90%, rgb(20, 30, 60) 95%, rgb(18, 25, 50) 98%, rgb(15, 22, 45) 100%)',
+                      'linear-gradient(to bottom, rgb(35, 60, 145) 0%, rgb(60, 95, 200) 15%, rgb(23, 37, 84) 90%, rgb(18, 28, 55) 95%, rgb(15, 22, 45) 98%, rgb(12, 18, 38) 100%)',
                   }}>
                   {/* Subtle highlight at top */}
                   <div className='absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-1/4 bg-gradient-to-b from-blue-800/20 to-transparent rounded-t-full'></div>
@@ -106,7 +106,7 @@ export default function ChoiceStage({ onPillChoice }: ChoiceStageProps) {
                   className='relative w-full h-full rounded-full flex items-center justify-center shadow-2xl'
                   style={{
                     background:
-                      'linear-gradient(to bottom, rgb(127, 29, 29) 0%, rgb(69, 10, 10) 90%, rgb(60, 12, 12) 95%, rgb(55, 10, 10) 98%, rgb(50, 9, 9) 100%)',
+                      'linear-gradient(to bottom, rgb(140, 35, 35) 0%, rgb(220, 60, 60) 15%, rgb(69, 10, 10) 90%, rgb(55, 11, 11) 95%, rgb(48, 9, 9) 98%, rgb(42, 8, 8) 100%)',
                   }}>
                   {/* Subtle highlight at top */}
                   <div className='absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-1/4 bg-gradient-to-b from-red-800/20 to-transparent rounded-t-full'></div>
