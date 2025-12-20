@@ -50,6 +50,8 @@ export default function Pill({
           {/* Subtle highlight at top */}
           <div
             className={`absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-1/4 bg-gradient-to-b ${highlightColor} to-transparent rounded-t-full`}></div>
+          {/* Vertical line down the middle (capsule seam) */}
+          <div className='absolute left-1/2 top-0 bottom-0 w-[3px] bg-black/30'></div>
         </div>
       </div>
     </button>
