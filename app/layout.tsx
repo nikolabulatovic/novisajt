@@ -1,14 +1,20 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Literata, Source_Serif_4, Inter } from 'next/font/google';
 import './globals.css';
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
+const literata = Literata({
+  variable: '--font-literata',
+  subsets: ['latin'],
+  weight: '500', // Medium
+});
+
+const sourceSerif4 = Source_Serif_4({
+  variable: '--font-source-serif',
   subsets: ['latin'],
 });
 
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
+const inter = Inter({
+  variable: '--font-inter',
   subsets: ['latin'],
 });
 
@@ -25,7 +31,7 @@ export default function RootLayout({
   return (
     <html lang='sr'>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        className={`${literata.variable} ${sourceSerif4.variable} ${inter.variable} antialiased`}>
         {children}
       </body>
     </html>
