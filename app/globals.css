@@ -133,7 +133,7 @@ p {
     opacity: 0.6;
   }
   100% {
-    transform: scale(4);
+    transform: scale(5);
     opacity: 0;
   }
 }

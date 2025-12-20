@@ -213,10 +213,10 @@ export default function CharacterEvaluation({
                     style={{
                       left: ripple.x,
                       top: ripple.y,
-                      width: '20px',
-                      height: '20px',
-                      marginLeft: '-10px',
-                      marginTop: '-10px',
+                      width: '30px',
+                      height: '30px',
+                      marginLeft: '-15px',
+                      marginTop: '-15px',
                     }}
                   />
                 ))}
