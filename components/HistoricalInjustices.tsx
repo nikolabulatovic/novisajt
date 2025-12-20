@@ -9,7 +9,6 @@ interface HistoricalInjusticesProps {
 const intro = [
   'Kroz istoriju, ogromne nepravde nisu činili monstrumi.',
   'Činili su ih obični ljudi.',
-  '',
   'Ljudi koji su voleli svoje porodice.',
   'Ljudi koji su se smatrali dobrima.',
 ];
