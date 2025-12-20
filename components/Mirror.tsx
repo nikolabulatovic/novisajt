@@ -126,8 +126,11 @@ export default function Mirror({ answers, onComplete }: MirrorProps) {
             }`}>
             <button
               onClick={onComplete}
-              className='cursor-pointer px-10 py-5 bg-gray-800/50 hover:bg-gray-700/50 rounded-full text-white font-light text-xl transition-all duration-300 border border-gray-700/50 hover:border-gray-600/50'>
-              Nastavi
+              className='button-next cursor-pointer px-12 py-6 rounded-full font-light text-xl group relative overflow-hidden'>
+              <span className='relative z-10 flex items-center justify-center'>
+                Nastavi
+              </span>
+              <div className='absolute inset-0 bg-gradient-to-r from-transparent via-red-400/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700' />
             </button>
           </div>
         </div>
