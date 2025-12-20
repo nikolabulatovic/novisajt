@@ -61,7 +61,13 @@ export default function ChoiceStage({ onPillChoice }: ChoiceStageProps) {
                 isFadingOut && selectedPill !== 'blue' ? 'opacity-30' : ''
               } ${isFadingOut ? 'pointer-events-none' : ''}`}>
               <div className='relative w-32 h-16 md:w-40 md:h-20 transform transition-all duration-500 group-hover:scale-110 group-hover:rotate-3'>
-                <div className='relative w-full h-full bg-gradient-to-br from-blue-900/80 via-blue-800/70 to-blue-900/80 rounded-full flex items-center justify-center shadow-lg border-2 border-blue-700/40 group-hover:border-blue-600/50 transition-all backdrop-blur-sm'></div>
+                {/* Shadow at bottom for 3D effect */}
+                <div className='absolute inset-0 rounded-full bg-black/40 blur-md translate-y-2'></div>
+                {/* Pill with top-to-bottom gradient */}
+                <div className='relative w-full h-full bg-gradient-to-b from-blue-700 via-blue-800 to-blue-900 rounded-full flex items-center justify-center shadow-2xl'>
+                  {/* Highlight at top */}
+                  <div className='absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-1/3 bg-gradient-to-b from-blue-500/30 to-transparent rounded-t-full'></div>
+                </div>
               </div>
             </button>
             <div className='text-center space-y-2'>
@@ -88,7 +94,13 @@ export default function ChoiceStage({ onPillChoice }: ChoiceStageProps) {
                     ? 'scale-110 -rotate-3'
                     : 'group-hover:scale-110 group-hover:-rotate-3'
                 }`}>
-                <div className='relative w-full h-full bg-gradient-to-br from-red-900/80 via-red-800/70 to-red-900/80 rounded-full flex items-center justify-center shadow-lg border-2 border-red-700/40 group-hover:border-red-600/50 transition-all backdrop-blur-sm'></div>
+                {/* Shadow at bottom for 3D effect */}
+                <div className='absolute inset-0 rounded-full bg-black/40 blur-md translate-y-2'></div>
+                {/* Pill with top-to-bottom gradient */}
+                <div className='relative w-full h-full bg-gradient-to-b from-red-700 via-red-800 to-red-900 rounded-full flex items-center justify-center shadow-2xl'>
+                  {/* Highlight at top */}
+                  <div className='absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-1/3 bg-gradient-to-b from-red-500/30 to-transparent rounded-t-full'></div>
+                </div>
               </div>
             </button>
             <div className='text-center space-y-2'>
