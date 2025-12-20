@@ -38,16 +38,16 @@ export default function AnswerOption({
       style={{
         animationDelay: `${index * 100}ms`,
       }}
-      className={`w-full text-center p-6 md:p-8 rounded-xl transition-all duration-500 transform cursor-pointer backdrop-blur-md group relative overflow-hidden animate-fade-in ${
+      className={`w-full text-center p-6 md:p-8 rounded-xl transition-all duration-500 transform cursor-pointer backdrop-blur-md group relative overflow-hidden animate-fade-in border ${
         shouldFade
-          ? 'opacity-0 translate-y-4 scale-95 pointer-events-none'
+          ? 'opacity-0 pointer-events-none border-transparent'
           : shouldFadeOut
-          ? 'opacity-0 pointer-events-none'
+          ? 'opacity-0 pointer-events-none border-transparent'
           : isSelected
-          ? 'scale-[1.02] bg-gray-800/60 border border-gray-600/50'
+          ? 'scale-[1.02] bg-gray-800/60 border-gray-600/50'
           : isDisabled
-          ? 'opacity-50 cursor-not-allowed'
-          : 'scale-100 bg-gray-900/50 border border-gray-800/30 hover:bg-gray-800/60 hover:border-gray-700/50'
+          ? 'opacity-50 cursor-not-allowed border-gray-800/30'
+          : 'scale-100 bg-gray-900/50 border-gray-800/30 hover:bg-gray-800/60 hover:border-gray-700/50'
       } ${className}`}>
       {/* Ripple effects or other children */}
       {children}
