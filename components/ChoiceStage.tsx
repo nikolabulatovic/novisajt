@@ -61,8 +61,7 @@ export default function ChoiceStage({ onPillChoice }: ChoiceStageProps) {
                 isFadingOut && selectedPill !== 'blue' ? 'opacity-30' : ''
               } ${isFadingOut ? 'pointer-events-none' : ''}`}>
               <div className='relative w-32 h-16 md:w-40 md:h-20 transform transition-all duration-500 group-hover:scale-110 group-hover:rotate-3'>
-                <div className='absolute inset-0 bg-blue-600 rounded-full blur-xl opacity-30 group-hover:opacity-50 transition-opacity' />
-                <div className='relative w-full h-full bg-gradient-to-br from-blue-600 to-blue-800 rounded-full flex items-center justify-center shadow-2xl border-4 border-blue-700 group-hover:border-blue-600 transition-all'></div>
+                <div className='relative w-full h-full bg-gradient-to-br from-blue-900/80 via-blue-800/70 to-blue-900/80 rounded-full flex items-center justify-center shadow-lg border-2 border-blue-700/40 group-hover:border-blue-600/50 transition-all backdrop-blur-sm'></div>
               </div>
             </button>
             <div className='text-center space-y-2'>
@@ -89,8 +88,7 @@ export default function ChoiceStage({ onPillChoice }: ChoiceStageProps) {
                     ? 'scale-110 -rotate-3'
                     : 'group-hover:scale-110 group-hover:-rotate-3'
                 }`}>
-                <div className='absolute inset-0 bg-red-600 rounded-full blur-xl opacity-30 group-hover:opacity-50 transition-opacity' />
-                <div className='relative w-full h-full bg-gradient-to-br from-red-600 to-red-800 rounded-full flex items-center justify-center shadow-2xl border-4 border-red-700 group-hover:border-red-600 transition-all'></div>
+                <div className='relative w-full h-full bg-gradient-to-br from-red-900/80 via-red-800/70 to-red-900/80 rounded-full flex items-center justify-center shadow-lg border-2 border-red-700/40 group-hover:border-red-600/50 transition-all backdrop-blur-sm'></div>
               </div>
             </button>
             <div className='text-center space-y-2'>

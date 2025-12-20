@@ -22,9 +22,8 @@ export default function NextButton({
         <span className='relative z-10 flex items-center justify-center'>
           {label}
         </span>
-        <div className='absolute inset-0 bg-gradient-to-r from-transparent via-red-400/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700' />
+        <div className='absolute inset-0 bg-gradient-to-r from-transparent via-red-800/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700' />
       </button>
     </div>
   );
 }
-

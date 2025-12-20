@@ -189,11 +189,11 @@ p {
   position: relative;
   background: linear-gradient(
     135deg,
-    rgba(185, 28, 28, 0.3) 0%,
-    rgba(220, 38, 38, 0.2) 50%,
-    rgba(239, 68, 68, 0.3) 100%
+    rgba(127, 29, 29, 0.6) 0%,
+    rgba(153, 27, 27, 0.5) 50%,
+    rgba(127, 29, 29, 0.6) 100%
   );
-  border: 1px solid rgba(239, 68, 68, 0.4);
+  border: 1px solid rgba(153, 27, 27, 0.4);
   backdrop-filter: blur(10px);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   color: rgba(254, 226, 226, 0.95);
@@ -204,13 +204,12 @@ p {
   transform: translateY(-2px) scale(1.02);
   background: linear-gradient(
     135deg,
-    rgba(220, 38, 38, 0.5) 0%,
-    rgba(239, 68, 68, 0.4) 50%,
-    rgba(248, 113, 113, 0.5) 100%
+    rgba(153, 27, 27, 0.7) 0%,
+    rgba(185, 28, 28, 0.6) 50%,
+    rgba(153, 27, 27, 0.7) 100%
   );
-  border-color: rgba(248, 113, 113, 0.7);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 30px rgba(239, 68, 68, 0.4),
-    0 0 60px rgba(220, 38, 38, 0.2);
+  border-color: rgba(185, 28, 28, 0.5);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(127, 29, 29, 0.2);
   color: rgba(255, 241, 242, 1);
 }
 
@@ -226,8 +225,8 @@ p {
   padding: 1px;
   background: linear-gradient(
     135deg,
-    rgba(248, 113, 113, 0.5),
-    rgba(239, 68, 68, 0.3),
+    rgba(185, 28, 28, 0.4),
+    rgba(153, 27, 27, 0.3),
     transparent
   );
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
