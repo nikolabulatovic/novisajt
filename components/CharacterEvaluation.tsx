@@ -2,6 +2,7 @@
 
 import { useState, useRef, MouseEvent } from 'react';
 import ProgressDots from './ui/ProgressDots';
+import AnswerOption from './ui/AnswerOption';
 
 interface CharacterEvaluationProps {
   onComplete: (answers: Record<string, string>) => void;
@@ -57,7 +58,10 @@ export default function CharacterEvaluation({
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [showContent, setShowContent] = useState(true);
   const [hoveredOption, setHoveredOption] = useState<number | null>(null);
-  const [buttonsFading, setButtonsFading] = useState(false);
+  const [selectedOptionIndex, setSelectedOptionIndex] = useState<number | null>(
+    null,
+  );
+  const [nonSelectedFading, setNonSelectedFading] = useState(false);
   const [ripples, setRipples] = useState<
     Record<number, Array<{ id: number; x: number; y: number }>>
   >({});
@@ -96,23 +100,28 @@ export default function CharacterEvaluation({
   ) => {
     // Create ripple first
     createRipple(event, optionIndex);
+    setSelectedOptionIndex(optionIndex);
 
     const questionId = `q${questions[currentQuestion].id}`;
     const newAnswers = { ...answers, [questionId]: value.toString() };
     setAnswers(newAnswers);
 
-    // Wait for ripple animation to complete (600ms), then fade/lower buttons
+    // Fade out non-selected answers immediately
+    setNonSelectedFading(true);
+
+    // After non-selected fade (500ms) + keep selected visible (1000ms), fade it out
     setTimeout(() => {
-      setButtonsFading(true);
+      // Selected answer fades out
       setIsTransitioning(true);
       setShowContent(false);
 
-      // After fade animation, move to next question or complete
+      // After selected fades out (300ms), move to next question or complete
       setTimeout(() => {
         if (currentQuestion < questions.length - 1) {
           setCurrentQuestion(currentQuestion + 1);
           setIsTransitioning(false);
-          setButtonsFading(false);
+          setNonSelectedFading(false);
+          setSelectedOptionIndex(null);
           // Clear ripples when moving to next question
           setRipples({});
           // Show content after transition completes
@@ -123,10 +132,10 @@ export default function CharacterEvaluation({
           // All questions answered
           setTimeout(() => {
             onComplete(newAnswers);
-          }, 1000);
+          }, 1500);
         }
-      }, 500);
-    }, 600); // Wait for ripple to complete
+      }, 300); // Selected fade out duration
+    }, 1500); // Non-selected fade (500ms) + keep selected visible (1000ms)
   };
 
   return (
@@ -176,49 +185,46 @@ export default function CharacterEvaluation({
 
           {/* Options with staggered animations */}
           <div className='space-y-6 max-w-3xl mx-auto'>
-            {questions[currentQuestion].options.map((option, index) => (
-              <button
-                key={index}
-                onClick={(e) => handleAnswer(option.value, e, index)}
-                onMouseEnter={() => setHoveredOption(index)}
-                onMouseLeave={() => setHoveredOption(null)}
-                style={{
-                  animationDelay: `${index * 100}ms`,
-                }}
-                className={`w-full text-center p-6 md:p-8 rounded-xl transition-all duration-500 transform cursor-pointer backdrop-blur-md group relative overflow-hidden animate-fade-in ${
-                  buttonsFading
-                    ? 'opacity-0 translate-y-4 scale-95 pointer-events-none'
-                    : hoveredOption === index
-                    ? 'scale-[1.02] bg-gray-800/60 border border-gray-600/50'
-                    : 'scale-100 bg-gray-900/50 border border-gray-800/30 hover:bg-gray-800/60 hover:border-gray-700/50'
-                }`}>
-                {/* Ripple effects for this specific button */}
-                {(ripples[index] || []).map((ripple) => (
-                  <span
-                    key={ripple.id}
-                    className='ripple'
-                    style={{
-                      left: ripple.x,
-                      top: ripple.y,
-                      width: '30px',
-                      height: '30px',
-                      marginLeft: '-15px',
-                      marginTop: '-15px',
-                    }}
-                  />
-                ))}
+            {questions[currentQuestion].options.map((option, index) => {
+              const isSelected = selectedOptionIndex === index;
+              const shouldFade = nonSelectedFading && !isSelected;
+              const shouldFadeOut = isTransitioning && isSelected;
+              // Keep selected button highlighted (not just on hover) until it fades out
+              const isHighlighted =
+                isSelected || (hoveredOption === index && !nonSelectedFading);
 
-                <span
-                  className={`relative z-10 text-lg md:text-xl lg:text-2xl font-light transition-colors duration-300 ${
-                    hoveredOption === index
-                      ? 'text-gray-200'
-                      : 'text-gray-300 group-hover:text-gray-200'
-                  }`}
-                  style={{ fontFamily: 'var(--font-literata), serif' }}>
-                  {option.text}
-                </span>
-              </button>
-            ))}
+              return (
+                <AnswerOption
+                  key={index}
+                  text={option.text}
+                  onClick={(e) => handleAnswer(option.value, e, index)}
+                  onMouseEnter={() =>
+                    !nonSelectedFading && setHoveredOption(index)
+                  }
+                  onMouseLeave={() => setHoveredOption(null)}
+                  isSelected={isHighlighted}
+                  isDisabled={nonSelectedFading || isTransitioning}
+                  index={index}
+                  shouldFade={shouldFade}
+                  shouldFadeOut={shouldFadeOut}>
+                  {/* Ripple effects for this specific button */}
+                  {(ripples[index] || []).map((ripple) => (
+                    <span
+                      key={ripple.id}
+                      className='ripple'
+                      style={{
+                        left: ripple.x,
+                        top: ripple.y,
+                        width: '30px',
+                        height: '30px',
+                        marginLeft: '-15px',
+                        marginTop: '-15px',
+                      }}
+                    />
+                  ))}
+                </AnswerOption>
+              );
+            })}
           </div>
         </div>
       </div>

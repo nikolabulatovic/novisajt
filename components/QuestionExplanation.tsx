@@ -139,7 +139,11 @@ export default function QuestionExplanation({
           })}
 
           <div className='mt-12'>
-            <NextButton onClick={onComplete} label='Razumem' show={showButton} />
+            <NextButton
+              onClick={onComplete}
+              label='Razumem'
+              show={showButton}
+            />
           </div>
         </div>
       </div>
