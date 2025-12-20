@@ -69,7 +69,7 @@ export default function RedPillIntro({ onComplete }: RedPillIntroProps) {
       <div className='relative z-10 max-w-4xl mx-auto w-full'>
         <div className='text-center space-y-6'>
           {/* Main text with word-by-word animation */}
-          <div className='bg-gray-900/40 backdrop-blur-lg rounded-2xl p-8 md:p-12 border border-gray-800/50 shadow-2xl'>
+          <div className='bg-gray-900/20 backdrop-blur-lg rounded-2xl p-8 md:p-12 border border-gray-800/20 shadow-2xl'>
             <div className='space-y-4 text-left md:text-center'>
               {text.map((sentence, sentenceIndex) => {
                 const sentenceWords = sentence.split(' ');
