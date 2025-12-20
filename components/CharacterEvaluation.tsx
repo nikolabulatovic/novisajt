@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, MouseEvent } from 'react';
+import ProgressDots from './ui/ProgressDots';
 
 interface CharacterEvaluationProps {
   onComplete: (answers: Record<string, string>) => void;
@@ -151,22 +152,8 @@ export default function CharacterEvaluation({
 
       <div className='relative z-10 max-w-4xl mx-auto w-full'>
         {/* Enhanced progress indicator with glow */}
-        <div className='mb-16 flex justify-center items-center space-x-4'>
-          {questions.map((_, index) => (
-            <div
-              key={index}
-              className={`transition-all duration-700 ease-out ${
-                index < currentQuestion
-                  ? 'w-3 h-3 bg-gray-300 shadow-lg shadow-gray-400/50'
-                  : index === currentQuestion
-                  ? 'w-3 h-3 bg-gray-400 shadow-lg shadow-gray-400/70 animate-pulse-glow'
-                  : 'w-2 h-2 bg-gray-600/40'
-              } rounded-full relative`}>
-              {index < currentQuestion && (
-                <div className='absolute inset-0 rounded-full bg-gray-300 animate-ping opacity-20' />
-              )}
-            </div>
-          ))}
+        <div className='mb-16'>
+          <ProgressDots current={currentQuestion} total={questions.length} />
         </div>
 
         {/* Question and Options */}

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import NextButton from './ui/NextButton';
 
 interface FactsNumbersProps {
   onComplete: () => void;
@@ -100,18 +101,12 @@ export default function FactsNumbers({ onComplete }: FactsNumbersProps) {
           </div>
 
           {/* Button */}
-          <div
-            className={`mt-12 transition-opacity duration-500 ${
-              showButton ? 'opacity-100' : 'opacity-0 pointer-events-none'
-            }`}>
-            <button
+          <div className='mt-12'>
+            <NextButton
               onClick={handleNext}
-              className='button-next cursor-pointer px-12 py-6 rounded-full font-light text-xl group relative overflow-hidden'>
-              <span className='relative z-10 flex items-center justify-center'>
-                {currentFact < facts.length - 1 ? 'Dalje' : 'Nastavi'}
-              </span>
-              <div className='absolute inset-0 bg-gradient-to-r from-transparent via-red-400/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700' />
-            </button>
+              label={currentFact < facts.length - 1 ? 'Dalje' : 'Nastavi'}
+              show={showButton}
+            />
           </div>
         </div>
       </div>
