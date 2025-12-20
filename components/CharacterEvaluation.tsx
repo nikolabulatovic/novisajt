@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, MouseEvent } from 'react';
 
 interface CharacterEvaluationProps {
   onComplete: (answers: Record<string, string>) => void;
@@ -54,91 +54,181 @@ export default function CharacterEvaluation({
   const [answers, setAnswers] =
     useState<Record<string, string>>(existingAnswers);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [showContent, setShowContent] = useState(true);
+  const [hoveredOption, setHoveredOption] = useState<number | null>(null);
+  const [buttonsFading, setButtonsFading] = useState(false);
+  const [ripples, setRipples] = useState<
+    Record<number, Array<{ id: number; x: number; y: number }>>
+  >({});
+  const rippleIdCounter = useRef(0);
 
-  const handleAnswer = (value: number) => {
+  const createRipple = (
+    event: MouseEvent<HTMLButtonElement>,
+    optionIndex: number,
+  ) => {
+    const button = event.currentTarget;
+    const rect = button.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+    const rippleId = ++rippleIdCounter.current;
+
+    setRipples((prev) => ({
+      ...prev,
+      [optionIndex]: [...(prev[optionIndex] || []), { id: rippleId, x, y }],
+    }));
+
+    // Remove ripple after animation
+    setTimeout(() => {
+      setRipples((prev) => ({
+        ...prev,
+        [optionIndex]: (prev[optionIndex] || []).filter(
+          (r) => r.id !== rippleId,
+        ),
+      }));
+    }, 600);
+  };
+
+  const handleAnswer = (
+    value: number,
+    event: MouseEvent<HTMLButtonElement>,
+    optionIndex: number,
+  ) => {
+    // Create ripple first
+    createRipple(event, optionIndex);
+
     const questionId = `q${questions[currentQuestion].id}`;
     const newAnswers = { ...answers, [questionId]: value.toString() };
     setAnswers(newAnswers);
-    setIsTransitioning(true);
 
+    // Wait for ripple animation to complete (600ms), then fade/lower buttons
     setTimeout(() => {
-      if (currentQuestion < questions.length - 1) {
-        setCurrentQuestion(currentQuestion + 1);
-        setIsTransitioning(false);
-      } else {
-        // All questions answered
-        setTimeout(() => {
-          onComplete(newAnswers);
-        }, 1000);
-      }
-    }, 500);
+      setButtonsFading(true);
+      setIsTransitioning(true);
+      setShowContent(false);
+
+      // After fade animation, move to next question or complete
+      setTimeout(() => {
+        if (currentQuestion < questions.length - 1) {
+          setCurrentQuestion(currentQuestion + 1);
+          setIsTransitioning(false);
+          setButtonsFading(false);
+          // Clear ripples when moving to next question
+          setRipples({});
+          // Show content after transition completes
+          setTimeout(() => {
+            setShowContent(true);
+          }, 50);
+        } else {
+          // All questions answered
+          setTimeout(() => {
+            onComplete(newAnswers);
+          }, 1000);
+        }
+      }, 500);
+    }, 600); // Wait for ripple to complete
   };
 
-  const progress = ((currentQuestion + 1) / questions.length) * 100;
-
   return (
-    <div className='min-h-screen flex items-center justify-center p-8 relative bg-black'>
-      {/* SLIKA: Minimalistička, tamna - apstraktna forma koja sugerira introspekciju i samopreispitivanje */}
-      {/* Opciono: Dark, abstract background suggesting introspection/self-reflection */}
-      {/* Primeri: Apstraktne forme koje sugerišu ogledalo, dubinu, ili unutrašnji prostor */}
-      {/* Fajl: character-introspection.png ili self-reflection.png */}
+    <div className='min-h-screen flex items-center justify-center p-8 relative bg-black overflow-hidden'>
+      {/* Background image */}
       <div
-        className='absolute inset-0 opacity-35 bg-cover bg-center bg-no-repeat transition-opacity duration-[2000ms] ease-in-out'
+        className='absolute inset-0 opacity-50 bg-cover bg-center bg-no-repeat transition-opacity duration-[2000ms] ease-in-out'
         style={{
           backgroundImage: "url('/images/character-introspection.jpeg')",
         }}
       />
 
-      {/* Background */}
-      <div className='absolute inset-0 overflow-hidden'>
-        <div className='absolute top-1/4 left-1/4 w-96 h-96 rounded-full blur-3xl animate-pulse' />
-        <div className='absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full blur-3xl animate-pulse delay-1000' />
+      {/* Enhanced atmospheric background effects */}
+      <div className='absolute inset-0 overflow-hidden pointer-events-none'>
+        <div className='absolute top-1/4 left-1/4 w-96 h-96 bg-gray-400/10 rounded-full blur-3xl animate-pulse animate-glow' />
+        <div className='absolute bottom-1/4 right-1/4 w-96 h-96 bg-gray-400/10 rounded-full blur-3xl animate-pulse animate-glow delay-1000' />
+        <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gray-500/5 rounded-full blur-3xl animate-float' />
       </div>
 
-      <div className='relative z-10 max-w-3xl mx-auto w-full'>
-        {/* Progress Bar */}
-        <div className='mb-12'>
-          <div className='flex justify-between items-center mb-4'>
-            <span className='text-gray-400 text-sm font-medium'>
-              Pitanje {currentQuestion + 1} od {questions.length}
-            </span>
-            <span className='text-gray-400 text-sm font-medium'>
-              {Math.round(progress)}%
-            </span>
-          </div>
-          <div className='w-full bg-gray-900/50 rounded-full h-2 overflow-hidden'>
+      {/* Gradient overlays for depth */}
+      <div className='absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60 pointer-events-none' />
+      <div className='absolute inset-0 bg-gradient-to-r from-transparent via-black/20 to-transparent pointer-events-none' />
+
+      <div className='relative z-10 max-w-4xl mx-auto w-full'>
+        {/* Enhanced progress indicator with glow */}
+        <div className='mb-16 flex justify-center items-center space-x-4'>
+          {questions.map((_, index) => (
             <div
-              className='bg-gray-600 h-full rounded-full transition-all duration-500 ease-out'
-              style={{ width: `${progress}%` }}
-            />
-          </div>
+              key={index}
+              className={`transition-all duration-700 ease-out ${
+                index < currentQuestion
+                  ? 'w-3 h-3 bg-gray-300 shadow-lg shadow-gray-400/50'
+                  : index === currentQuestion
+                  ? 'w-3 h-3 bg-gray-400 shadow-lg shadow-gray-400/70 animate-pulse-glow'
+                  : 'w-2 h-2 bg-gray-600/40'
+              } rounded-full relative`}>
+              {index < currentQuestion && (
+                <div className='absolute inset-0 rounded-full bg-gray-300 animate-ping opacity-20' />
+              )}
+            </div>
+          ))}
         </div>
 
-        {/* Question Card */}
+        {/* Question and Options */}
         <div
-          className={`bg-gray-900/40 backdrop-blur-lg rounded-2xl p-8 md:p-12 border border-gray-800/50 shadow-2xl transition-all duration-500 ${
+          className={`text-center space-y-12 transition-all duration-700 ease-out ${
             isTransitioning
-              ? 'opacity-0 translate-y-4'
-              : 'opacity-100 translate-y-0'
+              ? 'opacity-0 translate-y-8 scale-95'
+              : showContent
+              ? 'opacity-100 translate-y-0 scale-100'
+              : 'opacity-0 translate-y-8 scale-95'
           }`}>
-          <h2 className='text-3xl md:text-4xl font-light mb-8 text-center text-gray-200'>
-            {questions[currentQuestion].question}
-          </h2>
+          {/* Question with subtle glow effect */}
+          <div className='relative'>
+            <h1 className='text-2xl md:text-4xl font-light text-gray-200 leading-relaxed max-w-3xl mx-auto relative z-10 drop-shadow-lg'>
+              {questions[currentQuestion].question}
+            </h1>
+            {/* Subtle glow behind question */}
+            <div className='absolute inset-0 blur-2xl opacity-20 bg-gray-400/30 -z-0' />
+          </div>
 
-          <div className='space-y-4'>
+          {/* Options with staggered animations */}
+          <div className='space-y-6 max-w-3xl mx-auto'>
             {questions[currentQuestion].options.map((option, index) => (
               <button
                 key={index}
-                onClick={() => handleAnswer(option.value)}
-                className='cursor-pointer w-full text-left p-6 rounded-xl bg-gray-900/30 hover:bg-gray-800/40 border border-gray-800/50 hover:border-gray-600/50 transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg group'>
-                <div className='flex items-center space-x-4'>
-                  <div className='w-6 h-6 rounded-full border-2 border-gray-600 group-hover:border-gray-400 flex items-center justify-center transition-colors'>
-                    <div className='w-3 h-3 rounded-full bg-gray-400 opacity-0 group-hover:opacity-100 transition-opacity' />
-                  </div>
-                  <span className='text-lg md:text-xl lg:text-2xl text-gray-300 group-hover:text-gray-200 transition-colors font-light'>
-                    {option.text}
-                  </span>
-                </div>
+                onClick={(e) => handleAnswer(option.value, e, index)}
+                onMouseEnter={() => setHoveredOption(index)}
+                onMouseLeave={() => setHoveredOption(null)}
+                style={{
+                  animationDelay: `${index * 100}ms`,
+                }}
+                className={`w-full text-center p-6 md:p-8 rounded-xl transition-all duration-500 transform cursor-pointer backdrop-blur-md group relative overflow-hidden animate-fade-in ${
+                  buttonsFading
+                    ? 'opacity-0 translate-y-4 scale-95 pointer-events-none'
+                    : hoveredOption === index
+                    ? 'scale-[1.02] bg-gray-800/60 border border-gray-600/50'
+                    : 'scale-100 bg-gray-900/50 border border-gray-800/30 hover:bg-gray-800/60 hover:border-gray-700/50'
+                }`}>
+                {/* Ripple effects for this specific button */}
+                {(ripples[index] || []).map((ripple) => (
+                  <span
+                    key={ripple.id}
+                    className='ripple'
+                    style={{
+                      left: ripple.x,
+                      top: ripple.y,
+                      width: '20px',
+                      height: '20px',
+                      marginLeft: '-10px',
+                      marginTop: '-10px',
+                    }}
+                  />
+                ))}
+
+                <span
+                  className={`relative z-10 text-lg md:text-xl lg:text-2xl font-light transition-colors duration-300 ${
+                    hoveredOption === index
+                      ? 'text-gray-200'
+                      : 'text-gray-300 group-hover:text-gray-200'
+                  }`}>
+                  {option.text}
+                </span>
               </button>
             ))}
           </div>
