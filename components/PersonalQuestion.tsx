@@ -68,28 +68,24 @@ export default function PersonalQuestion({
             </h1>
 
             {/* Options */}
-            <div className='bg-gray-900/40 backdrop-blur-lg rounded-2xl p-8 md:p-12 border border-gray-800/50 shadow-2xl'>
-              <div className='space-y-4'>
-                {['Da', 'Voleo bih da verujem da bih', 'Ne znam'].map(
-                  (option, index) => (
-                    <button
-                      key={index}
-                      onClick={() => handleAnswer(option)}
-                      disabled={selected !== null}
-                      className={`w-full text-left p-6 rounded-xl transition-all duration-300 transform hover:scale-[1.02] ${
-                        selected === option
-                          ? 'bg-gray-800/60 border-2 border-gray-600 cursor-pointer'
-                          : selected !== null
-                          ? 'opacity-50 cursor-not-allowed'
-                          : 'bg-gray-900/30 border border-gray-800/50 hover:bg-gray-800/40 hover:border-gray-700/50 cursor-pointer'
-                      }`}>
-                      <span className='text-lg md:text-xl lg:text-2xl text-gray-300 font-light'>
-                        {option}
-                      </span>
-                    </button>
-                  ),
-                )}
-              </div>
+            <div className='flex flex-row gap-8'>
+              {['Da', 'Nadam se', 'Ne znam'].map((option, index) => (
+                <button
+                  key={index}
+                  onClick={() => handleAnswer(option)}
+                  disabled={selected !== null}
+                  className={`w-full text-center px-2 py-6 rounded-xl transition-all duration-300 transform hover:scale-[1.02] ${
+                    selected === option
+                      ? 'bg-gray-800/60 border-2 border-gray-600 cursor-pointer'
+                      : selected !== null
+                      ? 'opacity-50 cursor-not-allowed'
+                      : 'bg-gray-900/70 border border-gray-800/50 hover:bg-gray-800/80 hover:border-gray-700/50 cursor-pointer'
+                  }`}>
+                  <span className='text-lg md:text-xl lg:text-2xl text-gray-300 font-light'>
+                    {option}
+                  </span>
+                </button>
+              ))}
             </div>
           </div>
         ) : (
