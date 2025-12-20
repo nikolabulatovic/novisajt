@@ -35,7 +35,9 @@ export default function Pill({
         className={`relative w-32 h-16 md:w-40 md:h-20 transform transition-all duration-500 ${
           isSelected && isFadingOut
             ? `scale-110 ${rotationClass}`
-            : `group-hover:scale-110 ${isRed ? 'group-hover:-rotate-3' : 'group-hover:rotate-3'}`
+            : `group-hover:scale-110 ${
+                isRed ? 'group-hover:-rotate-3' : 'group-hover:rotate-3'
+              }`
         }`}>
         {/* Shadow at bottom for 3D effect */}
         <div className='absolute inset-0 rounded-full bg-black/50 blur-md translate-y-2'></div>
@@ -53,4 +55,3 @@ export default function Pill({
     </button>
   );
 }
-
