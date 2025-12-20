@@ -53,8 +53,8 @@ p {
   line-height: 1.6 !important;
 }
 
-/* UI elements (buttons, etc.) */
-button,
+/* UI elements (buttons, etc.) - only apply to navigation/action buttons, not answer options */
+.button-next,
 .button,
 .font-ui {
   font-family: var(--font-inter), sans-serif;

@@ -19,7 +19,7 @@ const questions = [
         value: 2,
       },
       {
-        text: 'Aktivno radim da uskladim svoje postupke sa svojim vrednostima',
+        text: 'Hoću da uskladim svoje postupke sa svojim vrednostima',
         value: 3,
       },
     ],
@@ -226,7 +226,8 @@ export default function CharacterEvaluation({
                     hoveredOption === index
                       ? 'text-gray-200'
                       : 'text-gray-300 group-hover:text-gray-200'
-                  }`}>
+                  }`}
+                  style={{ fontFamily: 'var(--font-literata), serif' }}>
                   {option.text}
                 </span>
               </button>

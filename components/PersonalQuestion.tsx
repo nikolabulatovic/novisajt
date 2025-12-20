@@ -81,7 +81,9 @@ export default function PersonalQuestion({
                       ? 'opacity-50 cursor-not-allowed'
                       : 'bg-gray-900/70 border border-gray-800/50 hover:bg-gray-800/80 hover:border-gray-700/50 cursor-pointer'
                   }`}>
-                  <span className='text-lg md:text-xl lg:text-2xl text-gray-300 font-light'>
+                  <span
+                    className='text-lg md:text-xl lg:text-2xl text-gray-300 font-light'
+                    style={{ fontFamily: 'var(--font-literata), serif' }}>
                     {option}
                   </span>
                 </button>

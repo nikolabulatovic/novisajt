@@ -102,7 +102,9 @@ export default function Mirror({ answers, onComplete }: MirrorProps) {
                   <p className='text-xl md:text-2xl font-light text-gray-400 mb-2'>
                     {question}
                   </p>
-                  <p className='text-2xl md:text-3xl font-light text-gray-200'>
+                  <p
+                    className='text-2xl md:text-3xl font-light text-gray-200'
+                    style={{ fontFamily: 'var(--font-literata), serif' }}>
                     {answer}
                   </p>
                 </div>
