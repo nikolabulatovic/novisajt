@@ -62,11 +62,16 @@ export default function ChoiceStage({ onPillChoice }: ChoiceStageProps) {
               } ${isFadingOut ? 'pointer-events-none' : ''}`}>
               <div className='relative w-32 h-16 md:w-40 md:h-20 transform transition-all duration-500 group-hover:scale-110 group-hover:rotate-3'>
                 {/* Shadow at bottom for 3D effect */}
-                <div className='absolute inset-0 rounded-full bg-black/40 blur-md translate-y-2'></div>
+                <div className='absolute inset-0 rounded-full bg-black/50 blur-md translate-y-2'></div>
                 {/* Pill with top-to-bottom gradient */}
-                <div className='relative w-full h-full bg-gradient-to-b from-blue-700 via-blue-800 to-blue-900 rounded-full flex items-center justify-center shadow-2xl'>
-                  {/* Highlight at top */}
-                  <div className='absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-1/3 bg-gradient-to-b from-blue-500/30 to-transparent rounded-t-full'></div>
+                <div
+                  className='relative w-full h-full rounded-full flex items-center justify-center shadow-2xl'
+                  style={{
+                    background:
+                      'linear-gradient(to bottom, rgb(30, 58, 138) 0%, rgb(23, 37, 84) 90%, rgb(20, 30, 60) 95%, rgb(18, 25, 50) 98%, rgb(15, 22, 45) 100%)',
+                  }}>
+                  {/* Subtle highlight at top */}
+                  <div className='absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-1/4 bg-gradient-to-b from-blue-800/20 to-transparent rounded-t-full'></div>
                 </div>
               </div>
             </button>
@@ -95,11 +100,16 @@ export default function ChoiceStage({ onPillChoice }: ChoiceStageProps) {
                     : 'group-hover:scale-110 group-hover:-rotate-3'
                 }`}>
                 {/* Shadow at bottom for 3D effect */}
-                <div className='absolute inset-0 rounded-full bg-black/40 blur-md translate-y-2'></div>
+                <div className='absolute inset-0 rounded-full bg-black/50 blur-md translate-y-2'></div>
                 {/* Pill with top-to-bottom gradient */}
-                <div className='relative w-full h-full bg-gradient-to-b from-red-700 via-red-800 to-red-900 rounded-full flex items-center justify-center shadow-2xl'>
-                  {/* Highlight at top */}
-                  <div className='absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-1/3 bg-gradient-to-b from-red-500/30 to-transparent rounded-t-full'></div>
+                <div
+                  className='relative w-full h-full rounded-full flex items-center justify-center shadow-2xl'
+                  style={{
+                    background:
+                      'linear-gradient(to bottom, rgb(127, 29, 29) 0%, rgb(69, 10, 10) 90%, rgb(60, 12, 12) 95%, rgb(55, 10, 10) 98%, rgb(50, 9, 9) 100%)',
+                  }}>
+                  {/* Subtle highlight at top */}
+                  <div className='absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-1/4 bg-gradient-to-b from-red-800/20 to-transparent rounded-t-full'></div>
                 </div>
               </div>
             </button>
