@@ -6,10 +6,9 @@ import CharacterEvaluation from '@/components/CharacterEvaluation';
 import RedPillIntro from '@/components/RedPillIntro';
 import QuestionExplanation from '@/components/QuestionExplanation';
 import HistoricalInjustices from '@/components/HistoricalInjustices';
-import MilgramExperiment from '@/components/MilgramExperiment';
 import PersonalQuestion from '@/components/PersonalQuestion';
 import BreakingQuestion from '@/components/BreakingQuestion';
-import AnimalsIntroduction from '@/components/AnimalsIntroduction';
+import SpasaStory from '@/components/SpasaStory';
 import FactsNumbers from '@/components/FactsNumbers';
 import DomesticationReproduction from '@/components/DomesticationReproduction';
 import MoralConsistency from '@/components/MoralConsistency';
@@ -26,7 +25,7 @@ type Stage =
   | 'historical'
   | 'personal-question'
   | 'breaking-question'
-  | 'animals-intro'
+  | 'spasa-story'
   | 'facts'
   | 'domestication'
   | 'moral-consistency'
@@ -89,15 +88,15 @@ export default function Home() {
   };
 
   const handleBreakingQuestionComplete = (answer: string) => {
-    if (answer === 'Ne') {
+    if (answer === 'Radije bih da ne znam') {
       // Tihi izlaz - možemo vratiti na početak ili prikazati poruku
       transitionToStage('choice');
     } else {
-      transitionToStage('animals-intro');
+      transitionToStage('spasa-story');
     }
   };
 
-  const handleAnimalsIntroComplete = () => {
+  const handleSpasaStoryComplete = () => {
     transitionToStage('facts');
   };
 
@@ -159,8 +158,8 @@ export default function Home() {
         {stage === 'breaking-question' && (
           <BreakingQuestion onComplete={handleBreakingQuestionComplete} />
         )}
-        {stage === 'animals-intro' && (
-          <AnimalsIntroduction onComplete={handleAnimalsIntroComplete} />
+        {stage === 'spasa-story' && (
+          <SpasaStory onComplete={handleSpasaStoryComplete} />
         )}
         {stage === 'facts' && <FactsNumbers onComplete={handleFactsComplete} />}
         {stage === 'domestication' && (

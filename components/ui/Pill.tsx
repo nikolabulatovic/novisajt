@@ -6,6 +6,9 @@ interface PillProps {
   disabled?: boolean;
   isSelected?: boolean;
   isFadingOut?: boolean;
+  label?: string;
+  show?: boolean;
+  className?: string;
 }
 
 export default function Pill({
@@ -14,9 +17,13 @@ export default function Pill({
   disabled = false,
   isSelected = false,
   isFadingOut = false,
+  label,
+  show = true,
+  className = '',
 }: PillProps) {
   const isRed = color === 'red';
   const rotationClass = isRed ? '-rotate-3' : 'rotate-3';
+  const isButton = !!label;
 
   const gradientStyle = isRed
     ? 'linear-gradient(to bottom, rgb(140, 35, 35) 0%, rgb(220, 60, 60) 15%, rgb(69, 10, 10) 90%, rgb(55, 11, 11) 95%, rgb(48, 9, 9) 98%, rgb(42, 8, 8) 100%)'
@@ -24,13 +31,54 @@ export default function Pill({
 
   const highlightColor = isRed ? 'from-red-800/20' : 'from-blue-800/20';
 
+  // Button variant: same pill shape with text
+  if (isButton) {
+    return (
+      <div
+        className={`transition-opacity duration-500 ${className} ${
+          show ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        }`}>
+        <button
+          onClick={onClick}
+          disabled={disabled}
+          className={`group relative flex flex-col items-center cursor-pointer ${
+            disabled ? 'pointer-events-none' : ''
+          }`}>
+          <div className='relative w-32 h-16 md:w-40 md:h-20 transform transition-all duration-500 group-hover:scale-110 group-hover:rotate-3'>
+            {/* Shadow at bottom for 3D effect */}
+            <div className='absolute inset-0 rounded-full bg-black/50 blur-md translate-y-2'></div>
+            {/* Pill with top-to-bottom gradient */}
+            <div
+              className='relative w-full h-full rounded-full flex items-center justify-center shadow-2xl'
+              style={{
+                background: gradientStyle,
+              }}>
+              {/* Subtle highlight at top */}
+              <div
+                className={`absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-1/4 bg-gradient-to-b ${highlightColor} to-transparent rounded-t-full`}></div>
+              {/* Vertical line down the middle (capsule seam) */}
+              <div className='absolute left-1/2 top-0 bottom-0 w-[3px] bg-black/30'></div>
+              {/* Text label */}
+              <span
+                className='relative z-10 text-white font-light text-sm md:text-base'
+                style={{ fontFamily: 'var(--font-inter), sans-serif' }}>
+                {label}
+              </span>
+            </div>
+          </div>
+        </button>
+      </div>
+    );
+  }
+
+  // Original pill variant: visual pill without text
   return (
     <button
       onClick={onClick}
       disabled={disabled}
       className={`group relative flex flex-col items-center space-y-6 cursor-pointer ${
         isFadingOut && !isSelected ? 'opacity-30' : ''
-      } ${disabled ? 'pointer-events-none' : ''}`}>
+      } ${disabled ? 'pointer-events-none' : ''} ${className}`}>
       <div
         className={`relative w-32 h-16 md:w-40 md:h-20 transform transition-all duration-500 ${
           isSelected && isFadingOut

@@ -112,14 +112,14 @@ export default function CharacterEvaluation({
     // After non-selected fade (500ms) + keep selected visible (1000ms), fade it out
     setTimeout(() => {
       // Selected answer fades out
-      setIsTransitioning(true);
+    setIsTransitioning(true);
       setShowContent(false);
 
       // After selected fades out (300ms), move to next question or complete
-      setTimeout(() => {
-        if (currentQuestion < questions.length - 1) {
-          setCurrentQuestion(currentQuestion + 1);
-          setIsTransitioning(false);
+    setTimeout(() => {
+      if (currentQuestion < questions.length - 1) {
+        setCurrentQuestion(currentQuestion + 1);
+        setIsTransitioning(false);
           setNonSelectedFading(false);
           setSelectedOptionIndex(null);
           // Clear ripples when moving to next question
@@ -128,12 +128,12 @@ export default function CharacterEvaluation({
           setTimeout(() => {
             setShowContent(true);
           }, 50);
-        } else {
-          // All questions answered
-          setTimeout(() => {
-            onComplete(newAnswers);
+      } else {
+        // All questions answered
+        setTimeout(() => {
+          onComplete(newAnswers);
           }, 1500);
-        }
+      }
       }, 300); // Selected fade out duration
     }, 1500); // Non-selected fade (500ms) + keep selected visible (1000ms)
   };
@@ -177,7 +177,7 @@ export default function CharacterEvaluation({
           {/* Question with subtle glow effect */}
           <div className='relative'>
             <h1 className='text-2xl md:text-4xl font-light text-gray-200 leading-relaxed max-w-3xl mx-auto relative z-10 drop-shadow-lg'>
-              {questions[currentQuestion].question}
+            {questions[currentQuestion].question}
             </h1>
             {/* Subtle glow behind question */}
             <div className='absolute inset-0 blur-2xl opacity-20 bg-gray-400/30 -z-0' />
@@ -195,7 +195,7 @@ export default function CharacterEvaluation({
 
               return (
                 <AnswerOption
-                  key={index}
+                key={index}
                   text={option.text}
                   onClick={(e) => handleAnswer(option.value, e, index)}
                   onMouseEnter={() =>

@@ -152,7 +152,7 @@ export default function HistoricalInjustices({
                 onClick={handleIntroContinue}
                 className='button-next cursor-pointer px-12 py-6 rounded-full font-light text-xl group relative overflow-hidden'>
                 <span className='relative z-10 flex items-center justify-center'>
-                  Nastavi
+                Nastavi
                 </span>
                 <div className='absolute inset-0 bg-gradient-to-r from-transparent via-red-400/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700' />
               </button>
@@ -245,7 +245,7 @@ export default function HistoricalInjustices({
                   onClick={handleContinue}
                   className='button-next cursor-pointer px-12 py-6 rounded-full font-light text-xl group relative overflow-hidden'>
                   <span className='relative z-10 flex items-center justify-center'>
-                    Dalje
+                  Dalje
                   </span>
                   <div className='absolute inset-0 bg-gradient-to-r from-transparent via-red-400/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700' />
                 </button>
@@ -339,7 +339,7 @@ export default function HistoricalInjustices({
                   onClick={handleContinue}
                   className='button-next cursor-pointer px-12 py-6 rounded-full font-light text-xl group relative overflow-hidden'>
                   <span className='relative z-10 flex items-center justify-center'>
-                    Nastavi
+                  Nastavi
                   </span>
                   <div className='absolute inset-0 bg-gradient-to-r from-transparent via-red-400/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700' />
                 </button>
