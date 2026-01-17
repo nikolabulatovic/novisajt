@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { NavigationProvider, Stage } from '@/contexts/NavigationContext';
 import ChoiceStage from '@/components/ChoiceStage';
 import CharacterEvaluation from '@/components/CharacterEvaluation';
 import RedPillIntro from '@/components/RedPillIntro';
@@ -16,23 +17,7 @@ import FinalChoice from '@/components/FinalChoice';
 import Mirror from '@/components/Mirror';
 import CallToAction from '@/components/CallToAction';
 import AfterChoice from '@/components/AfterChoice';
-
-type Stage =
-  | 'choice'
-  | 'intro'
-  | 'evaluation'
-  | 'explanation'
-  | 'historical'
-  | 'personal-question'
-  | 'breaking-question'
-  | 'spasa-story'
-  | 'facts'
-  | 'domestication'
-  | 'moral-consistency'
-  | 'final-choice'
-  | 'mirror'
-  | 'call-to-action'
-  | 'after-choice';
+import NavigationMenu from '@/components/NavigationMenu';
 
 export default function Home() {
   const [stage, setStage] = useState<Stage>('choice');
@@ -124,8 +109,14 @@ export default function Home() {
     transitionToStage('after-choice');
   };
 
+  const navigateToStage = (newStage: Stage) => {
+    transitionToStage(newStage);
+  };
+
   return (
-    <main className='min-h-screen bg-black text-white overflow-hidden relative'>
+    <NavigationProvider currentStage={stage} navigateToStage={navigateToStage}>
+      <NavigationMenu />
+      <main className='min-h-screen bg-black text-white overflow-hidden relative'>
       {/* Fade overlay for transitions */}
       <div
         className={`absolute inset-0 bg-black z-50 pointer-events-none transition-opacity duration-[400ms] ease-in-out ${
@@ -180,5 +171,6 @@ export default function Home() {
         {stage === 'after-choice' && <AfterChoice />}
       </div>
     </main>
+    </NavigationProvider>
   );
 }
