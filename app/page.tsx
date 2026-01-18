@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import { NavigationProvider, Stage } from '@/contexts/NavigationContext';
+import { TransitionProvider } from '@/contexts/TransitionContext';
+import TransitionOverlay from '@/components/ui/TransitionOverlay';
 import ChoiceStage from '@/components/ChoiceStage';
 import CharacterEvaluation from '@/components/CharacterEvaluation';
 import RedPillIntro from '@/components/RedPillIntro';
@@ -135,8 +137,10 @@ export default function Home() {
 
   return (
     <NavigationProvider currentStage={stage} navigateToStage={navigateToStage}>
-      <NavigationMenu />
-      <main className='min-h-screen bg-black text-white overflow-hidden relative'>
+      <TransitionProvider>
+        <NavigationMenu />
+        <TransitionOverlay />
+        <main className='min-h-screen bg-black text-white overflow-hidden relative'>
         {/* Fade overlay for transitions */}
         <div
           className={`absolute inset-0 bg-black z-50 pointer-events-none transition-opacity duration-[400ms] ease-in-out ${isTransitioning ? 'opacity-100' : 'opacity-0'
@@ -201,6 +205,7 @@ export default function Home() {
           {stage === 'after-choice' && <AfterChoice />}
         </div>
       </main>
+      </TransitionProvider>
     </NavigationProvider>
   );
 }
