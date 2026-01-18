@@ -113,8 +113,19 @@ export default function HistoricalInjustices({
 
   return (
     <div className='min-h-screen flex items-center justify-center relative bg-black'>
-      {/* SLIKA: Minimalistička, tamna - možda apstraktna forma koja sugerira težinu istorije */}
-      {/* Opciono: Dark, abstract background - subtle historical weight */}
+      {/* Background image for intro stage */}
+      {stage === 'intro' && (
+        <div
+          className='absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-[2000ms] ease-in-out opacity-75'
+          style={{
+            backgroundImage: "url('/images/historical-weight.png')",
+          }}
+        />
+      )}
+      {/* Dark overlay for text visibility */}
+      {stage === 'intro' && (
+        <div className='absolute inset-0 bg-black/50 pointer-events-none' />
+      )}
 
       <div className='absolute inset-0 overflow-hidden'>
         <div className='absolute top-1/2 left-1/2 w-96 h-96 bg-gray-800/5 rounded-full blur-3xl animate-pulse' />

@@ -10,7 +10,11 @@ import HistoricalInjustices from '@/components/HistoricalInjustices';
 import PersonalQuestion from '@/components/PersonalQuestion';
 import BreakingQuestion from '@/components/BreakingQuestion';
 import SpasaStory from '@/components/SpasaStory';
+import SpasaRevelation from '@/components/SpasaRevelation';
+import SpasaRevelationPart1 from '@/components/SpasaRevelationPart1';
 import FactsNumbers from '@/components/FactsNumbers';
+import SpasaRevelationPart2 from '@/components/SpasaRevelationPart2';
+import AnimalExploitation from '@/components/AnimalExploitation';
 import DomesticationReproduction from '@/components/DomesticationReproduction';
 import MoralConsistency from '@/components/MoralConsistency';
 import FinalChoice from '@/components/FinalChoice';
@@ -82,11 +86,27 @@ export default function Home() {
   };
 
   const handleSpasaStoryComplete = () => {
+    transitionToStage('spasa-revelation');
+  };
+
+  const handleSpasaRevelationComplete = () => {
+    transitionToStage('spasa-revelation-part1');
+  };
+
+  const handleSpasaRevelationPart1Complete = () => {
     transitionToStage('facts');
   };
 
   const handleFactsComplete = () => {
-    transitionToStage('domestication');
+    transitionToStage('spasa-revelation-part2');
+  };
+
+  const handleSpasaRevelationPart2Complete = () => {
+    transitionToStage('animal-exploitation');
+  };
+
+  const handleAnimalExploitationComplete = () => {
+    transitionToStage('moral-consistency');
   };
 
   const handleDomesticationComplete = () => {
@@ -117,60 +137,70 @@ export default function Home() {
     <NavigationProvider currentStage={stage} navigateToStage={navigateToStage}>
       <NavigationMenu />
       <main className='min-h-screen bg-black text-white overflow-hidden relative'>
-      {/* Fade overlay for transitions */}
-      <div
-        className={`absolute inset-0 bg-black z-50 pointer-events-none transition-opacity duration-[400ms] ease-in-out ${
-          isTransitioning ? 'opacity-100' : 'opacity-0'
-        }`}
-      />
+        {/* Fade overlay for transitions */}
+        <div
+          className={`absolute inset-0 bg-black z-50 pointer-events-none transition-opacity duration-[400ms] ease-in-out ${isTransitioning ? 'opacity-100' : 'opacity-0'
+            }`}
+        />
 
-      {/* Stage content with fade in */}
-      <div
-        className={`transition-opacity duration-[600ms] ease-in-out ${
-          isTransitioning ? 'opacity-0' : 'opacity-100'
-        }`}>
-        {stage === 'choice' && <ChoiceStage onPillChoice={handlePillChoice} />}
-        {stage === 'intro' && <RedPillIntro onComplete={handleIntroComplete} />}
-        {stage === 'evaluation' && (
-          <CharacterEvaluation
-            onComplete={handleEvaluationComplete}
-            answers={answers}
-          />
-        )}
-        {stage === 'explanation' && (
-          <QuestionExplanation onComplete={handleExplanationComplete} />
-        )}
-        {stage === 'historical' && (
-          <HistoricalInjustices onComplete={handleHistoricalComplete} />
-        )}
-        {stage === 'personal-question' && (
-          <PersonalQuestion onComplete={handlePersonalQuestionComplete} />
-        )}
-        {stage === 'breaking-question' && (
-          <BreakingQuestion onComplete={handleBreakingQuestionComplete} />
-        )}
-        {stage === 'spasa-story' && (
-          <SpasaStory onComplete={handleSpasaStoryComplete} />
-        )}
-        {stage === 'facts' && <FactsNumbers onComplete={handleFactsComplete} />}
-        {stage === 'domestication' && (
-          <DomesticationReproduction onComplete={handleDomesticationComplete} />
-        )}
-        {stage === 'moral-consistency' && (
-          <MoralConsistency onComplete={handleMoralConsistencyComplete} />
-        )}
-        {stage === 'final-choice' && (
-          <FinalChoice onComplete={handleFinalChoiceComplete} />
-        )}
-        {stage === 'mirror' && (
-          <Mirror answers={answers} onComplete={handleMirrorComplete} />
-        )}
-        {stage === 'call-to-action' && (
-          <CallToAction onComplete={handleCallToActionComplete} />
-        )}
-        {stage === 'after-choice' && <AfterChoice />}
-      </div>
-    </main>
+        {/* Stage content with fade in */}
+        <div
+          className={`transition-opacity duration-[600ms] ease-in-out ${isTransitioning ? 'opacity-0' : 'opacity-100'
+            }`}>
+          {stage === 'choice' && <ChoiceStage onPillChoice={handlePillChoice} />}
+          {stage === 'intro' && <RedPillIntro onComplete={handleIntroComplete} />}
+          {stage === 'evaluation' && (
+            <CharacterEvaluation
+              onComplete={handleEvaluationComplete}
+              answers={answers}
+            />
+          )}
+          {stage === 'explanation' && (
+            <QuestionExplanation onComplete={handleExplanationComplete} />
+          )}
+          {stage === 'historical' && (
+            <HistoricalInjustices onComplete={handleHistoricalComplete} />
+          )}
+          {stage === 'personal-question' && (
+            <PersonalQuestion onComplete={handlePersonalQuestionComplete} />
+          )}
+          {stage === 'breaking-question' && (
+            <BreakingQuestion onComplete={handleBreakingQuestionComplete} />
+          )}
+          {stage === 'spasa-story' && (
+            <SpasaStory onComplete={handleSpasaStoryComplete} />
+          )}
+          {stage === 'spasa-revelation' && (
+            <SpasaRevelation onComplete={handleSpasaRevelationComplete} />
+          )}
+          {stage === 'spasa-revelation-part1' && (
+            <SpasaRevelationPart1 onComplete={handleSpasaRevelationPart1Complete} />
+          )}
+          {stage === 'facts' && <FactsNumbers onComplete={handleFactsComplete} />}
+          {stage === 'spasa-revelation-part2' && (
+            <SpasaRevelationPart2 onComplete={handleSpasaRevelationPart2Complete} />
+          )}
+          {stage === 'animal-exploitation' && (
+            <AnimalExploitation onComplete={handleAnimalExploitationComplete} />
+          )}
+          {stage === 'domestication' && (
+            <DomesticationReproduction onComplete={handleDomesticationComplete} />
+          )}
+          {stage === 'moral-consistency' && (
+            <MoralConsistency onComplete={handleMoralConsistencyComplete} />
+          )}
+          {stage === 'final-choice' && (
+            <FinalChoice onComplete={handleFinalChoiceComplete} />
+          )}
+          {stage === 'mirror' && (
+            <Mirror answers={answers} onComplete={handleMirrorComplete} />
+          )}
+          {stage === 'call-to-action' && (
+            <CallToAction onComplete={handleCallToActionComplete} />
+          )}
+          {stage === 'after-choice' && <AfterChoice />}
+        </div>
+      </main>
     </NavigationProvider>
   );
 }

@@ -56,6 +56,16 @@ export default function SpasaStory({ onComplete }: SpasaStoryProps) {
 
   return (
     <div className='min-h-screen flex items-center justify-center p-8 relative bg-black'>
+      {/* Background image */}
+      <div
+        className='absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-[2000ms] ease-in-out opacity-80'
+        style={{
+          backgroundImage: "url('/images/spasa-rescue-hope.png')",
+        }}
+      />
+      {/* Dark overlay for text visibility */}
+      <div className='absolute inset-0 bg-black/50 pointer-events-none' />
+
       {/* Background effects */}
       <div className='absolute inset-0 overflow-hidden'>
         <div className='absolute top-1/2 left-1/2 w-96 h-96 bg-gray-800/5 rounded-full blur-3xl animate-pulse' />
@@ -64,8 +74,15 @@ export default function SpasaStory({ onComplete }: SpasaStoryProps) {
       <div className='relative z-10 max-w-4xl mx-auto w-full'>
         {!showFinalMessage ? (
           <div className='text-center space-y-12'>
-            <div className='bg-gray-900/40 backdrop-blur-lg rounded-2xl p-8 md:p-12 border border-gray-800/50 shadow-2xl'>
-              <div className='space-y-6 text-left md:text-center'>
+            <div className='relative p-16'>
+              {/* Smooth linear gradient backdrop - transparent at edges, more opaque in center - only for text */}
+              <div
+                className='absolute inset-0 -mx-8 -my-6 pointer-events-none'
+                style={{
+                  background: `linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.15) 20%, rgba(0, 0, 0, 0.4) 35%, rgba(0, 0, 0, 0.65) 50%, rgba(0, 0, 0, 0.4) 65%, rgba(0, 0, 0, 0.15) 80%, transparent 100%)`,
+                }}
+              />
+              <div className='space-y-6 text-left md:text-center relative z-10'>
                 {text.map((sentence, sentenceIndex) => {
                   const sentenceWords = sentence.split(' ');
                   let wordStartIndex = 0;
@@ -84,11 +101,10 @@ export default function SpasaStory({ onComplete }: SpasaStoryProps) {
                         return (
                           <span
                             key={wordIndex}
-                            className={`transition-all duration-700 ease-out ${
-                              isVisible
-                                ? 'opacity-100 translate-y-0'
-                                : 'opacity-0 translate-y-4'
-                            }`}
+                            className={`transition-all duration-700 ease-out ${isVisible
+                              ? 'opacity-100 translate-y-0'
+                              : 'opacity-0 translate-y-4'
+                              }`}
                             style={{
                               transitionDelay: isVisible
                                 ? `${currentWordIndex * 20}ms`
@@ -115,10 +131,16 @@ export default function SpasaStory({ onComplete }: SpasaStoryProps) {
           </div>
         ) : (
           <div
-            className={`text-center transition-opacity duration-1000 ${
-              finalMessageVisible ? 'opacity-100' : 'opacity-0'
-            }`}>
-            <p className='text-2xl md:text-3xl lg:text-4xl font-light text-gray-200 leading-relaxed'>
+            className={`text-center transition-opacity duration-1000 relative ${finalMessageVisible ? 'opacity-100' : 'opacity-0'
+              }`}>
+            {/* Smooth linear gradient backdrop for final message */}
+            <div
+              className='absolute inset-0 -mx-8 -my-12 pointer-events-none'
+              style={{
+                background: `linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.15) 20%, rgba(0, 0, 0, 0.4) 35%, rgba(0, 0, 0, 0.65) 50%, rgba(0, 0, 0, 0.4) 65%, rgba(0, 0, 0, 0.15) 80%, transparent 100%)`,
+              }}
+            />
+            <p className='text-2xl md:text-3xl lg:text-4xl font-light text-gray-200 leading-relaxed relative z-10'>
               Ali postoji nešto što jesmo dužni: da sve životinje ostavimo na
               miru.
             </p>

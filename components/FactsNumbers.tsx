@@ -8,7 +8,10 @@ interface FactsNumbersProps {
 }
 
 const facts = [
-  'Svake godine ubijemo preko 90 milijardi kopnenih životinja – nepotrebno.',
+  'Svake godine oduzmemo život preko 90 milijardi kopnenih životinja da bismo ih pojeli. Broj ubijenih morskih životinja je mnogo veći.',
+  'To ne radimo zbog zdravlja, preživljavanja niti samoodbrane.',
+  'To radimo zbog trenutnog zadovoljstva i pogodnosti.',
+  'Društvo to prihvata.'
   // Može se dodati više činjenica ako je potrebno
 ];
 
@@ -68,11 +71,10 @@ export default function FactsNumbers({ onComplete }: FactsNumbersProps) {
                 return (
                   <span
                     key={wordIndex}
-                    className={`transition-all duration-700 ease-out ${
-                      isVisible
-                        ? 'opacity-100 translate-y-0'
-                        : 'opacity-0 translate-y-4'
-                    }`}
+                    className={`transition-all duration-700 ease-out ${isVisible
+                      ? 'opacity-100 translate-y-0'
+                      : 'opacity-0 translate-y-4'
+                      }`}
                     style={{
                       transitionDelay: isVisible
                         ? `${wordIndex * 20}ms`
@@ -91,11 +93,10 @@ export default function FactsNumbers({ onComplete }: FactsNumbersProps) {
             {facts.map((_, index) => (
               <div
                 key={index}
-                className={`h-2 rounded-full transition-all duration-500 ${
-                  index <= currentFact
-                    ? 'bg-gray-600 w-8'
-                    : 'bg-gray-800/50 w-2'
-                }`}
+                className={`h-2 rounded-full transition-all duration-500 ${index <= currentFact
+                  ? 'bg-gray-600 w-8'
+                  : 'bg-gray-800/50 w-2'
+                  }`}
               />
             ))}
           </div>
