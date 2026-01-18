@@ -1,0 +1,43 @@
+// Animation timings (in milliseconds)
+export const ANIMATION_TIMINGS = {
+  WORD_SPEED_DEFAULT: 120,
+  WORD_SPEED_SLOW: 180,
+  WORD_SPEED_FAST: 100,
+  LINE_DELAY_DEFAULT: 500,
+  LINE_DELAY_SLOW: 600,
+  DELAY_AFTER_COMPLETE_DEFAULT: 1000,
+  DELAY_AFTER_COMPLETE_LONG: 2000,
+  TRANSITION_DURATION_DEFAULT: 700,
+  TRANSITION_DURATION_LONG: 3000,
+  TRANSITION_DURATION_VERY_LONG: 5000,
+  WORD_TRANSITION_DELAY_DEFAULT: 20,
+  WORD_TRANSITION_DELAY_SLOW: 15,
+} as const;
+
+// Opacity values
+export const OPACITY = {
+  BACKGROUND_IMAGE_DEFAULT: 0.8,
+  BACKGROUND_IMAGE_SUBTLE: 0.2,
+  BACKGROUND_IMAGE_LIGHT: 0.25,
+  BACKGROUND_IMAGE_MEDIUM: 0.35,
+  OVERLAY_DEFAULT: 0.5,
+  OVERLAY_DARK: 0.7,
+  OVERLAY_LIGHT: 0.3,
+  TEXT_BACKDROP_DEFAULT: 0.65,
+} as const;
+
+// Max width classes
+export const MAX_WIDTH = {
+  SM: 'max-w-3xl',
+  MD: 'max-w-4xl',
+  LG: 'max-w-5xl',
+  XL: 'max-w-6xl',
+} as const;
+
+// Spacing values
+export const SPACING = {
+  SM: 'space-y-6',
+  MD: 'space-y-12',
+  LG: 'space-y-16',
+} as const;
+

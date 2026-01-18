@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import NextButton from './ui/NextButton';
 
 interface FinalChoiceProps {
   onComplete: () => void;
@@ -57,11 +58,10 @@ export default function FinalChoice({ onComplete }: FinalChoiceProps) {
                 <button
                   key={index}
                   onClick={() => handleAnswer(option)}
-                  className={`cursor-pointer w-full text-left p-6 rounded-xl transition-all duration-300 transform hover:scale-[1.02] ${
-                    selected === option
-                      ? 'bg-gray-800/60 border-2 border-gray-600'
-                      : 'bg-gray-900/30 border border-gray-800/50 hover:bg-gray-800/40 hover:border-gray-700/50'
-                  }`}>
+                  className={`cursor-pointer w-full text-left p-6 rounded-xl transition-all duration-300 transform hover:scale-[1.02] ${selected === option
+                    ? 'bg-gray-800/60 border-2 border-gray-600'
+                    : 'bg-gray-900/30 border border-gray-800/50 hover:bg-gray-800/40 hover:border-gray-700/50'
+                    }`}>
                   <span
                     className='text-lg md:text-xl lg:text-2xl text-gray-300 font-light'
                     style={{ fontFamily: 'var(--font-literata), serif' }}>
@@ -73,19 +73,7 @@ export default function FinalChoice({ onComplete }: FinalChoiceProps) {
           </div>
 
           {/* Continue button */}
-          <div
-            className={`mt-8 transition-opacity duration-500 ${
-              showButton ? 'opacity-100' : 'opacity-0 pointer-events-none'
-            }`}>
-            <button
-              onClick={handleContinue}
-              className='button-next cursor-pointer px-12 py-6 rounded-full font-light text-xl group relative overflow-hidden'>
-              <span className='relative z-10 flex items-center justify-center'>
-                Nastavi
-              </span>
-              <div className='absolute inset-0 bg-gradient-to-r from-transparent via-red-400/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700' />
-            </button>
-          </div>
+          <NextButton onClick={handleContinue} label='Nastavi' show={showButton} marginTop="sm" />
         </div>
       </div>
     </div>

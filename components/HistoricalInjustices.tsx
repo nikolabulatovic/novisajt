@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import NextButton from './ui/NextButton';
 
 interface HistoricalInjusticesProps {
   onComplete: () => void;
@@ -55,8 +56,8 @@ export default function HistoricalInjustices({
     stage === 'slavery'
       ? slaveryTotalWords
       : stage === 'nazism'
-      ? nazismTotalWords
-      : 0;
+        ? nazismTotalWords
+        : 0;
 
   // Intro stage
   useEffect(() => {
@@ -142,32 +143,25 @@ export default function HistoricalInjustices({
               return (
                 <p
                   key={index}
-                  className={`text-2xl md:text-3xl lg:text-4xl font-light text-gray-200 text-center leading-relaxed transition-all duration-1000 ease-out ${
-                    visibleLines.includes(index)
-                      ? 'opacity-100 translate-y-0'
-                      : 'opacity-0 translate-y-8'
-                  }`}>
+                  className={`text-2xl md:text-3xl lg:text-4xl font-light text-gray-200 text-center leading-relaxed transition-all duration-1000 ease-out ${visibleLines.includes(index)
+                    ? 'opacity-100 translate-y-0'
+                    : 'opacity-0 translate-y-8'
+                    }`}>
                   {line}
                 </p>
               );
             })}
 
             {/* Intro button */}
-            <div
-              className={`mt-12 text-center transition-opacity duration-500 ${
-                showIntroButton
-                  ? 'opacity-100'
-                  : 'opacity-0 pointer-events-none'
-              }`}>
-              <button
-                onClick={handleIntroContinue}
-                className='button-next cursor-pointer px-12 py-6 rounded-full font-light text-xl group relative overflow-hidden'>
-                <span className='relative z-10 flex items-center justify-center'>
-                Nastavi
-                </span>
-                <div className='absolute inset-0 bg-gradient-to-r from-transparent via-red-400/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700' />
-              </button>
-            </div>
+            <NextButton
+              onClick={handleIntroContinue}
+              label='Nastavi'
+              show={showIntroButton}
+              className={`transition-opacity duration-500 ${showIntroButton
+                ? 'opacity-100'
+                : 'opacity-0 pointer-events-none'
+                }`}
+            />
           </div>
         ) : stage === 'slavery' ? (
           // Slavery stage - Image left, text right, blending
@@ -223,11 +217,10 @@ export default function HistoricalInjustices({
                             return (
                               <span
                                 key={wordIndex}
-                                className={`transition-all duration-700 ease-out ${
-                                  isVisible
-                                    ? 'opacity-100 translate-y-0'
-                                    : 'opacity-0 translate-y-4'
-                                }`}
+                                className={`transition-all duration-700 ease-out ${isVisible
+                                  ? 'opacity-100 translate-y-0'
+                                  : 'opacity-0 translate-y-4'
+                                  }`}
                                 style={{
                                   transitionDelay: isVisible
                                     ? `${currentWordIndex * 20}ms`
@@ -249,17 +242,9 @@ export default function HistoricalInjustices({
 
               {/* Button - absolutely positioned within image */}
               <div
-                className={`absolute bottom-8 right-8 z-20 transition-opacity duration-500 ${
-                  showButton ? 'opacity-100' : 'opacity-0 pointer-events-none'
-                }`}>
-                <button
-                  onClick={handleContinue}
-                  className='button-next cursor-pointer px-12 py-6 rounded-full font-light text-xl group relative overflow-hidden'>
-                  <span className='relative z-10 flex items-center justify-center'>
-                  Dalje
-                  </span>
-                  <div className='absolute inset-0 bg-gradient-to-r from-transparent via-red-400/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700' />
-                </button>
+                className={`absolute bottom-8 right-8 z-20 transition-opacity duration-500 ${showButton ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                  }`}>
+                <NextButton onClick={handleContinue} label='Dalje' show={showButton} marginTop="none" />
               </div>
             </div>
           </div>
@@ -317,11 +302,10 @@ export default function HistoricalInjustices({
                             return (
                               <span
                                 key={wordIndex}
-                                className={`transition-all duration-700 ease-out ${
-                                  isVisible
-                                    ? 'opacity-100 translate-y-0'
-                                    : 'opacity-0 translate-y-4'
-                                }`}
+                                className={`transition-all duration-700 ease-out ${isVisible
+                                  ? 'opacity-100 translate-y-0'
+                                  : 'opacity-0 translate-y-4'
+                                  }`}
                                 style={{
                                   transitionDelay: isVisible
                                     ? `${currentWordIndex * 20}ms`
@@ -343,17 +327,9 @@ export default function HistoricalInjustices({
 
               {/* Button - absolutely positioned within image */}
               <div
-                className={`absolute bottom-8 left-8 z-20 transition-opacity duration-500 ${
-                  showButton ? 'opacity-100' : 'opacity-0 pointer-events-none'
-                }`}>
-                <button
-                  onClick={handleContinue}
-                  className='button-next cursor-pointer px-12 py-6 rounded-full font-light text-xl group relative overflow-hidden'>
-                  <span className='relative z-10 flex items-center justify-center'>
-                  Nastavi
-                  </span>
-                  <div className='absolute inset-0 bg-gradient-to-r from-transparent via-red-400/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700' />
-                </button>
+                className={`absolute bottom-8 left-8 z-20 transition-opacity duration-500 ${showButton ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                  }`}>
+                <NextButton onClick={handleContinue} label='Nastavi' show={showButton} marginTop="none" />
               </div>
             </div>
           </div>

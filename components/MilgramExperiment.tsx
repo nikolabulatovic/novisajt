@@ -1,6 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import PageContainer from './ui/PageContainer';
+import BackgroundImage from './ui/BackgroundImage';
+import NextButton from './ui/NextButton';
 
 interface MilgramExperimentProps {
   onComplete: () => void;
@@ -55,21 +58,13 @@ export default function MilgramExperiment({
   }, []);
 
   return (
-    <div className='min-h-screen flex items-start justify-center pt-16 md:pt-24 relative bg-black'>
-      {/* Full background image */}
-      <div className='absolute inset-0 w-full h-full overflow-hidden'>
-        <div
-          className='absolute inset-0 bg-cover bg-center bg-no-repeat'
-          style={{
-            backgroundImage: "url('/images/milgram.jpeg')",
-          }}
-        />
-        {/* Dark overlay for text visibility */}
-        <div className='absolute inset-0 bg-black/70 pointer-events-none' />
-      </div>
-
-      <div className='relative z-10 max-w-3xl mx-auto w-full p-6 md:p-8'>
-        {/* Text container with backdrop for better visibility */}
+    <PageContainer
+      backgroundImage="/images/milgram.jpeg"
+      backgroundImageOpacity={1}
+      overlayOpacity={0.7}
+      maxWidth="lg"
+      className="items-start pt-16 md:pt-24">
+      <div className='relative z-10 w-full p-6 md:p-8'>
         <div className='bg-gray-900/60 backdrop-blur-md rounded-2xl p-6 md:p-8 border border-gray-800/50 shadow-2xl'>
           <div className='space-y-3 md:space-y-4'>
             {text.map((item, index) => {
@@ -79,32 +74,19 @@ export default function MilgramExperiment({
               return (
                 <p
                   key={index}
-                  className={`text-lg md:text-xl lg:text-2xl font-light text-gray-200 text-center leading-relaxed transition-all duration-1000 ease-out ${
-                    visibleLines.includes(index)
-                      ? 'opacity-100 translate-y-0'
-                      : 'opacity-0 translate-y-6'
-                  }`}>
+                  className={`text-lg md:text-xl lg:text-2xl font-light text-gray-200 text-center leading-relaxed transition-all duration-1000 ease-out ${visibleLines.includes(index)
+                    ? 'opacity-100 translate-y-0'
+                    : 'opacity-0 translate-y-6'
+                    }`}>
                   {item.line}
                 </p>
               );
             })}
           </div>
 
-          <div
-            className={`mt-8 text-center transition-opacity duration-500 ${
-              showButton ? 'opacity-100' : 'opacity-0 pointer-events-none'
-            }`}>
-            <button
-              onClick={onComplete}
-              className='button-next cursor-pointer px-12 py-6 rounded-full font-light text-xl group relative overflow-hidden'>
-              <span className='relative z-10 flex items-center justify-center'>
-              Nastavi
-              </span>
-              <div className='absolute inset-0 bg-gradient-to-r from-transparent via-red-400/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700' />
-            </button>
-          </div>
+          <NextButton onClick={onComplete} label='Nastavi' show={showButton} marginTop="sm" />
         </div>
       </div>
-    </div>
+    </PageContainer>
   );
 }

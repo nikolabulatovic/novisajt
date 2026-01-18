@@ -1,6 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import PageContainer from './ui/PageContainer';
+import { useLineAnimation } from '@/hooks/useLineAnimation';
+import NextButton from './ui/NextButton';
+import ContentContainer from './ui/ContentContainer';
 
 interface AnimalsIntroductionProps {
   onComplete: () => void;
@@ -9,83 +13,46 @@ interface AnimalsIntroductionProps {
 export default function AnimalsIntroduction({
   onComplete,
 }: AnimalsIntroductionProps) {
-  const [visibleLines, setVisibleLines] = useState<number[]>([]);
   const [showButton, setShowButton] = useState(false);
 
-  const text = [
-    {
-      line: 'Ljudi nisu jedina svesna bića.',
-      size: 'text-4xl md:text-5xl lg:text-6xl',
-    },
-    {
-      line: 'Životinje imaju svest.',
-      size: 'text-3xl md:text-4xl lg:text-5xl',
-    },
-    {
-      line: 'Životinje imaju osećanja.',
-      size: 'text-3xl md:text-4xl lg:text-5xl',
-    },
-    {
-      line: 'Ljudi su takođe životinje.',
-      size: 'text-4xl md:text-5xl lg:text-6xl',
-    },
+  const lines = [
+    { text: 'Ljudi nisu jedina svesna bića.', bold: false },
+    { text: 'Životinje imaju svest.', bold: false },
+    { text: 'Životinje imaju osećanja.', bold: false },
+    { text: 'Ljudi su takođe životinje.', bold: false },
   ];
 
-  useEffect(() => {
-    text.forEach((_, index) => {
-      setTimeout(() => {
-        setVisibleLines((prev) => [...prev, index]);
-        if (index === text.length - 1) {
-          setTimeout(() => {
-            setShowButton(true);
-          }, 1000);
-        }
-      }, index * 600);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const { visibleLines } = useLineAnimation({
+    lines,
+    delayBetweenLines: 600,
+    delayAfterComplete: 1000,
+    onComplete: () => setShowButton(true),
+  });
 
   return (
-    <div className='min-h-screen flex items-center justify-center p-8 relative bg-black'>
-      {/* SLIKA: Minimalistička, tamna - možda apstraktna forma koja sugerira prirodu ili svest */}
-      {/* Opciono: Dark, abstract background suggesting nature/consciousness/connection */}
-      {/* ILI: Subtle, non-graphic image of animals in natural setting (very dark, almost silhouette) */}
-
-      <div className='absolute inset-0 overflow-hidden'>
-        <div className='absolute top-1/2 left-1/2 w-96 h-96 bg-gray-800/5 rounded-full blur-3xl animate-pulse' />
-      </div>
-
-      <div className='relative z-10 max-w-4xl mx-auto w-full'>
-        <div className='space-y-6 md:space-y-10 text-center'>
-          {text.map((item, index) => (
-            <p
-              key={index}
-              className={`${
-                item.size
-              } font-light text-gray-200 leading-tight transition-all duration-800 ease-out ${
-                visibleLines.includes(index)
+    <PageContainer maxWidth="md">
+      <ContentContainer spacing="md" align="center">
+        <div className='space-y-6 md:space-y-10'>
+          {lines.map((line, index) => {
+            const sizeClass =
+              index === 0 || index === 3
+                ? 'text-4xl md:text-5xl lg:text-6xl'
+                : 'text-3xl md:text-4xl lg:text-5xl';
+            return (
+              <p
+                key={index}
+                className={`${sizeClass} font-light text-gray-200 leading-tight transition-all duration-800 ease-out ${visibleLines.includes(index)
                   ? 'opacity-100 translate-y-0'
                   : 'opacity-0 translate-y-8'
-              }`}>
-              {item.line}
-            </p>
-          ))}
+                  }`}>
+                {line.text}
+              </p>
+            );
+          })}
         </div>
 
-        <div
-          className={`mt-12 text-center transition-opacity duration-500 ${
-            showButton ? 'opacity-100' : 'opacity-0 pointer-events-none'
-          }`}>
-          <button
-            onClick={onComplete}
-            className='button-next cursor-pointer px-12 py-6 rounded-full font-light text-xl group relative overflow-hidden'>
-            <span className='relative z-10 flex items-center justify-center'>
-            Nastavi
-            </span>
-            <div className='absolute inset-0 bg-gradient-to-r from-transparent via-red-400/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700' />
-          </button>
-        </div>
-      </div>
-    </div>
+        <NextButton onClick={onComplete} label='Nastavi' show={showButton} />
+      </ContentContainer>
+    </PageContainer>
   );
 }
