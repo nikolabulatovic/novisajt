@@ -3,7 +3,11 @@
 import { useState, MouseEvent } from 'react';
 import { useTransition } from '@/contexts/TransitionContext';
 import { useNavigation } from '@/contexts/NavigationContext';
-import { getBackgroundImageForStage } from '@/utils/backgroundImages';
+import {
+  getBackgroundImageForStage,
+  getBackgroundOpacityForStage,
+} from '@/utils/backgroundImages';
+import { getNextStage } from '@/utils/nextStage';
 
 interface PillProps {
   color: 'red' | 'blue';
@@ -51,21 +55,25 @@ export default function Pill({
     // Start expansion animation
     setIsExpanding(true);
 
-    // Get current background image for transition
-    const currentBg = getBackgroundImageForStage(currentStage);
+    // Get next stage and its background image/opacity for transition
+    const nextStage = getNextStage(currentStage, isRed ? 'red' : 'blue');
+    const nextBg = nextStage ? getBackgroundImageForStage(nextStage) : null;
+    const nextOpacity = nextStage
+      ? getBackgroundOpacityForStage(nextStage)
+      : 0.8;
 
-    // Start the transition overlay effect
-    startTransition(centerX, centerY, currentBg || undefined);
+    // Start the transition overlay effect with NEXT background
+    startTransition(centerX, centerY, nextBg || undefined, nextOpacity);
 
     // Call the original onClick after a short delay
     setTimeout(() => {
       onClick();
     }, 100);
 
-    // Reset expansion after animation completes
+    // Reset expansion after animation completes - slower (4 seconds)
     setTimeout(() => {
       setIsExpanding(false);
-    }, 2000); // Match animation duration
+    }, 4000); // Match animation duration
   };
 
   // Button variant: same pill shape with text
@@ -79,7 +87,7 @@ export default function Pill({
           disabled={disabled}
           className={`group relative flex flex-col items-center cursor-pointer ${disabled ? 'pointer-events-none' : ''
             }`}>
-          <div className={`relative w-32 h-16 md:w-40 md:h-20 transform transition-all duration-[2000ms] ease-out ${isExpanding
+          <div className={`relative w-32 h-16 md:w-40 md:h-20 transform transition-all duration-[4000ms] ease-out ${isExpanding
             ? 'scale-[2] opacity-0'
             : 'group-hover:scale-110 group-hover:rotate-3'
             }`}>
@@ -117,7 +125,7 @@ export default function Pill({
       className={`group relative flex flex-col items-center space-y-6 cursor-pointer ${isFadingOut && !isSelected ? 'opacity-30' : ''
         } ${disabled ? 'pointer-events-none' : ''} ${className}`}>
       <div
-        className={`relative w-32 h-16 md:w-40 md:h-20 transform transition-all duration-[2000ms] ease-out ${isExpanding
+        className={`relative w-32 h-16 md:w-40 md:h-20 transform transition-all duration-[4000ms] ease-out ${isExpanding
           ? 'scale-[2] opacity-0'
           : isSelected && isFadingOut
             ? `scale-110 ${rotationClass}`

@@ -26,3 +26,28 @@ export function getBackgroundImageForStage(stage: Stage): string | null {
   return backgroundMap[stage] || null;
 }
 
+export function getBackgroundOpacityForStage(stage: Stage): number {
+  const opacityMap: Record<Stage, number> = {
+    choice: 0.2, // opacity-20
+    intro: 0.2, // PageContainer default for RedPillIntro
+    evaluation: 0.5, // opacity-50
+    explanation: 0.8, // default
+    historical: 0.75, // opacity-75 for intro stage
+    'personal-question': 0.8,
+    'breaking-question': 0.8,
+    'spasa-story': 0.8, // PageContainer default
+    'spasa-revelation': 0.8, // PageContainer default
+    'spasa-revelation-part1': 0.8, // PageContainer default
+    facts: 0.8,
+    'spasa-revelation-part2': 0.8, // PageContainer default
+    'animal-exploitation': 0.8, // PageContainer default
+    domestication: 0.8,
+    'moral-consistency': 0.8,
+    'final-choice': 0.8,
+    mirror: 0.8,
+    'call-to-action': 0.8,
+    'after-choice': 0.8,
+  };
+
+  return opacityMap[stage] || 0.8;
+}

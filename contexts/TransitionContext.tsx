@@ -6,11 +6,13 @@ interface TransitionContextType {
   startTransition: (
     centerX: number,
     centerY: number,
-    currentBackgroundImage?: string,
+    nextBackgroundImage?: string,
+    nextBackgroundOpacity?: number,
   ) => void;
   isTransitioning: boolean;
   transitionCenter: { x: number; y: number } | null;
-  currentBackgroundImage: string | null;
+  nextBackgroundImage: string | null;
+  nextBackgroundOpacity: number;
 }
 
 const TransitionContext = createContext<TransitionContextType | undefined>(
@@ -23,25 +25,29 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
     x: number;
     y: number;
   } | null>(null);
-  const [currentBackgroundImage, setCurrentBackgroundImage] = useState<
+  const [nextBackgroundImage, setNextBackgroundImage] = useState<
     string | null
   >(null);
+  const [nextBackgroundOpacity, setNextBackgroundOpacity] = useState<number>(0.8);
 
   const startTransition = (
     centerX: number,
     centerY: number,
-    currentBackgroundImage?: string,
+    nextBackgroundImage?: string,
+    nextBackgroundOpacity: number = 0.8,
   ) => {
     setTransitionCenter({ x: centerX, y: centerY });
-    setCurrentBackgroundImage(currentBackgroundImage || null);
+    setNextBackgroundImage(nextBackgroundImage || null);
+    setNextBackgroundOpacity(nextBackgroundOpacity);
     setIsTransitioning(true);
 
-    // Reset after animation completes
+    // Reset after animation completes - slower transition (4 seconds)
     setTimeout(() => {
       setIsTransitioning(false);
       setTransitionCenter(null);
-      setCurrentBackgroundImage(null);
-    }, 2000);
+      setNextBackgroundImage(null);
+      setNextBackgroundOpacity(0.8);
+    }, 4000);
   };
 
   return (
@@ -50,7 +56,8 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
         startTransition,
         isTransitioning,
         transitionCenter,
-        currentBackgroundImage,
+        nextBackgroundImage,
+        nextBackgroundOpacity,
       }}>
       {children}
     </TransitionContext.Provider>
