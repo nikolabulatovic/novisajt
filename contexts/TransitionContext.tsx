@@ -41,13 +41,13 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
     setNextBackgroundOpacity(nextBackgroundOpacity);
     setIsTransitioning(true);
 
-    // Reset after animation completes - slower transition (4 seconds)
+    // Reset after animation completes - quicker transition (2.5 seconds)
     setTimeout(() => {
       setIsTransitioning(false);
       setTransitionCenter(null);
       setNextBackgroundImage(null);
       setNextBackgroundOpacity(0.8);
-    }, 4000);
+    }, 2500);
   };
 
   return (

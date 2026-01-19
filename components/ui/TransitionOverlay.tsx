@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useTransition } from '@/contexts/TransitionContext';
+import { appleEaseInStrong } from '@/utils/easing';
 
 export default function TransitionOverlay() {
   const {
@@ -25,13 +26,13 @@ export default function TransitionOverlay() {
       // Animate clip size from 0 to maxRadius
       setClipSize(0);
       const startTime = Date.now();
-      const duration = 4000; // 4 seconds - slower transition
+      const duration = 2500; // 2.5 seconds - quicker overall, but slow start with acceleration
 
       const animate = () => {
         const elapsed = Date.now() - startTime;
         const progress = Math.min(elapsed / duration, 1);
-        // Use ease-out for smooth deceleration
-        const eased = 1 - Math.pow(1 - progress, 3);
+        // Use enhanced ease-in curve: slow start, then strong acceleration
+        const eased = appleEaseInStrong(progress);
         setClipSize(eased * maxRadius);
 
         if (progress < 1) {

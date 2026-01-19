@@ -141,70 +141,70 @@ export default function Home() {
         <NavigationMenu />
         <TransitionOverlay />
         <main className='min-h-screen bg-black text-white overflow-hidden relative'>
-        {/* Fade overlay for transitions */}
-        <div
-          className={`absolute inset-0 bg-black z-50 pointer-events-none transition-opacity duration-[400ms] ease-in-out ${isTransitioning ? 'opacity-100' : 'opacity-0'
-            }`}
-        />
+          {/* Fade overlay for transitions */}
+          <div
+            className={`absolute inset-0 bg-black z-50 pointer-events-none transition-opacity duration-[400ms] ease-in-out ${isTransitioning ? 'opacity-100' : 'opacity-0'
+              }`}
+          />
 
-        {/* Stage content with fade in */}
-        <div
-          className={`transition-opacity duration-[600ms] ease-in-out ${isTransitioning ? 'opacity-0' : 'opacity-100'
-            }`}>
-          {stage === 'choice' && <ChoiceStage onPillChoice={handlePillChoice} />}
-          {stage === 'intro' && <RedPillIntro onComplete={handleIntroComplete} />}
-          {stage === 'evaluation' && (
-            <CharacterEvaluation
-              onComplete={handleEvaluationComplete}
-              answers={answers}
-            />
-          )}
-          {stage === 'explanation' && (
-            <QuestionExplanation onComplete={handleExplanationComplete} />
-          )}
-          {stage === 'historical' && (
-            <HistoricalInjustices onComplete={handleHistoricalComplete} />
-          )}
-          {stage === 'personal-question' && (
-            <PersonalQuestion onComplete={handlePersonalQuestionComplete} />
-          )}
-          {stage === 'breaking-question' && (
-            <BreakingQuestion onComplete={handleBreakingQuestionComplete} />
-          )}
-          {stage === 'spasa-story' && (
-            <SpasaStory onComplete={handleSpasaStoryComplete} />
-          )}
-          {stage === 'spasa-revelation' && (
-            <SpasaRevelation onComplete={handleSpasaRevelationComplete} />
-          )}
-          {stage === 'spasa-revelation-part1' && (
-            <SpasaRevelationPart1 onComplete={handleSpasaRevelationPart1Complete} />
-          )}
-          {stage === 'facts' && <FactsNumbers onComplete={handleFactsComplete} />}
-          {stage === 'spasa-revelation-part2' && (
-            <SpasaRevelationPart2 onComplete={handleSpasaRevelationPart2Complete} />
-          )}
-          {stage === 'animal-exploitation' && (
-            <AnimalExploitation onComplete={handleAnimalExploitationComplete} />
-          )}
-          {stage === 'domestication' && (
-            <DomesticationReproduction onComplete={handleDomesticationComplete} />
-          )}
-          {stage === 'moral-consistency' && (
-            <MoralConsistency onComplete={handleMoralConsistencyComplete} />
-          )}
-          {stage === 'final-choice' && (
-            <FinalChoice onComplete={handleFinalChoiceComplete} />
-          )}
-          {stage === 'mirror' && (
-            <Mirror answers={answers} onComplete={handleMirrorComplete} />
-          )}
-          {stage === 'call-to-action' && (
-            <CallToAction onComplete={handleCallToActionComplete} />
-          )}
-          {stage === 'after-choice' && <AfterChoice />}
-        </div>
-      </main>
+          {/* Stage content with fade in */}
+          <div
+            className={`transition-opacity duration-[600ms] ease-in-out ${isTransitioning ? 'opacity-0' : 'opacity-100'
+              }`}>
+            {stage === 'choice' && <ChoiceStage onPillChoice={handlePillChoice} />}
+            {stage === 'intro' && <RedPillIntro onComplete={handleIntroComplete} />}
+            {stage === 'evaluation' && (
+              <CharacterEvaluation
+                onComplete={handleEvaluationComplete}
+                answers={answers}
+              />
+            )}
+            {stage === 'explanation' && (
+              <QuestionExplanation onComplete={handleExplanationComplete} />
+            )}
+            {stage === 'historical' && (
+              <HistoricalInjustices onComplete={handleHistoricalComplete} />
+            )}
+            {stage === 'personal-question' && (
+              <PersonalQuestion onComplete={handlePersonalQuestionComplete} />
+            )}
+            {stage === 'breaking-question' && (
+              <BreakingQuestion onComplete={handleBreakingQuestionComplete} />
+            )}
+            {stage === 'spasa-story' && (
+              <SpasaStory onComplete={handleSpasaStoryComplete} />
+            )}
+            {stage === 'spasa-revelation' && (
+              <SpasaRevelation onComplete={handleSpasaRevelationComplete} />
+            )}
+            {stage === 'spasa-revelation-part1' && (
+              <SpasaRevelationPart1 onComplete={handleSpasaRevelationPart1Complete} />
+            )}
+            {stage === 'facts' && <FactsNumbers onComplete={handleFactsComplete} />}
+            {stage === 'spasa-revelation-part2' && (
+              <SpasaRevelationPart2 onComplete={handleSpasaRevelationPart2Complete} />
+            )}
+            {stage === 'animal-exploitation' && (
+              <AnimalExploitation onComplete={handleAnimalExploitationComplete} />
+            )}
+            {stage === 'domestication' && (
+              <DomesticationReproduction onComplete={handleDomesticationComplete} />
+            )}
+            {stage === 'moral-consistency' && (
+              <MoralConsistency onComplete={handleMoralConsistencyComplete} />
+            )}
+            {stage === 'final-choice' && (
+              <FinalChoice onComplete={handleFinalChoiceComplete} />
+            )}
+            {stage === 'mirror' && (
+              <Mirror answers={answers} onComplete={handleMirrorComplete} />
+            )}
+            {stage === 'call-to-action' && (
+              <CallToAction onComplete={handleCallToActionComplete} />
+            )}
+            {stage === 'after-choice' && <AfterChoice />}
+          </div>
+        </main>
       </TransitionProvider>
     </NavigationProvider>
   );
