@@ -24,7 +24,9 @@ export default function TransitionOverlay() {
       const maxRadius = maxDistance * 1.2; // Add some padding
 
       // Animate clip size from 0 to maxRadius
-      setClipSize(0);
+      setTimeout(() => {
+        setClipSize(0);
+      }, 0);
       const startTime = Date.now();
       const duration = 2500; // 2.5 seconds - quicker overall, but slow start with acceleration
 
@@ -50,8 +52,10 @@ export default function TransitionOverlay() {
 
       requestAnimationFrame(animate);
     } else {
-      setClipSize(0);
-      setShouldFadeOut(false);
+      setTimeout(() => {
+        setClipSize(0);
+        setShouldFadeOut(false);
+      }, 0);
     }
   }, [isTransitioning, transitionCenter]);
 

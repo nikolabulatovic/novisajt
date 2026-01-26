@@ -5,6 +5,7 @@ import NextButton from './ui/NextButton';
 import PageContainer from './ui/PageContainer';
 import AnimatedText from './ui/AnimatedText';
 import ContentContainer from './ui/ContentContainer';
+import { sectionBackgrounds } from '@/config/sectionBackgrounds';
 
 interface FactsNumbersProps {
   onComplete: () => void;
@@ -31,8 +32,13 @@ export default function FactsNumbers({ onComplete }: FactsNumbersProps) {
     }
   };
 
+  const { backgroundImage, opacity = 0.8 } = sectionBackgrounds.facts;
+
   return (
-    <PageContainer maxWidth="md">
+    <PageContainer
+      backgroundImage={backgroundImage}
+      backgroundImageOpacity={opacity}
+      maxWidth="md">
       <ContentContainer spacing="lg">
         {/* Fact */}
         <div className='bg-gray-900/40 backdrop-blur-lg rounded-2xl p-8 md:p-12 border border-gray-800/50 shadow-2xl'>

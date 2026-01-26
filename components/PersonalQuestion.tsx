@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { sectionBackgrounds } from '@/config/sectionBackgrounds';
 
 interface PersonalQuestionProps {
   onComplete: () => void;
@@ -44,16 +45,22 @@ export default function PersonalQuestion({
           - Osoba koja stoji sama protiv grupe (moralna hrabrost)
           - Ogledalo ili refleksija (samo-refleksija)
       */}
-      <div className='absolute inset-0 w-full h-full overflow-hidden'>
-        <div
-          className='absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30'
-          style={{
-            backgroundImage: "url('/images/covek-u-grupi.jpeg')",
-          }}
-        />
-        {/* Dark overlay for text visibility */}
-        <div className='absolute inset-0 bg-black/60 pointer-events-none' />
-      </div>
+      {(() => {
+        const { backgroundImage, opacity = 0.8 } = sectionBackgrounds['personal-question'];
+        return backgroundImage ? (
+          <div className='absolute inset-0 w-full h-full overflow-hidden'>
+            <div
+              className='absolute inset-0 bg-cover bg-center bg-no-repeat'
+              style={{
+                backgroundImage: `url('${backgroundImage}')`,
+                opacity: opacity,
+              }}
+            />
+            {/* Dark overlay for text visibility */}
+            <div className='absolute inset-0 bg-black/60 pointer-events-none' />
+          </div>
+        ) : null;
+      })()}
 
       <div className='relative z-10 max-w-4xl mx-auto w-full'>
         {!showFlashMessage ? (

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Pill from './ui/Pill';
+import { sectionBackgrounds } from '@/config/sectionBackgrounds';
 
 interface ChoiceStageProps {
   onPillChoice: (pill: 'red' | 'blue') => void;
@@ -21,19 +22,23 @@ export default function ChoiceStage({ onPillChoice }: ChoiceStageProps) {
     }, 600); // Match the fade out duration
   };
 
+  const { backgroundImage, opacity = 0.8 } = sectionBackgrounds.choice;
+
   return (
     <div
-      className={`min-h-screen flex items-center justify-center p-8 relative bg-black transition-opacity duration-[600ms] ease-in-out ${
-        isFadingOut ? 'opacity-0' : 'opacity-100'
-      }`}>
-      {/* SLIKA: Minimalistička, tamna pozadina - možda apstraktna tekstura ili mrlje svetlosti u tamnoj sobi */}
-      {/* Opciono: Subtle background image - dark, abstract, minimal */}
-      <div
-        className='absolute inset-0 opacity-20 bg-cover bg-center bg-no-repeat transition-opacity duration-[600ms]'
-        style={{
-          backgroundImage: "url('/images/red-pill-blue-pill-cover-ai.png')",
-        }}
-      />
+      className={`min-h-screen flex items-center justify-center p-8 relative bg-black transition-opacity duration-[600ms] ease-in-out ${isFadingOut ? 'opacity-0' : 'opacity-100'
+        }`}>
+      {
+        backgroundImage ? (
+          <div
+            className='absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-[600ms]'
+            style={{
+              backgroundImage: `url('${backgroundImage}')`,
+              opacity: opacity,
+            }}
+          />
+        ) : null
+      }
 
       {/* Animated background - minimal */}
       <div className='absolute inset-0 overflow-hidden'>

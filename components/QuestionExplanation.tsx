@@ -5,6 +5,7 @@ import NextButton from './ui/NextButton';
 import PageContainer from './ui/PageContainer';
 import AnimatedText from './ui/AnimatedText';
 import ContentContainer from './ui/ContentContainer';
+import { sectionBackgrounds } from '@/config/sectionBackgrounds';
 
 interface QuestionExplanationProps {
   onComplete: () => void;
@@ -50,10 +51,12 @@ export default function QuestionExplanation({
     },
   ];
 
+  const { backgroundImage, opacity = 0.8 } = sectionBackgrounds.explanation;
+
   return (
     <PageContainer
-      backgroundImage="/images/ogledalo.png"
-      backgroundImageOpacity={0.35}
+      backgroundImage={backgroundImage}
+      backgroundImageOpacity={opacity}
       overlayOpacity={0}
       maxWidth="lg">
       <ContentContainer spacing="sm">

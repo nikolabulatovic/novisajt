@@ -5,6 +5,7 @@ import NextButton from './ui/NextButton';
 import PageContainer from './ui/PageContainer';
 import AnimatedText from './ui/AnimatedText';
 import ContentContainer from './ui/ContentContainer';
+import { sectionBackgrounds } from '@/config/sectionBackgrounds';
 
 interface RedPillIntroProps {
   onComplete: () => void;
@@ -26,11 +27,13 @@ export default function RedPillIntro({ onComplete }: RedPillIntroProps) {
     }, 300);
   }, []);
 
+  const { backgroundImage, opacity } = sectionBackgrounds.intro;
+
   return (
     <PageContainer
       className="overflow-hidden"
-      backgroundImage={imageVisible ? "/images/intro-reflection.jpeg" : undefined}
-      backgroundImageOpacity={0.2}
+      backgroundImage={imageVisible ? backgroundImage : undefined}
+      backgroundImageOpacity={opacity}
       overlayOpacity={0}
       showBackgroundEffects={false}>
       {/* Custom animated background effects */}

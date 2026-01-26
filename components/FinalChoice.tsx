@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import NextButton from './ui/NextButton';
+import { sectionBackgrounds } from '@/config/sectionBackgrounds';
 
 interface FinalChoiceProps {
   onComplete: () => void;
@@ -24,10 +25,23 @@ export default function FinalChoice({ onComplete }: FinalChoiceProps) {
     }
   };
 
+  const { backgroundImage, opacity = 0.8 } = sectionBackgrounds['final-choice'];
+
   return (
     <div className='min-h-screen flex items-center justify-center p-8 relative bg-black'>
-      {/* SLIKA: Minimalistička, tamna - možda apstraktna forma koja sugerira konačni izbor */}
-      {/* Opciono: Dark, abstract background suggesting final choice/moment of decision */}
+      {backgroundImage && (
+        <div className='absolute inset-0 w-full h-full overflow-hidden'>
+          <div
+            className='absolute inset-0 bg-cover bg-center bg-no-repeat'
+            style={{
+              backgroundImage: `url('${backgroundImage}')`,
+              opacity: opacity,
+            }}
+          />
+          {/* Dark overlay for text visibility */}
+          <div className='absolute inset-0 bg-black/50 pointer-events-none' />
+        </div>
+      )}
 
       <div className='absolute inset-0 overflow-hidden'>
         <div className='absolute top-1/2 left-1/2 w-96 h-96 bg-gray-800/5 rounded-full blur-3xl animate-pulse' />

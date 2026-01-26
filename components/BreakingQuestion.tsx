@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { sectionBackgrounds } from '@/config/sectionBackgrounds';
 
 interface BreakingQuestionProps {
   onComplete: (answer: string) => void;
@@ -26,17 +27,22 @@ export default function BreakingQuestion({
 
   return (
     <div className='min-h-screen flex items-center justify-center p-8 relative bg-black'>
-      {/* Background image */}
-      <div className='absolute inset-0 w-full h-full overflow-hidden'>
-        <div
-          className='absolute inset-0 bg-cover bg-center bg-no-repeat opacity-50'
-          style={{
-            backgroundImage: "url('/images/odluka-put.jpg')",
-          }}
-        />
-        {/* Dark overlay for text visibility */}
-        <div className='absolute inset-0 bg-black/50 pointer-events-none' />
-      </div>
+      {(() => {
+        const { backgroundImage, opacity = 0.8 } = sectionBackgrounds['breaking-question'];
+        return backgroundImage ? (
+          <div className='absolute inset-0 w-full h-full overflow-hidden'>
+            <div
+              className='absolute inset-0 bg-cover bg-center bg-no-repeat'
+              style={{
+                backgroundImage: `url('${backgroundImage}')`,
+                opacity: opacity,
+              }}
+            />
+            {/* Dark overlay for text visibility */}
+            <div className='absolute inset-0 bg-black/50 pointer-events-none' />
+          </div>
+        ) : null;
+      })()}
 
       <div className='relative z-10 max-w-4xl mx-auto w-full'>
         <div className='text-center space-y-12'>
@@ -57,11 +63,10 @@ export default function BreakingQuestion({
               <button
                 key={index}
                 onClick={() => handleAnswer(option)}
-                className={`w-full text-center p-6 rounded-xl transition-all duration-300 transform hover:scale-[1.02] cursor-pointer ${
-                  selected === option
+                className={`w-full text-center p-6 rounded-xl transition-all duration-300 transform hover:scale-[1.02] cursor-pointer ${selected === option
                     ? 'bg-gray-800/60 border-2 border-gray-600'
                     : 'bg-gray-900/70 border border-gray-800/50 hover:bg-gray-800/80 hover:border-gray-700/50'
-                }`}>
+                  }`}>
                 <span
                   className='text-lg md:text-xl lg:text-2xl text-gray-300 font-light'
                   style={{ fontFamily: 'var(--font-literata), serif' }}>

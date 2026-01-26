@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import NextButton from './ui/NextButton';
+import { sectionBackgrounds } from '@/config/sectionBackgrounds';
 
 interface HistoricalInjusticesProps {
   onComplete: () => void;
@@ -112,14 +113,17 @@ export default function HistoricalInjustices({
     }
   };
 
+  const { backgroundImage, opacity = 0.8 } = sectionBackgrounds.historical;
+
   return (
     <div className='min-h-screen flex items-center justify-center relative bg-black'>
       {/* Background image for intro stage */}
-      {stage === 'intro' && (
+      {stage === 'intro' && backgroundImage && (
         <div
-          className='absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-[2000ms] ease-in-out opacity-75'
+          className='absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-[2000ms] ease-in-out'
           style={{
-            backgroundImage: "url('/images/historical-weight.png')",
+            backgroundImage: `url('${backgroundImage}')`,
+            opacity: opacity,
           }}
         />
       )}

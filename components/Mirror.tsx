@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import NextButton from './ui/NextButton';
 import PageContainer from './ui/PageContainer';
 import ContentContainer from './ui/ContentContainer';
+import { sectionBackgrounds } from '@/config/sectionBackgrounds';
 
 interface MirrorProps {
   answers: Record<string, string>;
@@ -70,8 +71,13 @@ export default function Mirror({ answers, onComplete }: MirrorProps) {
     }
   }, [answerEntries.length]);
 
+  const { backgroundImage, opacity = 0.8 } = sectionBackgrounds.mirror;
+
   return (
-    <PageContainer maxWidth="md">
+    <PageContainer
+      backgroundImage={backgroundImage}
+      backgroundImageOpacity={opacity}
+      maxWidth="md">
       <ContentContainer spacing="lg">
         {/* Title */}
         <h1 className='text-4xl md:text-6xl font-light text-gray-300 mb-12'>

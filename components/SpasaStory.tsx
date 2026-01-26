@@ -6,6 +6,7 @@ import PageContainer from './ui/PageContainer';
 import AnimatedText from './ui/AnimatedText';
 import TextBackdrop from './ui/TextBackdrop';
 import ContentContainer from './ui/ContentContainer';
+import { sectionBackgrounds } from '@/config/sectionBackgrounds';
 
 interface SpasaStoryProps {
   onComplete: () => void;
@@ -35,10 +36,12 @@ export default function SpasaStory({ onComplete }: SpasaStoryProps) {
     }
   };
 
+  const { backgroundImage, opacity = 0.8 } = sectionBackgrounds['spasa-story'];
+
   return (
     <PageContainer
-      backgroundImage="/images/spasa-rescue-hope.png"
-      backgroundImageOpacity={0.8}
+      backgroundImage={backgroundImage}
+      backgroundImageOpacity={opacity}
       overlayOpacity={0.5}>
       {!showFinalMessage ? (
         <ContentContainer spacing="lg">

@@ -3,6 +3,7 @@
 import { useState, useRef, MouseEvent } from 'react';
 import ProgressDots from './ui/ProgressDots';
 import AnswerOption from './ui/AnswerOption';
+import { sectionBackgrounds } from '@/config/sectionBackgrounds';
 
 interface CharacterEvaluationProps {
   onComplete: (answers: Record<string, string>) => void;
@@ -138,15 +139,20 @@ export default function CharacterEvaluation({
     }, 500); // Non-selected fade (500ms) + keep selected visible (1000ms)
   };
 
+  const { backgroundImage, opacity = 0.8 } = sectionBackgrounds.evaluation;
+
   return (
     <div className='min-h-screen flex items-center justify-center p-8 relative bg-black overflow-hidden'>
       {/* Background image */}
-      <div
-        className='absolute inset-0 opacity-50 bg-cover bg-center bg-no-repeat transition-opacity duration-[2000ms] ease-in-out'
-        style={{
-          backgroundImage: "url('/images/character-introspection.jpeg')",
-        }}
-      />
+      {backgroundImage && (
+        <div
+          className='absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-[2000ms] ease-in-out'
+          style={{
+            backgroundImage: `url('${backgroundImage}')`,
+            opacity: opacity,
+          }}
+        />
+      )}
 
       {/* Enhanced atmospheric background effects */}
       <div className='absolute inset-0 overflow-hidden pointer-events-none'>

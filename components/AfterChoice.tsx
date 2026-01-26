@@ -1,16 +1,30 @@
 'use client';
 
 import { useState } from 'react';
+import { sectionBackgrounds } from '@/config/sectionBackgrounds';
 
 export default function AfterChoice() {
   const [activeSection, setActiveSection] = useState<
     'communities' | 'education'
   >('communities');
 
+  const { backgroundImage, opacity = 0.8 } = sectionBackgrounds['after-choice'];
+
   return (
     <div className='min-h-screen flex items-center justify-center p-8 relative bg-black'>
-      {/* SLIKA: Minimalistička, tamna - možda apstraktna forma koja sugerira zajednicu ili rast */}
-      {/* Opciono: Dark, abstract background suggesting community/growth */}
+      {backgroundImage && (
+        <div className='absolute inset-0 w-full h-full overflow-hidden'>
+          <div
+            className='absolute inset-0 bg-cover bg-center bg-no-repeat'
+            style={{
+              backgroundImage: `url('${backgroundImage}')`,
+              opacity: opacity,
+            }}
+          />
+          {/* Dark overlay for text visibility */}
+          <div className='absolute inset-0 bg-black/50 pointer-events-none' />
+        </div>
+      )}
 
       <div className='absolute inset-0 overflow-hidden'>
         <div className='absolute top-1/2 left-1/2 w-96 h-96 bg-gray-800/5 rounded-full blur-3xl animate-pulse' />
@@ -22,20 +36,18 @@ export default function AfterChoice() {
           <div className='flex justify-center space-x-4 mb-8'>
             <button
               onClick={() => setActiveSection('communities')}
-              className={`cursor-pointer px-8 py-4 rounded-full transition-all duration-300 ${
-                activeSection === 'communities'
-                  ? 'bg-gray-800/60 border-2 border-gray-600 text-gray-200'
-                  : 'bg-gray-900/30 border border-gray-800/50 text-gray-400 hover:bg-gray-800/40'
-              }`}>
+              className={`cursor-pointer px-8 py-4 rounded-full transition-all duration-300 ${activeSection === 'communities'
+                ? 'bg-gray-800/60 border-2 border-gray-600 text-gray-200'
+                : 'bg-gray-900/30 border border-gray-800/50 text-gray-400 hover:bg-gray-800/40'
+                }`}>
               Zajednice
             </button>
             <button
               onClick={() => setActiveSection('education')}
-              className={`cursor-pointer px-8 py-4 rounded-full transition-all duration-300 ${
-                activeSection === 'education'
-                  ? 'bg-gray-800/60 border-2 border-gray-600 text-gray-200'
-                  : 'bg-gray-900/30 border border-gray-800/50 text-gray-400 hover:bg-gray-800/40'
-              }`}>
+              className={`cursor-pointer px-8 py-4 rounded-full transition-all duration-300 ${activeSection === 'education'
+                ? 'bg-gray-800/60 border-2 border-gray-600 text-gray-200'
+                : 'bg-gray-900/30 border border-gray-800/50 text-gray-400 hover:bg-gray-800/40'
+                }`}>
               Edukacija
             </button>
           </div>

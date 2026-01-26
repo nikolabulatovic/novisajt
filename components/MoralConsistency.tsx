@@ -5,6 +5,7 @@ import PageContainer from './ui/PageContainer';
 import AnimatedLines from './ui/AnimatedLines';
 import NextButton from './ui/NextButton';
 import ContentContainer from './ui/ContentContainer';
+import { sectionBackgrounds } from '@/config/sectionBackgrounds';
 
 interface MoralConsistencyProps {
   onComplete: () => void;
@@ -22,8 +23,13 @@ export default function MoralConsistency({
     { text: 'Možemo da živimo bez ovoga.', bold: false },
   ];
 
+  const { backgroundImage, opacity = 0.8 } = sectionBackgrounds['moral-consistency'];
+
   return (
-    <PageContainer maxWidth="lg">
+    <PageContainer
+      backgroundImage={backgroundImage}
+      backgroundImageOpacity={opacity}
+      maxWidth="lg">
       <ContentContainer spacing="md" align="center">
         <AnimatedLines
           lines={lines}
