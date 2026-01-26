@@ -16,7 +16,7 @@ export default function BackgroundImage({
   return (
     <>
       <div
-        className={`absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-[2000ms] ease-in-out ${className}`}
+        className={`absolute inset-0 bg-cover bg-center bg-no-repeat ${className}`}
         style={{
           backgroundImage: `url('${src}')`,
           opacity,

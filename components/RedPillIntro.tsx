@@ -13,7 +13,6 @@ interface RedPillIntroProps {
 
 export default function RedPillIntro({ onComplete }: RedPillIntroProps) {
   const [showButton, setShowButton] = useState(false);
-  const [imageVisible, setImageVisible] = useState(false);
 
   const text = [
     'Tvoj izbor je da vidiš istinu i to zahteva hrabrost.',
@@ -21,18 +20,12 @@ export default function RedPillIntro({ onComplete }: RedPillIntroProps) {
     'Prvo ćemo ti postaviti tri pitanja.',
   ];
 
-  useEffect(() => {
-    setTimeout(() => {
-      setImageVisible(true);
-    }, 300);
-  }, []);
-
   const { backgroundImage, opacity } = sectionBackgrounds.intro;
 
   return (
     <PageContainer
       className="overflow-hidden"
-      backgroundImage={imageVisible ? backgroundImage : undefined}
+      backgroundImage={backgroundImage}
       backgroundImageOpacity={opacity}
       overlayOpacity={0}
       showBackgroundEffects={false}>

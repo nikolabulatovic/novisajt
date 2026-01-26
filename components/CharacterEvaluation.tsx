@@ -145,13 +145,15 @@ export default function CharacterEvaluation({
     <div className='min-h-screen flex items-center justify-center p-8 relative bg-black overflow-hidden'>
       {/* Background image */}
       {backgroundImage && (
-        <div
-          className='absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-[2000ms] ease-in-out'
-          style={{
-            backgroundImage: `url('${backgroundImage}')`,
-            opacity: opacity,
-          }}
-        />
+        <div className='fixed inset-0 z-0'>
+          <div
+            className='absolute inset-0 bg-cover bg-center bg-no-repeat'
+            style={{
+              backgroundImage: `url('${backgroundImage}')`,
+              opacity: opacity,
+            }}
+          />
+        </div>
       )}
 
       {/* Enhanced atmospheric background effects */}

@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, MouseEvent } from 'react';
-import { useTransition } from '@/contexts/TransitionContext';
 import { useNavigation } from '@/contexts/NavigationContext';
 import {
   getBackgroundImageForStage,
@@ -31,7 +30,6 @@ export default function Pill({
   className = '',
 }: PillProps) {
   const [isExpanding, setIsExpanding] = useState(false);
-  const { startTransition } = useTransition();
   const { currentStage } = useNavigation();
   const isRed = color === 'red';
   const rotationClass = isRed ? '-rotate-3' : 'rotate-3';
@@ -46,24 +44,8 @@ export default function Pill({
   const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
     if (disabled) return;
 
-    // Get the center of the button relative to viewport
-    const button = e.currentTarget;
-    const rect = button.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-
     // Start expansion animation
     setIsExpanding(true);
-
-    // Get next stage and its background image/opacity for transition
-    const nextStage = getNextStage(currentStage, isRed ? 'red' : 'blue');
-    const nextBg = nextStage ? getBackgroundImageForStage(nextStage) : null;
-    const nextOpacity = nextStage
-      ? getBackgroundOpacityForStage(nextStage)
-      : 0.8;
-
-    // Start the transition overlay effect with NEXT background
-    startTransition(centerX, centerY, nextBg || undefined, nextOpacity);
 
     // Call the original onClick after a short delay
     setTimeout(() => {
