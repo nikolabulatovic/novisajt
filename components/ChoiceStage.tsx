@@ -23,22 +23,52 @@ export default function ChoiceStage({ onPillChoice }: ChoiceStageProps) {
   };
 
   const { backgroundImage, opacity = 0.8 } = sectionBackgrounds.choice;
+  const { backgroundImage: nextBackgroundImage, opacity: nextOpacity } = sectionBackgrounds.intro;
 
   return (
     <div
       className={`min-h-screen flex items-center justify-center p-8 relative bg-black transition-opacity duration-[600ms] ease-in-out ${isFadingOut ? 'opacity-0' : 'opacity-100'
         }`}>
-      {
-        backgroundImage ? (
-          <div
-            className='absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-[600ms]'
-            style={{
-              backgroundImage: `url('${backgroundImage}')`,
-              opacity: opacity,
-            }}
-          />
-        ) : null
-      }
+      {/* Next section's background - rendered first, behind everything */}
+      {nextBackgroundImage && (
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat z-0"
+          style={{
+            backgroundImage: `url('${nextBackgroundImage}')`,
+            opacity: nextOpacity || 0.2,
+          }}
+        />
+      )}
+
+      {/* Current section's background with mask cutout */}
+      {backgroundImage ? (
+        <div
+          className='absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-[600ms] z-[1]'
+          style={{
+            backgroundImage: `url('${backgroundImage}')`,
+            opacity: 1,
+            // Create a mask that cuts out a circle, revealing the next section behind
+            maskImage: 'radial-gradient(circle at 45% 45%, transparent 15%, black 15%)',
+            WebkitMaskImage: 'radial-gradient(circle at 45% 45%, transparent 15%, black 15%)',
+          }}
+        />
+      ) : null}
+
+      {/* Subtle glow/border around the peek - positioned near red pill */}
+      {nextBackgroundImage && (
+        <div
+          className="absolute animate-pulse pointer-events-none z-[2]"
+          style={{
+            left: 'calc(45% - 15vw)',
+            top: 'calc(45% - 15vh)',
+            width: '30vw',
+            height: '30vh',
+            borderRadius: '50%',
+            border: '1px solid rgba(255, 100, 100, 0.3)',
+            boxShadow: '0 0 40px rgba(255, 100, 100, 0.2), inset 0 0 30px rgba(255, 100, 100, 0.15)',
+          }}
+        />
+      )}
 
       {/* Animated background - minimal */}
       <div className='absolute inset-0 overflow-hidden'>
