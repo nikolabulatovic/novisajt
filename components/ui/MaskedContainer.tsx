@@ -39,13 +39,11 @@ export default function MaskedContainer({
   const borderRadiusValue = parseFloat(maskStyle.borderRadius);
 
   // Extract center percentages from left/top
-  const centerXMatch = maskStyle.left.match(/calc\((\d+)% -/);
-  const centerYMatch = maskStyle.top.match(/calc\((\d+)% -/);
-  const centerXPercent = centerXMatch ? parseFloat(centerXMatch[1]) : 50;
-  const centerYPercent = centerYMatch ? parseFloat(centerYMatch[1]) : 50;
+  const leftValue = parseFloat(maskStyle.left);
+  const topValue = parseFloat(maskStyle.top);
 
   // Generate unique mask ID
-  const maskId = `mask-hole-${Math.round(widthValue)}-${Math.round(heightValue)}-${Math.round(borderRadiusValue)}-${centerXPercent}-${centerYPercent}`;
+  const maskId = `mask-hole-${Math.round(widthValue)}-${Math.round(heightValue)}-${Math.round(borderRadiusValue)}-${leftValue}-${topValue}`;
 
   return (
     <div
@@ -64,9 +62,8 @@ export default function MaskedContainer({
               rx={borderRadiusValue}
               ry={borderRadiusValue}
               fill="white"
-              x={`${centerXPercent}%`}
-              y={`${centerYPercent}%`}
-              transform={`translate(-${widthValue / 2}, -${heightValue / 2})`}
+              x={leftValue}
+              y={topValue}
             />
           </mask>
         </defs>
@@ -76,10 +73,10 @@ export default function MaskedContainer({
       {
         nextBackgroundImage && (
           <div
-            className={`absolute inset-0 bg-cover bg-center bg-no-repeat before:content-[""] before:absolute before:inset-0 before:bg-black/50 ${expansionProgress >= 0 ? 'z-[10000]' : ''}`}
+            className={`absolute inset-0 bg-cover bg-center bg-no-repeat before:content-[""] before:absolute before:inset-0 before:bg-black/50 ${expansionProgress > 0 ? 'z-[10000]' : ''}`}
             style={{
               backgroundImage: `url('${nextBackgroundImage}')`,
-              ...(expansionProgress >= 0 ? {
+              ...(expansionProgress > 0 ? {
                 maskImage: `url(#${maskId})`,
                 WebkitMaskImage: `url(#${maskId})`,
               } : {}),
@@ -102,7 +99,9 @@ export default function MaskedContainer({
         ) : null
       }
 
-      {children}
+      <div className='relative'>
+        {children}
+      </div>
 
       {/* Subtle glow/border around the mask */}
       {

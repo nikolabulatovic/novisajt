@@ -8,9 +8,7 @@ const PILL_WIDTH_PX = 160;
 const PILL_HEIGHT_PX = 80;
 const PILL_BORDER_RADIUS_PX = PILL_HEIGHT_PX / 2; // Full rounded = 50% of height
 
-interface UseMaskExpansionFromPillOptions extends Omit<UseMaskExpansionOptions, 'centerX' | 'centerY' | 'startWidth' | 'startHeight' | 'startBorderRadius'> {
-  // All options from useMaskExpansion except those that are pill-specific
-}
+type UseMaskExpansionFromPillOptions = Omit<UseMaskExpansionOptions, 'centerX' | 'centerY' | 'startWidth' | 'startHeight' | 'startBorderRadius'>
 
 /**
  * Hook that wraps useMaskExpansion specifically for pill-to-viewport expansion

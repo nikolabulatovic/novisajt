@@ -7,8 +7,8 @@ const DEFAULT_CENTER_Y = 50;
 
 export interface UseMaskExpansionOptions {
   duration?: number; // Animation duration in milliseconds
-  centerX?: number; // Center X position as percentage (0-100)
-  centerY?: number; // Center Y position as percentage (0-100)
+  startLeft?: number; // Starting left position in pixels
+  startTop?: number; // Starting top position in pixels
   startWidth: number; // Starting width in pixels
   startHeight: number; // Starting height in pixels
   startBorderRadius: number; // Starting border radius in pixels
@@ -26,13 +26,7 @@ export type MaskStyle = {
 export interface UseMaskExpansionReturn {
   expansionProgress: number; // 0 to 1
   startExpansion: (centerX?: number, centerY?: number) => void; // Function to start the animation, optionally with center position
-  maskStyle: {
-    width: string; // Current width (px or vw)
-    height: string; // Current height (px or vh)
-    borderRadius: string; // Current border radius (px)
-    left: string; // Left position
-    top: string; // Top position
-  };
+  maskStyle: MaskStyle;
 }
 
 /**
@@ -41,29 +35,29 @@ export interface UseMaskExpansionReturn {
  */
 export function useMaskExpansion({
   duration = EXPANSION_DURATION,
-  centerX = DEFAULT_CENTER_X,
-  centerY = DEFAULT_CENTER_Y,
+  startLeft = DEFAULT_CENTER_X,
+  startTop = DEFAULT_CENTER_Y,
   startWidth,
   startHeight,
   startBorderRadius,
   onComplete,
 }: UseMaskExpansionOptions): UseMaskExpansionReturn {
   const [expansionProgress, setExpansionProgress] = useState(0);
-  const [currentCenterX, setCurrentCenterX] = useState(centerX);
-  const [currentCenterY, setCurrentCenterY] = useState(centerY);
+  const [currentLeft, setCurrentLeft] = useState(startLeft);
+  const [currentTop, setCurrentTop] = useState(startTop);
 
-  const startExpansion = useCallback((overrideCenterX?: number, overrideCenterY?: number) => {
+  const startExpansion = useCallback((overrideLeft?: number, overrideTop?: number) => {
     // Reset expansion progress
     setExpansionProgress(0);
 
     // Update center position if provided
-    if (overrideCenterX !== undefined && overrideCenterY !== undefined) {
-      setCurrentCenterX(overrideCenterX);
-      setCurrentCenterY(overrideCenterY);
+    if (overrideLeft !== undefined && overrideTop !== undefined) {
+      setCurrentLeft(overrideLeft);
+      setCurrentTop(overrideTop);
     } else {
       // Use default center position
-      setCurrentCenterX(centerX);
-      setCurrentCenterY(centerY);
+      setCurrentLeft(startLeft);
+      setCurrentTop(startTop);
     }
 
     const startTime = Date.now();
@@ -86,7 +80,7 @@ export function useMaskExpansion({
     };
 
     requestAnimationFrame(animate);
-  }, [duration, onComplete, centerX, centerY]);
+  }, [duration, onComplete, startLeft, startTop]);
 
   // Calculate mask style - use SSR-safe values when window is undefined
   // Since expansionProgress starts at 0, initial values will be consistent
@@ -98,8 +92,8 @@ export function useMaskExpansion({
         width: `${startWidth}px`,
         height: `${startHeight}px`,
         borderRadius: `${startBorderRadius}px`,
-        left: `${currentCenterX}%`,
-        top: `${currentCenterY}%`,
+        left: `${currentLeft}px`,
+        top: `${currentTop}px`,
       };
     }
 
@@ -114,18 +108,18 @@ export function useMaskExpansion({
     const currentHeight = startHeight + (endHeight - startHeight) * expansionProgress;
     const currentBorderRadius = startBorderRadius * (1 - expansionProgress);
 
-    // Calculate position to keep center point fixed
-    const left = `calc(${currentCenterX}% - ${(currentWidth / viewportWidth) * 50}vw)`;
-    const top = `calc(${currentCenterY}% - ${(currentHeight / viewportHeight) * 50}vh)`;
+    // Interpolate position from starting left/top to 0 (full viewport)
+    const left = currentLeft * (1 - expansionProgress);
+    const top = currentTop * (1 - expansionProgress);
 
     return {
       width: `${currentWidth}px`,
       height: `${currentHeight}px`,
       borderRadius: `${currentBorderRadius}px`,
-      left,
-      top,
+      left: `${left}px`,
+      top: `${top}px`,
     };
-  }, [expansionProgress, currentCenterX, currentCenterY, startWidth, startHeight, startBorderRadius]);
+  }, [expansionProgress, currentLeft, currentTop, startWidth, startHeight, startBorderRadius]);
 
   return {
     expansionProgress,
