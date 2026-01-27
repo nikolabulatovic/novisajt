@@ -35,58 +35,96 @@ export default function MaskedContainer({
   showGlow = true,
   className = '',
 }: MaskedContainerProps) {
-  // Only apply mask if expansion has started (progress > 0)
-  const shouldApplyMask = expansionProgress > 0;
+  // Parse dimensions for SVG mask
+  const widthValue = parseFloat(maskStyle.width);
+  const heightValue = parseFloat(maskStyle.height);
+  const borderRadiusValue = parseFloat(maskStyle.borderRadius);
+
+  // Extract center percentages from left/top
+  const centerXMatch = maskStyle.left.match(/calc\((\d+)% -/);
+  const centerYMatch = maskStyle.top.match(/calc\((\d+)% -/);
+  const centerXPercent = centerXMatch ? parseFloat(centerXMatch[1]) : 50;
+  const centerYPercent = centerYMatch ? parseFloat(centerYMatch[1]) : 50;
+
+  // Generate unique mask ID
+  const maskId = `mask-hole-${Math.round(widthValue)}-${Math.round(heightValue)}-${Math.round(borderRadiusValue)}-${centerXPercent}-${centerYPercent}`;
 
   return (
     <div
       className={`min-h-screen flex items-center justify-center p-8 relative transition-opacity duration-[600ms] ease-in-out ${isFadingOut ? 'opacity-0' : 'opacity-100'
         } ${className}`}>
+      {/* SVG mask definition - creates a hole in the current section background */}
+      <svg className='absolute' height='100%' width='100%' style={{ pointerEvents: 'none' }}>
+        <defs>
+          <mask id={maskId}>
+            {/* Black background = hides next section everywhere */}
+            <rect width="100%" height="100%" fill="black" />
+            {/* White rounded rectangle = visible area (reveals next section inside mask) */}
+            {/* Centered at centerXPercent, centerYPercent, expanding in all directions */}
+            <rect
+              width={widthValue}
+              height={heightValue}
+              rx={borderRadiusValue}
+              ry={borderRadiusValue}
+              fill="white"
+              x={`${centerXPercent}%`}
+              y={`${centerYPercent}%`}
+              transform={`translate(-${widthValue / 2}, -${heightValue / 2})`}
+            />
+          </mask>
+        </defs>
+      </svg>
+
       {/* Next section's background - rendered behind with clip-path to show only inside mask */}
-      {nextBackgroundImage && (
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat z-0"
-          style={{
-            backgroundImage: `url('${nextBackgroundImage}')`,
-          }}
-        />
-      )}
+      {
+        nextBackgroundImage && (
+          <div
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat z-1"
+            style={{
+              backgroundImage: `url('${nextBackgroundImage}')`,
+              maskImage: `url(#${maskId})`,
+              WebkitMaskImage: `url(#${maskId})`,
+            }}
+          />
+        )
+      }
 
 
 
       {/* Current section's background with mask cutout */}
-      {backgroundImage ? (
-        <div
-          className='absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-[600ms] z-[1]'
-          style={{
-            backgroundImage: `url('${backgroundImage}')`,
-            opacity: 1,
-            // Create a mask that cuts out a circle, revealing the next section behind
-            maskImage: 'radial-gradient(circle at 45% 45%, transparent 15%, black 15%)',
-            WebkitMaskImage: 'radial-gradient(circle at 45% 45%, transparent 15%, black 15%)',
-          }}
-        />
-      ) : null}
+      {
+        backgroundImage ? (
+          <div
+            className='absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-[600ms] z-0'
+            style={{
+              backgroundImage: `url('${backgroundImage}')`,
+              opacity: 1,
+            }}
+          />
+        ) : null
+      }
 
       {children}
 
       {/* Subtle glow/border around the mask */}
-      {showGlow && nextBackgroundImage && (
-        <div
-          className="absolute animate-pulse pointer-events-none z-[2]"
-          style={{
-            left: maskStyle.left,
-            top: maskStyle.top,
-            width: maskStyle.width,
-            height: maskStyle.height,
-            borderRadius: maskStyle.borderRadius,
-            border: '1px solid rgba(255, 100, 100, 0.3)',
-            boxShadow:
-              '0 0 40px rgba(255, 100, 100, 0.2), inset 0 0 30px rgba(255, 100, 100, 0.15)',
-          }}
-        />
-      )}
-    </div>
+      {
+        showGlow && nextBackgroundImage && (
+          <div
+            className="absolute animate-pulse pointer-events-none z-[2]"
+            style={{
+              left: maskStyle.left,
+              top: maskStyle.top,
+              width: maskStyle.width,
+              height: maskStyle.height,
+              borderRadius: maskStyle.borderRadius,
+              border: '1px solid rgba(255, 100, 100, 0.3)',
+              boxShadow:
+                '0 0 40px rgba(255, 100, 100, 0.2), inset 0 0 30px rgba(255, 100, 100, 0.15)',
+            }}
+          />
+        )
+      }
+    </div >
   );
 }
 

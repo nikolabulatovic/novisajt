@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Pill from './ui/Pill';
 import { sectionBackgrounds } from '@/config/sectionBackgrounds';
 import MaskedContainer from './ui/MaskedContainer';
+import { useMaskExpansion } from '@/hooks/useMaskExpansion';
 
 interface ChoiceStageProps {
   onPillChoice: (pill: 'red' | 'blue') => void;
@@ -13,23 +14,36 @@ export default function ChoiceStage({ onPillChoice }: ChoiceStageProps) {
   const [isFadingOut, setIsFadingOut] = useState(false);
   const [selectedPill, setSelectedPill] = useState<'red' | 'blue' | null>(null);
 
+  // Use mask expansion hook
+  const { startExpansion, maskStyle, expansionProgress } = useMaskExpansion({
+    centerX: 50,
+    centerY: 50,
+    onComplete: () => {
+      // After mask expansion completes, trigger transition
+      setIsFadingOut(true);
+      setTimeout(() => {
+        onPillChoice('red');
+      }, 600); // Match the fade out duration
+    },
+  });
+
   const handlePillClick = (pill: 'red' | 'blue') => {
     setSelectedPill(pill);
-    setIsFadingOut(true);
 
-    // Wait for fade out animation to complete before calling onPillChoice
-    setTimeout(() => {
-      onPillChoice(pill);
-    }, 600); // Match the fade out duration
+    if (pill === 'red') {
+      startExpansion();
+    }
   };
 
-  const { backgroundImage, opacity = 0.8 } = sectionBackgrounds.choice;
-  const { backgroundImage: nextBackgroundImage, opacity: nextOpacity } = sectionBackgrounds.intro;
+  const { backgroundImage } = sectionBackgrounds.choice;
+  const { backgroundImage: nextBackgroundImage } = sectionBackgrounds.intro;
 
   return (
     <div className="min-h-screen relative bg-black">
       {/* Masked container with all ChoiceStage content */}
       <MaskedContainer
+        maskStyle={maskStyle}
+        expansionProgress={expansionProgress}
         backgroundImage={backgroundImage}
         nextBackgroundImage={nextBackgroundImage}
         isFadingOut={isFadingOut}
