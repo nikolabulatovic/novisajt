@@ -16,7 +16,6 @@ interface MaskedContainerProps {
   expansionProgress?: number; // Progress of expansion (0 to 1), used to determine if mask should be applied
   backgroundImage?: string; // Current section background
   nextBackgroundImage?: string; // Next section background to reveal inside mask
-  isFadingOut?: boolean; // Whether the container is fading out
   showGlow?: boolean; // Whether to show the glow border
   className?: string; // Additional CSS classes
 }
@@ -31,7 +30,6 @@ export default function MaskedContainer({
   expansionProgress = 0,
   backgroundImage,
   nextBackgroundImage,
-  isFadingOut = false,
   showGlow = true,
   className = '',
 }: MaskedContainerProps) {
@@ -51,8 +49,7 @@ export default function MaskedContainer({
 
   return (
     <div
-      className={`min-h-screen flex items-center justify-center p-8 relative transition-opacity duration-[600ms] ease-in-out ${isFadingOut ? 'opacity-0' : 'opacity-100'
-        } ${className}`}>
+      className={`min-h-screen flex items-center justify-center p-8 relative ${className}`}>
       {/* SVG mask definition - creates a hole in the current section background */}
       <svg className='absolute' height='100%' width='100%' style={{ pointerEvents: 'none' }}>
         <defs>
@@ -79,10 +76,10 @@ export default function MaskedContainer({
       {
         nextBackgroundImage && (
           <div
-            className={`absolute inset-0 bg-cover bg-center bg-no-repeat before:content-[""] before:absolute before:inset-0 before:bg-black/50 ${expansionProgress > 0 ? 'z-[10000]' : ''}`}
+            className={`absolute inset-0 bg-cover bg-center bg-no-repeat before:content-[""] before:absolute before:inset-0 before:bg-black/50 ${expansionProgress >= 0 ? 'z-[10000]' : ''}`}
             style={{
               backgroundImage: `url('${nextBackgroundImage}')`,
-              ...(expansionProgress > 0 ? {
+              ...(expansionProgress >= 0 ? {
                 maskImage: `url(#${maskId})`,
                 WebkitMaskImage: `url(#${maskId})`,
               } : {}),
@@ -97,7 +94,7 @@ export default function MaskedContainer({
       {
         backgroundImage ? (
           <div
-            className='absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-[600ms] z-0 before:content-[""] before:absolute before:inset-0 before:bg-black/50'
+            className='absolute inset-0 bg-cover bg-center bg-no-repeat z-0 before:content-[""] before:absolute before:inset-0 before:bg-black/50'
             style={{
               backgroundImage: `url('${backgroundImage}')`,
             }}

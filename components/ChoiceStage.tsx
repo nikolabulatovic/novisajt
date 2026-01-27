@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Pill from './ui/Pill';
 import { sectionBackgrounds } from '@/config/sectionBackgrounds';
 import MaskedContainer from './ui/MaskedContainer';
-import { useMaskExpansion } from '@/hooks/useMaskExpansion';
+import { useMaskExpansionFromPill } from '@/hooks/useMaskExpansionFromPill';
 
 interface ChoiceStageProps {
   onPillChoice: (pill: 'red' | 'blue') => void;
@@ -14,10 +14,8 @@ export default function ChoiceStage({ onPillChoice }: ChoiceStageProps) {
   const [isFadingOut, setIsFadingOut] = useState(false);
   const [selectedPill, setSelectedPill] = useState<'red' | 'blue' | null>(null);
 
-  // Use mask expansion hook
-  const { startExpansion, maskStyle, expansionProgress } = useMaskExpansion({
-    centerX: 50,
-    centerY: 50,
+  // Use mask expansion hook - automatically gets red pill position from PillContext
+  const { startExpansion, maskStyle, expansionProgress } = useMaskExpansionFromPill({
     onComplete: () => {
       // After mask expansion completes, trigger transition
       setIsFadingOut(true);
@@ -31,6 +29,7 @@ export default function ChoiceStage({ onPillChoice }: ChoiceStageProps) {
     setSelectedPill(pill);
 
     if (pill === 'red') {
+      // Start expansion - position is automatically calculated from red pill in context
       startExpansion();
     }
   };
@@ -46,7 +45,6 @@ export default function ChoiceStage({ onPillChoice }: ChoiceStageProps) {
         expansionProgress={expansionProgress}
         backgroundImage={backgroundImage}
         nextBackgroundImage={nextBackgroundImage}
-        isFadingOut={isFadingOut}
         showGlow={!!nextBackgroundImage}>
 
         {/* Animated background - minimal */}

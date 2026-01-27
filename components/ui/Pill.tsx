@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, MouseEvent } from 'react';
+import { useState, MouseEvent, useRef, useEffect } from 'react';
 import { useNavigation } from '@/contexts/NavigationContext';
+import { usePillContext } from '@/contexts/PillContext';
 import {
   getBackgroundImageForStage,
   getBackgroundOpacityForStage,
@@ -31,9 +32,21 @@ export default function Pill({
 }: PillProps) {
   const [isExpanding, setIsExpanding] = useState(false);
   const { currentStage } = useNavigation();
+  const pillContext = usePillContext();
+  const pillShapeRef = useRef<HTMLDivElement>(null);
   const isRed = color === 'red';
   const rotationClass = isRed ? '-rotate-3' : 'rotate-3';
   const isButton = !!label;
+
+  // Register red pill ref in context (ref to the actual pill shape element)
+  useEffect(() => {
+    if (isRed && pillContext && pillShapeRef.current) {
+      pillContext.registerRedPill(pillShapeRef as React.RefObject<HTMLElement | null>);
+      return () => {
+        pillContext.unregisterRedPill();
+      };
+    }
+  }, [isRed, pillContext]);
 
   const gradientStyle = isRed
     ? 'linear-gradient(to bottom, rgb(140, 35, 35) 0%, rgb(220, 60, 60) 15%, rgb(69, 10, 10) 90%, rgb(55, 11, 11) 95%, rgb(48, 9, 9) 98%, rgb(42, 8, 8) 100%)'
@@ -77,6 +90,7 @@ export default function Pill({
             <div className='absolute inset-0 rounded-full bg-black/50 blur-md translate-y-2'></div>
             {/* Pill with top-to-bottom gradient */}
             <div
+              ref={isRed ? pillShapeRef : undefined}
               className='relative w-full h-full rounded-full flex items-center justify-center shadow-2xl'
               style={{
                 background: gradientStyle,
@@ -118,6 +132,7 @@ export default function Pill({
         <div className='absolute inset-0 rounded-full bg-black/50 blur-md translate-y-2'></div>
         {/* Pill with top-to-bottom gradient */}
         <div
+          ref={isRed ? pillShapeRef : undefined}
           className='relative w-full h-full rounded-full flex items-center justify-center shadow-2xl'
           style={{
             background: gradientStyle,
