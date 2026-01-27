@@ -1,6 +1,7 @@
 import { useState, useCallback, useMemo } from 'react';
+import { appleEaseOut } from '@/utils/easing';
 
-const EXPANSION_DURATION = 4000;
+const EXPANSION_DURATION = 1500;
 const EXPANSION_CENTER_X = 50;
 const EXPANSION_CENTER_Y = 50;
 
@@ -21,7 +22,7 @@ interface UseMaskExpansionOptions {
 
 interface UseMaskExpansionReturn {
   expansionProgress: number; // 0 to 1
-  startExpansion: () => void; // Function to start the animation
+  startExpansion: (pillCenterX?: number, pillCenterY?: number) => void; // Function to start the animation, optionally with pill center position
   maskStyle: {
     width: string; // Current width (px or vw)
     height: string; // Current height (px or vh)
@@ -44,16 +45,29 @@ export function useMaskExpansion({
   onComplete,
 }: UseMaskExpansionOptions = {}): UseMaskExpansionReturn {
   const [expansionProgress, setExpansionProgress] = useState(0);
+  const [currentCenterX, setCurrentCenterX] = useState(centerX);
+  const [currentCenterY, setCurrentCenterY] = useState(centerY);
 
-  const startExpansion = useCallback(() => {
+  const startExpansion = useCallback((pillCenterX?: number, pillCenterY?: number) => {
+    // Reset expansion progress
+    setExpansionProgress(0);
+
+    // Update center position if provided (from pill click)
+    if (pillCenterX !== undefined && pillCenterY !== undefined) {
+      setCurrentCenterX(pillCenterX);
+      setCurrentCenterY(pillCenterY);
+    }
+
     const startTime = Date.now();
 
     const animate = () => {
       const elapsed = Date.now() - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      setExpansionProgress(progress);
+      const linearProgress = Math.min(elapsed / duration, 1);
+      // Apply easing function for smooth deceleration
+      const easedProgress = appleEaseOut(linearProgress);
+      setExpansionProgress(easedProgress);
 
-      if (progress < 1) {
+      if (linearProgress < 1) {
         requestAnimationFrame(animate);
       } else {
         // Animation complete
@@ -76,8 +90,8 @@ export function useMaskExpansion({
         width: `${pillWidth}px`,
         height: `${pillHeight}px`,
         borderRadius: `${PILL_BORDER_RADIUS_PX}px`,
-        left: '50%',
-        top: '50%',
+        left: `${currentCenterX}%`,
+        top: `${currentCenterY}%`,
       };
     }
 
@@ -95,8 +109,8 @@ export function useMaskExpansion({
     const currentBorderRadius = PILL_BORDER_RADIUS_PX * (1 - expansionProgress);
 
     // Calculate position to keep center point fixed
-    const left = `calc(${centerX}% - ${(currentWidth / viewportWidth) * 50}vw)`;
-    const top = `calc(${centerY}% - ${(currentHeight / viewportHeight) * 50}vh)`;
+    const left = `calc(${currentCenterX}% - ${(currentWidth / viewportWidth) * 50}vw)`;
+    const top = `calc(${currentCenterY}% - ${(currentHeight / viewportHeight) * 50}vh)`;
 
     return {
       width: `${currentWidth}px`,
@@ -105,7 +119,7 @@ export function useMaskExpansion({
       left,
       top,
     };
-  }, [expansionProgress, centerX, centerY, pillWidth, pillHeight]);
+  }, [expansionProgress, currentCenterX, currentCenterY, pillWidth, pillHeight]);
 
   return {
     expansionProgress,

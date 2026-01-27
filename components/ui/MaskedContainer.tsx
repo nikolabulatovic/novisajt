@@ -79,11 +79,13 @@ export default function MaskedContainer({
       {
         nextBackgroundImage && (
           <div
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat z-1"
+            className={`absolute inset-0 bg-cover bg-center bg-no-repeat before:content-[""] before:absolute before:inset-0 before:bg-black/50 ${expansionProgress > 0 ? 'z-[10000]' : ''}`}
             style={{
               backgroundImage: `url('${nextBackgroundImage}')`,
-              maskImage: `url(#${maskId})`,
-              WebkitMaskImage: `url(#${maskId})`,
+              ...(expansionProgress > 0 ? {
+                maskImage: `url(#${maskId})`,
+                WebkitMaskImage: `url(#${maskId})`,
+              } : {}),
             }}
           />
         )
@@ -95,10 +97,9 @@ export default function MaskedContainer({
       {
         backgroundImage ? (
           <div
-            className='absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-[600ms] z-0'
+            className='absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-[600ms] z-0 before:content-[""] before:absolute before:inset-0 before:bg-black/50'
             style={{
               backgroundImage: `url('${backgroundImage}')`,
-              opacity: 1,
             }}
           />
         ) : null
