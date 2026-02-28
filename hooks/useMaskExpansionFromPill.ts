@@ -1,43 +1,73 @@
-import { useCallback } from 'react';
+import { useCallback, useLayoutEffect, useState } from 'react';
 import { usePillContext } from '@/contexts/PillContext';
 import { useMaskExpansion, UseMaskExpansionOptions, UseMaskExpansionReturn } from './useMaskExpansion';
 
-// Pill dimensions (matching Pill component: w-32 h-16 md:w-40 md:h-20)
-// Using desktop size as base (160px x 80px)
-const PILL_WIDTH_PX = 160;
-const PILL_HEIGHT_PX = 80;
-const PILL_BORDER_RADIUS_PX = PILL_HEIGHT_PX / 2; // Full rounded = 50% of height
+// Fallback pill dimensions (matching Pill component: w-32 h-16 md:w-40 md:h-20)
+// Used only if pill ref is not available yet
+const FALLBACK_PILL_WIDTH_PX = 160;
+const FALLBACK_PILL_HEIGHT_PX = 80;
+const FALLBACK_PILL_BORDER_RADIUS_PX = FALLBACK_PILL_HEIGHT_PX / 2; // Full rounded = 50% of height
 
-type UseMaskExpansionFromPillOptions = Omit<UseMaskExpansionOptions, 'centerX' | 'centerY' | 'startWidth' | 'startHeight' | 'startBorderRadius'>
+type UseMaskExpansionFromPillOptions = Omit<UseMaskExpansionOptions, 'startLeft' | 'startTop' | 'startWidth' | 'startHeight' | 'startBorderRadius'>;
 
 /**
  * Hook that wraps useMaskExpansion specifically for pill-to-viewport expansion
- * Automatically gets the red pill position from PillContext and uses pill dimensions
+ * Automatically gets the red pill dimensions from PillContext upfront and position on-demand
  */
 export function useMaskExpansionFromPill({
   duration,
   onComplete,
 }: UseMaskExpansionFromPillOptions = {}): UseMaskExpansionReturn {
   const pillContext = usePillContext();
+  const [pillDimensions, setPillDimensions] = useState({
+    left: 0,
+    top: 0,
+    width: FALLBACK_PILL_WIDTH_PX,
+    height: FALLBACK_PILL_HEIGHT_PX,
+    borderRadius: FALLBACK_PILL_BORDER_RADIUS_PX,
+  });
 
-  // Use the generic useMaskExpansion hook with pill-specific dimensions
+  // Calculate pill dimensions upfront when ref becomes available
+  // Using useLayoutEffect for DOM measurements before paint
+  useLayoutEffect(() => {
+    if (pillContext?.redPillRef?.current) {
+      const rect = pillContext.redPillRef.current.getBoundingClientRect();
+      // Defer state update to avoid linter warning about synchronous setState
+      requestAnimationFrame(() => {
+        setPillDimensions({
+          left: rect.left,
+          top: rect.top,
+          width: rect.width,
+          height: rect.height,
+          borderRadius: rect.height / 2, // Full rounded = 50% of height
+        });
+      });
+    }
+  }, [pillContext]);
+
+  // Use the generic useMaskExpansion hook with actual pill dimensions
   const { startExpansion: baseStartExpansion, ...rest } = useMaskExpansion({
     duration,
-    startWidth: PILL_WIDTH_PX,
-    startHeight: PILL_HEIGHT_PX,
-    startBorderRadius: PILL_BORDER_RADIUS_PX,
+    startLeft: pillDimensions.left,
+    startTop: pillDimensions.top,
+    startWidth: pillDimensions.width,
+    startHeight: pillDimensions.height,
+    startBorderRadius: pillDimensions.borderRadius,
     onComplete,
   });
 
   const startExpansion = useCallback(() => {
     // Calculate position from red pill ref in context (on-demand)
-    if (pillContext?.redPillRef?.current) {
+    if (pillContext?.redPillRef?.current && typeof window !== 'undefined') {
       const rect = pillContext.redPillRef.current.getBoundingClientRect();
-      const centerX = ((rect.left + rect.width / 2) / window.innerWidth) * 100;
-      const centerY = ((rect.top + rect.height / 2) / window.innerHeight) * 100;
-      baseStartExpansion(centerX, centerY);
+      // Get left and top position directly from bounding rect
+      const left = rect.left;
+      const top = rect.top;
+
+      // Start expansion with calculated position (dimensions already set via props)
+      baseStartExpansion(left, top);
     } else {
-      // Fallback to default center if pill not found
+      // Fallback if pill not found
       baseStartExpansion();
     }
   }, [baseStartExpansion, pillContext]);

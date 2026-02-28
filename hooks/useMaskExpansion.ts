@@ -1,9 +1,7 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, useEffect } from 'react';
 import { appleEaseOut } from '@/utils/easing';
 
 const EXPANSION_DURATION = 1500;
-const DEFAULT_CENTER_X = 50;
-const DEFAULT_CENTER_Y = 50;
 
 export interface UseMaskExpansionOptions {
   duration?: number; // Animation duration in milliseconds
@@ -25,7 +23,7 @@ export type MaskStyle = {
 
 export interface UseMaskExpansionReturn {
   expansionProgress: number; // 0 to 1
-  startExpansion: (centerX?: number, centerY?: number) => void; // Function to start the animation, optionally with center position
+  startExpansion: (left?: number, top?: number) => void; // Function to start the animation, optionally with position
   maskStyle: MaskStyle;
 }
 
@@ -35,27 +33,34 @@ export interface UseMaskExpansionReturn {
  */
 export function useMaskExpansion({
   duration = EXPANSION_DURATION,
-  startLeft = DEFAULT_CENTER_X,
-  startTop = DEFAULT_CENTER_Y,
+  startLeft,
+  startTop,
   startWidth,
   startHeight,
   startBorderRadius,
   onComplete,
 }: UseMaskExpansionOptions): UseMaskExpansionReturn {
   const [expansionProgress, setExpansionProgress] = useState(0);
-  const [currentLeft, setCurrentLeft] = useState(startLeft);
-  const [currentTop, setCurrentTop] = useState(startTop);
+  const [currentLeft, setCurrentLeft] = useState(startLeft ?? 0);
+  const [currentTop, setCurrentTop] = useState(startTop ?? 0);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setCurrentLeft(startLeft ?? 0);
+      setCurrentTop(startTop ?? 0);
+    }, 0);
+  }, [startLeft, startTop]);
 
   const startExpansion = useCallback((overrideLeft?: number, overrideTop?: number) => {
     // Reset expansion progress
     setExpansionProgress(0);
 
-    // Update center position if provided
+    // Update position if provided
     if (overrideLeft !== undefined && overrideTop !== undefined) {
       setCurrentLeft(overrideLeft);
       setCurrentTop(overrideTop);
-    } else {
-      // Use default center position
+    } else if (startLeft !== undefined && startTop !== undefined) {
+      // Use initial startLeft/startTop if provided
       setCurrentLeft(startLeft);
       setCurrentTop(startTop);
     }

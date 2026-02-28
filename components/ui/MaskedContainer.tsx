@@ -52,9 +52,6 @@ export default function MaskedContainer({
       <svg className='absolute' height='100%' width='100%' style={{ pointerEvents: 'none' }}>
         <defs>
           <mask id={maskId}>
-            {/* Black background = hides next section everywhere */}
-            <rect width="100%" height="100%" fill="black" />
-            {/* White rounded rectangle = visible area (reveals next section inside mask) */}
             {/* Centered at centerXPercent, centerYPercent, expanding in all directions */}
             <rect
               width={widthValue}

@@ -1,13 +1,7 @@
 'use client';
 
-import { useState, MouseEvent, useRef, useEffect } from 'react';
-import { useNavigation } from '@/contexts/NavigationContext';
+import { useRef, useEffect } from 'react';
 import { usePillContext } from '@/contexts/PillContext';
-import {
-  getBackgroundImageForStage,
-  getBackgroundOpacityForStage,
-} from '@/utils/backgroundImages';
-import { getNextStage } from '@/utils/nextStage';
 
 interface PillProps {
   color: 'red' | 'blue';
@@ -30,18 +24,17 @@ export default function Pill({
   show = true,
   className = '',
 }: PillProps) {
-  const [isExpanding, setIsExpanding] = useState(false);
-  const { currentStage } = useNavigation();
   const pillContext = usePillContext();
-  const pillShapeRef = useRef<HTMLDivElement>(null);
+  const pillShapeRef = useRef<HTMLButtonElement>(null);
   const isRed = color === 'red';
-  const rotationClass = isRed ? '-rotate-3' : 'rotate-3';
   const isButton = !!label;
 
   // Register red pill ref in context (ref to the actual pill shape element)
   useEffect(() => {
     if (isRed && pillContext && pillShapeRef.current) {
-      pillContext.registerRedPill(pillShapeRef as React.RefObject<HTMLElement | null>);
+      setTimeout(() => {
+        pillContext.registerRedPill(pillShapeRef as React.RefObject<HTMLElement | null>);
+      }, 500);
       return () => {
         pillContext.unregisterRedPill();
       };
@@ -54,21 +47,13 @@ export default function Pill({
 
   const highlightColor = isRed ? 'from-red-800/20' : 'from-blue-800/20';
 
-  const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
+  const handleClick = () => {
     if (disabled) return;
-
-    // Start expansion animation
-    setIsExpanding(true);
 
     // Call the original onClick after a short delay
     setTimeout(() => {
       onClick();
     }, 100);
-
-    // Reset expansion after animation completes - slower (4 seconds)
-    setTimeout(() => {
-      setIsExpanding(false);
-    }, 4000); // Match animation duration
   };
 
   // Button variant: same pill shape with text
@@ -78,19 +63,16 @@ export default function Pill({
         className={`transition-opacity duration-500 ${className} ${show ? 'opacity-100' : 'opacity-0 pointer-events-none'
           }`}>
         <button
+          ref={isRed ? pillShapeRef : undefined}
           onClick={handleClick}
           disabled={disabled}
           className={`group relative flex flex-col items-center cursor-pointer ${disabled ? 'pointer-events-none' : ''
             }`}>
-          <div className={`relative w-32 h-16 md:w-40 md:h-20 transform transition-all duration-[4000ms] ease-out ${isExpanding
-            ? 'scale-[2] opacity-0'
-            : 'group-hover:scale-110 group-hover:rotate-3'
-            }`}>
+          <div className='relative w-32 h-16 md:w-40 md:h-20 transform transition-all duration-[4000ms] ease-out group-hover:scale-110 group-hover:rotate-3'>
             {/* Shadow at bottom for 3D effect */}
             <div className='absolute inset-0 rounded-full bg-black/50 blur-md translate-y-2'></div>
             {/* Pill with top-to-bottom gradient */}
             <div
-              ref={isRed ? pillShapeRef : undefined}
               className='relative w-full h-full rounded-full flex items-center justify-center shadow-2xl'
               style={{
                 background: gradientStyle,
@@ -116,23 +98,18 @@ export default function Pill({
   // Original pill variant: visual pill without text
   return (
     <button
+      ref={isRed ? pillShapeRef : undefined}
       onClick={handleClick}
       disabled={disabled}
       className={`group relative flex flex-col items-center space-y-6 cursor-pointer ${isFadingOut && !isSelected ? 'opacity-30' : ''
         } ${disabled ? 'pointer-events-none' : ''} ${className}`}>
       <div
-        className={`relative w-32 h-16 md:w-40 md:h-20 transform transition-all duration-[4000ms] ease-out ${isExpanding
-          ? 'scale-[2] opacity-0'
-          : isSelected && isFadingOut
-            ? `scale-110 ${rotationClass}`
-            : `group-hover:scale-110 ${isRed ? 'group-hover:-rotate-3' : 'group-hover:rotate-3'
-            }`
+        className={`relative w-32 h-16 md:w-40 md:h-20 transform transition-all duration-[4000ms] ease-out group-hover:scale-110 ${isRed ? 'group-hover:-rotate-3' : 'group-hover:rotate-3'
           }`}>
         {/* Shadow at bottom for 3D effect */}
         <div className='absolute inset-0 rounded-full bg-black/50 blur-md translate-y-2'></div>
         {/* Pill with top-to-bottom gradient */}
         <div
-          ref={isRed ? pillShapeRef : undefined}
           className='relative w-full h-full rounded-full flex items-center justify-center shadow-2xl'
           style={{
             background: gradientStyle,
