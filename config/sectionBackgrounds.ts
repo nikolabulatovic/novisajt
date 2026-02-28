@@ -39,18 +39,26 @@ export const sectionBackgrounds: Record<Stage, SectionBackgroundConfig> = {
     opacity: 0.8,
   },
   'spasa-revelation': {
-    backgroundImage: '/images/spasa-revelation-bg.jpg',
+    backgroundImage: '/images/spasa-prasa.jpg',
     opacity: 0.8,
   },
   'spasa-revelation-part1': {
-    backgroundImage: '/images/spasa-revelation-part1-bg.jpg',
+    backgroundImage: '/images/enslaved-pigs.jpg',
     opacity: 0.8,
   },
   facts: {
     opacity: 0.8,
   },
   'spasa-revelation-part2': {
-    backgroundImage: '/images/spasa-revelation-part2-bg.jpg',
+    backgroundImage: '/images/horse-stable-gray.jpg',
+    opacity: 0.8,
+  },
+  'spasa-revelation-part3': {
+    backgroundImage: '/images/industrija-koze.png',
+    opacity: 0.8,
+  },
+  'spasa-revelation-part4': {
+    backgroundImage: '/images/farm-animals.jpg',
     opacity: 0.8,
   },
   'animal-exploitation': {

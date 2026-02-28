@@ -17,8 +17,12 @@ export default function SpasaRevelationPart1({
 }: SpasaRevelationPart1Props) {
   const [showButton, setShowButton] = useState(false);
 
-  const text =
-    'Ostali prasići nisu imali tu sreću. Njima je neko predodredio dan smrti, pre njihovog rođenja. Ne zato što je taj neko sadista - nego zato što ispunjava potražnju. Radi to što drugi ljudi traže od njega da radi.';
+  const text = [
+    'Ostali prasići nisu imali tu sreću.',
+    'Njima je dan smrti određen pre nego što su se rodili. Ne zato što je neko monstrum — nego zato što to neko traži.',
+    'Neko proizvodi smrt jer je mi naručujemo. Kao proizvod. Kao robu.',
+    'Industrija ne mrzi životinje. Industrija ih ne vidi.',
+  ];
 
   const { backgroundImage, opacity = 0.8 } = sectionBackgrounds['spasa-revelation-part1'];
 

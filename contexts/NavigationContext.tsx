@@ -15,6 +15,8 @@ export type Stage =
   | 'spasa-revelation-part1'
   | 'facts'
   | 'spasa-revelation-part2'
+  | 'spasa-revelation-part3'
+  | 'spasa-revelation-part4'
   | 'animal-exploitation'
   | 'domestication'
   | 'moral-consistency'

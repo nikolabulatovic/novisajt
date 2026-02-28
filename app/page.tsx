@@ -16,6 +16,8 @@ import SpasaRevelation from '@/components/SpasaRevelation';
 import SpasaRevelationPart1 from '@/components/SpasaRevelationPart1';
 import FactsNumbers from '@/components/FactsNumbers';
 import SpasaRevelationPart2 from '@/components/SpasaRevelationPart2';
+import SpasaRevelationPart3 from '@/components/SpasaRevelationPart3';
+import SpasaRevelationPart4 from '@/components/SpasaRevelationPart4';
 import AnimalExploitation from '@/components/AnimalExploitation';
 import DomesticationReproduction from '@/components/DomesticationReproduction';
 import MoralConsistency from '@/components/MoralConsistency';
@@ -96,14 +98,18 @@ export default function Home() {
   };
 
   const handleSpasaRevelationPart1Complete = () => {
-    transitionToStage('facts');
-  };
-
-  const handleFactsComplete = () => {
     transitionToStage('spasa-revelation-part2');
   };
 
   const handleSpasaRevelationPart2Complete = () => {
+    transitionToStage('spasa-revelation-part3');
+  };
+
+  const handleSpasaRevelationPart3Complete = () => {
+    transitionToStage('spasa-revelation-part4');
+  };
+
+  const handleSpasaRevelationPart4Complete = () => {
     transitionToStage('animal-exploitation');
   };
 
@@ -180,9 +186,15 @@ export default function Home() {
             {stage === 'spasa-revelation-part1' && (
               <SpasaRevelationPart1 onComplete={handleSpasaRevelationPart1Complete} />
             )}
-            {stage === 'facts' && <FactsNumbers onComplete={handleFactsComplete} />}
+            {stage === 'facts' && <FactsNumbers onComplete={() => { }} />}
             {stage === 'spasa-revelation-part2' && (
               <SpasaRevelationPart2 onComplete={handleSpasaRevelationPart2Complete} />
+            )}
+            {stage === 'spasa-revelation-part3' && (
+              <SpasaRevelationPart3 onComplete={handleSpasaRevelationPart3Complete} />
+            )}
+            {stage === 'spasa-revelation-part4' && (
+              <SpasaRevelationPart4 onComplete={handleSpasaRevelationPart4Complete} />
             )}
             {stage === 'animal-exploitation' && (
               <AnimalExploitation onComplete={handleAnimalExploitationComplete} />

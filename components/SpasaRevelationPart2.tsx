@@ -18,8 +18,10 @@ export default function SpasaRevelationPart2({
   const [showButton, setShowButton] = useState(false);
 
   const text = [
-    'Koren problema je to što se životinje gledaju kao objekti i resursi, a ne kao svesna bića koja jesu. Ne poštujemo ih u najosnovnijem smislu.',
-    'Druga bića ne postoje da bismo ih mi koristili. Tu su da žive svoj život.',
+    'Ali problem nije samo industrija. Industrija je samo savremeni oblik iste stare ideje.',
+    'Problem je stariji od fabrika. Stariji od traka, klanica i korporacija.',
+    'To je mentalitet.',
+    'Ideja da druga bića postoje da bi bila korišćena. Da je normalno pretvoriti nekoga u sredstvo.',
   ];
 
   const { backgroundImage, opacity = 0.8 } = sectionBackgrounds['spasa-revelation-part2'];

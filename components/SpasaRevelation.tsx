@@ -16,8 +16,10 @@ export default function SpasaRevelation({ onComplete }: SpasaRevelationProps) {
   const [showButton, setShowButton] = useState(false);
 
   const text = [
-    'Spasa je prase. I, baš kao ljudi i druge životinje, ona je svesna i osećajna — želi da živi svoj život.',
-    'Spašena je zato što je profesorima veterine bila slatka. Porasla je u azilu i tamo se i dalje povezuje i druži sa ljudima i sa drugim životinjama.',
+    { line: [{ text: 'Spasa je prase.', bold: true }] },
+    { line: [{ text: 'Baš kao i mi, ona je svesna. Oseća strah, radoznalost, vezanost. Želi da živi.' }] },
+    { line: [{ text: 'Spašena je jer je bila slatka. Jer se nekome učinila posebnom. Jer je pogled na nju probudio empatiju.' }] },
+    { line: [{ text: 'Završila je u azilu. Danas se igra. Uči. Povezuje se sa ljudima i drugim životinjama.' }] },
   ];
 
   const { backgroundImage, opacity = 0.8 } = sectionBackgrounds['spasa-revelation'];
