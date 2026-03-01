@@ -18,10 +18,10 @@ export default function SpasaRevelationPart2({
   const [showButton, setShowButton] = useState(false);
 
   const text = [
-    'Ali problem nije samo industrija. Industrija je samo savremeni oblik iste stare ideje.',
+    'Ali koren problema nije industrija. Industrija je samo savremeni oblik iste stare ideje.',
     'Problem je stariji od fabrika. Stariji od traka, klanica i korporacija.',
     'To je mentalitet.',
-    'Ideja da druga bića postoje da bi bila korišćena. Da je normalno pretvoriti nekoga u sredstvo.',
+    'Verovanje da druga bića postoje da bi bila korišćena. Da je normalno pretvoriti nekoga u sredstvo.',
   ];
 
   const { backgroundImage, opacity = 0.8 } = sectionBackgrounds['spasa-revelation-part2'];

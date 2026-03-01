@@ -8,23 +8,25 @@ import TextBackdrop from './ui/TextBackdrop';
 import ContentContainer from './ui/ContentContainer';
 import { sectionBackgrounds } from '@/config/sectionBackgrounds';
 
-interface SpasaRevelationPart1Props {
+interface SpasaRevelationPart3Props {
   onComplete: () => void;
 }
 
-export default function SpasaRevelationPart1({
+export default function SpasaRevelationPart3({
   onComplete,
-}: SpasaRevelationPart1Props) {
+}: SpasaRevelationPart3Props) {
   const [showButton, setShowButton] = useState(false);
 
   const text = [
-    'Ostali prasići nisu imali tu sreću.',
-    'Njima je dan smrti određen pre nego što su se rodili. Ne zato što je neko sadista — nego zato što postoji potražnja za njihovim telima.',
-    'Neko im oduzima život jer mi to naručujemo. Kao proizvod. Kao robu.',
-    'Industrija ne mrzi životinje. Industrija ih ne vidi.',
+    'Životinje se ne eksploatišu samo zarad tanjira.',
+    'Koriste se gde god postoji korist. Njihova tela postaju materijal.',
+    'Za garderobu — koža, krzno, vuna, svila.',
+    'Za testiranje — kozmetika, lekovi, hemikalije.',
+    'Za zabavu — zoološki vrtovi, cirkusi, trke.',
+    'I u svakoj od tih uloga, one nisu posmatrane kao bića, nego kao stvari.',
   ];
 
-  const { backgroundImage, opacity = 0.8 } = sectionBackgrounds['spasa-revelation-part1'];
+  const { backgroundImage, opacity = 0.8 } = sectionBackgrounds['spasa-revelation-part3'];
 
   return (
     <PageContainer
@@ -51,4 +53,3 @@ export default function SpasaRevelationPart1({
     </PageContainer>
   );
 }
-
