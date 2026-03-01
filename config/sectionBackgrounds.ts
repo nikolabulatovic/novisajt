@@ -42,22 +42,34 @@ export const sectionBackgrounds: Record<Stage, SectionBackgroundConfig> = {
     backgroundImage: '/images/spasa-prasa.jpg',
     opacity: 0.8,
   },
-  'spasa-revelation-part1': {
+  'other-pigs': {
     backgroundImage: '/images/enslaved-pigs.jpg',
     opacity: 0.8,
   },
   facts: {
     opacity: 0.8,
   },
-  'spasa-revelation-part2': {
+  'root-of-the-problem': {
     backgroundImage: '/images/horse-stable-gray.jpg',
     opacity: 0.8,
   },
-  'spasa-revelation-part3': {
+  'animals-treated-as-products': {
     backgroundImage: '/images/industrija-koze.png',
     opacity: 0.8,
   },
-  'spasa-revelation-part4': {
+  'let-them-live': {
+    backgroundImage: '/images/farm-animals.jpg',
+    opacity: 0.8,
+  },
+  'from-the-wild': {
+    backgroundImage: '/images/farm-animals.jpg',
+    opacity: 0.8,
+  },
+  'animal-cost-of-living': {
+    backgroundImage: '/images/farm-animals.jpg',
+    opacity: 0.8,
+  },
+  'reproduction-control': {
     backgroundImage: '/images/farm-animals.jpg',
     opacity: 0.8,
   },

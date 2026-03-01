@@ -8,23 +8,24 @@ import TextBackdrop from './ui/TextBackdrop';
 import ContentContainer from './ui/ContentContainer';
 import { sectionBackgrounds } from '@/config/sectionBackgrounds';
 
-interface SpasaRevelationPart4Props {
+interface AnimalCostOfLivingProps {
   onComplete: () => void;
 }
 
-export default function SpasaRevelationPart4({
+export default function AnimalCostOfLiving({
   onComplete,
-}: SpasaRevelationPart4Props) {
+}: AnimalCostOfLivingProps) {
   const [showButton, setShowButton] = useState(false);
 
   const text = [
-    { line: [{ text: 'Druga svesna bića ne postoje da bi služila nama.' }] },
-    { line: [{ text: 'Ne postoje da bi bila iskorišćena. Ne postoje da bi bila potrošena.' }] },
-    { line: [{ text: 'Postoje iz istog razloga kao i mi:' }] },
-    { line: [{ text: 'Da žive svoj život.', bold: true }] },
+    'Životinja se drži u životu dok se od nje može zaraditi.',
+    'Držati je znači obezbediti prostor, hranu, vodu i negu.',
+    'Kada više ne donosi prihod, ljudi je uklanjaju.',
+    'Svake godine stvaramo nove životinje da bismo ih koristili.',
+    'Zato ih ne izdržavamo do prirodne starosti.',
   ];
 
-  const { backgroundImage, opacity = 0.8 } = sectionBackgrounds['spasa-revelation-part4'];
+  const { backgroundImage, opacity = 0.8 } = sectionBackgrounds['animal-cost-of-living'];
 
   return (
     <PageContainer

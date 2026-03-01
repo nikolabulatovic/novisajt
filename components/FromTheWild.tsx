@@ -8,23 +8,25 @@ import TextBackdrop from './ui/TextBackdrop';
 import ContentContainer from './ui/ContentContainer';
 import { sectionBackgrounds } from '@/config/sectionBackgrounds';
 
-interface SpasaRevelationPart2Props {
+interface FromTheWildProps {
   onComplete: () => void;
 }
 
-export default function SpasaRevelationPart2({
+export default function FromTheWild({
   onComplete,
-}: SpasaRevelationPart2Props) {
+}: FromTheWildProps) {
   const [showButton, setShowButton] = useState(false);
 
   const text = [
-    'Ali koren problema nije industrija. Industrija je samo savremeni oblik iste stare ideje.',
-    'Problem je stariji od fabrika. Stariji od traka, klanica i korporacija.',
-    'To je mentalitet.',
-    'Verovanje da druga bića postoje da bi bila korišćena. Da je normalno pretvoriti nekoga u sredstvo.',
+    'Milijarde domaćih životinja postoje isključivo da bi se koristile kao resurs.',
+    'Sve domaće vrste potiču od divljih vrsta - nekada su to bile slobodne životinje.',
+    'Ljudi su im ukrali slobodu i preuzeli potpunu kontrolu nad njihovim životima, uključujući kontrolu reprodukcije.',
+    'Životinje nemaju nikakav izbor.',
+    'Telad se oduzimaju majkama.',
+    'Pilići se razdvajaju po polu, a muški se ubijaju ubrzo nakon rođenja jer nisu isplativi.',
   ];
 
-  const { backgroundImage, opacity = 0.8 } = sectionBackgrounds['spasa-revelation-part2'];
+  const { backgroundImage, opacity = 0.8 } = sectionBackgrounds['from-the-wild'];
 
   return (
     <PageContainer
@@ -51,4 +53,3 @@ export default function SpasaRevelationPart2({
     </PageContainer>
   );
 }
-

@@ -8,25 +8,23 @@ import TextBackdrop from './ui/TextBackdrop';
 import ContentContainer from './ui/ContentContainer';
 import { sectionBackgrounds } from '@/config/sectionBackgrounds';
 
-interface SpasaRevelationPart3Props {
+interface OtherPigsProps {
   onComplete: () => void;
 }
 
-export default function SpasaRevelationPart3({
+export default function OtherPigs({
   onComplete,
-}: SpasaRevelationPart3Props) {
+}: OtherPigsProps) {
   const [showButton, setShowButton] = useState(false);
 
   const text = [
-    'Životinje se ne eksploatišu samo zarad tanjira.',
-    'Koriste se gde god postoji korist. Njihova tela postaju materijal.',
-    'Za garderobu — koža, krzno, vuna, svila.',
-    'Za testiranje — kozmetika, lekovi, hemikalije.',
-    'Za zabavu — zoološki vrtovi, cirkusi, trke.',
-    'I u svakoj od tih uloga, one nisu posmatrane kao bića, nego kao stvari.',
+    'Ostali prasići nisu imali tu sreću.',
+    'Njima je dan smrti određen pre nego što su se rodili. Ne zato što je neko sadista — nego zato što postoji potražnja za njihovim telima.',
+    'Neko im oduzima život jer mi to naručujemo. Kao proizvod. Kao robu.',
+    'Industrija ne mrzi životinje. Industrija ih ne vidi.',
   ];
 
-  const { backgroundImage, opacity = 0.8 } = sectionBackgrounds['spasa-revelation-part3'];
+  const { backgroundImage, opacity = 0.8 } = sectionBackgrounds['other-pigs'];
 
   return (
     <PageContainer
@@ -53,3 +51,4 @@ export default function SpasaRevelationPart3({
     </PageContainer>
   );
 }
+

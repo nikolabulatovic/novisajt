@@ -13,11 +13,14 @@ import PersonalQuestion from '@/components/PersonalQuestion';
 import BreakingQuestion from '@/components/BreakingQuestion';
 import SpasaStory from '@/components/SpasaStory';
 import SpasaRevelation from '@/components/SpasaRevelation';
-import SpasaRevelationPart1 from '@/components/SpasaRevelationPart1';
+import OtherPigs from '@/components/OtherPigs';
 import FactsNumbers from '@/components/FactsNumbers';
-import SpasaRevelationPart2 from '@/components/SpasaRevelationPart2';
-import SpasaRevelationPart3 from '@/components/SpasaRevelationPart3';
-import SpasaRevelationPart4 from '@/components/SpasaRevelationPart4';
+import RootOfTheProblem from '@/components/RootOfTheProblem';
+import AnimalsTreatedAsProducts from '@/components/AnimalsTreatedAsProducts';
+import LetThemLive from '@/components/LetThemLive';
+import FromTheWild from '@/components/FromTheWild';
+import AnimalCostOfLiving from '@/components/AnimalCostOfLiving';
+import ReproductionControl from '@/components/SpasaRevelationPart7';
 import AnimalExploitation from '@/components/AnimalExploitation';
 import DomesticationReproduction from '@/components/DomesticationReproduction';
 import MoralConsistency from '@/components/MoralConsistency';
@@ -94,22 +97,34 @@ export default function Home() {
   };
 
   const handleSpasaRevelationComplete = () => {
-    transitionToStage('spasa-revelation-part1');
+    transitionToStage('other-pigs');
   };
 
-  const handleSpasaRevelationPart1Complete = () => {
-    transitionToStage('spasa-revelation-part2');
+  const handleOtherPigsComplete = () => {
+    transitionToStage('root-of-the-problem');
   };
 
-  const handleSpasaRevelationPart2Complete = () => {
-    transitionToStage('spasa-revelation-part3');
+  const handleRootOfTheProblemComplete = () => {
+    transitionToStage('animals-treated-as-products');
   };
 
-  const handleSpasaRevelationPart3Complete = () => {
-    transitionToStage('spasa-revelation-part4');
+  const handleAnimalsTreatedAsProductsComplete = () => {
+    transitionToStage('let-them-live');
   };
 
-  const handleSpasaRevelationPart4Complete = () => {
+  const handleLetThemLiveComplete = () => {
+    transitionToStage('from-the-wild');
+  };
+
+  const handleFromTheWildComplete = () => {
+    transitionToStage('animal-cost-of-living');
+  };
+
+  const handleAnimalCostOfLivingComplete = () => {
+    transitionToStage('reproduction-control');
+  };
+
+  const handleReproductionControlComplete = () => {
     transitionToStage('animal-exploitation');
   };
 
@@ -183,18 +198,27 @@ export default function Home() {
             {stage === 'spasa-revelation' && (
               <SpasaRevelation onComplete={handleSpasaRevelationComplete} />
             )}
-            {stage === 'spasa-revelation-part1' && (
-              <SpasaRevelationPart1 onComplete={handleSpasaRevelationPart1Complete} />
+            {stage === 'other-pigs' && (
+              <OtherPigs onComplete={handleOtherPigsComplete} />
             )}
             {stage === 'facts' && <FactsNumbers onComplete={() => { }} />}
-            {stage === 'spasa-revelation-part2' && (
-              <SpasaRevelationPart2 onComplete={handleSpasaRevelationPart2Complete} />
+            {stage === 'root-of-the-problem' && (
+              <RootOfTheProblem onComplete={handleRootOfTheProblemComplete} />
             )}
-            {stage === 'spasa-revelation-part3' && (
-              <SpasaRevelationPart3 onComplete={handleSpasaRevelationPart3Complete} />
+            {stage === 'animals-treated-as-products' && (
+              <AnimalsTreatedAsProducts onComplete={handleAnimalsTreatedAsProductsComplete} />
             )}
-            {stage === 'spasa-revelation-part4' && (
-              <SpasaRevelationPart4 onComplete={handleSpasaRevelationPart4Complete} />
+            {stage === 'let-them-live' && (
+              <LetThemLive onComplete={handleLetThemLiveComplete} />
+            )}
+            {stage === 'from-the-wild' && (
+              <FromTheWild onComplete={handleFromTheWildComplete} />
+            )}
+            {stage === 'animal-cost-of-living' && (
+              <AnimalCostOfLiving onComplete={handleAnimalCostOfLivingComplete} />
+            )}
+            {stage === 'reproduction-control' && (
+              <ReproductionControl onComplete={handleReproductionControlComplete} />
             )}
             {stage === 'animal-exploitation' && (
               <AnimalExploitation onComplete={handleAnimalExploitationComplete} />
