@@ -62,15 +62,27 @@ export const sectionBackgrounds: Record<Stage, SectionBackgroundConfig> = {
     opacity: 0.8,
   },
   'from-the-wild': {
-    backgroundImage: '/images/farm-animals.jpg',
+    backgroundImage: '/images/farm-animals2.jpg',
     opacity: 0.8,
   },
   'animal-cost-of-living': {
-    backgroundImage: '/images/farm-animals.jpg',
+    backgroundImage: '/images/farm-animals2.jpg',
     opacity: 0.8,
   },
   'reproduction-control': {
-    backgroundImage: '/images/farm-animals.jpg',
+    backgroundImage: '/images/farm-animals2.jpg',
+    opacity: 0.8,
+  },
+  'solution-use': {
+    backgroundImage: '/images/farm-animals2.jpg',
+    opacity: 0.8,
+  },
+  'solution-know': {
+    backgroundImage: '/images/farm-animals2.jpg',
+    opacity: 0.8,
+  },
+  'solution-choice': {
+    backgroundImage: '/images/farm-animals2.jpg',
     opacity: 0.8,
   },
   'animal-exploitation': {

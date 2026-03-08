@@ -21,6 +21,9 @@ import LetThemLive from '@/components/LetThemLive';
 import FromTheWild from '@/components/FromTheWild';
 import AnimalCostOfLiving from '@/components/AnimalCostOfLiving';
 import ReproductionControl from '@/components/SpasaRevelationPart7';
+import SolutionUse from '@/components/SolutionUse';
+import SolutionKnow from '@/components/SolutionKnow';
+import SolutionChoice from '@/components/SolutionChoice';
 import AnimalExploitation from '@/components/AnimalExploitation';
 import DomesticationReproduction from '@/components/DomesticationReproduction';
 import MoralConsistency from '@/components/MoralConsistency';
@@ -125,7 +128,19 @@ export default function Home() {
   };
 
   const handleReproductionControlComplete = () => {
-    transitionToStage('animal-exploitation');
+    transitionToStage('solution-use');
+  };
+
+  const handleSolutionUseComplete = () => {
+    transitionToStage('solution-know');
+  };
+
+  const handleSolutionKnowComplete = () => {
+    transitionToStage('solution-choice');
+  };
+
+  const handleSolutionChoiceComplete = () => {
+    transitionToStage('after-choice');
   };
 
   const handleAnimalExploitationComplete = () => {
@@ -219,6 +234,15 @@ export default function Home() {
             )}
             {stage === 'reproduction-control' && (
               <ReproductionControl onComplete={handleReproductionControlComplete} />
+            )}
+            {stage === 'solution-use' && (
+              <SolutionUse onComplete={handleSolutionUseComplete} />
+            )}
+            {stage === 'solution-know' && (
+              <SolutionKnow onComplete={handleSolutionKnowComplete} />
+            )}
+            {stage === 'solution-choice' && (
+              <SolutionChoice onComplete={handleSolutionChoiceComplete} />
             )}
             {stage === 'animal-exploitation' && (
               <AnimalExploitation onComplete={handleAnimalExploitationComplete} />
