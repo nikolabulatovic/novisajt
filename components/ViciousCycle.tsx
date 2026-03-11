@@ -8,24 +8,22 @@ import TextBackdrop from './ui/TextBackdrop';
 import ContentContainer from './ui/ContentContainer';
 import { sectionBackgrounds } from '@/config/sectionBackgrounds';
 
-interface RootOfTheProblemProps {
+interface ViciousCycleProps {
   onComplete: () => void;
 }
 
-export default function RootOfTheProblem({
-  onComplete,
-}: RootOfTheProblemProps) {
+export default function ViciousCycle({ onComplete }: ViciousCycleProps) {
   const [showButton, setShowButton] = useState(false);
 
   const text = [
-    'Ali koren problema nije industrija. Industrija je samo savremeni oblik iste stare ideje.',
-    'Problem je stariji od fabrika. Stariji od traka, klanica i korporacija.',
-    'To je mentalitet.',
-    'Verovanje da druga bića postoje da bi bila korišćena. Da je normalno pretvoriti nekoga u proizvod.',
+    'Prisilnom veštačkom oplodnjom stvaramo milijarde novih životinja godišnje.',
+    'To je neprestani ciklus.',
+    'Pilići se razdvajaju po polu čim se ispile i muški se ubijaju ubrzo nakon rođenja jer nisu isplativi.',
+    'Ženke postaju koke nosilje.',
   ];
 
   const { backgroundImage, opacity = 0.8 } =
-    sectionBackgrounds['root-of-the-problem'];
+    sectionBackgrounds['vicious-cycle'];
 
   return (
     <PageContainer

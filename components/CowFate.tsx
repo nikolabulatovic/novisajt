@@ -8,41 +8,37 @@ import TextBackdrop from './ui/TextBackdrop';
 import ContentContainer from './ui/ContentContainer';
 import { sectionBackgrounds } from '@/config/sectionBackgrounds';
 
-interface ReproductionControlProps {
+interface CowFateProps {
   onComplete: () => void;
 }
 
-export default function ReproductionControl({
-  onComplete,
-}: ReproductionControlProps) {
+export default function CowFate({ onComplete }: CowFateProps) {
   const [showButton, setShowButton] = useState(false);
 
   const text = [
-    'Svesno smo kontrolisali njihovu reprodukciju da stvorimo bića koja proizvode više mleka, jaja i vune nego što je prirodno potrebno njihovom telu - čak i u meri koja im nanosi patnju.',
-    'Krave sa hroničnim upalama vimena.',
-    'Kokoške koje nose 250–300 jaja godišnje umesto nekoliko desetina.',
-    'Ovce čija je vuna postala teret.',
-    'To nije suživot.',
-    'To je biološka dominacija.',
+    'Telad se oduzimaju majkama kravama.',
+    'Većina muških teladi se ubija ubrzo nakon rođenja. Prodaju se i zatim zakolju za meso, da se od njih zaradi.',
+    'Ženke su prisiljene da postanu mašine za mleko, kao njihove majke.',
   ];
 
-  const { backgroundImage, opacity = 0.8 } = sectionBackgrounds['reproduction-control'];
+  const { backgroundImage, opacity = 0.8 } =
+    sectionBackgrounds['cow-fate'];
 
   return (
     <PageContainer
       backgroundImage={backgroundImage}
       backgroundImageOpacity={opacity}
       overlayOpacity={0.5}>
-      <ContentContainer spacing="lg">
+      <ContentContainer spacing='lg'>
         <div className='relative p-16'>
-          <TextBackdrop type="linear" />
+          <TextBackdrop type='linear' />
           <div className='relative z-10'>
             <AnimatedText
               text={text}
               speed={120}
               delayAfterComplete={1000}
-              textSize="md"
-              alignment="center"
+              textSize='md'
+              alignment='center'
               onComplete={() => setShowButton(true)}
             />
           </div>

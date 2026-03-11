@@ -13,19 +13,24 @@ interface LetThemLiveProps {
 
 const OPTIONS = ['Slažem se.', 'Ne slažem se.'] as const;
 
-export default function LetThemLive({
-  onComplete,
-}: LetThemLiveProps) {
+export default function LetThemLive({ onComplete }: LetThemLiveProps) {
   const [showOptions, setShowOptions] = useState(false);
 
   const text = [
     { line: [{ text: 'Druga svesna bića ne postoje da bi služila nama.' }] },
-    { line: [{ text: 'Ne postoje da bi bila iskorišćena. Ne postoje da bi bila potrošena.' }] },
+    {
+      line: [
+        {
+          text: 'Ne postoje da bi bila iskorišćena. Ne postoje da bi bila potrošena.',
+        },
+      ],
+    },
     { line: [{ text: 'Postoje iz istog razloga kao i mi:' }] },
     { line: [{ text: 'Da žive svoj život.', bold: true }] },
   ];
 
-  const { backgroundImage, opacity = 0.8 } = sectionBackgrounds['let-them-live'];
+  const { backgroundImage, opacity = 0.8 } =
+    sectionBackgrounds['let-them-live'];
 
   const handleAnswer = (answer: string) => {
     if (answer === 'Slažem se.') {
@@ -39,16 +44,16 @@ export default function LetThemLive({
       backgroundImage={backgroundImage}
       backgroundImageOpacity={opacity}
       overlayOpacity={0.5}>
-      <ContentContainer spacing="lg">
+      <ContentContainer spacing='lg'>
         <div className='relative p-16'>
-          <TextBackdrop type="linear" />
+          <TextBackdrop type='linear' />
           <div className='relative z-10'>
             <AnimatedText
               text={text}
               speed={120}
               delayAfterComplete={1000}
-              textSize="md"
-              alignment="center"
+              textSize='md'
+              alignment='center'
               onComplete={() => setShowOptions(true)}
             />
           </div>

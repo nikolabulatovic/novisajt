@@ -18,30 +18,30 @@ export default function AnimalCostOfLiving({
   const [showButton, setShowButton] = useState(false);
 
   const text = [
-    'Životinja se drži u životu dok se od nje može zaraditi.',
-    'Držati je znači obezbediti prostor, hranu, vodu i negu.',
-    'Kada više ne donosi prihod, ljudi je uklanjaju.',
-    'Svake godine stvaramo nove životinje da bismo ih koristili.',
-    'Zato ih ne izdržavamo do prirodne starosti.',
+    'Životinje se ne ubijaju samo zbog mesa.',
+    'Finansijski je neodrživo držati domaće životinje do njihove prirodne starosti.',
+    'Veliki je novčani gubitak.',
+    'Ubijanje je uslov opstanka svakog posla koji zavisi od uzgoja životinja.',
   ];
 
-  const { backgroundImage, opacity = 0.8 } = sectionBackgrounds['animal-cost-of-living'];
+  const { backgroundImage, opacity = 0.8 } =
+    sectionBackgrounds['animal-cost-of-living'];
 
   return (
     <PageContainer
       backgroundImage={backgroundImage}
       backgroundImageOpacity={opacity}
       overlayOpacity={0.5}>
-      <ContentContainer spacing="lg">
+      <ContentContainer spacing='lg'>
         <div className='relative p-16'>
-          <TextBackdrop type="linear" />
+          <TextBackdrop type='linear' />
           <div className='relative z-10'>
             <AnimatedText
               text={text}
               speed={120}
               delayAfterComplete={1000}
-              textSize="md"
-              alignment="center"
+              textSize='md'
+              alignment='center'
               onComplete={() => setShowButton(true)}
             />
           </div>

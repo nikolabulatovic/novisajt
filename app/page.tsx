@@ -19,8 +19,10 @@ import RootOfTheProblem from '@/components/RootOfTheProblem';
 import AnimalsTreatedAsProducts from '@/components/AnimalsTreatedAsProducts';
 import LetThemLive from '@/components/LetThemLive';
 import FromTheWild from '@/components/FromTheWild';
+import ViciousCycle from '@/components/ViciousCycle';
+import CowFate from '@/components/CowFate';
 import AnimalCostOfLiving from '@/components/AnimalCostOfLiving';
-import ReproductionControl from '@/components/SpasaRevelationPart7';
+import ReproductionControl from '@/components/ReproductionControl';
 import SolutionUse from '@/components/SolutionUse';
 import SolutionKnow from '@/components/SolutionKnow';
 import SolutionChoice from '@/components/SolutionChoice';
@@ -120,14 +122,22 @@ export default function Home() {
   };
 
   const handleFromTheWildComplete = () => {
-    transitionToStage('animal-cost-of-living');
-  };
-
-  const handleAnimalCostOfLivingComplete = () => {
     transitionToStage('reproduction-control');
   };
 
   const handleReproductionControlComplete = () => {
+    transitionToStage('vicious-cycle');
+  };
+
+  const handleViciousCycleComplete = () => {
+    transitionToStage('cow-fate');
+  };
+
+  const handleCowFateComplete = () => {
+    transitionToStage('animal-cost-of-living');
+  };
+
+  const handleAnimalCostOfLivingComplete = () => {
     transitionToStage('solution-use');
   };
 
@@ -179,16 +189,22 @@ export default function Home() {
         <main className='min-h-screen bg-black text-white overflow-hidden relative'>
           {/* Fade overlay for transitions */}
           <div
-            className={`absolute inset-0 bg-black z-50 pointer-events-none transition-opacity duration-[400ms] ease-in-out ${isTransitioning ? 'opacity-100' : 'opacity-0'
-              }`}
+            className={`absolute inset-0 bg-black z-50 pointer-events-none transition-opacity duration-[400ms] ease-in-out ${
+              isTransitioning ? 'opacity-100' : 'opacity-0'
+            }`}
           />
 
           {/* Stage content with fade in */}
           <div
-            className={`transition-opacity duration-[600ms] ease-in-out ${isTransitioning ? 'opacity-0' : 'opacity-100'
-              }`}>
-            {stage === 'choice' && <ChoiceStage onPillChoice={handlePillChoice} />}
-            {stage === 'intro' && <RedPillIntro onComplete={handleIntroComplete} />}
+            className={`transition-opacity duration-[600ms] ease-in-out ${
+              isTransitioning ? 'opacity-0' : 'opacity-100'
+            }`}>
+            {stage === 'choice' && (
+              <ChoiceStage onPillChoice={handlePillChoice} />
+            )}
+            {stage === 'intro' && (
+              <RedPillIntro onComplete={handleIntroComplete} />
+            )}
             {stage === 'evaluation' && (
               <CharacterEvaluation
                 onComplete={handleEvaluationComplete}
@@ -216,12 +232,14 @@ export default function Home() {
             {stage === 'other-pigs' && (
               <OtherPigs onComplete={handleOtherPigsComplete} />
             )}
-            {stage === 'facts' && <FactsNumbers onComplete={() => { }} />}
+            {stage === 'facts' && <FactsNumbers onComplete={() => {}} />}
             {stage === 'root-of-the-problem' && (
               <RootOfTheProblem onComplete={handleRootOfTheProblemComplete} />
             )}
             {stage === 'animals-treated-as-products' && (
-              <AnimalsTreatedAsProducts onComplete={handleAnimalsTreatedAsProductsComplete} />
+              <AnimalsTreatedAsProducts
+                onComplete={handleAnimalsTreatedAsProductsComplete}
+              />
             )}
             {stage === 'let-them-live' && (
               <LetThemLive onComplete={handleLetThemLiveComplete} />
@@ -229,11 +247,21 @@ export default function Home() {
             {stage === 'from-the-wild' && (
               <FromTheWild onComplete={handleFromTheWildComplete} />
             )}
+            {stage === 'vicious-cycle' && (
+              <ViciousCycle onComplete={handleViciousCycleComplete} />
+            )}
+            {stage === 'cow-fate' && (
+              <CowFate onComplete={handleCowFateComplete} />
+            )}
             {stage === 'animal-cost-of-living' && (
-              <AnimalCostOfLiving onComplete={handleAnimalCostOfLivingComplete} />
+              <AnimalCostOfLiving
+                onComplete={handleAnimalCostOfLivingComplete}
+              />
             )}
             {stage === 'reproduction-control' && (
-              <ReproductionControl onComplete={handleReproductionControlComplete} />
+              <ReproductionControl
+                onComplete={handleReproductionControlComplete}
+              />
             )}
             {stage === 'solution-use' && (
               <SolutionUse onComplete={handleSolutionUseComplete} />
@@ -245,10 +273,14 @@ export default function Home() {
               <SolutionChoice onComplete={handleSolutionChoiceComplete} />
             )}
             {stage === 'animal-exploitation' && (
-              <AnimalExploitation onComplete={handleAnimalExploitationComplete} />
+              <AnimalExploitation
+                onComplete={handleAnimalExploitationComplete}
+              />
             )}
             {stage === 'domestication' && (
-              <DomesticationReproduction onComplete={handleDomesticationComplete} />
+              <DomesticationReproduction
+                onComplete={handleDomesticationComplete}
+              />
             )}
             {stage === 'moral-consistency' && (
               <MoralConsistency onComplete={handleMoralConsistencyComplete} />

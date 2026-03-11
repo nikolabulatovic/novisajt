@@ -8,24 +8,26 @@ import TextBackdrop from './ui/TextBackdrop';
 import ContentContainer from './ui/ContentContainer';
 import { sectionBackgrounds } from '@/config/sectionBackgrounds';
 
-interface RootOfTheProblemProps {
+interface ReproductionControlProps {
   onComplete: () => void;
 }
 
-export default function RootOfTheProblem({
+export default function ReproductionControl({
   onComplete,
-}: RootOfTheProblemProps) {
+}: ReproductionControlProps) {
   const [showButton, setShowButton] = useState(false);
 
   const text = [
-    'Ali koren problema nije industrija. Industrija je samo savremeni oblik iste stare ideje.',
-    'Problem je stariji od fabrika. Stariji od traka, klanica i korporacija.',
-    'To je mentalitet.',
-    'Verovanje da druga bića postoje da bi bila korišćena. Da je normalno pretvoriti nekoga u proizvod.',
+    'Parili smo ih i oblikovali po našim željama, na njihovu štetu.',
+    'Krave sa hroničnim upalama vimena.',
+    'Kokoške koje nose 250–300 jaja godišnje umesto nekoliko desetina.',
+    'Ovce čija je vuna postala teret.',
+    'To nije suživot.',
+    'To je biološka dominacija.',
   ];
 
   const { backgroundImage, opacity = 0.8 } =
-    sectionBackgrounds['root-of-the-problem'];
+    sectionBackgrounds['reproduction-control'];
 
   return (
     <PageContainer

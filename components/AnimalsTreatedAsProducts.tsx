@@ -23,26 +23,27 @@ export default function AnimalsTreatedAsProducts({
     'Za garderobu — koža, krzno, vuna, svila.',
     'Za testiranje — kozmetika, lekovi, hemikalije.',
     'Za zabavu — zoološki vrtovi, cirkusi, trke.',
-    'I u svakoj od tih uloga, one nisu posmatrane kao bića, nego kao stvari.',
+    'I u svakoj od tih uloga, one su posmatrane kao stvari, a ne kao bića.',
   ];
 
-  const { backgroundImage, opacity = 0.8 } = sectionBackgrounds['animals-treated-as-products'];
+  const { backgroundImage, opacity = 0.8 } =
+    sectionBackgrounds['animals-treated-as-products'];
 
   return (
     <PageContainer
       backgroundImage={backgroundImage}
       backgroundImageOpacity={opacity}
       overlayOpacity={0.5}>
-      <ContentContainer spacing="lg">
+      <ContentContainer spacing='lg'>
         <div className='relative p-16'>
-          <TextBackdrop type="linear" />
+          <TextBackdrop type='linear' />
           <div className='relative z-10'>
             <AnimatedText
               text={text}
               speed={120}
               delayAfterComplete={1000}
-              textSize="md"
-              alignment="center"
+              textSize='md'
+              alignment='center'
               onComplete={() => setShowButton(true)}
             />
           </div>

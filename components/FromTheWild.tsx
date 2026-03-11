@@ -12,37 +12,33 @@ interface FromTheWildProps {
   onComplete: () => void;
 }
 
-export default function FromTheWild({
-  onComplete,
-}: FromTheWildProps) {
+export default function FromTheWild({ onComplete }: FromTheWildProps) {
   const [showButton, setShowButton] = useState(false);
 
   const text = [
-    'Milijarde domaćih životinja postoje isključivo da bi se koristile kao resurs.',
     'Sve domaće vrste potiču od divljih vrsta - nekada su to bile slobodne životinje.',
     'Ljudi su im ukrali slobodu i preuzeli potpunu kontrolu nad njihovim životima, uključujući kontrolu reprodukcije.',
     'Životinje nemaju nikakav izbor.',
-    'Telad se oduzimaju majkama.',
-    'Pilići se razdvajaju po polu, a muški se ubijaju ubrzo nakon rođenja jer nisu isplativi.',
   ];
 
-  const { backgroundImage, opacity = 0.8 } = sectionBackgrounds['from-the-wild'];
+  const { backgroundImage, opacity = 0.8 } =
+    sectionBackgrounds['from-the-wild'];
 
   return (
     <PageContainer
       backgroundImage={backgroundImage}
       backgroundImageOpacity={opacity}
       overlayOpacity={0.5}>
-      <ContentContainer spacing="lg">
+      <ContentContainer spacing='lg'>
         <div className='relative p-16'>
-          <TextBackdrop type="linear" />
+          <TextBackdrop type='linear' />
           <div className='relative z-10'>
             <AnimatedText
               text={text}
               speed={120}
               delayAfterComplete={1000}
-              textSize="md"
-              alignment="center"
+              textSize='md'
+              alignment='center'
               onComplete={() => setShowButton(true)}
             />
           </div>

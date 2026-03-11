@@ -17,6 +17,8 @@ export type Stage =
   | 'animals-treated-as-products'
   | 'let-them-live'
   | 'from-the-wild'
+  | 'vicious-cycle'
+  | 'cow-fate'
   | 'animal-cost-of-living'
   | 'reproduction-control'
   | 'solution-use'

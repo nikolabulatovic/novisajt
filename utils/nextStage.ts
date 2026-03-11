@@ -4,7 +4,10 @@ import { Stage } from '@/contexts/NavigationContext';
  * Determines the next stage based on the current stage
  * This is used for transition effects to show the next background image
  */
-export function getNextStage(currentStage: Stage, pillColor?: 'red' | 'blue'): Stage | null {
+export function getNextStage(
+  currentStage: Stage,
+  pillColor?: 'red' | 'blue',
+): Stage | null {
   // For choice stage, red pill goes to intro, blue stays on choice
   if (currentStage === 'choice') {
     return pillColor === 'red' ? 'intro' : null;
@@ -25,9 +28,11 @@ export function getNextStage(currentStage: Stage, pillColor?: 'red' | 'blue'): S
     'root-of-the-problem': 'animals-treated-as-products',
     'animals-treated-as-products': 'let-them-live',
     'let-them-live': 'from-the-wild',
-    'from-the-wild': 'animal-cost-of-living',
-    'animal-cost-of-living': 'reproduction-control',
-    'reproduction-control': 'solution-use',
+    'from-the-wild': 'reproduction-control',
+    'reproduction-control': 'vicious-cycle',
+    'vicious-cycle': 'cow-fate',
+    'cow-fate': 'animal-cost-of-living',
+    'animal-cost-of-living': 'solution-use',
     'solution-use': 'solution-know',
     'solution-know': 'solution-choice',
     'solution-choice': 'after-choice',
@@ -43,6 +48,3 @@ export function getNextStage(currentStage: Stage, pillColor?: 'red' | 'blue'): S
 
   return stageMap[currentStage] || null;
 }
-
-
-

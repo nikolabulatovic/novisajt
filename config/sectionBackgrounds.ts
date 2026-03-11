@@ -65,6 +65,14 @@ export const sectionBackgrounds: Record<Stage, SectionBackgroundConfig> = {
     backgroundImage: '/images/farm-animals2.jpg',
     opacity: 0.8,
   },
+  'vicious-cycle': {
+    backgroundImage: '/images/farm-animals2.jpg',
+    opacity: 0.8,
+  },
+  'cow-fate': {
+    backgroundImage: '/images/farm-animals2.jpg',
+    opacity: 0.8,
+  },
   'animal-cost-of-living': {
     backgroundImage: '/images/farm-animals2.jpg',
     opacity: 0.8,
