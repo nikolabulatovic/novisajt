@@ -93,6 +93,14 @@ export const sectionBackgrounds: Record<Stage, SectionBackgroundConfig> = {
     backgroundImage: '/images/farm-animals2.jpg',
     opacity: 0.8,
   },
+  'align-behaviour': {
+    backgroundImage: '/images/farm-animals2.jpg',
+    opacity: 0.8,
+  },
+  'veganism-principle': {
+    backgroundImage: '/images/farm-animals2.jpg',
+    opacity: 0.8,
+  },
   'animal-exploitation': {
     backgroundImage: '/images/animal-exploitation-bg.jpg',
     opacity: 0.25,

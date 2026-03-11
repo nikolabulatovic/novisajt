@@ -26,6 +26,8 @@ import ReproductionControl from '@/components/ReproductionControl';
 import SolutionUse from '@/components/SolutionUse';
 import SolutionKnow from '@/components/SolutionKnow';
 import SolutionChoice from '@/components/SolutionChoice';
+import AlignBehaviour from '@/components/AlignBehaviour';
+import VeganismPrinciple from '@/components/VeganismPrinciple';
 import AnimalExploitation from '@/components/AnimalExploitation';
 import DomesticationReproduction from '@/components/DomesticationReproduction';
 import MoralConsistency from '@/components/MoralConsistency';
@@ -150,6 +152,15 @@ export default function Home() {
   };
 
   const handleSolutionChoiceComplete = () => {
+    transitionToStage('align-behaviour');
+  };
+
+  const handleAlignBehaviourComplete = (answer: string) => {
+    setAnswers((prev) => ({ ...prev, 'align-behaviour': answer }));
+    transitionToStage('veganism-principle');
+  };
+
+  const handleVeganismPrincipleComplete = () => {
     transitionToStage('after-choice');
   };
 
@@ -189,16 +200,14 @@ export default function Home() {
         <main className='min-h-screen bg-black text-white overflow-hidden relative'>
           {/* Fade overlay for transitions */}
           <div
-            className={`absolute inset-0 bg-black z-50 pointer-events-none transition-opacity duration-[400ms] ease-in-out ${
-              isTransitioning ? 'opacity-100' : 'opacity-0'
-            }`}
+            className={`absolute inset-0 bg-black z-50 pointer-events-none transition-opacity duration-[400ms] ease-in-out ${isTransitioning ? 'opacity-100' : 'opacity-0'
+              }`}
           />
 
           {/* Stage content with fade in */}
           <div
-            className={`transition-opacity duration-[600ms] ease-in-out ${
-              isTransitioning ? 'opacity-0' : 'opacity-100'
-            }`}>
+            className={`transition-opacity duration-[600ms] ease-in-out ${isTransitioning ? 'opacity-0' : 'opacity-100'
+              }`}>
             {stage === 'choice' && (
               <ChoiceStage onPillChoice={handlePillChoice} />
             )}
@@ -232,7 +241,7 @@ export default function Home() {
             {stage === 'other-pigs' && (
               <OtherPigs onComplete={handleOtherPigsComplete} />
             )}
-            {stage === 'facts' && <FactsNumbers onComplete={() => {}} />}
+            {stage === 'facts' && <FactsNumbers onComplete={() => { }} />}
             {stage === 'root-of-the-problem' && (
               <RootOfTheProblem onComplete={handleRootOfTheProblemComplete} />
             )}
@@ -271,6 +280,12 @@ export default function Home() {
             )}
             {stage === 'solution-choice' && (
               <SolutionChoice onComplete={handleSolutionChoiceComplete} />
+            )}
+            {stage === 'align-behaviour' && (
+              <AlignBehaviour onComplete={handleAlignBehaviourComplete} />
+            )}
+            {stage === 'veganism-principle' && (
+              <VeganismPrinciple onComplete={handleVeganismPrincipleComplete} />
             )}
             {stage === 'animal-exploitation' && (
               <AnimalExploitation

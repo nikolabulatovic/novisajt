@@ -24,6 +24,8 @@ export type Stage =
   | 'solution-use'
   | 'solution-know'
   | 'solution-choice'
+  | 'align-behaviour'
+  | 'veganism-principle'
   | 'facts'
   | 'animal-exploitation'
   | 'domestication'
