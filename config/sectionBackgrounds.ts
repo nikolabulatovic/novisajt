@@ -62,23 +62,23 @@ export const sectionBackgrounds: Record<Stage, SectionBackgroundConfig> = {
     opacity: 0.8,
   },
   'from-the-wild': {
-    backgroundImage: '/images/farm-animals2.jpg',
+    backgroundImage: '/images/gallus-gallus.jpg',
     opacity: 0.8,
   },
   'vicious-cycle': {
-    backgroundImage: '/images/farm-animals2.jpg',
+    backgroundImage: '/images/chicks-in-bucket.png',
     opacity: 0.8,
   },
   'cow-fate': {
-    backgroundImage: '/images/farm-animals2.jpg',
+    backgroundImage: '/images/cow-slave.jpg',
     opacity: 0.8,
   },
   'animal-cost-of-living': {
-    backgroundImage: '/images/farm-animals2.jpg',
+    backgroundImage: '/images/cows-transported.png',
     opacity: 0.8,
   },
   'reproduction-control': {
-    backgroundImage: '/images/farm-animals2.jpg',
+    backgroundImage: '/images/cow-silhouettes.png',
     opacity: 0.8,
   },
   'solution-use': {
@@ -86,7 +86,7 @@ export const sectionBackgrounds: Record<Stage, SectionBackgroundConfig> = {
     opacity: 0.8,
   },
   'solution-know': {
-    backgroundImage: '/images/farm-animals2.jpg',
+    backgroundImage: '/images/djokovic-trophy.jpg',
     opacity: 0.8,
   },
   'vegan-diet-health': {
@@ -94,7 +94,7 @@ export const sectionBackgrounds: Record<Stage, SectionBackgroundConfig> = {
     opacity: 0.8,
   },
   'solution-choice': {
-    backgroundImage: '/images/farm-animals2.jpg',
+    backgroundImage: '/images/silhouette-cracked-mirror.png',
     opacity: 0.8,
   },
   'align-behaviour': {
