@@ -89,6 +89,10 @@ export const sectionBackgrounds: Record<Stage, SectionBackgroundConfig> = {
     backgroundImage: '/images/farm-animals2.jpg',
     opacity: 0.8,
   },
+  'vegan-diet-health': {
+    backgroundImage: '/images/farm-animals2.jpg',
+    opacity: 0.8,
+  },
   'solution-choice': {
     backgroundImage: '/images/farm-animals2.jpg',
     opacity: 0.8,

@@ -35,6 +35,7 @@ export function getNextStage(
     'animal-cost-of-living': 'solution-use',
     'solution-use': 'solution-know',
     'solution-know': 'solution-choice',
+    'vegan-diet-health': 'solution-choice',
     'solution-choice': 'align-behaviour',
     'align-behaviour': 'veganism-principle',
     'veganism-principle': 'after-choice',

@@ -25,6 +25,7 @@ import AnimalCostOfLiving from '@/components/AnimalCostOfLiving';
 import ReproductionControl from '@/components/ReproductionControl';
 import SolutionUse from '@/components/SolutionUse';
 import SolutionKnow from '@/components/SolutionKnow';
+import VeganDietHealth from '@/components/VeganDietHealth';
 import SolutionChoice from '@/components/SolutionChoice';
 import AlignBehaviour from '@/components/AlignBehaviour';
 import VeganismPrinciple from '@/components/VeganismPrinciple';
@@ -147,7 +148,16 @@ export default function Home() {
     transitionToStage('solution-know');
   };
 
-  const handleSolutionKnowComplete = () => {
+  const handleSolutionKnowComplete = (answer: string) => {
+    if (answer === 'Nisam siguran' || answer === 'Ne možemo') {
+      transitionToStage('vegan-diet-health');
+    } else {
+      transitionToStage('solution-choice');
+    }
+  };
+
+  const handleVeganDietHealthComplete = (answer: string) => {
+    setAnswers((prev) => ({ ...prev, 'vegan-diet-health': answer }));
     transitionToStage('solution-choice');
   };
 
@@ -277,6 +287,9 @@ export default function Home() {
             )}
             {stage === 'solution-know' && (
               <SolutionKnow onComplete={handleSolutionKnowComplete} />
+            )}
+            {stage === 'vegan-diet-health' && (
+              <VeganDietHealth onComplete={handleVeganDietHealthComplete} />
             )}
             {stage === 'solution-choice' && (
               <SolutionChoice onComplete={handleSolutionChoiceComplete} />

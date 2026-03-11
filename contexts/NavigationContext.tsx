@@ -23,6 +23,7 @@ export type Stage =
   | 'reproduction-control'
   | 'solution-use'
   | 'solution-know'
+  | 'vegan-diet-health'
   | 'solution-choice'
   | 'align-behaviour'
   | 'veganism-principle'
