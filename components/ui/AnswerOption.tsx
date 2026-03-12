@@ -35,7 +35,7 @@ export default function AnswerOption({
       disabled={isDisabled}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-      className={`w-full text-center p-6 md:p-8 rounded-xl transition-all duration-500 transform cursor-pointer backdrop-blur-md group relative overflow-hidden animate-fade-in border ${shouldFade
+      className={`w-full text-center p-4 sm:p-5 md:p-6 lg:p-8 rounded-xl transition-all duration-500 transform cursor-pointer backdrop-blur-md group relative overflow-hidden animate-fade-in border ${shouldFade
         ? 'opacity-0 pointer-events-none border-transparent'
         : shouldFadeOut
           ? 'opacity-0 pointer-events-none border-transparent'
@@ -49,7 +49,7 @@ export default function AnswerOption({
       {children}
 
       <span
-        className={`relative z-10 text-lg md:text-xl lg:text-2xl font-light transition-colors duration-300 ${isSelected
+        className={`relative z-10 text-base sm:text-lg md:text-xl lg:text-2xl font-light transition-colors duration-300 ${isSelected
           ? 'text-gray-200'
           : 'text-gray-300 group-hover:text-gray-200'
           }`}

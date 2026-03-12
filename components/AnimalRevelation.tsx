@@ -51,12 +51,12 @@ export default function AnimalRevelation({ choice }: AnimalRevelationProps) {
   }, [currentSection, isVisible]);
 
   return (
-    <div className='min-h-screen flex items-center justify-center p-8 relative overflow-hidden'>
+    <div className='min-h-screen flex items-center justify-center p-4 md:p-8 relative overflow-hidden'>
       {/* Animated background */}
       <div className='absolute inset-0'>
         <div className='absolute top-0 left-0 w-full h-full bg-gradient-to-br from-black via-slate-950 to-black' />
-        <div className='absolute top-1/4 left-1/4 w-96 h-96 bg-red-600/10 rounded-full blur-3xl animate-pulse' />
-        <div className='absolute bottom-1/4 right-1/4 w-96 h-96 bg-orange-600/10 rounded-full blur-3xl animate-pulse delay-1000' />
+        <div className='absolute top-1/4 left-1/4 w-48 h-48 md:w-96 md:h-96 bg-red-600/10 rounded-full blur-3xl animate-pulse' />
+        <div className='absolute bottom-1/4 right-1/4 w-48 h-48 md:w-96 md:h-96 bg-orange-600/10 rounded-full blur-3xl animate-pulse delay-1000' />
       </div>
 
       <div className='relative z-10 max-w-4xl mx-auto w-full'>
@@ -65,7 +65,7 @@ export default function AnimalRevelation({ choice }: AnimalRevelationProps) {
           className={`text-center space-y-8 transition-all duration-1000 ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}>
-          <h1 className='text-5xl md:text-7xl font-bold mb-8 bg-gradient-to-r from-gray-300 via-red-400 to-orange-400 bg-clip-text text-transparent'>
+          <h1 className='text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-6 md:mb-8 bg-gradient-to-r from-gray-300 via-red-400 to-orange-400 bg-clip-text text-transparent'>
             {sections[currentSection].title}
           </h1>
 
@@ -92,7 +92,7 @@ export default function AnimalRevelation({ choice }: AnimalRevelationProps) {
         {currentSection === sections.length - 1 && (
           <div className='mt-16 text-center animate-fade-in'>
             <div className='bg-gray-900/40 backdrop-blur-lg rounded-2xl p-8 md:p-12 border border-gray-800/50 shadow-2xl max-w-2xl mx-auto'>
-              <h2 className='text-3xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-green-500 to-emerald-500 bg-clip-text text-transparent'>
+              <h2 className='text-2xl sm:text-3xl md:text-4xl font-bold mb-4 md:mb-6 bg-gradient-to-r from-green-500 to-emerald-500 bg-clip-text text-transparent'>
                 Spreman/na da saznaš više?
               </h2>
               <p className='text-lg text-gray-300 mb-8'>

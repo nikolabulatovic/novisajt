@@ -31,7 +31,7 @@ export default function ViciousCycle({ onComplete }: ViciousCycleProps) {
       backgroundImageOpacity={opacity}
       overlayOpacity={0.5}>
       <ContentContainer spacing='lg'>
-        <div className='relative p-16'>
+        <div className='relative p-6 md:p-16'>
           <TextBackdrop type='linear' />
           <div className='relative z-10'>
             <AnimatedText

@@ -124,7 +124,7 @@ export default function NavigationMenu() {
 
       {/* Menu Panel */}
       <div
-        className={`absolute top-16 right-0 w-64 bg-gray-900/95 backdrop-blur-lg border border-gray-800/50 rounded-xl shadow-2xl overflow-hidden transition-all duration-300 ${isOpen
+        className={`absolute top-16 right-0 w-56 sm:w-64 max-w-[calc(100vw-2rem)] bg-gray-900/95 backdrop-blur-lg border border-gray-800/50 rounded-xl shadow-2xl overflow-hidden transition-all duration-300 ${isOpen
             ? 'opacity-100 translate-y-0 pointer-events-auto'
             : 'opacity-0 -translate-y-4 pointer-events-none'
           }`}>

@@ -11,9 +11,9 @@ interface ContentContainerProps {
 }
 
 const spacingClasses = {
-  sm: 'space-y-6',
-  md: 'space-y-12',
-  lg: 'space-y-16',
+  sm: 'space-y-4 md:space-y-6',
+  md: 'space-y-8 md:space-y-12',
+  lg: 'space-y-10 md:space-y-16',
 };
 
 const alignmentClasses = {

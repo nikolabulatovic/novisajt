@@ -12,10 +12,10 @@ export default function PageHeading({
   className = '',
 }: PageHeadingProps) {
   const sizeClasses = {
-    sm: 'text-2xl md:text-3xl',
-    md: 'text-3xl md:text-4xl',
-    lg: 'text-3xl md:text-5xl',
-    xl: 'text-4xl md:text-6xl',
+    sm: 'text-xl sm:text-2xl md:text-3xl',
+    md: 'text-2xl sm:text-3xl md:text-4xl',
+    lg: 'text-2xl sm:text-3xl md:text-4xl lg:text-5xl',
+    xl: 'text-3xl sm:text-4xl md:text-5xl lg:text-6xl',
   };
 
   return (

@@ -28,7 +28,7 @@ export default function FinalChoice({ onComplete }: FinalChoiceProps) {
   const { backgroundImage, opacity = 0.8 } = sectionBackgrounds['final-choice'];
 
   return (
-    <div className='min-h-screen flex items-center justify-center p-8 relative bg-black'>
+    <div className='min-h-screen flex items-center justify-center p-4 md:p-8 relative bg-black'>
       {backgroundImage && (
         <div className='absolute inset-0 w-full h-full overflow-hidden'>
           <div
@@ -44,25 +44,25 @@ export default function FinalChoice({ onComplete }: FinalChoiceProps) {
       )}
 
       <div className='absolute inset-0 overflow-hidden'>
-        <div className='absolute top-1/2 left-1/2 w-96 h-96 bg-gray-800/5 rounded-full blur-3xl animate-pulse' />
+        <div className='absolute top-1/2 left-1/2 w-48 h-48 md:w-96 md:h-96 bg-gray-800/5 rounded-full blur-3xl animate-pulse' />
       </div>
 
       <div className='relative z-10 max-w-4xl mx-auto w-full'>
         <div className='text-center space-y-12'>
           {/* Question */}
-          <h1 className='text-3xl md:text-5xl font-light text-gray-200 leading-relaxed max-w-3xl mx-auto'>
+          <h1 className='text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-gray-200 leading-relaxed max-w-3xl mx-auto'>
             Da li želiš istinu – ili povratak u ignorisanje?
           </h1>
 
           {/* Emphasis */}
           <div className='bg-gray-900/40 backdrop-blur-lg rounded-2xl p-8 md:p-12 border border-gray-800/50 shadow-2xl space-y-6'>
-            <p className='text-xl md:text-2xl font-light text-gray-300'>
+            <p className='text-lg sm:text-xl md:text-2xl font-light text-gray-300'>
               Ovo je lična odluka.
             </p>
-            <p className='text-xl md:text-2xl font-light text-gray-300'>
+            <p className='text-lg sm:text-xl md:text-2xl font-light text-gray-300'>
               Nije važno šta drugi rade.
             </p>
-            <p className='text-xl md:text-2xl font-light text-gray-300'>
+            <p className='text-lg sm:text-xl md:text-2xl font-light text-gray-300'>
               Važno je šta TI radiš.
             </p>
 

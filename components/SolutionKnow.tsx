@@ -27,9 +27,9 @@ export default function SolutionKnow({ onComplete }: SolutionKnowProps) {
       backgroundImageOpacity={opacity}
       overlayOpacity={0.5}>
       <ContentContainer spacing="lg">
-        <div className="relative p-16 text-center space-y-12">
+        <div className="relative p-6 md:p-16 text-center space-y-12">
           <h1
-            className="text-2xl md:text-4xl font-light text-gray-200 leading-relaxed max-w-3xl mx-auto"
+            className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light text-gray-200 leading-relaxed max-w-3xl mx-auto"
             style={{ fontFamily: 'var(--font-literata), serif' }}>
             Da li znaš da je moguće živeti zdrav život bez korišćenja životinja, kao milioni ljudi danas?
           </h1>

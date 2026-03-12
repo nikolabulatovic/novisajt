@@ -133,7 +133,7 @@ export default function HistoricalInjustices({
       )}
 
       <div className='absolute inset-0 overflow-hidden'>
-        <div className='absolute top-1/2 left-1/2 w-96 h-96 bg-gray-800/5 rounded-full blur-3xl animate-pulse' />
+        <div className='absolute top-1/2 left-1/2 w-48 h-48 md:w-96 md:h-96 bg-gray-800/5 rounded-full blur-3xl animate-pulse' />
       </div>
 
       <div className='relative z-10 mx-auto w-full'>
@@ -147,7 +147,7 @@ export default function HistoricalInjustices({
               return (
                 <p
                   key={index}
-                  className={`text-2xl md:text-3xl lg:text-4xl font-light text-gray-200 text-center leading-relaxed transition-all duration-1000 ease-out ${visibleLines.includes(index)
+                  className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light text-gray-200 text-center leading-relaxed transition-all duration-1000 ease-out px-4 ${visibleLines.includes(index)
                     ? 'opacity-100 translate-y-0'
                     : 'opacity-0 translate-y-8'
                     }`}>
@@ -187,9 +187,9 @@ export default function HistoricalInjustices({
               </div>
 
               {/* Content overlay */}
-              <div className='relative z-10 flex flex-col md:flex-row items-start gap-8 md:gap-12 h-full min-h-screen p-8'>
+              <div className='relative z-10 flex flex-col md:flex-row items-start gap-6 md:gap-12 h-full min-h-screen p-4 md:p-8'>
                 {/* Spacer for image area */}
-                <div className='w-full md:w-2/5 flex-shrink-0' />
+                <div className='hidden md:block md:w-2/5 flex-shrink-0' />
 
                 {/* Text - right side */}
                 <div className='flex-1 space-y-6 pt-4'>
@@ -212,7 +212,7 @@ export default function HistoricalInjustices({
                       return (
                         <p
                           key={sentenceIndex}
-                          className='text-xl md:text2xl lg:text-3xl leading-relaxed font-light text-gray-300'>
+                          className='text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl leading-relaxed font-light text-gray-300'>
                           {sentenceWords.map((word, wordIndex) => {
                             const currentWordIndex = wordStartIndex + wordIndex;
                             const isVisible =
@@ -246,7 +246,7 @@ export default function HistoricalInjustices({
 
               {/* Button - absolutely positioned within image */}
               <div
-                className={`absolute bottom-8 right-8 z-20 transition-opacity duration-500 ${showButton ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                className={`absolute bottom-4 right-4 md:bottom-8 md:right-8 z-20 transition-opacity duration-500 ${showButton ? 'opacity-100' : 'opacity-0 pointer-events-none'
                   }`}>
                 <NextButton onClick={handleContinue} label='Dalje' show={showButton} marginTop="none" />
               </div>
@@ -272,9 +272,9 @@ export default function HistoricalInjustices({
               </div>
 
               {/* Content overlay */}
-              <div className='relative z-10 flex flex-col md:flex-row-reverse items-start gap-8 md:gap-12 h-full min-h-screen p-8'>
+              <div className='relative z-10 flex flex-col md:flex-row-reverse items-start gap-6 md:gap-12 h-full min-h-screen p-4 md:p-8'>
                 {/* Spacer for image area */}
-                <div className='w-full md:w-2/5 flex-shrink-0' />
+                <div className='hidden md:block md:w-2/5 flex-shrink-0' />
 
                 {/* Text - left side */}
                 <div className='flex-1 space-y-6 pt-4'>
@@ -297,7 +297,7 @@ export default function HistoricalInjustices({
                       return (
                         <p
                           key={sentenceIndex}
-                          className='text-xl md:text-2xl lg:text-3xl leading-relaxed font-light text-gray-300'>
+                          className='text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl leading-relaxed font-light text-gray-300'>
                           {sentenceWords.map((word, wordIndex) => {
                             const currentWordIndex = wordStartIndex + wordIndex;
                             const isVisible =
@@ -331,7 +331,7 @@ export default function HistoricalInjustices({
 
               {/* Button - absolutely positioned within image */}
               <div
-                className={`absolute bottom-8 left-8 z-20 transition-opacity duration-500 ${showButton ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                className={`absolute bottom-4 left-4 md:bottom-8 md:left-8 z-20 transition-opacity duration-500 ${showButton ? 'opacity-100' : 'opacity-0 pointer-events-none'
                   }`}>
                 <NextButton onClick={handleContinue} label='Nastavi' show={showButton} marginTop="none" />
               </div>

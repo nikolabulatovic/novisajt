@@ -87,7 +87,7 @@ export default function Pill({
           disabled={disabled}
           className={`group relative flex flex-col items-center cursor-pointer ${disabled ? 'pointer-events-none' : ''
             }`}>
-          <div className={`relative w-32 h-16 md:w-40 md:h-20 transform transition-all duration-[4000ms] ease-out ${isExpanding
+          <div className={`relative w-24 h-12 sm:w-32 sm:h-16 md:w-40 md:h-20 transform transition-all duration-[4000ms] ease-out ${isExpanding
             ? 'scale-[2] opacity-0'
             : 'group-hover:scale-110 group-hover:rotate-3'
             }`}>
@@ -106,7 +106,7 @@ export default function Pill({
               <div className='absolute left-1/2 top-0 bottom-0 w-[3px] bg-black/30'></div>
               {/* Text label */}
               <span
-                className='relative z-10 text-white font-light text-sm md:text-base'
+                className='relative z-10 text-white font-light text-xs sm:text-sm md:text-base'
                 style={{ fontFamily: 'var(--font-inter), sans-serif' }}>
                 {label}
               </span>
@@ -125,7 +125,7 @@ export default function Pill({
       className={`group relative flex flex-col items-center space-y-6 cursor-pointer ${isFadingOut && !isSelected ? 'opacity-30' : ''
         } ${disabled ? 'pointer-events-none' : ''} ${className}`}>
       <div
-        className={`relative w-32 h-16 md:w-40 md:h-20 transform transition-all duration-[4000ms] ease-out ${isExpanding
+        className={`relative w-24 h-12 sm:w-32 sm:h-16 md:w-40 md:h-20 transform transition-all duration-[4000ms] ease-out ${isExpanding
           ? 'scale-[2] opacity-0'
           : isSelected && isFadingOut
             ? `scale-110 ${rotationClass}`

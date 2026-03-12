@@ -80,7 +80,7 @@ export default function Mirror({ answers, onComplete }: MirrorProps) {
       maxWidth="md">
       <ContentContainer spacing="lg">
         {/* Title */}
-        <h1 className='text-4xl md:text-6xl font-light text-gray-300 mb-12'>
+        <h1 className='text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-gray-300 mb-6 md:mb-12'>
           Tvoji odgovori
         </h1>
 
@@ -99,11 +99,11 @@ export default function Mirror({ answers, onComplete }: MirrorProps) {
                   ? 'opacity-100 translate-y-0'
                   : 'opacity-0 translate-y-8'
                   }`}>
-                <p className='text-xl md:text-2xl font-light text-gray-400 mb-2'>
+                <p className='text-base sm:text-lg md:text-xl lg:text-2xl font-light text-gray-400 mb-2'>
                   {question}
                 </p>
                 <p
-                  className='text-2xl md:text-3xl font-light text-gray-200'
+                  className='text-xl sm:text-2xl md:text-3xl font-light text-gray-200'
                   style={{ fontFamily: 'var(--font-literata), serif' }}>
                   {answer}
                 </p>
@@ -115,7 +115,7 @@ export default function Mirror({ answers, onComplete }: MirrorProps) {
         {/* Message */}
         {visibleIndex >= answerEntries.length - 1 && (
           <div className='mt-12 animate-fade-in'>
-            <p className='text-2xl md:text-3xl font-light text-gray-300'>
+            <p className='text-xl sm:text-2xl md:text-3xl font-light text-gray-300'>
               Budi ono za šta kažeš da jesi.
             </p>
           </div>

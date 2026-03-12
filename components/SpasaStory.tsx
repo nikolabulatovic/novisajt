@@ -45,7 +45,7 @@ export default function SpasaStory({ onComplete }: SpasaStoryProps) {
       overlayOpacity={0.5}>
       {!showFinalMessage ? (
         <ContentContainer spacing='lg'>
-          <div className='relative p-16'>
+          <div className='relative p-6 md:p-16'>
             <TextBackdrop type='linear' />
             <div className='relative z-10'>
               <AnimatedText
@@ -71,7 +71,7 @@ export default function SpasaStory({ onComplete }: SpasaStoryProps) {
             finalMessageVisible ? 'opacity-100' : 'opacity-0'
           }`}>
           <TextBackdrop type='linear' className='-mx-8 -my-12' />
-          <p className='text-2xl md:text-3xl lg:text-4xl font-light text-gray-200 leading-relaxed relative z-10'>
+          <p className='text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light text-gray-200 leading-relaxed relative z-10'>
             Ali postoji nešto što jesmo dužni: da sve životinje ostavimo na
             miru.
           </p>

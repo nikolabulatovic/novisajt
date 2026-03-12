@@ -35,7 +35,7 @@ export default function PageContainer({
 }: PageContainerProps) {
   return (
     <div
-      className={`min-h-screen flex items-center justify-center p-8 relative bg-black ${className}`}>
+      className={`min-h-screen flex items-center justify-center p-4 md:p-8 relative bg-black ${className}`}>
       {backgroundImage && (
         <div className="fixed inset-0 z-0">
           <BackgroundImage
