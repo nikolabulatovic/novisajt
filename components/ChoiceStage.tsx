@@ -26,19 +26,18 @@ export default function ChoiceStage({ onPillChoice }: ChoiceStageProps) {
 
   return (
     <div
-      className={`min-h-screen flex items-center justify-center p-4 md:p-8 relative bg-black transition-opacity duration-[600ms] ease-in-out ${isFadingOut ? 'opacity-0' : 'opacity-100'
-        }`}>
-      {
-        backgroundImage ? (
-          <div
-            className='absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-[600ms]'
-            style={{
-              backgroundImage: `url('${backgroundImage}')`,
-              opacity: opacity,
-            }}
-          />
-        ) : null
-      }
+      className={`min-h-screen flex items-center justify-center p-4 md:p-8 relative bg-black transition-opacity duration-[600ms] ease-in-out ${
+        isFadingOut ? 'opacity-0' : 'opacity-100'
+      }`}>
+      {backgroundImage ? (
+        <div
+          className='absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-[600ms]'
+          style={{
+            backgroundImage: `url('${backgroundImage}')`,
+            opacity: opacity,
+          }}
+        />
+      ) : null}
 
       {/* Animated background - minimal */}
       <div className='absolute inset-0 overflow-hidden'>
@@ -52,7 +51,8 @@ export default function ChoiceStage({ onPillChoice }: ChoiceStageProps) {
             Izbor
           </h1>
           <h2 className='text-lg sm:text-xl md:text-2xl lg:text-4xl text-gray-300 max-w-2xl mx-auto leading-relaxed'>
-            Želiš li da saznaš istinu – ili da nastaviš kao do sada?
+            Želiš li da saznaš istinu –
+            ili&nbsp;da&nbsp;nastaviš&nbsp;kao&nbsp;do&nbsp;sada?
           </h2>
         </div>
 
