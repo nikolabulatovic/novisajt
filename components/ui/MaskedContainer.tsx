@@ -2,6 +2,8 @@
 
 import { ReactNode } from 'react';
 
+const DEFAULT_NEXT_OVERLAY_OPACITY = 0.8;
+
 interface MaskStyle {
   width: string;
   height: string;
@@ -16,6 +18,7 @@ interface MaskedContainerProps {
   expansionProgress?: number; // Progress of expansion (0 to 1), used to determine if mask should be applied
   backgroundImage?: string; // Current section background
   nextBackgroundImage?: string; // Next section background to reveal inside mask
+  nextBackgroundOpacity?: number; // Target opacity of the next background (should match the next section's backgroundImageOpacity)
   showGlow?: boolean; // Whether to show the glow border
   className?: string; // Additional CSS classes
 }
@@ -30,6 +33,7 @@ export default function MaskedContainer({
   expansionProgress = 0,
   backgroundImage,
   nextBackgroundImage,
+  nextBackgroundOpacity = DEFAULT_NEXT_OVERLAY_OPACITY,
   showGlow = true,
   className = '',
 }: MaskedContainerProps) {
@@ -70,15 +74,19 @@ export default function MaskedContainer({
       {
         nextBackgroundImage && (
           <div
-            className={`absolute inset-0 bg-cover bg-center bg-no-repeat before:content-[""] before:absolute before:inset-0 before:bg-black/50 ${expansionProgress > 0 ? 'z-[10000]' : ''}`}
+            className={`absolute inset-0 bg-cover bg-center bg-no-repeat ${expansionProgress > 0 ? 'z-[10000]' : ''}`}
             style={{
               backgroundImage: `url('${nextBackgroundImage}')`,
               ...(expansionProgress > 0 ? {
                 maskImage: `url(#${maskId})`,
                 WebkitMaskImage: `url(#${maskId})`,
               } : {}),
-            }}
-          />
+            }}>
+            <div
+              className='absolute inset-0 bg-black'
+              style={{ opacity: 1 - (1 - nextBackgroundOpacity) * expansionProgress }}
+            />
+          </div>
         )
       }
 
