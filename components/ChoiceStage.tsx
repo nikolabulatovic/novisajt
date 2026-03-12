@@ -11,17 +11,12 @@ interface ChoiceStageProps {
 }
 
 export default function ChoiceStage({ onPillChoice }: ChoiceStageProps) {
-  const [isFadingOut, setIsFadingOut] = useState(false);
   const [selectedPill, setSelectedPill] = useState<'red' | 'blue' | null>(null);
 
   // Use mask expansion hook - automatically gets red pill position from PillContext
   const { startExpansion, maskStyle, expansionProgress } = useMaskExpansionFromPill({
     onComplete: () => {
-      // After mask expansion completes, trigger transition
-      setIsFadingOut(true);
-      setTimeout(() => {
-        onPillChoice('red');
-      }, 600); // Match the fade out duration
+      onPillChoice('red');
     },
   });
 
@@ -71,9 +66,7 @@ export default function ChoiceStage({ onPillChoice }: ChoiceStageProps) {
               <Pill
                 color='blue'
                 onClick={() => handlePillClick('blue')}
-                disabled={isFadingOut}
                 isSelected={selectedPill === 'blue'}
-                isFadingOut={isFadingOut}
               />
               <div className='text-center space-y-2'>
                 <p className='text-xl sm:text-2xl md:text-3xl font-semibold text-gray-300'>
@@ -90,9 +83,7 @@ export default function ChoiceStage({ onPillChoice }: ChoiceStageProps) {
               <Pill
                 color='red'
                 onClick={() => handlePillClick('red')}
-                disabled={isFadingOut}
                 isSelected={selectedPill === 'red'}
-                isFadingOut={isFadingOut}
               />
               <div className='text-center space-y-2'>
                 <p className='text-xl sm:text-2xl md:text-3xl font-semibold text-gray-300'>

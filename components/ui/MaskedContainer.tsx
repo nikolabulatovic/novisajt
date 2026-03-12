@@ -102,7 +102,7 @@ export default function MaskedContainer({
 
       {/* Subtle glow/border around the mask */}
       {
-        showGlow && nextBackgroundImage && (
+        showGlow && nextBackgroundImage && expansionProgress === 0 && (
           <div
             className="absolute animate-pulse pointer-events-none z-[2]"
             style={{
