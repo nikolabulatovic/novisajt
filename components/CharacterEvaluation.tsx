@@ -142,7 +142,7 @@ export default function CharacterEvaluation({
   const { backgroundImage, opacity = 0.8 } = sectionBackgrounds.evaluation;
 
   return (
-    <div className='min-h-screen flex items-center justify-center p-8 relative bg-black overflow-hidden'>
+    <div className='min-h-screen flex items-center justify-center p-4 md:p-8 relative bg-black overflow-hidden'>
       {/* Background image */}
       {backgroundImage && (
         <div className='fixed inset-0 z-0'>
@@ -158,9 +158,9 @@ export default function CharacterEvaluation({
 
       {/* Enhanced atmospheric background effects */}
       <div className='absolute inset-0 overflow-hidden pointer-events-none'>
-        <div className='absolute top-1/4 left-1/4 w-96 h-96 bg-gray-400/10 rounded-full blur-3xl animate-pulse animate-glow' />
-        <div className='absolute bottom-1/4 right-1/4 w-96 h-96 bg-gray-400/10 rounded-full blur-3xl animate-pulse animate-glow delay-1000' />
-        <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gray-500/5 rounded-full blur-3xl animate-float' />
+        <div className='absolute top-1/4 left-1/4 w-48 h-48 md:w-96 md:h-96 bg-gray-400/10 rounded-full blur-3xl animate-pulse animate-glow' />
+        <div className='absolute bottom-1/4 right-1/4 w-48 h-48 md:w-96 md:h-96 bg-gray-400/10 rounded-full blur-3xl animate-pulse animate-glow delay-1000' />
+        <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 md:w-[600px] md:h-[600px] bg-gray-500/5 rounded-full blur-3xl animate-float' />
       </div>
 
       {/* Gradient overlays for depth */}
@@ -169,7 +169,7 @@ export default function CharacterEvaluation({
 
       <div className='relative z-10 max-w-4xl mx-auto w-full'>
         {/* Enhanced progress indicator with glow */}
-        <div className='mb-16'>
+        <div className='mb-8 md:mb-16'>
           <ProgressDots current={currentQuestion} total={questions.length} />
         </div>
 
@@ -183,7 +183,7 @@ export default function CharacterEvaluation({
             }`}>
           {/* Question with subtle glow effect */}
           <div className='relative'>
-            <h1 className='text-2xl md:text-4xl font-light text-gray-200 leading-relaxed max-w-3xl mx-auto relative z-10 drop-shadow-lg'>
+            <h1 className='text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light text-gray-200 leading-relaxed max-w-3xl mx-auto relative z-10 drop-shadow-lg'>
               {questions[currentQuestion].question}
             </h1>
             {/* Subtle glow behind question */}

@@ -26,7 +26,7 @@ export default function BreakingQuestion({
   };
 
   return (
-    <div className='min-h-screen flex items-center justify-center p-8 relative bg-black'>
+    <div className='min-h-screen flex items-center justify-center p-4 md:p-8 relative bg-black'>
       {(() => {
         const { backgroundImage, opacity = 0.8 } = sectionBackgrounds['breaking-question'];
         return backgroundImage ? (
@@ -47,13 +47,13 @@ export default function BreakingQuestion({
       <div className='relative z-10 max-w-4xl mx-auto w-full'>
         <div className='text-center space-y-12'>
           {/* Question */}
-          <h1 className='text-3xl md:text-5xl font-light text-gray-200 leading-relaxed max-w-3xl mx-auto'>
+          <h1 className='text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-gray-200 leading-relaxed max-w-3xl mx-auto'>
             Šta ako danas postoji ogromna nepravda u kojoj učestvuješ – a da to
             ignorišeš jer je lakše?
           </h1>
 
           {/* Sub-question */}
-          <p className='text-2xl md:text-3xl font-light text-gray-300'>
+          <p className='text-xl sm:text-2xl md:text-3xl font-light text-gray-300'>
             Da li želiš da znaš?
           </p>
 

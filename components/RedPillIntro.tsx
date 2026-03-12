@@ -31,8 +31,8 @@ export default function RedPillIntro({ onComplete }: RedPillIntroProps) {
       showBackgroundEffects={false}>
       {/* Custom animated background effects */}
       <div className='absolute inset-0 overflow-hidden pointer-events-none z-0'>
-        <div className='absolute top-1/4 left-1/4 w-96 h-96 bg-red-500/5 rounded-full blur-3xl animate-pulse' />
-        <div className='absolute bottom-1/4 right-1/4 w-96 h-96 bg-orange-500/5 rounded-full blur-3xl animate-pulse delay-1000' />
+        <div className='absolute top-1/4 left-1/4 w-48 h-48 md:w-96 md:h-96 bg-red-500/5 rounded-full blur-3xl animate-pulse' />
+        <div className='absolute bottom-1/4 right-1/4 w-48 h-48 md:w-96 md:h-96 bg-orange-500/5 rounded-full blur-3xl animate-pulse delay-1000' />
       </div>
 
       <ContentContainer spacing="sm">

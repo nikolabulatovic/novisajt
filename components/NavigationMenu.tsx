@@ -13,9 +13,22 @@ const stageLabels: Record<Stage, string> = {
   'breaking-question': 'Prelomno pitanje',
   'spasa-story': 'Spasina priča',
   'spasa-revelation': 'Spasino otkriće',
-  'spasa-revelation-part1': 'Ostali prasići',
+  'other-pigs': 'Ostali prasići',
+  'root-of-the-problem': 'Koren problema',
+  'animals-treated-as-products': 'Gde se koriste',
+  'let-them-live': 'Da žive svoj život',
+  'from-the-wild': 'Resurs i kontrola',
+  'vicious-cycle': 'Začarani krug',
+  'cow-fate': 'Sudbina krava',
+  'animal-cost-of-living': 'U životu dok donosi prihod',
+  'reproduction-control': 'Biološka dominacija',
+  'solution-use': 'Da li koristiš životinje?',
+  'solution-know': 'Da li znaš da je moguće?',
+  'vegan-diet-health': 'Veganska ishrana i zdravlje',
+  'solution-choice': 'Biranje suprotno uverenju',
+  'align-behaviour': 'Usaglašavanje ponašanja',
+  'veganism-principle': 'Princip veganstva',
   facts: 'Činjenice',
-  'spasa-revelation-part2': 'Koren problema',
   'animal-exploitation': 'Eksploatacija',
   domestication: 'Pitomstvo',
   'moral-consistency': 'Moralna doslednost',
@@ -35,9 +48,22 @@ const stageOrder: Stage[] = [
   'breaking-question',
   'spasa-story',
   'spasa-revelation',
-  'spasa-revelation-part1',
+  'other-pigs',
+  'root-of-the-problem',
+  'animals-treated-as-products',
+  'let-them-live',
+  'from-the-wild',
+  'reproduction-control',
+  'vicious-cycle',
+  'cow-fate',
+  'animal-cost-of-living',
+  'solution-use',
+  'solution-know',
+  'vegan-diet-health',
+  'solution-choice',
+  'align-behaviour',
+  'veganism-principle',
   'facts',
-  'spasa-revelation-part2',
   'animal-exploitation',
   'domestication',
   'moral-consistency',
@@ -55,10 +81,7 @@ export default function NavigationMenu() {
   // Close menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (
-        menuRef.current &&
-        !menuRef.current.contains(event.target as Node)
-      ) {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setIsOpen(false);
       }
     };
@@ -101,9 +124,9 @@ export default function NavigationMenu() {
 
       {/* Menu Panel */}
       <div
-        className={`absolute top-16 right-0 w-64 bg-gray-900/95 backdrop-blur-lg border border-gray-800/50 rounded-xl shadow-2xl overflow-hidden transition-all duration-300 ${isOpen
-          ? 'opacity-100 translate-y-0 pointer-events-auto'
-          : 'opacity-0 -translate-y-4 pointer-events-none'
+        className={`absolute top-16 right-0 w-56 sm:w-64 max-w-[calc(100vw-2rem)] bg-gray-900/95 backdrop-blur-lg border border-gray-800/50 rounded-xl shadow-2xl overflow-hidden transition-all duration-300 ${isOpen
+            ? 'opacity-100 translate-y-0 pointer-events-auto'
+            : 'opacity-0 -translate-y-4 pointer-events-none'
           }`}>
         <div className='p-2 max-h-[70vh] overflow-y-auto'>
           <div className='px-3 py-2 border-b border-gray-800/50 mb-2'>
@@ -118,8 +141,8 @@ export default function NavigationMenu() {
                 key={stage}
                 onClick={() => handleStageClick(stage)}
                 className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-200 mb-1 ${isActive
-                  ? 'bg-gray-800/60 border border-gray-700/50 text-gray-100'
-                  : 'text-gray-300 hover:bg-gray-800/40 hover:text-gray-100'
+                    ? 'bg-gray-800/60 border border-gray-700/50 text-gray-100'
+                    : 'text-gray-300 hover:bg-gray-800/40 hover:text-gray-100'
                   }`}>
                 <div className='flex items-center justify-between'>
                   <span
@@ -139,4 +162,3 @@ export default function NavigationMenu() {
     </div>
   );
 }
-

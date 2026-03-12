@@ -8,40 +8,37 @@ import TextBackdrop from './ui/TextBackdrop';
 import ContentContainer from './ui/ContentContainer';
 import { sectionBackgrounds } from '@/config/sectionBackgrounds';
 
-interface AnimalExploitationProps {
+interface FromTheWildProps {
   onComplete: () => void;
 }
 
-export default function AnimalExploitation({
-  onComplete,
-}: AnimalExploitationProps) {
+export default function FromTheWild({ onComplete }: FromTheWildProps) {
   const [showButton, setShowButton] = useState(false);
 
   const text = [
-    'Eksploatacija životinja nije samo o hrani.',
-    'Životinje se koriste za garderobu — koža, krzno, vuna, svila.',
-    'Testira se na njima — kozmetika, lekovi, hemikalije.',
-    'Koriste se za zabavu — zoološki vrtovi, cirkusi, konji za trke.',
-    'I sve to bez njihovog pristanka.',
+    'Sve domaće vrste potiču od divljih vrsta - nekada su to bile slobodne životinje.',
+    'Ljudi su im ukrali slobodu i preuzeli potpunu kontrolu nad njihovim životima, uključujući kontrolu reprodukcije.',
+    'Životinje nemaju nikakav izbor.',
   ];
 
-  const { backgroundImage, opacity = 0.8 } = sectionBackgrounds['animal-exploitation'];
+  const { backgroundImage, opacity = 0.8 } =
+    sectionBackgrounds['from-the-wild'];
 
   return (
     <PageContainer
       backgroundImage={backgroundImage}
       backgroundImageOpacity={opacity}
       overlayOpacity={0.5}>
-      <ContentContainer spacing="lg">
+      <ContentContainer spacing='lg'>
         <div className='relative p-6 md:p-16'>
-          <TextBackdrop type="linear" />
+          <TextBackdrop type='linear' />
           <div className='relative z-10'>
             <AnimatedText
               text={text}
               speed={120}
               delayAfterComplete={1000}
-              textSize="md"
-              alignment="center"
+              textSize='md'
+              alignment='center'
               onComplete={() => setShowButton(true)}
             />
           </div>
@@ -52,4 +49,3 @@ export default function AnimalExploitation({
     </PageContainer>
   );
 }
-

@@ -8,35 +8,37 @@ import TextBackdrop from './ui/TextBackdrop';
 import ContentContainer from './ui/ContentContainer';
 import { sectionBackgrounds } from '@/config/sectionBackgrounds';
 
-interface SpasaRevelationPart1Props {
+interface CowFateProps {
   onComplete: () => void;
 }
 
-export default function SpasaRevelationPart1({
-  onComplete,
-}: SpasaRevelationPart1Props) {
+export default function CowFate({ onComplete }: CowFateProps) {
   const [showButton, setShowButton] = useState(false);
 
-  const text =
-    'Ostali prasići nisu imali tu sreću. Njima je neko predodredio dan smrti, pre njihovog rođenja. Ne zato što je taj neko sadista - nego zato što ispunjava potražnju. Radi to što drugi ljudi traže od njega da radi.';
+  const text = [
+    'Telad se oduzimaju majkama kravama.',
+    'Većina muških teladi se ubija ubrzo nakon rođenja. Prodaju se i zatim zakolju za meso, da se od njih zaradi.',
+    'Ženke su prisiljene da postanu mašine za mleko, kao njihove majke.',
+  ];
 
-  const { backgroundImage, opacity = 0.8 } = sectionBackgrounds['spasa-revelation-part1'];
+  const { backgroundImage, opacity = 0.8 } =
+    sectionBackgrounds['cow-fate'];
 
   return (
     <PageContainer
       backgroundImage={backgroundImage}
       backgroundImageOpacity={opacity}
       overlayOpacity={0.5}>
-      <ContentContainer spacing="lg">
-        <div className='relative p-16'>
-          <TextBackdrop type="linear" />
+      <ContentContainer spacing='lg'>
+        <div className='relative p-6 md:p-16'>
+          <TextBackdrop type='linear' />
           <div className='relative z-10'>
             <AnimatedText
               text={text}
               speed={120}
               delayAfterComplete={1000}
-              textSize="md"
-              alignment="center"
+              textSize='md'
+              alignment='center'
               onComplete={() => setShowButton(true)}
             />
           </div>
@@ -47,4 +49,3 @@ export default function SpasaRevelationPart1({
     </PageContainer>
   );
 }
-

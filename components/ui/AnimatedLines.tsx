@@ -20,10 +20,10 @@ interface AnimatedLinesProps {
 }
 
 const textSizeClasses = {
-  sm: 'text-lg md:text-xl lg:text-2xl',
-  md: 'text-xl md:text-2xl lg:text-3xl',
-  lg: 'text-2xl md:text-3xl lg:text-4xl',
-  xl: 'text-3xl md:text-4xl lg:text-5xl',
+  sm: 'text-base sm:text-lg md:text-xl lg:text-2xl',
+  md: 'text-lg sm:text-xl md:text-2xl lg:text-3xl',
+  lg: 'text-xl sm:text-2xl md:text-3xl lg:text-4xl',
+  xl: 'text-2xl sm:text-3xl md:text-4xl lg:text-5xl',
 };
 
 const alignmentClasses = {

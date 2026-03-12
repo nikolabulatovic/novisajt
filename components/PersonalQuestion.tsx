@@ -35,7 +35,7 @@ export default function PersonalQuestion({
   };
 
   return (
-    <div className='min-h-screen flex items-center justify-center p-8 relative bg-black'>
+    <div className='min-h-screen flex items-center justify-center p-4 md:p-8 relative bg-black'>
       {/* Background image placeholder */}
       {/* IDEJA ZA SLIKU:
           - Istorijska fotografija ljudi u masi/grupi (sugerira konformnost, pripadanje grupi)
@@ -69,7 +69,7 @@ export default function PersonalQuestion({
               hideQuestion ? 'opacity-0' : 'opacity-100'
             }`}>
             {/* Question */}
-            <h1 className='text-3xl md:text-5xl font-light text-gray-200 leading-relaxed max-w-3xl mx-auto'>
+            <h1 className='text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-gray-200 leading-relaxed max-w-3xl mx-auto'>
               Da li bi bio (ili bila) protiv ovih nepravdi tada kada su se
               zaista dešavale?
             </h1>
@@ -102,7 +102,7 @@ export default function PersonalQuestion({
             className={`text-center transition-opacity duration-500 ${
               fadeOut ? 'opacity-0' : 'opacity-100'
             }`}>
-            <p className='text-3xl md:text-5xl lg:text-6xl font-light text-gray-200 italic'>
+            <p className='text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-light text-gray-200 italic'>
               Većina ljudi veruje da bi bila.
             </p>
           </div>

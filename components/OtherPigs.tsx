@@ -8,24 +8,23 @@ import TextBackdrop from './ui/TextBackdrop';
 import ContentContainer from './ui/ContentContainer';
 import { sectionBackgrounds } from '@/config/sectionBackgrounds';
 
-interface AnimalExploitationProps {
+interface OtherPigsProps {
   onComplete: () => void;
 }
 
-export default function AnimalExploitation({
+export default function OtherPigs({
   onComplete,
-}: AnimalExploitationProps) {
+}: OtherPigsProps) {
   const [showButton, setShowButton] = useState(false);
 
   const text = [
-    'Eksploatacija životinja nije samo o hrani.',
-    'Životinje se koriste za garderobu — koža, krzno, vuna, svila.',
-    'Testira se na njima — kozmetika, lekovi, hemikalije.',
-    'Koriste se za zabavu — zoološki vrtovi, cirkusi, konji za trke.',
-    'I sve to bez njihovog pristanka.',
+    'Ostali prasići nisu imali tu sreću.',
+    'Njima je dan smrti određen pre nego što su se rodili. Ne zato što je neko sadista — nego zato što postoji potražnja za njihovim telima.',
+    'Neko im oduzima život jer mi to naručujemo. Kao proizvod. Kao robu.',
+    'Industrija ne mrzi životinje. Industrija ih ne vidi.',
   ];
 
-  const { backgroundImage, opacity = 0.8 } = sectionBackgrounds['animal-exploitation'];
+  const { backgroundImage, opacity = 0.8 } = sectionBackgrounds['other-pigs'];
 
   return (
     <PageContainer

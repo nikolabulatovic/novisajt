@@ -39,18 +39,70 @@ export const sectionBackgrounds: Record<Stage, SectionBackgroundConfig> = {
     opacity: 0.8,
   },
   'spasa-revelation': {
-    backgroundImage: '/images/spasa-revelation-bg.jpg',
+    backgroundImage: '/images/spasa-prasa.jpg',
     opacity: 0.8,
   },
-  'spasa-revelation-part1': {
-    backgroundImage: '/images/spasa-revelation-part1-bg.jpg',
+  'other-pigs': {
+    backgroundImage: '/images/enslaved-pigs.jpg',
     opacity: 0.8,
   },
   facts: {
     opacity: 0.8,
   },
-  'spasa-revelation-part2': {
-    backgroundImage: '/images/spasa-revelation-part2-bg.jpg',
+  'root-of-the-problem': {
+    backgroundImage: '/images/horse-stable-gray.jpg',
+    opacity: 0.8,
+  },
+  'animals-treated-as-products': {
+    backgroundImage: '/images/industrija-koze.png',
+    opacity: 0.8,
+  },
+  'let-them-live': {
+    backgroundImage: '/images/farm-animals.jpg',
+    opacity: 0.8,
+  },
+  'from-the-wild': {
+    backgroundImage: '/images/gallus-gallus.jpg',
+    opacity: 0.8,
+  },
+  'vicious-cycle': {
+    backgroundImage: '/images/chicks-in-bucket.png',
+    opacity: 0.8,
+  },
+  'cow-fate': {
+    backgroundImage: '/images/cow-slave.jpg',
+    opacity: 0.8,
+  },
+  'animal-cost-of-living': {
+    backgroundImage: '/images/cows-transported.png',
+    opacity: 0.8,
+  },
+  'reproduction-control': {
+    backgroundImage: '/images/cow-silhouettes.png',
+    opacity: 0.8,
+  },
+  'solution-use': {
+    backgroundImage: '/images/farm-animals2.jpg',
+    opacity: 0.8,
+  },
+  'solution-know': {
+    backgroundImage: '/images/djokovic-trophy.jpg',
+    opacity: 0.8,
+  },
+  'vegan-diet-health': {
+    backgroundImage: '/images/farm-animals2.jpg',
+    opacity: 0.8,
+  },
+  'solution-choice': {
+    backgroundImage: '/images/silhouette-cracked-mirror.png',
+    opacity: 0.8,
+  },
+  'align-behaviour': {
+    backgroundImage: '/images/farm-animals2.jpg',
+    opacity: 0.8,
+  },
+  'veganism-principle': {
+    backgroundImage: '/images/farm-animals2.jpg',
     opacity: 0.8,
   },
   'animal-exploitation': {

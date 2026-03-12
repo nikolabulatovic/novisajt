@@ -12,9 +12,22 @@ import PersonalQuestion from '@/components/PersonalQuestion';
 import BreakingQuestion from '@/components/BreakingQuestion';
 import SpasaStory from '@/components/SpasaStory';
 import SpasaRevelation from '@/components/SpasaRevelation';
-import SpasaRevelationPart1 from '@/components/SpasaRevelationPart1';
+import OtherPigs from '@/components/OtherPigs';
 import FactsNumbers from '@/components/FactsNumbers';
-import SpasaRevelationPart2 from '@/components/SpasaRevelationPart2';
+import RootOfTheProblem from '@/components/RootOfTheProblem';
+import AnimalsTreatedAsProducts from '@/components/AnimalsTreatedAsProducts';
+import LetThemLive from '@/components/LetThemLive';
+import FromTheWild from '@/components/FromTheWild';
+import ViciousCycle from '@/components/ViciousCycle';
+import CowFate from '@/components/CowFate';
+import AnimalCostOfLiving from '@/components/AnimalCostOfLiving';
+import ReproductionControl from '@/components/ReproductionControl';
+import SolutionUse from '@/components/SolutionUse';
+import SolutionKnow from '@/components/SolutionKnow';
+import VeganDietHealth from '@/components/VeganDietHealth';
+import SolutionChoice from '@/components/SolutionChoice';
+import AlignBehaviour from '@/components/AlignBehaviour';
+import VeganismPrinciple from '@/components/VeganismPrinciple';
 import AnimalExploitation from '@/components/AnimalExploitation';
 import DomesticationReproduction from '@/components/DomesticationReproduction';
 import MoralConsistency from '@/components/MoralConsistency';
@@ -79,19 +92,73 @@ export default function Home() {
   };
 
   const handleSpasaRevelationComplete = () => {
-    transitionToStage('spasa-revelation-part1');
+    transitionToStage('other-pigs');
   };
 
-  const handleSpasaRevelationPart1Complete = () => {
-    transitionToStage('facts');
+  const handleOtherPigsComplete = () => {
+    transitionToStage('root-of-the-problem');
   };
 
-  const handleFactsComplete = () => {
-    transitionToStage('spasa-revelation-part2');
+  const handleRootOfTheProblemComplete = () => {
+    transitionToStage('animals-treated-as-products');
   };
 
-  const handleSpasaRevelationPart2Complete = () => {
-    transitionToStage('animal-exploitation');
+  const handleAnimalsTreatedAsProductsComplete = () => {
+    transitionToStage('let-them-live');
+  };
+
+  const handleLetThemLiveComplete = () => {
+    transitionToStage('from-the-wild');
+  };
+
+  const handleFromTheWildComplete = () => {
+    transitionToStage('reproduction-control');
+  };
+
+  const handleReproductionControlComplete = () => {
+    transitionToStage('vicious-cycle');
+  };
+
+  const handleViciousCycleComplete = () => {
+    transitionToStage('cow-fate');
+  };
+
+  const handleCowFateComplete = () => {
+    transitionToStage('animal-cost-of-living');
+  };
+
+  const handleAnimalCostOfLivingComplete = () => {
+    transitionToStage('solution-use');
+  };
+
+  const handleSolutionUseComplete = () => {
+    transitionToStage('solution-know');
+  };
+
+  const handleSolutionKnowComplete = (answer: string) => {
+    if (answer === 'Nisam siguran' || answer === 'Ne možemo') {
+      transitionToStage('vegan-diet-health');
+    } else {
+      transitionToStage('solution-choice');
+    }
+  };
+
+  const handleVeganDietHealthComplete = (answer: string) => {
+    setAnswers((prev) => ({ ...prev, 'vegan-diet-health': answer }));
+    transitionToStage('solution-choice');
+  };
+
+  const handleSolutionChoiceComplete = () => {
+    transitionToStage('align-behaviour');
+  };
+
+  const handleAlignBehaviourComplete = (answer: string) => {
+    setAnswers((prev) => ({ ...prev, 'align-behaviour': answer }));
+    transitionToStage('veganism-principle');
+  };
+
+  const handleVeganismPrincipleComplete = () => {
+    transitionToStage('after-choice');
   };
 
   const handleAnimalExploitationComplete = () => {
@@ -154,18 +221,67 @@ export default function Home() {
             {stage === 'spasa-revelation' && (
               <SpasaRevelation onComplete={handleSpasaRevelationComplete} />
             )}
-            {stage === 'spasa-revelation-part1' && (
-              <SpasaRevelationPart1 onComplete={handleSpasaRevelationPart1Complete} />
+            {stage === 'other-pigs' && (
+              <OtherPigs onComplete={handleOtherPigsComplete} />
             )}
-            {stage === 'facts' && <FactsNumbers onComplete={handleFactsComplete} />}
-            {stage === 'spasa-revelation-part2' && (
-              <SpasaRevelationPart2 onComplete={handleSpasaRevelationPart2Complete} />
+            {stage === 'facts' && <FactsNumbers onComplete={() => { }} />}
+            {stage === 'root-of-the-problem' && (
+              <RootOfTheProblem onComplete={handleRootOfTheProblemComplete} />
+            )}
+            {stage === 'animals-treated-as-products' && (
+              <AnimalsTreatedAsProducts
+                onComplete={handleAnimalsTreatedAsProductsComplete}
+              />
+            )}
+            {stage === 'let-them-live' && (
+              <LetThemLive onComplete={handleLetThemLiveComplete} />
+            )}
+            {stage === 'from-the-wild' && (
+              <FromTheWild onComplete={handleFromTheWildComplete} />
+            )}
+            {stage === 'vicious-cycle' && (
+              <ViciousCycle onComplete={handleViciousCycleComplete} />
+            )}
+            {stage === 'cow-fate' && (
+              <CowFate onComplete={handleCowFateComplete} />
+            )}
+            {stage === 'animal-cost-of-living' && (
+              <AnimalCostOfLiving
+                onComplete={handleAnimalCostOfLivingComplete}
+              />
+            )}
+            {stage === 'reproduction-control' && (
+              <ReproductionControl
+                onComplete={handleReproductionControlComplete}
+              />
+            )}
+            {stage === 'solution-use' && (
+              <SolutionUse onComplete={handleSolutionUseComplete} />
+            )}
+            {stage === 'solution-know' && (
+              <SolutionKnow onComplete={handleSolutionKnowComplete} />
+            )}
+            {stage === 'vegan-diet-health' && (
+              <VeganDietHealth onComplete={handleVeganDietHealthComplete} />
+            )}
+            {stage === 'solution-choice' && (
+              <SolutionChoice onComplete={handleSolutionChoiceComplete} />
+            )}
+            {stage === 'align-behaviour' && (
+              <AlignBehaviour onComplete={handleAlignBehaviourComplete} />
+            )}
+            {stage === 'veganism-principle' && (
+              <VeganismPrinciple onComplete={handleVeganismPrincipleComplete} />
             )}
             {stage === 'animal-exploitation' && (
-              <AnimalExploitation onComplete={handleAnimalExploitationComplete} />
+              <AnimalExploitation
+                onComplete={handleAnimalExploitationComplete}
+              />
             )}
             {stage === 'domestication' && (
-              <DomesticationReproduction onComplete={handleDomesticationComplete} />
+              <DomesticationReproduction
+                onComplete={handleDomesticationComplete}
+              />
             )}
             {stage === 'moral-consistency' && (
               <MoralConsistency onComplete={handleMoralConsistencyComplete} />

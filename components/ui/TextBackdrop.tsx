@@ -17,7 +17,7 @@ export default function TextBackdrop({
 
   return (
     <div
-      className={`absolute inset-0 -mx-8 -my-6 pointer-events-none ${className}`}
+      className={`absolute inset-0 -mx-4 md:-mx-8 -my-3 md:-my-6 pointer-events-none ${className}`}
       style={{
         background: type === 'linear' ? linearGradient : radialGradient,
       }}

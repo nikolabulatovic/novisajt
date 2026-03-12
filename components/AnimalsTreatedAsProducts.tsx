@@ -8,40 +8,42 @@ import TextBackdrop from './ui/TextBackdrop';
 import ContentContainer from './ui/ContentContainer';
 import { sectionBackgrounds } from '@/config/sectionBackgrounds';
 
-interface AnimalExploitationProps {
+interface AnimalsTreatedAsProductsProps {
   onComplete: () => void;
 }
 
-export default function AnimalExploitation({
+export default function AnimalsTreatedAsProducts({
   onComplete,
-}: AnimalExploitationProps) {
+}: AnimalsTreatedAsProductsProps) {
   const [showButton, setShowButton] = useState(false);
 
   const text = [
-    'Eksploatacija životinja nije samo o hrani.',
-    'Životinje se koriste za garderobu — koža, krzno, vuna, svila.',
-    'Testira se na njima — kozmetika, lekovi, hemikalije.',
-    'Koriste se za zabavu — zoološki vrtovi, cirkusi, konji za trke.',
-    'I sve to bez njihovog pristanka.',
+    'Životinje se ne eksploatišu samo zarad tanjira.',
+    'Koriste se gde god postoji korist. Njihova tela postaju materijal.',
+    'Za garderobu — koža, krzno, vuna, svila.',
+    'Za testiranje — kozmetika, lekovi, hemikalije.',
+    'Za zabavu — zoološki vrtovi, cirkusi, trke.',
+    'I u svakoj od tih uloga, one su posmatrane kao stvari, a ne kao bića.',
   ];
 
-  const { backgroundImage, opacity = 0.8 } = sectionBackgrounds['animal-exploitation'];
+  const { backgroundImage, opacity = 0.8 } =
+    sectionBackgrounds['animals-treated-as-products'];
 
   return (
     <PageContainer
       backgroundImage={backgroundImage}
       backgroundImageOpacity={opacity}
       overlayOpacity={0.5}>
-      <ContentContainer spacing="lg">
+      <ContentContainer spacing='lg'>
         <div className='relative p-6 md:p-16'>
-          <TextBackdrop type="linear" />
+          <TextBackdrop type='linear' />
           <div className='relative z-10'>
             <AnimatedText
               text={text}
               speed={120}
               delayAfterComplete={1000}
-              textSize="md"
-              alignment="center"
+              textSize='md'
+              alignment='center'
               onComplete={() => setShowButton(true)}
             />
           </div>
@@ -52,4 +54,3 @@ export default function AnimalExploitation({
     </PageContainer>
   );
 }
-

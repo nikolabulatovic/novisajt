@@ -4,7 +4,10 @@ import { Stage } from '@/contexts/NavigationContext';
  * Determines the next stage based on the current stage
  * This is used for transition effects to show the next background image
  */
-export function getNextStage(currentStage: Stage, pillColor?: 'red' | 'blue'): Stage | null {
+export function getNextStage(
+  currentStage: Stage,
+  pillColor?: 'red' | 'blue',
+): Stage | null {
   // For choice stage, red pill goes to intro, blue stays on choice
   if (currentStage === 'choice') {
     return pillColor === 'red' ? 'intro' : null;
@@ -18,12 +21,25 @@ export function getNextStage(currentStage: Stage, pillColor?: 'red' | 'blue'): S
     explanation: 'historical',
     historical: 'personal-question',
     'personal-question': 'breaking-question',
-    'breaking-question': 'spasa-story', // Assuming "Želim da znam" answer
+    'breaking-question': 'spasa-story',
     'spasa-story': 'spasa-revelation',
-    'spasa-revelation': 'spasa-revelation-part1',
-    'spasa-revelation-part1': 'facts',
-    facts: 'spasa-revelation-part2',
-    'spasa-revelation-part2': 'animal-exploitation',
+    'spasa-revelation': 'other-pigs',
+    'other-pigs': 'root-of-the-problem',
+    'root-of-the-problem': 'animals-treated-as-products',
+    'animals-treated-as-products': 'let-them-live',
+    'let-them-live': 'from-the-wild',
+    'from-the-wild': 'reproduction-control',
+    'reproduction-control': 'vicious-cycle',
+    'vicious-cycle': 'cow-fate',
+    'cow-fate': 'animal-cost-of-living',
+    'animal-cost-of-living': 'solution-use',
+    'solution-use': 'solution-know',
+    'solution-know': 'solution-choice',
+    'vegan-diet-health': 'solution-choice',
+    'solution-choice': 'align-behaviour',
+    'align-behaviour': 'veganism-principle',
+    'veganism-principle': 'after-choice',
+    facts: 'animal-exploitation',
     'animal-exploitation': 'moral-consistency',
     domestication: 'moral-consistency',
     'moral-consistency': 'final-choice',
@@ -35,6 +51,3 @@ export function getNextStage(currentStage: Stage, pillColor?: 'red' | 'blue'): S
 
   return stageMap[currentStage] || null;
 }
-
-
-
