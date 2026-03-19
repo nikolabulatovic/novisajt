@@ -129,6 +129,7 @@ export const sectionBackgrounds: Record<Stage, SectionBackgroundConfig> = {
     opacity: 0.8,
   },
   'after-choice': {
+    backgroundImage: '/images/animals-picturesque.png',
     opacity: 0.8,
   },
 };

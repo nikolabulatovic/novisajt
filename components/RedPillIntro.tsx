@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import NextButton from './ui/NextButton';
 import PageContainer from './ui/PageContainer';
 import AnimatedText from './ui/AnimatedText';
