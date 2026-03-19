@@ -3,16 +3,19 @@ import { Stage } from '@/contexts/NavigationContext';
 export interface SectionBackgroundConfig {
   backgroundImage?: string;
   opacity?: number;
+  pillTransition?: boolean; // Whether to use the pill mask expansion transition when leaving this stage
 }
 
 export const sectionBackgrounds: Record<Stage, SectionBackgroundConfig> = {
   choice: {
     backgroundImage: '/images/red-pill-blue-pill-cover-ai.png',
     opacity: 0.2,
+    pillTransition: true,
   },
   intro: {
     backgroundImage: '/images/intro-reflection.jpeg',
     opacity: 0.2,
+    pillTransition: true,
   },
   evaluation: {
     backgroundImage: '/images/character-introspection.jpeg',
@@ -21,6 +24,7 @@ export const sectionBackgrounds: Record<Stage, SectionBackgroundConfig> = {
   explanation: {
     backgroundImage: '/images/ogledalo.png',
     opacity: 0.35,
+    pillTransition: true,
   },
   historical: {
     backgroundImage: '/images/historical-weight.png',

@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { NavigationProvider, Stage } from '@/contexts/NavigationContext';
 import { PillProvider } from '@/contexts/PillContext';
+import PillTransitionLayer from '@/components/ui/PillTransitionLayer';
+import { sectionBackgrounds } from '@/config/sectionBackgrounds';
 import ChoiceStage from '@/components/ChoiceStage';
 import CharacterEvaluation from '@/components/CharacterEvaluation';
 import RedPillIntro from '@/components/RedPillIntro';
@@ -40,21 +42,30 @@ import NavigationMenu from '@/components/NavigationMenu';
 export default function Home() {
   const [stage, setStage] = useState<Stage>('choice');
   const [answers, setAnswers] = useState<Record<string, string>>({});
+  const [pendingNextStage, setPendingNextStage] = useState<Stage | null>(null);
 
-  const handlePillChoice = (pill: 'red' | 'blue') => {
-    // ChoiceStage handles its own fade out, so we just need to wait a bit
-    setTimeout(() => {
-      if (pill === 'red') {
-        setStage('intro');
-      } else {
-        // Plava pilula - neutralni izlaz (može se implementirati kasnije)
-        setStage('choice');
-      }
-    });
+  const handleTransitionComplete = () => {
+    if (pendingNextStage) {
+      setStage(pendingNextStage);
+    }
+    setPendingNextStage(null);
   };
 
   const transitionToStage = (newStage: Stage) => {
-    setStage(newStage);
+    if (sectionBackgrounds[stage]?.pillTransition) {
+      setPendingNextStage(newStage);
+    } else {
+      setStage(newStage);
+    }
+  };
+
+  const handlePillChoice = (pill: 'red' | 'blue') => {
+    if (pill === 'red') {
+      transitionToStage('intro');
+    } else {
+      // Plava pilula - neutralni izlaz (može se implementirati kasnije)
+      setStage('choice');
+    }
   };
 
   const handleIntroComplete = () => {
@@ -192,6 +203,7 @@ export default function Home() {
   return (
     <NavigationProvider currentStage={stage} navigateToStage={navigateToStage}>
       <PillProvider>
+        <PillTransitionLayer pendingNextStage={pendingNextStage} onComplete={handleTransitionComplete} />
         <NavigationMenu />
         <main className='min-h-screen bg-black text-white overflow-hidden relative'>
           <>

@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, useCallback, useMemo, ReactNode } from 'react';
 
 interface PillContextValue {
   redPillRef: React.RefObject<HTMLElement | null> | null;
@@ -13,16 +13,21 @@ const PillContext = createContext<PillContextValue | null>(null);
 export function PillProvider({ children }: { children: ReactNode }) {
   const [redPillRef, setRedPillRef] = useState<React.RefObject<HTMLElement | null> | null>(null);
 
-  const registerRedPill = (ref: React.RefObject<HTMLElement | null>) => {
+  const registerRedPill = useCallback((ref: React.RefObject<HTMLElement | null>) => {
     setRedPillRef(ref);
-  };
+  }, []);
 
-  const unregisterRedPill = () => {
+  const unregisterRedPill = useCallback(() => {
     setRedPillRef(null);
-  };
+  }, []);
+
+  const value = useMemo(
+    () => ({ redPillRef, registerRedPill, unregisterRedPill }),
+    [redPillRef, registerRedPill, unregisterRedPill]
+  );
 
   return (
-    <PillContext.Provider value={{ redPillRef, registerRedPill, unregisterRedPill }}>
+    <PillContext.Provider value={value}>
       {children}
     </PillContext.Provider>
   );
