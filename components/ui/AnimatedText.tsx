@@ -19,6 +19,7 @@ interface AnimatedTextProps {
   className?: string;
   wordTransitionDelay?: number;
   wordTransitionDuration?: number;
+  mode?: 'word' | 'char';
 }
 
 const textSizeClasses = {
@@ -44,6 +45,7 @@ export default function AnimatedText({
   className = '',
   wordTransitionDelay = 15,
   wordTransitionDuration = 3000,
+  mode = 'word',
 }: AnimatedTextProps) {
   // Handle QuestionExplanation-style text with segments
   const isSegmentFormat = Array.isArray(text) && text.length > 0 && typeof text[0] === 'object' && 'line' in text[0];
@@ -68,6 +70,7 @@ export default function AnimatedText({
     speed,
     delayAfterComplete,
     onComplete,
+    mode: isSegmentFormat ? 'word' : mode,
   });
 
   // Render QuestionExplanation-style format
@@ -134,40 +137,41 @@ export default function AnimatedText({
   // Render simple string array format
   const textArray = Array.isArray(text) ? text : [text];
 
-  // Calculate word start indices for each sentence
-  const wordStartIndices: number[] = [];
+  // Calculate unit start indices for each sentence (units = words or chars depending on mode)
+  const unitStartIndices: number[] = [];
   let currentIndex = 0;
   textArray.forEach((sentence) => {
-    wordStartIndices.push(currentIndex);
-    currentIndex += (typeof sentence === 'string' ? sentence : '').split(' ').length;
+    unitStartIndices.push(currentIndex);
+    const s = typeof sentence === 'string' ? sentence : '';
+    currentIndex += mode === 'char' ? s.length : s.split(' ').length;
   });
 
   return (
     <div className={`space-y-6 ${alignmentClasses[alignment]} ${className}`}>
       {textArray.map((sentence, sentenceIndex) => {
         const sentenceText = typeof sentence === 'string' ? sentence : '';
-        const sentenceWords = sentenceText.split(' ');
-        const currentWordStartIndex = wordStartIndices[sentenceIndex];
+        const units = mode === 'char' ? sentenceText.split('') : sentenceText.split(' ');
+        const currentUnitStartIndex = unitStartIndices[sentenceIndex];
 
         return (
           <p
             key={sentenceIndex}
             className={`${textSizeClasses[textSize]} leading-relaxed`}>
-            {sentenceWords.map((word, wordIndex) => {
-              const currentWordIndex = currentWordStartIndex + wordIndex;
-              const isVisible = currentWordIndex < visibleWordCount;
+            {units.map((unit, unitIndex) => {
+              const currentUnitIndex = currentUnitStartIndex + unitIndex;
+              const isVisible = currentUnitIndex < visibleWordCount;
 
               return (
                 <span
-                  key={wordIndex}
+                  key={unitIndex}
                   className={`transition-all ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
                     }`}
                   style={{
                     transitionDuration: isVisible ? `${wordTransitionDuration}ms` : '0ms',
-                    transitionDelay: isVisible ? `${currentWordIndex * wordTransitionDelay}ms` : '0ms',
+                    transitionDelay: isVisible ? `${currentUnitIndex * wordTransitionDelay}ms` : '0ms',
                   }}>
-                  {word}
-                  {wordIndex < sentenceWords.length - 1 ? ' ' : ''}
+                  {unit}
+                  {mode === 'word' && unitIndex < units.length - 1 ? ' ' : ''}
                 </span>
               );
             })}
