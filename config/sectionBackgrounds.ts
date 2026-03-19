@@ -8,7 +8,7 @@ export interface SectionBackgroundConfig {
 
 export const sectionBackgrounds: Record<Stage, SectionBackgroundConfig> = {
   choice: {
-    backgroundImage: '/images/red-pill-blue-pill-cover-ai.png',
+    backgroundImage: '/images/holding-out-hands.png',
     opacity: 0.2,
     pillTransition: true,
   },

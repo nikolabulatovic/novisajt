@@ -24,23 +24,19 @@ export default function ChoiceStage({ onPillChoice }: ChoiceStageProps) {
     <PageContainer backgroundImage={backgroundImage} backgroundImageOpacity={opacity} overlayOpacity={0} showBackgroundEffects={false}>
       {/* Animated background - minimal */}
       <div className='absolute inset-0 overflow-hidden pointer-events-none'>
-        <div className='absolute top-1/4 left-1/4 w-48 h-48 md:w-96 md:h-96 bg-blue-500/5 rounded-full blur-3xl animate-pulse' />
-        <div className='absolute bottom-1/4 right-1/4 w-48 h-48 md:w-96 md:h-96 bg-red-500/5 rounded-full blur-3xl animate-pulse delay-1000' />
+        <div className='absolute top-1/4 left-1/4 w-48 h-48 md:w-96 md:h-96 rounded-full blur-3xl animate-pulse' />
+        <div className='absolute bottom-1/4 right-1/4 w-48 h-48 md:w-96 md:h-96 rounded-full blur-3xl animate-pulse delay-1000' />
       </div>
 
       <div className='relative z-10 max-w-4xl mx-auto text-center space-y-12 animate-fade-in'>
-        <div className='space-y-6'>
-          <h1 className='text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-4 bg-gradient-to-r from-gray-300 via-purple-400 to-gray-300 bg-clip-text text-transparent animate-gradient'>
-            Izbor
+        <div className='space-y-6 mt-48'>
+          <h1 className='text-3xl sm:text-5xl font-bold mb-4 bg-gradient-to-r from-gray-300 via-purple-400 to-gray-300 bg-clip-text text-transparent animate-gradient'>
+            Imaš izbor
           </h1>
-          <h2 className='text-lg sm:text-xl md:text-2xl lg:text-4xl text-gray-300 max-w-2xl mx-auto leading-relaxed'>
-            Želiš li da saznaš istinu –
-            ili&nbsp;da&nbsp;nastaviš&nbsp;kao&nbsp;do&nbsp;sada?
-          </h2>
         </div>
 
         {/* Dva dugmeta - pilule */}
-        <div className='flex flex-row items-center justify-center gap-8 sm:gap-12 md:gap-16 mt-8 sm:mt-12 md:mt-16'>
+        <div className='flex flex-row items-center justify-around gap-8 sm:gap-12 md:gap-16 mt-16 sm:mt-24 md:mt-32'>
           {/* Plava pilula */}
           <div className='flex flex-col items-center space-y-6'>
             <Pill
@@ -53,7 +49,7 @@ export default function ChoiceStage({ onPillChoice }: ChoiceStageProps) {
                 Ostani
               </p>
               <p className='text-sm md:text-base lg:text-lg text-gray-400 max-w-xs'>
-                Nastavi kao što jesi - udoban u poznatom.
+                Ostani udoban u poznatom.
               </p>
             </div>
           </div>
@@ -70,7 +66,7 @@ export default function ChoiceStage({ onPillChoice }: ChoiceStageProps) {
                 Vidi
               </p>
               <p className='text-sm md:text-base lg:text-lg text-gray-400 max-w-xs'>
-                Otvori oči. Otkrij istinu o sebi i svetu.
+                Otkrij istinu o sebi i svetu.
               </p>
             </div>
           </div>
