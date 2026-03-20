@@ -21,7 +21,7 @@ export default function RootOfTheProblem({
     'Ali koren problema nije industrija. Industrija je samo savremeni oblik iste stare ideje.',
     'Problem je stariji od fabrika. Stariji od traka, klanica i korporacija.',
     'To je mentalitet.',
-    'Verovanje da druga bića postoje da bi bila korišćena. Da je normalno pretvoriti nekoga u proizvod.',
+    'Verovanje da druga bića postoje da bi bila korišćena. Da je normalno pretvoriti nekoga u proizvod ili sredstvo.',
   ];
 
   const { backgroundImage, opacity = 0.8 } =
