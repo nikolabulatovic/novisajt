@@ -31,7 +31,7 @@ export default function ChoiceStage({ onPillChoice }: ChoiceStageProps) {
       <div className='relative z-10 max-w-4xl mx-auto text-center space-y-12 animate-fade-in'>
         <div className='space-y-6 mt-48'>
           <h1 className='text-3xl sm:text-5xl font-bold mb-4 bg-gradient-to-r from-gray-300 via-purple-400 to-gray-300 bg-clip-text text-transparent animate-gradient'>
-            Imaš izbor
+            Izaberi
           </h1>
         </div>
 
