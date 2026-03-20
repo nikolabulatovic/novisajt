@@ -56,9 +56,6 @@ export const sectionBackgrounds: Record<Stage, SectionBackgroundConfig> = {
     backgroundImage: '/images/enslaved-pigs.jpg',
     opacity: 0.8,
   },
-  facts: {
-    opacity: 0.8,
-  },
   'root-of-the-problem': {
     backgroundImage: '/images/horse-stable-gray.jpg',
     opacity: 0.8,
@@ -115,25 +112,6 @@ export const sectionBackgrounds: Record<Stage, SectionBackgroundConfig> = {
     backgroundImage: '/images/farm-animals2.jpg',
     opacity: 0.8,
     pillTransition: true,
-  },
-  'animal-exploitation': {
-    backgroundImage: '/images/animal-exploitation-bg.jpg',
-    opacity: 0.25,
-  },
-  domestication: {
-    opacity: 0.8,
-  },
-  'moral-consistency': {
-    opacity: 0.8,
-  },
-  'final-choice': {
-    opacity: 0.8,
-  },
-  mirror: {
-    opacity: 0.8,
-  },
-  'call-to-action': {
-    opacity: 0.8,
   },
   'after-choice': {
     backgroundImage: '/images/animals-picturesque.png',

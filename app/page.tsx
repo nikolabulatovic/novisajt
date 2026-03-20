@@ -15,7 +15,6 @@ import BreakingQuestion from '@/components/BreakingQuestion';
 import SpasaStory from '@/components/SpasaStory';
 import SpasaRevelation from '@/components/SpasaRevelation';
 import OtherPigs from '@/components/OtherPigs';
-import FactsNumbers from '@/components/FactsNumbers';
 import RootOfTheProblem from '@/components/RootOfTheProblem';
 import AnimalsTreatedAsProducts from '@/components/AnimalsTreatedAsProducts';
 import LetThemLive from '@/components/LetThemLive';
@@ -30,12 +29,6 @@ import VeganDietHealth from '@/components/VeganDietHealth';
 import SolutionChoice from '@/components/SolutionChoice';
 import AlignBehaviour from '@/components/AlignBehaviour';
 import VeganismPrinciple from '@/components/VeganismPrinciple';
-import AnimalExploitation from '@/components/AnimalExploitation';
-import DomesticationReproduction from '@/components/DomesticationReproduction';
-import MoralConsistency from '@/components/MoralConsistency';
-import FinalChoice from '@/components/FinalChoice';
-import Mirror from '@/components/Mirror';
-import CallToAction from '@/components/CallToAction';
 import AfterChoice from '@/components/AfterChoice';
 import NavigationMenu from '@/components/NavigationMenu';
 
@@ -172,30 +165,6 @@ export default function Home() {
     transitionToStage('after-choice');
   };
 
-  const handleAnimalExploitationComplete = () => {
-    transitionToStage('moral-consistency');
-  };
-
-  const handleDomesticationComplete = () => {
-    transitionToStage('moral-consistency');
-  };
-
-  const handleMoralConsistencyComplete = () => {
-    transitionToStage('final-choice');
-  };
-
-  const handleFinalChoiceComplete = () => {
-    transitionToStage('mirror');
-  };
-
-  const handleMirrorComplete = () => {
-    transitionToStage('call-to-action');
-  };
-
-  const handleCallToActionComplete = () => {
-    transitionToStage('after-choice');
-  };
-
   const navigateToStage = (newStage: Stage) => {
     setStage(newStage);
   };
@@ -236,7 +205,6 @@ export default function Home() {
             {stage === 'other-pigs' && (
               <OtherPigs onComplete={handleOtherPigsComplete} />
             )}
-            {stage === 'facts' && <FactsNumbers onComplete={() => { }} />}
             {stage === 'root-of-the-problem' && (
               <RootOfTheProblem onComplete={handleRootOfTheProblemComplete} />
             )}
@@ -284,28 +252,6 @@ export default function Home() {
             )}
             {stage === 'veganism-principle' && (
               <VeganismPrinciple onComplete={handleVeganismPrincipleComplete} />
-            )}
-            {stage === 'animal-exploitation' && (
-              <AnimalExploitation
-                onComplete={handleAnimalExploitationComplete}
-              />
-            )}
-            {stage === 'domestication' && (
-              <DomesticationReproduction
-                onComplete={handleDomesticationComplete}
-              />
-            )}
-            {stage === 'moral-consistency' && (
-              <MoralConsistency onComplete={handleMoralConsistencyComplete} />
-            )}
-            {stage === 'final-choice' && (
-              <FinalChoice onComplete={handleFinalChoiceComplete} />
-            )}
-            {stage === 'mirror' && (
-              <Mirror answers={answers} onComplete={handleMirrorComplete} />
-            )}
-            {stage === 'call-to-action' && (
-              <CallToAction onComplete={handleCallToActionComplete} />
             )}
             {stage === 'after-choice' && <AfterChoice />}
           </>
