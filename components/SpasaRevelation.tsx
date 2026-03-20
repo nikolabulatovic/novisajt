@@ -27,8 +27,7 @@ export default function SpasaRevelation({ onComplete }: SpasaRevelationProps) {
   return (
     <PageContainer
       backgroundImage={backgroundImage}
-      backgroundImageOpacity={opacity}
-      overlayOpacity={0.5}>
+      backgroundImageOpacity={opacity}>
       <ContentContainer spacing="lg">
         <div className='relative p-6 md:p-16'>
           <TextBackdrop type="linear" />

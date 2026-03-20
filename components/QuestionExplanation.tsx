@@ -57,7 +57,6 @@ export default function QuestionExplanation({
     <PageContainer
       backgroundImage={backgroundImage}
       backgroundImageOpacity={opacity}
-      overlayOpacity={0}
       maxWidth="lg">
       <ContentContainer spacing="sm">
         <div className="px-2">

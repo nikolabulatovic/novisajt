@@ -27,13 +27,6 @@ export type Stage =
   | 'solution-choice'
   | 'align-behaviour'
   | 'veganism-principle'
-  | 'facts'
-  | 'animal-exploitation'
-  | 'domestication'
-  | 'moral-consistency'
-  | 'final-choice'
-  | 'mirror'
-  | 'call-to-action'
   | 'after-choice';
 
 interface NavigationContextType {

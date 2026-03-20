@@ -2,8 +2,9 @@
 
 import { useState } from 'react';
 import { NavigationProvider, Stage } from '@/contexts/NavigationContext';
-import { TransitionProvider } from '@/contexts/TransitionContext';
-import TransitionOverlay from '@/components/ui/TransitionOverlay';
+import { PillProvider } from '@/contexts/PillContext';
+import PillTransitionLayer from '@/components/ui/PillTransitionLayer';
+import { sectionBackgrounds } from '@/config/sectionBackgrounds';
 import ChoiceStage from '@/components/ChoiceStage';
 import CharacterEvaluation from '@/components/CharacterEvaluation';
 import RedPillIntro from '@/components/RedPillIntro';
@@ -14,7 +15,6 @@ import BreakingQuestion from '@/components/BreakingQuestion';
 import SpasaStory from '@/components/SpasaStory';
 import SpasaRevelation from '@/components/SpasaRevelation';
 import OtherPigs from '@/components/OtherPigs';
-import FactsNumbers from '@/components/FactsNumbers';
 import RootOfTheProblem from '@/components/RootOfTheProblem';
 import AnimalsTreatedAsProducts from '@/components/AnimalsTreatedAsProducts';
 import LetThemLive from '@/components/LetThemLive';
@@ -29,45 +29,36 @@ import VeganDietHealth from '@/components/VeganDietHealth';
 import SolutionChoice from '@/components/SolutionChoice';
 import AlignBehaviour from '@/components/AlignBehaviour';
 import VeganismPrinciple from '@/components/VeganismPrinciple';
-import AnimalExploitation from '@/components/AnimalExploitation';
-import DomesticationReproduction from '@/components/DomesticationReproduction';
-import MoralConsistency from '@/components/MoralConsistency';
-import FinalChoice from '@/components/FinalChoice';
-import Mirror from '@/components/Mirror';
-import CallToAction from '@/components/CallToAction';
 import AfterChoice from '@/components/AfterChoice';
 import NavigationMenu from '@/components/NavigationMenu';
 
 export default function Home() {
   const [stage, setStage] = useState<Stage>('choice');
   const [answers, setAnswers] = useState<Record<string, string>>({});
-  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [pendingNextStage, setPendingNextStage] = useState<Stage | null>(null);
 
-  const handlePillChoice = (pill: 'red' | 'blue') => {
-    // ChoiceStage handles its own fade out, so we just need to wait a bit
-    setTimeout(() => {
-      if (pill === 'red') {
-        setIsTransitioning(true);
-        setTimeout(() => {
-          setStage('intro');
-          setIsTransitioning(false);
-        }, 50);
-      } else {
-        // Plava pilula - neutralni izlaz (može se implementirati kasnije)
-        setStage('choice');
-      }
-    }, 600);
+  const handleTransitionComplete = () => {
+    if (pendingNextStage) {
+      setStage(pendingNextStage);
+    }
+    setPendingNextStage(null);
   };
 
   const transitionToStage = (newStage: Stage) => {
-    setIsTransitioning(true);
-    setTimeout(() => {
+    if (sectionBackgrounds[stage]?.pillTransition) {
+      setPendingNextStage(newStage);
+    } else {
       setStage(newStage);
-      // Small delay before fade in starts
-      setTimeout(() => {
-        setIsTransitioning(false);
-      }, 50);
-    }, 400);
+    }
+  };
+
+  const handlePillChoice = (pill: 'red' | 'blue') => {
+    if (pill === 'red') {
+      transitionToStage('intro');
+    } else {
+      // Plava pilula - neutralni izlaz (može se implementirati kasnije)
+      setStage('choice');
+    }
   };
 
   const handleIntroComplete = () => {
@@ -174,56 +165,19 @@ export default function Home() {
     transitionToStage('after-choice');
   };
 
-  const handleAnimalExploitationComplete = () => {
-    transitionToStage('moral-consistency');
-  };
-
-  const handleDomesticationComplete = () => {
-    transitionToStage('moral-consistency');
-  };
-
-  const handleMoralConsistencyComplete = () => {
-    transitionToStage('final-choice');
-  };
-
-  const handleFinalChoiceComplete = () => {
-    transitionToStage('mirror');
-  };
-
-  const handleMirrorComplete = () => {
-    transitionToStage('call-to-action');
-  };
-
-  const handleCallToActionComplete = () => {
-    transitionToStage('after-choice');
-  };
-
   const navigateToStage = (newStage: Stage) => {
-    transitionToStage(newStage);
+    setStage(newStage);
   };
 
   return (
     <NavigationProvider currentStage={stage} navigateToStage={navigateToStage}>
-      <TransitionProvider>
+      <PillProvider>
+        <PillTransitionLayer pendingNextStage={pendingNextStage} onComplete={handleTransitionComplete} />
         <NavigationMenu />
-        <TransitionOverlay />
         <main className='min-h-screen bg-black text-white overflow-hidden relative'>
-          {/* Fade overlay for transitions */}
-          <div
-            className={`absolute inset-0 bg-black z-50 pointer-events-none transition-opacity duration-[400ms] ease-in-out ${isTransitioning ? 'opacity-100' : 'opacity-0'
-              }`}
-          />
-
-          {/* Stage content with fade in */}
-          <div
-            className={`transition-opacity duration-[600ms] ease-in-out ${isTransitioning ? 'opacity-0' : 'opacity-100'
-              }`}>
-            {stage === 'choice' && (
-              <ChoiceStage onPillChoice={handlePillChoice} />
-            )}
-            {stage === 'intro' && (
-              <RedPillIntro onComplete={handleIntroComplete} />
-            )}
+          <>
+            {stage === 'choice' && <ChoiceStage onPillChoice={handlePillChoice} />}
+            {stage === 'intro' && <RedPillIntro onComplete={handleIntroComplete} />}
             {stage === 'evaluation' && (
               <CharacterEvaluation
                 onComplete={handleEvaluationComplete}
@@ -251,7 +205,6 @@ export default function Home() {
             {stage === 'other-pigs' && (
               <OtherPigs onComplete={handleOtherPigsComplete} />
             )}
-            {stage === 'facts' && <FactsNumbers onComplete={() => { }} />}
             {stage === 'root-of-the-problem' && (
               <RootOfTheProblem onComplete={handleRootOfTheProblemComplete} />
             )}
@@ -300,32 +253,10 @@ export default function Home() {
             {stage === 'veganism-principle' && (
               <VeganismPrinciple onComplete={handleVeganismPrincipleComplete} />
             )}
-            {stage === 'animal-exploitation' && (
-              <AnimalExploitation
-                onComplete={handleAnimalExploitationComplete}
-              />
-            )}
-            {stage === 'domestication' && (
-              <DomesticationReproduction
-                onComplete={handleDomesticationComplete}
-              />
-            )}
-            {stage === 'moral-consistency' && (
-              <MoralConsistency onComplete={handleMoralConsistencyComplete} />
-            )}
-            {stage === 'final-choice' && (
-              <FinalChoice onComplete={handleFinalChoiceComplete} />
-            )}
-            {stage === 'mirror' && (
-              <Mirror answers={answers} onComplete={handleMirrorComplete} />
-            )}
-            {stage === 'call-to-action' && (
-              <CallToAction onComplete={handleCallToActionComplete} />
-            )}
             {stage === 'after-choice' && <AfterChoice />}
-          </div>
+          </>
         </main>
-      </TransitionProvider>
+      </PillProvider>
     </NavigationProvider>
   );
 }

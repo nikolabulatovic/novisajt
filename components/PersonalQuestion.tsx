@@ -56,8 +56,6 @@ export default function PersonalQuestion({
                 opacity: opacity,
               }}
             />
-            {/* Dark overlay for text visibility */}
-            <div className='absolute inset-0 bg-black/60 pointer-events-none' />
           </div>
         ) : null;
       })()}

@@ -41,8 +41,7 @@ export default function SpasaStory({ onComplete }: SpasaStoryProps) {
   return (
     <PageContainer
       backgroundImage={backgroundImage}
-      backgroundImageOpacity={opacity}
-      overlayOpacity={0.5}>
+      backgroundImageOpacity={opacity}>
       {!showFinalMessage ? (
         <ContentContainer spacing='lg'>
           <div className='relative p-6 md:p-16'>

@@ -3,24 +3,34 @@ import { Stage } from '@/contexts/NavigationContext';
 export interface SectionBackgroundConfig {
   backgroundImage?: string;
   opacity?: number;
+  pillTransition?: boolean; // Whether to use the pill mask expansion transition when leaving this stage
+  pillTransitionOverlayColor?: 'black' | 'white'; // Overlay color used during pill mask expansion into this stage
+  gradientOverlayClasses?: string[]; // Extra gradient overlay divs to replicate in PillTransitionLayer so transition end matches page start
 }
 
 export const sectionBackgrounds: Record<Stage, SectionBackgroundConfig> = {
   choice: {
-    backgroundImage: '/images/red-pill-blue-pill-cover-ai.png',
+    backgroundImage: '/images/holding-out-hands.png',
     opacity: 0.2,
+    pillTransition: true,
   },
   intro: {
     backgroundImage: '/images/intro-reflection.jpeg',
     opacity: 0.2,
+    pillTransition: true,
   },
   evaluation: {
     backgroundImage: '/images/character-introspection.jpeg',
     opacity: 0.5,
+    gradientOverlayClasses: [
+      'absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60 pointer-events-none',
+      'absolute inset-0 bg-gradient-to-r from-transparent via-black/20 to-transparent pointer-events-none',
+    ],
   },
   explanation: {
     backgroundImage: '/images/ogledalo.png',
     opacity: 0.35,
+    pillTransition: true,
   },
   historical: {
     backgroundImage: '/images/historical-weight.png',
@@ -44,9 +54,6 @@ export const sectionBackgrounds: Record<Stage, SectionBackgroundConfig> = {
   },
   'other-pigs': {
     backgroundImage: '/images/enslaved-pigs.jpg',
-    opacity: 0.8,
-  },
-  facts: {
     opacity: 0.8,
   },
   'root-of-the-problem': {
@@ -104,28 +111,10 @@ export const sectionBackgrounds: Record<Stage, SectionBackgroundConfig> = {
   'veganism-principle': {
     backgroundImage: '/images/farm-animals2.jpg',
     opacity: 0.8,
-  },
-  'animal-exploitation': {
-    backgroundImage: '/images/animal-exploitation-bg.jpg',
-    opacity: 0.25,
-  },
-  domestication: {
-    opacity: 0.8,
-  },
-  'moral-consistency': {
-    opacity: 0.8,
-  },
-  'final-choice': {
-    opacity: 0.8,
-  },
-  mirror: {
-    opacity: 0.8,
-  },
-  'call-to-action': {
-    opacity: 0.8,
+    pillTransition: true,
   },
   'after-choice': {
+    backgroundImage: '/images/animals-picturesque.png',
     opacity: 0.8,
   },
 };
-

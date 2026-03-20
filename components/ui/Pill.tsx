@@ -1,13 +1,7 @@
 'use client';
 
-import { useState, MouseEvent } from 'react';
-import { useTransition } from '@/contexts/TransitionContext';
-import { useNavigation } from '@/contexts/NavigationContext';
-import {
-  getBackgroundImageForStage,
-  getBackgroundOpacityForStage,
-} from '@/utils/backgroundImages';
-import { getNextStage } from '@/utils/nextStage';
+import { useRef, useEffect } from 'react';
+import { usePillContext } from '@/contexts/PillContext';
 
 interface PillProps {
   color: 'red' | 'blue';
@@ -30,12 +24,22 @@ export default function Pill({
   show = true,
   className = '',
 }: PillProps) {
-  const [isExpanding, setIsExpanding] = useState(false);
-  const { startTransition } = useTransition();
-  const { currentStage } = useNavigation();
+  const pillContext = usePillContext();
+  const pillShapeRef = useRef<HTMLButtonElement>(null);
   const isRed = color === 'red';
-  const rotationClass = isRed ? '-rotate-3' : 'rotate-3';
   const isButton = !!label;
+
+  // Register red pill ref in context (ref to the actual pill shape element)
+  useEffect(() => {
+    if (isRed && pillContext && pillShapeRef.current) {
+      setTimeout(() => {
+        pillContext.registerRedPill(pillShapeRef as React.RefObject<HTMLElement | null>);
+      }, 500);
+      return () => {
+        pillContext.unregisterRedPill();
+      };
+    }
+  }, [isRed, pillContext]);
 
   const gradientStyle = isRed
     ? 'linear-gradient(to bottom, rgb(140, 35, 35) 0%, rgb(220, 60, 60) 15%, rgb(69, 10, 10) 90%, rgb(55, 11, 11) 95%, rgb(48, 9, 9) 98%, rgb(42, 8, 8) 100%)'
@@ -43,37 +47,13 @@ export default function Pill({
 
   const highlightColor = isRed ? 'from-red-800/20' : 'from-blue-800/20';
 
-  const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
+  const handleClick = () => {
     if (disabled) return;
-
-    // Get the center of the button relative to viewport
-    const button = e.currentTarget;
-    const rect = button.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-
-    // Start expansion animation
-    setIsExpanding(true);
-
-    // Get next stage and its background image/opacity for transition
-    const nextStage = getNextStage(currentStage, isRed ? 'red' : 'blue');
-    const nextBg = nextStage ? getBackgroundImageForStage(nextStage) : null;
-    const nextOpacity = nextStage
-      ? getBackgroundOpacityForStage(nextStage)
-      : 0.8;
-
-    // Start the transition overlay effect with NEXT background
-    startTransition(centerX, centerY, nextBg || undefined, nextOpacity);
 
     // Call the original onClick after a short delay
     setTimeout(() => {
       onClick();
     }, 100);
-
-    // Reset expansion after animation completes - slower (4 seconds)
-    setTimeout(() => {
-      setIsExpanding(false);
-    }, 4000); // Match animation duration
   };
 
   // Button variant: same pill shape with text
@@ -83,14 +63,12 @@ export default function Pill({
         className={`transition-opacity duration-500 ${className} ${show ? 'opacity-100' : 'opacity-0 pointer-events-none'
           }`}>
         <button
+          ref={isRed ? pillShapeRef : undefined}
           onClick={handleClick}
           disabled={disabled}
           className={`group relative flex flex-col items-center cursor-pointer ${disabled ? 'pointer-events-none' : ''
             }`}>
-          <div className={`relative w-24 h-12 sm:w-32 sm:h-16 md:w-40 md:h-20 transform transition-all duration-[4000ms] ease-out ${isExpanding
-            ? 'scale-[2] opacity-0'
-            : 'group-hover:scale-110 group-hover:rotate-3'
-            }`}>
+          <div className='relative w-24 h-12 sm:w-32 sm:h-16 md:w-40 md:h-20 transform transition-all duration-[4000ms] ease-out group-hover:scale-110 group-hover:rotate-3'>
             {/* Shadow at bottom for 3D effect */}
             <div className='absolute inset-0 rounded-full bg-black/50 blur-md translate-y-2'></div>
             {/* Pill with top-to-bottom gradient */}
@@ -120,17 +98,13 @@ export default function Pill({
   // Original pill variant: visual pill without text
   return (
     <button
+      ref={isRed ? pillShapeRef : undefined}
       onClick={handleClick}
       disabled={disabled}
       className={`group relative flex flex-col items-center space-y-6 cursor-pointer ${isFadingOut && !isSelected ? 'opacity-30' : ''
         } ${disabled ? 'pointer-events-none' : ''} ${className}`}>
       <div
-        className={`relative w-24 h-12 sm:w-32 sm:h-16 md:w-40 md:h-20 transform transition-all duration-[4000ms] ease-out ${isExpanding
-          ? 'scale-[2] opacity-0'
-          : isSelected && isFadingOut
-            ? `scale-110 ${rotationClass}`
-            : `group-hover:scale-110 ${isRed ? 'group-hover:-rotate-3' : 'group-hover:rotate-3'
-            }`
+        className={`relative w-24 h-12 sm:w-32 sm:h-16 md:w-40 md:h-20 transform transition-all duration-[4000ms] ease-out group-hover:scale-110 ${isRed ? 'group-hover:-rotate-3' : 'group-hover:rotate-3'
           }`}>
         {/* Shadow at bottom for 3D effect */}
         <div className='absolute inset-0 rounded-full bg-black/50 blur-md translate-y-2'></div>

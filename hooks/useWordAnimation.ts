@@ -2,9 +2,10 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 
 interface UseWordAnimationOptions {
   text: string | string[];
-  speed?: number; // ms per word
+  speed?: number; // ms per word or char
   delayAfterComplete?: number; // ms to wait after animation completes
   onComplete?: () => void;
+  mode?: 'word' | 'char';
 }
 
 export function useWordAnimation({
@@ -12,6 +13,7 @@ export function useWordAnimation({
   speed = 120,
   delayAfterComplete = 1000,
   onComplete,
+  mode = 'word',
 }: UseWordAnimationOptions) {
   const [visibleWordCount, setVisibleWordCount] = useState(0);
   const [showButton, setShowButton] = useState(false);
@@ -24,9 +26,12 @@ export function useWordAnimation({
   }, [onComplete]);
 
   const textArray = useMemo(() => Array.isArray(text) ? text : [text], [text]);
-  const allWords = useMemo(() => textArray.flatMap((sentence) => sentence.split(' ')), [textArray]);
+  const allWords = useMemo(
+    () => textArray.flatMap((sentence) => mode === 'char' ? sentence.split('') : sentence.split(' ')),
+    [textArray, mode],
+  );
   const totalWords = allWords.length;
-  const textKey = useMemo(() => allWords.join(' '), [allWords]);
+  const textKey = useMemo(() => allWords.join(mode === 'char' ? '' : ' '), [allWords, mode]);
 
   useEffect(() => {
     setVisibleWordCount(0);

@@ -28,13 +28,6 @@ const stageLabels: Record<Stage, string> = {
   'solution-choice': 'Biranje suprotno uverenju',
   'align-behaviour': 'Usaglašavanje ponašanja',
   'veganism-principle': 'Princip veganstva',
-  facts: 'Činjenice',
-  'animal-exploitation': 'Eksploatacija',
-  domestication: 'Pitomstvo',
-  'moral-consistency': 'Moralna doslednost',
-  'final-choice': 'Konačni izbor',
-  mirror: 'Ogledalo',
-  'call-to-action': 'Poziv na akciju',
   'after-choice': 'Nakon izbora',
 };
 
@@ -63,13 +56,6 @@ const stageOrder: Stage[] = [
   'solution-choice',
   'align-behaviour',
   'veganism-principle',
-  'facts',
-  'animal-exploitation',
-  'domestication',
-  'moral-consistency',
-  'final-choice',
-  'mirror',
-  'call-to-action',
   'after-choice',
 ];
 
@@ -125,8 +111,8 @@ export default function NavigationMenu() {
       {/* Menu Panel */}
       <div
         className={`absolute top-16 right-0 w-56 sm:w-64 max-w-[calc(100vw-2rem)] bg-gray-900/95 backdrop-blur-lg border border-gray-800/50 rounded-xl shadow-2xl overflow-hidden transition-all duration-300 ${isOpen
-            ? 'opacity-100 translate-y-0 pointer-events-auto'
-            : 'opacity-0 -translate-y-4 pointer-events-none'
+          ? 'opacity-100 translate-y-0 pointer-events-auto'
+          : 'opacity-0 -translate-y-4 pointer-events-none'
           }`}>
         <div className='p-2 max-h-[70vh] overflow-y-auto'>
           <div className='px-3 py-2 border-b border-gray-800/50 mb-2'>
@@ -141,8 +127,8 @@ export default function NavigationMenu() {
                 key={stage}
                 onClick={() => handleStageClick(stage)}
                 className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-200 mb-1 ${isActive
-                    ? 'bg-gray-800/60 border border-gray-700/50 text-gray-100'
-                    : 'text-gray-300 hover:bg-gray-800/40 hover:text-gray-100'
+                  ? 'bg-gray-800/60 border border-gray-700/50 text-gray-100'
+                  : 'text-gray-300 hover:bg-gray-800/40 hover:text-gray-100'
                   }`}>
                 <div className='flex items-center justify-between'>
                   <span

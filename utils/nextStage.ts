@@ -39,13 +39,6 @@ export function getNextStage(
     'solution-choice': 'align-behaviour',
     'align-behaviour': 'veganism-principle',
     'veganism-principle': 'after-choice',
-    facts: 'animal-exploitation',
-    'animal-exploitation': 'moral-consistency',
-    domestication: 'moral-consistency',
-    'moral-consistency': 'final-choice',
-    'final-choice': 'mirror',
-    mirror: 'call-to-action',
-    'call-to-action': 'after-choice',
     'after-choice': null,
   };
 

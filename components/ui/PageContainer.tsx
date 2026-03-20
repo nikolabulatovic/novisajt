@@ -8,7 +8,6 @@ interface PageContainerProps {
   children: ReactNode;
   backgroundImage?: string;
   backgroundImageOpacity?: number;
-  overlayOpacity?: number;
   maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
   showBackgroundEffects?: boolean;
   className?: string;
@@ -28,7 +27,6 @@ export default function PageContainer({
   children,
   backgroundImage,
   backgroundImageOpacity = 0.8,
-  overlayOpacity = 0.5,
   maxWidth = 'md',
   showBackgroundEffects = true,
   className = '',
@@ -41,7 +39,6 @@ export default function PageContainer({
           <BackgroundImage
             src={backgroundImage}
             opacity={backgroundImageOpacity}
-            overlayOpacity={overlayOpacity}
           />
         </div>
       )}
