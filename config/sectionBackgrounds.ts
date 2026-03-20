@@ -5,6 +5,7 @@ export interface SectionBackgroundConfig {
   opacity?: number;
   pillTransition?: boolean; // Whether to use the pill mask expansion transition when leaving this stage
   pillTransitionOverlayColor?: 'black' | 'white'; // Overlay color used during pill mask expansion into this stage
+  gradientOverlayClasses?: string[]; // Extra gradient overlay divs to replicate in PillTransitionLayer so transition end matches page start
 }
 
 export const sectionBackgrounds: Record<Stage, SectionBackgroundConfig> = {
@@ -21,6 +22,10 @@ export const sectionBackgrounds: Record<Stage, SectionBackgroundConfig> = {
   evaluation: {
     backgroundImage: '/images/character-introspection.jpeg',
     opacity: 0.5,
+    gradientOverlayClasses: [
+      'absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60 pointer-events-none',
+      'absolute inset-0 bg-gradient-to-r from-transparent via-black/20 to-transparent pointer-events-none',
+    ],
   },
   explanation: {
     backgroundImage: '/images/ogledalo.png',

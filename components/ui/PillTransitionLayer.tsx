@@ -1,9 +1,11 @@
 'use client';
 
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Stage } from '@/contexts/NavigationContext';
 import { sectionBackgrounds } from '@/config/sectionBackgrounds';
 import { useMaskExpansionFromPill } from '@/hooks/useMaskExpansionFromPill';
+
+const FADE_OUT_DURATION = 400;
 
 interface PillTransitionLayerProps {
   pendingNextStage: Stage | null;
@@ -14,31 +16,65 @@ interface PillTransitionLayerProps {
  * Fixed full-screen overlay that handles the pill-to-viewport mask expansion transition.
  * Renders on top of everything when a pill transition is in progress.
  *
- * Both the background image opacity and overlay opacity animate toward their
- * target values from sectionBackgrounds, so at expansion end the layer looks
- * identical to the destination page — no flash on unmount.
+ * Phase 1 — expansion: pill mask grows to fill viewport while revealing destination appearance.
+ * Phase 2 — fade-out: after onComplete swaps the real stage in underneath, this layer fades
+ *   to transparent, smoothly covering any residual visual mismatch between the layer and the page.
  */
 export default function PillTransitionLayer({
   pendingNextStage,
   onComplete,
 }: PillTransitionLayerProps) {
   const onCompleteRef = useRef(onComplete);
+  // Keeps config readable during fade-out after pendingNextStage becomes null
+  const [persistedStage, setPersistedStage] = useState<Stage | null>(null);
+  const [isFadingOut, setIsFadingOut] = useState(false);
+  const [fadeOutOpacity, setFadeOutOpacity] = useState(1);
 
   useEffect(() => {
     onCompleteRef.current = onComplete;
   }, [onComplete]);
 
-  // Stable callback so useMaskExpansion doesn't recreate startExpansion when onComplete changes
-  const stableOnComplete = useCallback(() => {
+  // React-recommended pattern for tracking the last non-null prop value:
+  // update state during render so React re-renders immediately without a cascading effect.
+  if (pendingNextStage && pendingNextStage !== persistedStage) {
+    setPersistedStage(pendingNextStage);
+  }
+
+  // Called when mask expansion finishes
+  const handleExpansionComplete = useCallback(() => {
+    // Swap the real stage in underneath this layer
     onCompleteRef.current();
+    // Then fade this layer out to cover any residual visual mismatch
+    setIsFadingOut(true);
   }, []);
+
+  useEffect(() => {
+    if (!isFadingOut) return;
+    const startTime = Date.now();
+    let raf: number;
+    const animate = () => {
+      const elapsed = Date.now() - startTime;
+      const progress = Math.min(elapsed / FADE_OUT_DURATION, 1);
+      setFadeOutOpacity(1 - progress);
+      if (progress < 1) {
+        raf = requestAnimationFrame(animate);
+      } else {
+        setIsFadingOut(false);
+        setFadeOutOpacity(1);
+      }
+    };
+    raf = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(raf);
+  }, [isFadingOut]);
+
+  const stableOnComplete = useCallback(() => {
+    handleExpansionComplete();
+  }, [handleExpansionComplete]);
 
   const { startExpansion, maskStyle, expansionProgress } = useMaskExpansionFromPill({
     onComplete: stableOnComplete,
   });
 
-  // Track which stage we've already started expanding to, so startExpansion
-  // is only called once per pending stage (not re-called when its identity changes)
   const startedForStageRef = useRef<typeof pendingNextStage>(null);
 
   useEffect(() => {
@@ -51,13 +87,16 @@ export default function PillTransitionLayer({
     }
   }, [pendingNextStage, startExpansion]);
 
-  // Don't render until the animation has started (position is correct only after startExpansion fires)
-  if (!pendingNextStage || expansionProgress === 0) return null;
+  const activeStage = pendingNextStage ?? persistedStage;
 
-  const nextConfig = sectionBackgrounds[pendingNextStage];
+  if ((!pendingNextStage && !isFadingOut) || expansionProgress === 0) return null;
+  if (!activeStage) return null;
+
+  const nextConfig = sectionBackgrounds[activeStage];
   const nextBackgroundImage = nextConfig?.backgroundImage;
   const transitionOverlayColor = nextConfig?.pillTransitionOverlayColor ?? 'black';
   const targetBgOpacity = nextConfig?.opacity ?? 0.8;
+  const gradientOverlayClasses = nextConfig?.gradientOverlayClasses ?? [];
 
   const widthValue = parseFloat(maskStyle.width);
   const heightValue = parseFloat(maskStyle.height);
@@ -68,7 +107,9 @@ export default function PillTransitionLayer({
   const maskId = 'pill-transition-mask';
 
   return (
-    <div className="fixed inset-0 z-[10001] pointer-events-none">
+    <div
+      className="fixed inset-0 z-[10001] pointer-events-none"
+      style={{ opacity: isFadingOut ? fadeOutOpacity : 1 }}>
       <svg className="absolute" width="100%" height="100%" style={{ pointerEvents: 'none' }}>
         <defs>
           <mask id={maskId}>
@@ -103,6 +144,9 @@ export default function PillTransitionLayer({
             }}
           />
         )}
+        {gradientOverlayClasses.map((cls, i) => (
+          <div key={i} className={cls} />
+        ))}
         {/* Overlay animates from fully opaque → target, revealing destination appearance */}
         <div
           className="absolute inset-0"
