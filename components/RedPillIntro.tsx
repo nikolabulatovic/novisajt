@@ -27,7 +27,6 @@ export default function RedPillIntro({ onComplete }: RedPillIntroProps) {
       className="overflow-hidden"
       backgroundImage={backgroundImage}
       backgroundImageOpacity={opacity}
-      overlayOpacity={0}
       showBackgroundEffects={false}>
       <ContentContainer spacing="sm">
         <div className='bg-gray-900/20 backdrop-blur-lg rounded-2xl p-8 md:p-12 border border-gray-800/20 shadow-2xl'>

@@ -4,6 +4,7 @@ export interface SectionBackgroundConfig {
   backgroundImage?: string;
   opacity?: number;
   pillTransition?: boolean; // Whether to use the pill mask expansion transition when leaving this stage
+  pillTransitionOverlayColor?: 'black' | 'white'; // Overlay color used during pill mask expansion into this stage
 }
 
 export const sectionBackgrounds: Record<Stage, SectionBackgroundConfig> = {
@@ -108,6 +109,7 @@ export const sectionBackgrounds: Record<Stage, SectionBackgroundConfig> = {
   'veganism-principle': {
     backgroundImage: '/images/farm-animals2.jpg',
     opacity: 0.8,
+    pillTransition: true,
   },
   'animal-exploitation': {
     backgroundImage: '/images/animal-exploitation-bg.jpg',
@@ -133,4 +135,3 @@ export const sectionBackgrounds: Record<Stage, SectionBackgroundConfig> = {
     opacity: 0.8,
   },
 };
-

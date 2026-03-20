@@ -21,7 +21,7 @@ export default function ChoiceStage({ onPillChoice }: ChoiceStageProps) {
   const { backgroundImage, opacity } = sectionBackgrounds.choice;
 
   return (
-    <PageContainer backgroundImage={backgroundImage} backgroundImageOpacity={opacity} overlayOpacity={0} showBackgroundEffects={false}>
+    <PageContainer backgroundImage={backgroundImage} backgroundImageOpacity={opacity} showBackgroundEffects={false}>
       {/* Animated background - minimal */}
       <div className='absolute inset-0 overflow-hidden pointer-events-none'>
         <div className='absolute top-1/4 left-1/4 w-48 h-48 md:w-96 md:h-96 rounded-full blur-3xl animate-pulse' />

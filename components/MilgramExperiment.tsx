@@ -60,8 +60,7 @@ export default function MilgramExperiment({
   return (
     <PageContainer
       backgroundImage="/images/milgram.jpeg"
-      backgroundImageOpacity={1}
-      overlayOpacity={0.7}
+      backgroundImageOpacity={0.3}
       maxWidth="lg"
       className="items-start pt-16 md:pt-24">
       <div className='relative z-10 w-full p-6 md:p-8'>

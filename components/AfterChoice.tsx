@@ -43,7 +43,6 @@ export default function AfterChoice() {
     <PageContainer
       backgroundImage={backgroundImage}
       backgroundImageOpacity={opacity}
-      overlayOpacity={0}
       maxWidth="3xl">
       <ContentContainer spacing="lg">
         <div className="relative p-16">

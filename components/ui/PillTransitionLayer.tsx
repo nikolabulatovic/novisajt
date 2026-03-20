@@ -5,8 +5,6 @@ import { Stage } from '@/contexts/NavigationContext';
 import { sectionBackgrounds } from '@/config/sectionBackgrounds';
 import { useMaskExpansionFromPill } from '@/hooks/useMaskExpansionFromPill';
 
-const DEFAULT_NEXT_OVERLAY_OPACITY = 0.8;
-
 interface PillTransitionLayerProps {
   pendingNextStage: Stage | null;
   onComplete: () => void;
@@ -15,6 +13,10 @@ interface PillTransitionLayerProps {
 /**
  * Fixed full-screen overlay that handles the pill-to-viewport mask expansion transition.
  * Renders on top of everything when a pill transition is in progress.
+ *
+ * Both the background image opacity and overlay opacity animate toward their
+ * target values from sectionBackgrounds, so at expansion end the layer looks
+ * identical to the destination page — no flash on unmount.
  */
 export default function PillTransitionLayer({
   pendingNextStage,
@@ -54,6 +56,8 @@ export default function PillTransitionLayer({
 
   const nextConfig = sectionBackgrounds[pendingNextStage];
   const nextBackgroundImage = nextConfig?.backgroundImage;
+  const transitionOverlayColor = nextConfig?.pillTransitionOverlayColor ?? 'black';
+  const targetBgOpacity = nextConfig?.opacity ?? 0.8;
 
   const widthValue = parseFloat(maskStyle.width);
   const heightValue = parseFloat(maskStyle.height);
@@ -88,15 +92,24 @@ export default function PillTransitionLayer({
           maskImage: `url(#${maskId})`,
           WebkitMaskImage: `url(#${maskId})`,
         }}>
+        {/* Solid black base — always fully opaque so old stage never shows through */}
+        <div className="absolute inset-0 bg-black" />
         {nextBackgroundImage && (
           <div
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: `url('${nextBackgroundImage}')` }}
+            style={{
+              backgroundImage: `url('${nextBackgroundImage}')`,
+              opacity: targetBgOpacity,
+            }}
           />
         )}
+        {/* Overlay animates from fully opaque → target, revealing destination appearance */}
         <div
-          className="absolute inset-0 bg-black"
-          style={{ opacity: 1 - (1 - DEFAULT_NEXT_OVERLAY_OPACITY) * expansionProgress }}
+          className="absolute inset-0"
+          style={{
+            backgroundColor: transitionOverlayColor,
+            opacity: 1 - expansionProgress,
+          }}
         />
       </div>
     </div>

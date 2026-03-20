@@ -24,8 +24,7 @@ export default function SolutionUse({ onComplete }: SolutionUseProps) {
   return (
     <PageContainer
       backgroundImage={backgroundImage}
-      backgroundImageOpacity={opacity}
-      overlayOpacity={0.5}>
+      backgroundImageOpacity={opacity}>
       <ContentContainer spacing="lg">
         <div className="relative p-6 md:p-16 text-center space-y-12">
           <h1

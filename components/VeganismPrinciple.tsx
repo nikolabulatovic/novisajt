@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import NextButton from './ui/NextButton';
+import Pill from './ui/Pill';
 import PageContainer from './ui/PageContainer';
 import AnimatedText from './ui/AnimatedText';
 import TextBackdrop from './ui/TextBackdrop';
@@ -29,8 +29,7 @@ export default function VeganismPrinciple({
   return (
     <PageContainer
       backgroundImage={backgroundImage}
-      backgroundImageOpacity={opacity}
-      overlayOpacity={0.5}>
+      backgroundImageOpacity={opacity}>
       <ContentContainer spacing="lg">
         <div className="relative p-6 md:p-16">
           <TextBackdrop type="linear" />
@@ -46,7 +45,9 @@ export default function VeganismPrinciple({
           </div>
         </div>
 
-        <NextButton onClick={onComplete} label="Nastavi" show={showButton} />
+        <div className="flex justify-center mt-8 md:mt-12">
+          <Pill color="red" onClick={onComplete} show={showButton} />
+        </div>
       </ContentContainer>
     </PageContainer>
   );

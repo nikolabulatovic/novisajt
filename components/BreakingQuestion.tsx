@@ -38,8 +38,6 @@ export default function BreakingQuestion({
                 opacity: opacity,
               }}
             />
-            {/* Dark overlay for text visibility */}
-            <div className='absolute inset-0 bg-black/50 pointer-events-none' />
           </div>
         ) : null;
       })()}
