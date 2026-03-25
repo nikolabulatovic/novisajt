@@ -11,7 +11,11 @@ import RedPillIntro from '@/components/RedPillIntro';
 import QuestionExplanation from '@/components/QuestionExplanation';
 import HistoricalInjustices from '@/components/HistoricalInjustices';
 import PersonalQuestion from '@/components/PersonalQuestion';
+import WouldYouLikeToBe from '@/components/WouldYouLikeToBe';
+import RecognizingInjustice from '@/components/RecognizingInjustice';
 import BreakingQuestion from '@/components/BreakingQuestion';
+import StayComfortable from '@/components/StayComfortable';
+import ApatheticStance from '@/components/ApatheticStance';
 import SpasaStory from '@/components/SpasaStory';
 import SpasaRevelation from '@/components/SpasaRevelation';
 import OtherPigs from '@/components/OtherPigs';
@@ -24,10 +28,17 @@ import CowFate from '@/components/CowFate';
 import AnimalCostOfLiving from '@/components/AnimalCostOfLiving';
 import ReproductionControl from '@/components/ReproductionControl';
 import SolutionUse from '@/components/SolutionUse';
+import AlreadyVegan from '@/components/AlreadyVegan';
 import SolutionKnow from '@/components/SolutionKnow';
 import VeganDietHealth from '@/components/VeganDietHealth';
+import AdditionalResources from '@/components/AdditionalResources';
 import SolutionChoice from '@/components/SolutionChoice';
+import AddressingContradiction from '@/components/AddressingContradiction';
+import NotHonest from '@/components/NotHonest';
 import AlignBehaviour from '@/components/AlignBehaviour';
+import BackToAnswers from '@/components/BackToAnswers';
+import BackToAnswersAgain from '@/components/BackToAnswersAgain';
+import NotFollowingThrough from '@/components/NotFollowingThrough';
 import VeganismPrinciple from '@/components/VeganismPrinciple';
 import AfterChoice from '@/components/AfterChoice';
 import NavigationMenu from '@/components/NavigationMenu';
@@ -56,8 +67,7 @@ export default function Home() {
     if (pill === 'red') {
       transitionToStage('intro');
     } else {
-      // Plava pilula - neutralni izlaz (može se implementirati kasnije)
-      setStage('choice');
+      transitionToStage('ostani-komforan');
     }
   };
 
@@ -78,14 +88,25 @@ export default function Home() {
     transitionToStage('personal-question');
   };
 
-  const handlePersonalQuestionComplete = () => {
-    transitionToStage('breaking-question');
+  const handlePersonalQuestionComplete = (answer: string) => {
+    if (answer === 'Ne znam') {
+      transitionToStage('da-li-bi-voleo');
+    } else {
+      transitionToStage('breaking-question');
+    }
+  };
+
+  const handleDaLiBiVoleoComplete = (answer: string) => {
+    if (answer === 'Nije bitno') {
+      transitionToStage('prepoznavanje-nepravde');
+    } else {
+      transitionToStage('breaking-question');
+    }
   };
 
   const handleBreakingQuestionComplete = (answer: string) => {
     if (answer === 'Radije bih da ne znam') {
-      // Tihi izlaz - možemo vratiti na početak ili prikazati poruku
-      transitionToStage('choice');
+      transitionToStage('apatican-stav');
     } else {
       transitionToStage('spasa-story');
     }
@@ -135,8 +156,20 @@ export default function Home() {
     transitionToStage('solution-use');
   };
 
-  const handleSolutionUseComplete = () => {
-    transitionToStage('solution-know');
+  const handleSolutionUseComplete = (answer: string) => {
+    if (answer === 'Ne') {
+      transitionToStage('vec-veganski');
+    } else {
+      transitionToStage('solution-know');
+    }
+  };
+
+  const handleVecVeganskiComplete = (answer: string) => {
+    if (answer === 'Spreman sam') {
+      transitionToStage('after-choice');
+    } else {
+      transitionToStage('solution-know');
+    }
   };
 
   const handleSolutionKnowComplete = (answer: string) => {
@@ -149,16 +182,56 @@ export default function Home() {
 
   const handleVeganDietHealthComplete = (answer: string) => {
     setAnswers((prev) => ({ ...prev, 'vegan-diet-health': answer }));
+    if (answer === 'Nije me ubedilo') {
+      transitionToStage('nije-ubedilo-resursi');
+    } else {
+      transitionToStage('solution-choice');
+    }
+  };
+
+  const handleNijeUbediloResursiComplete = () => {
     transitionToStage('solution-choice');
   };
 
-  const handleSolutionChoiceComplete = () => {
-    transitionToStage('align-behaviour');
+  const handleSolutionChoiceComplete = (answer: string) => {
+    if (answer === 'Ne slažem se') {
+      transitionToStage('kontradiktornost-je');
+    } else {
+      transitionToStage('align-behaviour');
+    }
+  };
+
+  const handleKontradiktornostJeComplete = (answer: string) => {
+    if (answer === 'Nije tačno') {
+      transitionToStage('nisi-iskren');
+    } else {
+      transitionToStage('align-behaviour');
+    }
   };
 
   const handleAlignBehaviourComplete = (answer: string) => {
     setAnswers((prev) => ({ ...prev, 'align-behaviour': answer }));
-    transitionToStage('veganism-principle');
+    if (answer === 'Ne') {
+      transitionToStage('vracanje-na-odgovore');
+    } else {
+      transitionToStage('veganism-principle');
+    }
+  };
+
+  const handleVracanjeNaOdgovoreComplete = (answer: string) => {
+    if (answer === 'Ne') {
+      transitionToStage('ponovo-na-odgovore');
+    } else {
+      transitionToStage('veganism-principle');
+    }
+  };
+
+  const handlePonovoNaOdgovoreComplete = (answer: string) => {
+    if (answer === 'Ne') {
+      transitionToStage('ne-drzis-se');
+    } else {
+      transitionToStage('veganism-principle');
+    }
   };
 
   const handleVeganismPrincipleComplete = () => {
@@ -193,9 +266,15 @@ export default function Home() {
             {stage === 'personal-question' && (
               <PersonalQuestion onComplete={handlePersonalQuestionComplete} />
             )}
+            {stage === 'da-li-bi-voleo' && (
+              <WouldYouLikeToBe onComplete={handleDaLiBiVoleoComplete} />
+            )}
+            {stage === 'prepoznavanje-nepravde' && <RecognizingInjustice />}
             {stage === 'breaking-question' && (
               <BreakingQuestion onComplete={handleBreakingQuestionComplete} />
             )}
+            {stage === 'ostani-komforan' && <StayComfortable />}
+            {stage === 'apatican-stav' && <ApatheticStance />}
             {stage === 'spasa-story' && (
               <SpasaStory onComplete={handleSpasaStoryComplete} />
             )}
@@ -238,18 +317,35 @@ export default function Home() {
             {stage === 'solution-use' && (
               <SolutionUse onComplete={handleSolutionUseComplete} />
             )}
+            {stage === 'vec-veganski' && (
+              <AlreadyVegan onComplete={handleVecVeganskiComplete} />
+            )}
             {stage === 'solution-know' && (
               <SolutionKnow onComplete={handleSolutionKnowComplete} />
             )}
             {stage === 'vegan-diet-health' && (
               <VeganDietHealth onComplete={handleVeganDietHealthComplete} />
             )}
+            {stage === 'nije-ubedilo-resursi' && (
+              <AdditionalResources onComplete={handleNijeUbediloResursiComplete} />
+            )}
             {stage === 'solution-choice' && (
               <SolutionChoice onComplete={handleSolutionChoiceComplete} />
             )}
+            {stage === 'kontradiktornost-je' && (
+              <AddressingContradiction onComplete={handleKontradiktornostJeComplete} />
+            )}
+            {stage === 'nisi-iskren' && <NotHonest />}
             {stage === 'align-behaviour' && (
               <AlignBehaviour onComplete={handleAlignBehaviourComplete} />
             )}
+            {stage === 'vracanje-na-odgovore' && (
+              <BackToAnswers onComplete={handleVracanjeNaOdgovoreComplete} answers={answers} />
+            )}
+            {stage === 'ponovo-na-odgovore' && (
+              <BackToAnswersAgain onComplete={handlePonovoNaOdgovoreComplete} answers={answers} />
+            )}
+            {stage === 'ne-drzis-se' && <NotFollowingThrough />}
             {stage === 'veganism-principle' && (
               <VeganismPrinciple onComplete={handleVeganismPrincipleComplete} />
             )}

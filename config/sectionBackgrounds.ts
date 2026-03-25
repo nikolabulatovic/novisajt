@@ -117,4 +117,48 @@ export const sectionBackgrounds: Record<Stage, SectionBackgroundConfig> = {
     backgroundImage: '/images/animals-picturesque.png',
     opacity: 0.8,
   },
+  'ostani-komforan': {
+    backgroundImage: '/images/holding-out-hands.png',
+    opacity: 0.3,
+  },
+  'da-li-bi-voleo': {
+    backgroundImage: '/images/covek-u-grupi.jpeg',
+    opacity: 0.3,
+  },
+  'prepoznavanje-nepravde': {
+    backgroundImage: '/images/historical-weight.png',
+    opacity: 0.5,
+  },
+  'apatican-stav': {
+    backgroundImage: '/images/odluka-put.jpg',
+    opacity: 0.4,
+  },
+  'vec-veganski': {
+    backgroundImage: '/images/animals-picturesque.png',
+    opacity: 0.5,
+  },
+  'nije-ubedilo-resursi': {
+    backgroundImage: '/images/farm-animals2.jpg',
+    opacity: 0.8,
+  },
+  'kontradiktornost-je': {
+    backgroundImage: '/images/silhouette-cracked-mirror.png',
+    opacity: 0.6,
+  },
+  'nisi-iskren': {
+    backgroundImage: '/images/silhouette-cracked-mirror.png',
+    opacity: 0.5,
+  },
+  'vracanje-na-odgovore': {
+    backgroundImage: '/images/ogledalo.png',
+    opacity: 0.4,
+  },
+  'ponovo-na-odgovore': {
+    backgroundImage: '/images/ogledalo.png',
+    opacity: 0.4,
+  },
+  'ne-drzis-se': {
+    backgroundImage: '/images/farm-animals2.jpg',
+    opacity: 0.4,
+  },
 };

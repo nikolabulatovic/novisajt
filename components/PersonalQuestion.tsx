@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { sectionBackgrounds } from '@/config/sectionBackgrounds';
 
 interface PersonalQuestionProps {
-  onComplete: () => void;
+  onComplete: (answer: string) => void;
 }
 
 export default function PersonalQuestion({
@@ -27,7 +27,7 @@ export default function PersonalQuestion({
         setTimeout(() => {
           setFadeOut(true);
           setTimeout(() => {
-            onComplete();
+            onComplete(value);
           }, 500); // Fade out duration
         }, 3000);
       }, 300); // Wait for question to fade out
