@@ -8,6 +8,7 @@ export default function PostHogProvider({ children }: { children: React.ReactNod
   useEffect(() => {
     posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
       api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
+      ui_host: 'https://eu.posthog.com',
       capture_pageview: false, // single-page app — we capture stage views manually
       capture_pageleave: true,
       session_recording: {
