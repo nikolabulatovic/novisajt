@@ -11,15 +11,15 @@ interface WouldYouLikeToBeProps {
   onComplete: (answer: string) => void;
 }
 
-const OPTIONS = ['Nije bitno', 'Ipak, zanima me'] as const;
+const OPTIONS = ['Da, bitno mi je', 'Nije mi bitno'] as const;
 
 export default function WouldYouLikeToBe({ onComplete }: WouldYouLikeToBeProps) {
   const [showOptions, setShowOptions] = useState(false);
   const { backgroundImage, opacity = 0.8 } = sectionBackgrounds['da-li-bi-voleo'];
 
   const text = [
-    '[placeholder] Da li bi voleo da budeš na pravoj strani istorije?',
-    'Ovaj ekran treba da bude popunjen sadržajem.',
+    'Tvoj odgovor je da ne znaš da li bi bio/la protiv velikih nepravdi.',
+    'Da li ti je inače bitno da budeš pravedan/na, odnosno da ne ugrožavaš nevine?',
   ];
 
   return (

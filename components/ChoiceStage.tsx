@@ -46,7 +46,7 @@ export default function ChoiceStage({ onPillChoice }: ChoiceStageProps) {
             />
             <div className='text-center space-y-2'>
               <p className='text-xl sm:text-2xl md:text-3xl font-semibold text-gray-300'>
-                Ostani
+                Odustani
               </p>
               <p className='text-sm md:text-base lg:text-lg text-gray-400 max-w-xs'>
                 Ostani udoban u poznatom.
@@ -63,7 +63,7 @@ export default function ChoiceStage({ onPillChoice }: ChoiceStageProps) {
             />
             <div className='text-center space-y-2'>
               <p className='text-xl sm:text-2xl md:text-3xl font-semibold text-gray-300'>
-                Vidi
+                Saznaj
               </p>
               <p className='text-sm md:text-base lg:text-lg text-gray-400 max-w-xs'>
                 Otkrij istinu o sebi i svetu.

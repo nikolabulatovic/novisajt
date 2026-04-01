@@ -10,8 +10,7 @@ export default function ApatheticStance() {
   const { backgroundImage, opacity = 0.8 } = sectionBackgrounds['apatican-stav'];
 
   const text = [
-    '[placeholder] Odlučio si da ne želiš da znaš.',
-    'Ovaj ekran treba da bude popunjen sadržajem.',
+    'Ostani u neznanju i budi siguran da tvoj izbor ima ozbiljne posledice.',
   ];
 
   return (
@@ -26,7 +25,7 @@ export default function ApatheticStance() {
               delayAfterComplete={800}
               textSize="md"
               alignment="center"
-              onComplete={() => {}}
+              onComplete={() => { }}
             />
           </div>
         </div>

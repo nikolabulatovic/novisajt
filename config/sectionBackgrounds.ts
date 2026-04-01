@@ -122,7 +122,6 @@ export const sectionBackgrounds: Record<Stage, SectionBackgroundConfig> = {
     opacity: 0.3,
   },
   'da-li-bi-voleo': {
-    backgroundImage: '/images/covek-u-grupi.jpeg',
     opacity: 0.3,
   },
   'prepoznavanje-nepravde': {
