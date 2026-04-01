@@ -48,6 +48,8 @@ export default function Home() {
   const [stage, setStage] = useState<Stage>('choice');
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [pendingNextStage, setPendingNextStage] = useState<Stage | null>(null);
+  const [blackOverlay, setBlackOverlay] = useState(false);
+  const [stageAfterFade, setStageAfterFade] = useState<Stage | null>(null);
   const { trackStageViewed, trackAnswerSelected, trackFlowCompleted } = useTracking();
 
   useEffect(() => {
@@ -74,7 +76,16 @@ export default function Home() {
     if (pill === 'red') {
       transitionToStage('intro');
     } else {
-      transitionToStage('ostani-komforan');
+      setStageAfterFade('ostani-komforan');
+      setBlackOverlay(true);
+    }
+  };
+
+  const handleBlackOverlayTransitionEnd = () => {
+    if (stageAfterFade) {
+      setStage(stageAfterFade);
+      setStageAfterFade(null);
+      setBlackOverlay(false);
     }
   };
 
@@ -270,6 +281,11 @@ export default function Home() {
     <NavigationProvider currentStage={stage} navigateToStage={navigateToStage}>
       <PillProvider>
         <PillTransitionLayer pendingNextStage={pendingNextStage} onComplete={handleTransitionComplete} />
+        <div
+          className="fixed inset-0 bg-black z-50 pointer-events-none transition-opacity duration-[2000ms]"
+          style={{ opacity: blackOverlay ? 1 : 0 }}
+          onTransitionEnd={handleBlackOverlayTransitionEnd}
+        />
         <NavigationMenu />
         <main className='min-h-screen bg-black text-white overflow-hidden relative'>
           <>
