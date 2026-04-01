@@ -129,7 +129,7 @@ export const sectionBackgrounds: Record<Stage, SectionBackgroundConfig> = {
     opacity: 0.5,
   },
   'apatican-stav': {
-    backgroundImage: '/images/odluka-put.jpg',
+    backgroundImage: '/images/izbor-da-ne-vidi-upscaled.jpg',
     opacity: 0.4,
   },
   'vec-veganski': {
