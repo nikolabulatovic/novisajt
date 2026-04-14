@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useMemo } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 interface UseWordAnimationOptions {
   text: string | string[];
@@ -25,19 +25,28 @@ export function useWordAnimation({
     onCompleteRef.current = onComplete;
   }, [onComplete]);
 
-  const textArray = useMemo(() => Array.isArray(text) ? text : [text], [text]);
+  const textArray = useMemo(
+    () => (Array.isArray(text) ? text : [text]),
+    [text],
+  );
   const allWords = useMemo(
-    () => textArray.flatMap((sentence) => mode === 'char' ? sentence.split('') : sentence.split(' ')),
+    () =>
+      textArray.flatMap((sentence) =>
+        mode === 'char' ? sentence.split('') : sentence.split(' '),
+      ),
     [textArray, mode],
   );
   const totalWords = allWords.length;
-  const textKey = useMemo(() => allWords.join(mode === 'char' ? '' : ' '), [allWords, mode]);
+  const textKey = useMemo(
+    () => allWords.join(mode === 'char' ? '' : ' '),
+    [allWords, mode],
+  );
 
   useEffect(() => {
     setVisibleWordCount(0);
     setShowButton(false);
     hasAnimatedRef.current = false;
-    
+
     let currentIndex = 0;
     const interval = setInterval(() => {
       if (currentIndex < totalWords) {
@@ -66,4 +75,3 @@ export function useWordAnimation({
     allWords,
   };
 }
-

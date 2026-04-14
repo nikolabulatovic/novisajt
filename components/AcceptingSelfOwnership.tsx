@@ -1,12 +1,14 @@
 'use client';
 
 import { useState } from 'react';
+
+import { sectionBackgrounds } from '@/config/sectionBackgrounds';
+
+import AnimatedText from './ui/AnimatedText';
+import ContentContainer from './ui/ContentContainer';
 import NextButton from './ui/NextButton';
 import PageContainer from './ui/PageContainer';
-import AnimatedText from './ui/AnimatedText';
 import TextBackdrop from './ui/TextBackdrop';
-import ContentContainer from './ui/ContentContainer';
-import { sectionBackgrounds } from '@/config/sectionBackgrounds';
 
 interface AcceptingSelfOwnershipProps {
   onComplete: () => void;
@@ -29,7 +31,8 @@ export default function AcceptingSelfOwnership({
   return (
     <PageContainer
       backgroundImage={backgroundImage}
-      backgroundImageOpacity={opacity}>
+      backgroundImageOpacity={opacity}
+    >
       <ContentContainer spacing="lg">
         <div className="relative p-6 md:p-16">
           <TextBackdrop type="linear" />

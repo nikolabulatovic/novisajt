@@ -20,15 +20,15 @@ export default function ProgressDots({
             index < current
               ? 'w-3 h-3 bg-gray-300 shadow-lg shadow-gray-400/50'
               : index === current
-              ? 'w-3 h-3 bg-gray-400 shadow-lg shadow-gray-400/70 animate-pulse-glow'
-              : 'w-2 h-2 bg-gray-600/40'
-          } rounded-full relative`}>
+                ? 'w-3 h-3 bg-gray-400 shadow-lg shadow-gray-400/70 animate-pulse-glow'
+                : 'w-2 h-2 bg-gray-600/40'
+          } rounded-full relative`}
+        >
           {index < current && (
-            <div className='absolute inset-0 rounded-full bg-gray-300 animate-ping opacity-20' />
+            <div className="absolute inset-0 rounded-full bg-gray-300 animate-ping opacity-20" />
           )}
         </div>
       ))}
     </div>
   );
 }
-

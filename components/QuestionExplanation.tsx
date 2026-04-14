@@ -1,11 +1,13 @@
 'use client';
 
 import { useState } from 'react';
-import NextButton from './ui/NextButton';
-import PageContainer from './ui/PageContainer';
+
+import { sectionBackgrounds } from '@/config/sectionBackgrounds';
+
 import AnimatedText from './ui/AnimatedText';
 import ContentContainer from './ui/ContentContainer';
-import { sectionBackgrounds } from '@/config/sectionBackgrounds';
+import NextButton from './ui/NextButton';
+import PageContainer from './ui/PageContainer';
 
 interface QuestionExplanationProps {
   onComplete: () => void;
@@ -57,7 +59,8 @@ export default function QuestionExplanation({
     <PageContainer
       backgroundImage={backgroundImage}
       backgroundImageOpacity={opacity}
-      maxWidth="lg">
+      maxWidth="lg"
+    >
       <ContentContainer spacing="sm">
         <div className="px-2">
           <AnimatedText
@@ -71,7 +74,7 @@ export default function QuestionExplanation({
           />
         </div>
 
-        <NextButton onClick={onComplete} label='Razumem' show={showButton} />
+        <NextButton onClick={onComplete} label="Razumem" show={showButton} />
       </ContentContainer>
     </PageContainer>
   );

@@ -1,4 +1,5 @@
-import { useState, useCallback, useMemo, useEffect } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+
 import { appleEaseOut } from '@/utils/easing';
 
 const EXPANSION_DURATION = 1500;
@@ -51,41 +52,44 @@ export function useMaskExpansion({
     }, 0);
   }, [startLeft, startTop]);
 
-  const startExpansion = useCallback((overrideLeft?: number, overrideTop?: number) => {
-    // Reset expansion progress
-    setExpansionProgress(0);
+  const startExpansion = useCallback(
+    (overrideLeft?: number, overrideTop?: number) => {
+      // Reset expansion progress
+      setExpansionProgress(0);
 
-    // Update position if provided
-    if (overrideLeft !== undefined && overrideTop !== undefined) {
-      setCurrentLeft(overrideLeft);
-      setCurrentTop(overrideTop);
-    } else if (startLeft !== undefined && startTop !== undefined) {
-      // Use initial startLeft/startTop if provided
-      setCurrentLeft(startLeft);
-      setCurrentTop(startTop);
-    }
-
-    const startTime = Date.now();
-
-    const animate = () => {
-      const elapsed = Date.now() - startTime;
-      const linearProgress = Math.min(elapsed / duration, 1);
-      // Apply easing function for smooth deceleration
-      const easedProgress = appleEaseOut(linearProgress);
-      setExpansionProgress(easedProgress);
-
-      if (linearProgress < 1) {
-        requestAnimationFrame(animate);
-      } else {
-        // Animation complete
-        if (onComplete) {
-          onComplete();
-        }
+      // Update position if provided
+      if (overrideLeft !== undefined && overrideTop !== undefined) {
+        setCurrentLeft(overrideLeft);
+        setCurrentTop(overrideTop);
+      } else if (startLeft !== undefined && startTop !== undefined) {
+        // Use initial startLeft/startTop if provided
+        setCurrentLeft(startLeft);
+        setCurrentTop(startTop);
       }
-    };
 
-    requestAnimationFrame(animate);
-  }, [duration, onComplete, startLeft, startTop]);
+      const startTime = Date.now();
+
+      const animate = () => {
+        const elapsed = Date.now() - startTime;
+        const linearProgress = Math.min(elapsed / duration, 1);
+        // Apply easing function for smooth deceleration
+        const easedProgress = appleEaseOut(linearProgress);
+        setExpansionProgress(easedProgress);
+
+        if (linearProgress < 1) {
+          requestAnimationFrame(animate);
+        } else {
+          // Animation complete
+          if (onComplete) {
+            onComplete();
+          }
+        }
+      };
+
+      requestAnimationFrame(animate);
+    },
+    [duration, onComplete, startLeft, startTop],
+  );
 
   // Calculate mask style - use SSR-safe values when window is undefined
   // Since expansionProgress starts at 0, initial values will be consistent
@@ -109,8 +113,10 @@ export function useMaskExpansion({
     const endWidth = viewportWidth;
     const endHeight = viewportHeight;
 
-    const currentWidth = startWidth + (endWidth - startWidth) * expansionProgress;
-    const currentHeight = startHeight + (endHeight - startHeight) * expansionProgress;
+    const currentWidth =
+      startWidth + (endWidth - startWidth) * expansionProgress;
+    const currentHeight =
+      startHeight + (endHeight - startHeight) * expansionProgress;
     const currentBorderRadius = startBorderRadius * (1 - expansionProgress);
 
     // Interpolate position from starting left/top to 0 (full viewport)
@@ -124,7 +130,14 @@ export function useMaskExpansion({
       left: `${left}px`,
       top: `${top}px`,
     };
-  }, [expansionProgress, currentLeft, currentTop, startWidth, startHeight, startBorderRadius]);
+  }, [
+    expansionProgress,
+    currentLeft,
+    currentTop,
+    startWidth,
+    startHeight,
+    startBorderRadius,
+  ]);
 
   return {
     expansionProgress,
@@ -132,4 +145,3 @@ export function useMaskExpansion({
     maskStyle,
   };
 }
-

@@ -33,9 +33,11 @@ export default function NextButton({
   marginTop = 'md',
 }: NextButtonProps) {
   return (
-    <div className={`flex ${alignClasses[align]} ${marginTopClasses[marginTop]} ${className}`}>
+    <div
+      className={`flex ${alignClasses[align]} ${marginTopClasses[marginTop]} ${className}`}
+    >
       <Pill
-        color='red'
+        color="red"
         onClick={onClick}
         label={label}
         show={show}

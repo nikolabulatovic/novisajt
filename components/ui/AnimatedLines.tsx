@@ -56,19 +56,23 @@ export default function AnimatedLines({
   });
 
   return (
-    <div className={`${spacingClasses[spacing]} ${alignmentClasses[alignment]} ${className}`}>
+    <div
+      className={`${spacingClasses[spacing]} ${alignmentClasses[alignment]} ${className}`}
+    >
       {lines.map((line, index) => (
         <p
           key={index}
-          className={`${textSizeClasses[textSize]} leading-relaxed text-gray-200 transition-all duration-700 ease-out ${line.bold ? 'font-medium' : 'font-light'
-            } ${line.italic ? 'italic' : ''} ${visibleLines.includes(index)
+          className={`${textSizeClasses[textSize]} leading-relaxed text-gray-200 transition-all duration-700 ease-out ${
+            line.bold ? 'font-medium' : 'font-light'
+          } ${line.italic ? 'italic' : ''} ${
+            visibleLines.includes(index)
               ? 'opacity-100 translate-y-0'
               : 'opacity-0 translate-y-4'
-            }`}>
+          }`}
+        >
           {line.text}
         </p>
       ))}
     </div>
   );
 }
-

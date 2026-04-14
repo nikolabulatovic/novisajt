@@ -1,6 +1,13 @@
 'use client';
 
-import { createContext, useContext, useState, useCallback, useMemo, ReactNode } from 'react';
+import {
+  ReactNode,
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from 'react';
 
 interface PillContextValue {
   redPillRef: React.RefObject<HTMLElement | null> | null;
@@ -11,11 +18,15 @@ interface PillContextValue {
 const PillContext = createContext<PillContextValue | null>(null);
 
 export function PillProvider({ children }: { children: ReactNode }) {
-  const [redPillRef, setRedPillRef] = useState<React.RefObject<HTMLElement | null> | null>(null);
+  const [redPillRef, setRedPillRef] =
+    useState<React.RefObject<HTMLElement | null> | null>(null);
 
-  const registerRedPill = useCallback((ref: React.RefObject<HTMLElement | null>) => {
-    setRedPillRef(ref);
-  }, []);
+  const registerRedPill = useCallback(
+    (ref: React.RefObject<HTMLElement | null>) => {
+      setRedPillRef(ref);
+    },
+    [],
+  );
 
   const unregisterRedPill = useCallback(() => {
     setRedPillRef(null);
@@ -23,14 +34,10 @@ export function PillProvider({ children }: { children: ReactNode }) {
 
   const value = useMemo(
     () => ({ redPillRef, registerRedPill, unregisterRedPill }),
-    [redPillRef, registerRedPill, unregisterRedPill]
+    [redPillRef, registerRedPill, unregisterRedPill],
   );
 
-  return (
-    <PillContext.Provider value={value}>
-      {children}
-    </PillContext.Provider>
-  );
+  return <PillContext.Provider value={value}>{children}</PillContext.Provider>;
 }
 
 export function usePillContext() {
@@ -40,4 +47,3 @@ export function usePillContext() {
   }
   return context;
 }
-

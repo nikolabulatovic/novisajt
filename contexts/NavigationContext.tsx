@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, ReactNode } from 'react';
+import { ReactNode, createContext, useContext } from 'react';
 
 export type Stage =
   | 'choice'
@@ -73,4 +73,3 @@ export function useNavigation() {
   }
   return context;
 }
-

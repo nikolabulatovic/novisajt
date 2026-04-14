@@ -38,4 +38,3 @@ export type TextBackdropType = 'linear' | 'radial';
 
 // Re-export Stage type for convenience
 export type { Stage };
-

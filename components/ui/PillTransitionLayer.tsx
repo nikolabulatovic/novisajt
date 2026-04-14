@@ -1,8 +1,9 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Stage } from '@/contexts/NavigationContext';
+
 import { sectionBackgrounds } from '@/config/sectionBackgrounds';
+import { Stage } from '@/contexts/NavigationContext';
 import { useMaskExpansionFromPill } from '@/hooks/useMaskExpansionFromPill';
 
 const FADE_OUT_DURATION = 400;
@@ -71,9 +72,10 @@ export default function PillTransitionLayer({
     handleExpansionComplete();
   }, [handleExpansionComplete]);
 
-  const { startExpansion, maskStyle, expansionProgress } = useMaskExpansionFromPill({
-    onComplete: stableOnComplete,
-  });
+  const { startExpansion, maskStyle, expansionProgress } =
+    useMaskExpansionFromPill({
+      onComplete: stableOnComplete,
+    });
 
   const startedForStageRef = useRef<typeof pendingNextStage>(null);
 
@@ -89,12 +91,14 @@ export default function PillTransitionLayer({
 
   const activeStage = pendingNextStage ?? persistedStage;
 
-  if ((!pendingNextStage && !isFadingOut) || expansionProgress === 0) return null;
+  if ((!pendingNextStage && !isFadingOut) || expansionProgress === 0)
+    return null;
   if (!activeStage) return null;
 
   const nextConfig = sectionBackgrounds[activeStage];
   const nextBackgroundImage = nextConfig?.backgroundImage;
-  const transitionOverlayColor = nextConfig?.pillTransitionOverlayColor ?? 'black';
+  const transitionOverlayColor =
+    nextConfig?.pillTransitionOverlayColor ?? 'black';
   const targetBgOpacity = nextConfig?.opacity ?? 0.8;
   const gradientOverlayClasses = nextConfig?.gradientOverlayClasses ?? [];
 
@@ -109,8 +113,14 @@ export default function PillTransitionLayer({
   return (
     <div
       className="fixed inset-0 z-[10001] pointer-events-none"
-      style={{ opacity: isFadingOut ? fadeOutOpacity : 1 }}>
-      <svg className="absolute" width="100%" height="100%" style={{ pointerEvents: 'none' }}>
+      style={{ opacity: isFadingOut ? fadeOutOpacity : 1 }}
+    >
+      <svg
+        className="absolute"
+        width="100%"
+        height="100%"
+        style={{ pointerEvents: 'none' }}
+      >
         <defs>
           <mask id={maskId}>
             <rect
@@ -132,7 +142,8 @@ export default function PillTransitionLayer({
         style={{
           maskImage: `url(#${maskId})`,
           WebkitMaskImage: `url(#${maskId})`,
-        }}>
+        }}
+      >
         {/* Solid black base — always fully opaque so old stage never shows through */}
         <div className="absolute inset-0 bg-black" />
         {nextBackgroundImage && (

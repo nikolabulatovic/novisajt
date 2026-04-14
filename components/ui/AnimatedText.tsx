@@ -1,7 +1,8 @@
 'use client';
 
-import { useWordAnimation } from '@/hooks/useWordAnimation';
 import { useMemo } from 'react';
+
+import { useWordAnimation } from '@/hooks/useWordAnimation';
 
 interface TextSegment {
   text: string;
@@ -48,14 +49,18 @@ export default function AnimatedText({
   mode = 'word',
 }: AnimatedTextProps) {
   // Handle QuestionExplanation-style text with segments
-  const isSegmentFormat = Array.isArray(text) && text.length > 0 && typeof text[0] === 'object' && 'line' in text[0];
+  const isSegmentFormat =
+    Array.isArray(text) &&
+    text.length > 0 &&
+    typeof text[0] === 'object' &&
+    'line' in text[0];
 
   // Memoize text preparation to prevent unnecessary hook resets
   const textToAnimate = useMemo(() => {
     if (isSegmentFormat) {
       // Flatten segments for animation counting
-      const flattened = (text as Array<{ line: TextSegment[] }>).flatMap((item) =>
-        item.line.flatMap((segment) => segment.text.split(' ')),
+      const flattened = (text as Array<{ line: TextSegment[] }>).flatMap(
+        (item) => item.line.flatMap((segment) => segment.text.split(' ')),
       );
       return flattened.join(' ');
     } else if (Array.isArray(text)) {
@@ -96,7 +101,8 @@ export default function AnimatedText({
           return (
             <p
               key={itemIndex}
-              className={`${textSizeClasses[textSize]} leading-relaxed`}>
+              className={`${textSizeClasses[textSize]} leading-relaxed`}
+            >
               {item.line.map((segment, segmentIndex) => {
                 const segmentWords = segment.text.split(' ');
                 const segmentStartIndex =
@@ -110,17 +116,25 @@ export default function AnimatedText({
                   const isVisible = currentWordIndex < visibleWordCount;
                   // Apply delay only when word becomes visible, not on every render
                   // Once visible, delay should be 0 to prevent re-animation
-                  const transitionDelay = isVisible ? `${currentWordIndex * 15}ms` : '0ms';
+                  const transitionDelay = isVisible
+                    ? `${currentWordIndex * 15}ms`
+                    : '0ms';
 
                   return (
                     <span
                       key={`${segmentIndex}-${wordIndex}`}
-                      className={`transition-all ease-in-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-                        } ${segment.bold ? 'font-bold' : ''} ${segment.italic ? 'italic' : ''}`}
+                      className={`transition-all ease-in-out ${
+                        isVisible
+                          ? 'opacity-100 translate-y-0'
+                          : 'opacity-0 translate-y-8'
+                      } ${segment.bold ? 'font-bold' : ''} ${segment.italic ? 'italic' : ''}`}
                       style={{
-                        transitionDuration: isVisible ? `${wordTransitionDuration}ms` : '0ms',
+                        transitionDuration: isVisible
+                          ? `${wordTransitionDuration}ms`
+                          : '0ms',
                         transitionDelay: isVisible ? transitionDelay : '0ms',
-                      }}>
+                      }}
+                    >
                       {word}
                       {wordIndex < segmentWords.length - 1 ? ' ' : ''}
                     </span>
@@ -150,13 +164,15 @@ export default function AnimatedText({
     <div className={`space-y-6 ${alignmentClasses[alignment]} ${className}`}>
       {textArray.map((sentence, sentenceIndex) => {
         const sentenceText = typeof sentence === 'string' ? sentence : '';
-        const units = mode === 'char' ? sentenceText.split('') : sentenceText.split(' ');
+        const units =
+          mode === 'char' ? sentenceText.split('') : sentenceText.split(' ');
         const currentUnitStartIndex = unitStartIndices[sentenceIndex];
 
         return (
           <p
             key={sentenceIndex}
-            className={`${textSizeClasses[textSize]} leading-relaxed`}>
+            className={`${textSizeClasses[textSize]} leading-relaxed`}
+          >
             {units.map((unit, unitIndex) => {
               const currentUnitIndex = currentUnitStartIndex + unitIndex;
               const isVisible = currentUnitIndex < visibleWordCount;
@@ -164,12 +180,20 @@ export default function AnimatedText({
               return (
                 <span
                   key={unitIndex}
-                  className={`transition-all ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-                    }`}
+                  className={`transition-all ease-out ${
+                    isVisible
+                      ? 'opacity-100 translate-y-0'
+                      : 'opacity-0 translate-y-4'
+                  }`}
                   style={{
-                    transitionDuration: isVisible ? `${wordTransitionDuration}ms` : '0ms',
-                    transitionDelay: isVisible ? `${currentUnitIndex * wordTransitionDelay}ms` : '0ms',
-                  }}>
+                    transitionDuration: isVisible
+                      ? `${wordTransitionDuration}ms`
+                      : '0ms',
+                    transitionDelay: isVisible
+                      ? `${currentUnitIndex * wordTransitionDelay}ms`
+                      : '0ms',
+                  }}
+                >
                   {unit}
                   {mode === 'word' && unitIndex < units.length - 1 ? ' ' : ''}
                 </span>
@@ -181,4 +205,3 @@ export default function AnimatedText({
     </div>
   );
 }
-

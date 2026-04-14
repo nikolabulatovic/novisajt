@@ -1,10 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import PageContainer from './ui/PageContainer';
+
 import { useLineAnimation } from '@/hooks/useLineAnimation';
-import NextButton from './ui/NextButton';
+
 import ContentContainer from './ui/ContentContainer';
+import NextButton from './ui/NextButton';
+import PageContainer from './ui/PageContainer';
 
 interface AnimalsIntroductionProps {
   onComplete: () => void;
@@ -32,7 +34,7 @@ export default function AnimalsIntroduction({
   return (
     <PageContainer maxWidth="md">
       <ContentContainer spacing="md" align="center">
-        <div className='space-y-6 md:space-y-10'>
+        <div className="space-y-6 md:space-y-10">
           {lines.map((line, index) => {
             const sizeClass =
               index === 0 || index === 3
@@ -41,17 +43,19 @@ export default function AnimalsIntroduction({
             return (
               <p
                 key={index}
-                className={`${sizeClass} font-light text-gray-200 leading-tight transition-all duration-800 ease-out ${visibleLines.includes(index)
-                  ? 'opacity-100 translate-y-0'
-                  : 'opacity-0 translate-y-8'
-                  }`}>
+                className={`${sizeClass} font-light text-gray-200 leading-tight transition-all duration-800 ease-out ${
+                  visibleLines.includes(index)
+                    ? 'opacity-100 translate-y-0'
+                    : 'opacity-0 translate-y-8'
+                }`}
+              >
                 {line.text}
               </p>
             );
           })}
         </div>
 
-        <NextButton onClick={onComplete} label='Nastavi' show={showButton} />
+        <NextButton onClick={onComplete} label="Nastavi" show={showButton} />
       </ContentContainer>
     </PageContainer>
   );

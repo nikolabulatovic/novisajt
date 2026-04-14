@@ -1,20 +1,20 @@
 'use client';
 
 import { useState } from 'react';
+
+import { sectionBackgrounds } from '@/config/sectionBackgrounds';
+
+import AnimatedText from './ui/AnimatedText';
+import ContentContainer from './ui/ContentContainer';
 import NextButton from './ui/NextButton';
 import PageContainer from './ui/PageContainer';
-import AnimatedText from './ui/AnimatedText';
 import TextBackdrop from './ui/TextBackdrop';
-import ContentContainer from './ui/ContentContainer';
-import { sectionBackgrounds } from '@/config/sectionBackgrounds';
 
 interface OtherPigsProps {
   onComplete: () => void;
 }
 
-export default function OtherPigs({
-  onComplete,
-}: OtherPigsProps) {
+export default function OtherPigs({ onComplete }: OtherPigsProps) {
   const [showButton, setShowButton] = useState(false);
 
   const text = [
@@ -29,11 +29,12 @@ export default function OtherPigs({
   return (
     <PageContainer
       backgroundImage={backgroundImage}
-      backgroundImageOpacity={opacity}>
+      backgroundImageOpacity={opacity}
+    >
       <ContentContainer spacing="lg">
-        <div className='relative p-6 md:p-16'>
+        <div className="relative p-6 md:p-16">
           <TextBackdrop type="linear" />
-          <div className='relative z-10'>
+          <div className="relative z-10">
             <AnimatedText
               text={text}
               speed={120}
@@ -45,9 +46,8 @@ export default function OtherPigs({
           </div>
         </div>
 
-        <NextButton onClick={onComplete} label='Nastavi' show={showButton} />
+        <NextButton onClick={onComplete} label="Nastavi" show={showButton} />
       </ContentContainer>
     </PageContainer>
   );
 }
-

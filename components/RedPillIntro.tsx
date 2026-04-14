@@ -1,11 +1,13 @@
 'use client';
 
 import { useState } from 'react';
-import NextButton from './ui/NextButton';
-import PageContainer from './ui/PageContainer';
+
+import { sectionBackgrounds } from '@/config/sectionBackgrounds';
+
 import AnimatedText from './ui/AnimatedText';
 import ContentContainer from './ui/ContentContainer';
-import { sectionBackgrounds } from '@/config/sectionBackgrounds';
+import NextButton from './ui/NextButton';
+import PageContainer from './ui/PageContainer';
 
 interface RedPillIntroProps {
   onComplete: () => void;
@@ -27,9 +29,10 @@ export default function RedPillIntro({ onComplete }: RedPillIntroProps) {
       className="overflow-hidden"
       backgroundImage={backgroundImage}
       backgroundImageOpacity={opacity}
-      showBackgroundEffects={false}>
+      showBackgroundEffects={false}
+    >
       <ContentContainer spacing="sm">
-        <div className='bg-gray-900/20 backdrop-blur-lg rounded-2xl p-8 md:p-12 border border-gray-800/20 shadow-2xl'>
+        <div className="bg-gray-900/20 backdrop-blur-lg rounded-2xl p-8 md:p-12 border border-gray-800/20 shadow-2xl">
           <AnimatedText
             text={text}
             delayAfterComplete={1000}
@@ -40,11 +43,7 @@ export default function RedPillIntro({ onComplete }: RedPillIntroProps) {
           />
         </div>
 
-        <NextButton
-          onClick={onComplete}
-          label='Nastavi'
-          show={showButton}
-        />
+        <NextButton onClick={onComplete} label="Nastavi" show={showButton} />
       </ContentContainer>
     </PageContainer>
   );

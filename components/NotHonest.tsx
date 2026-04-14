@@ -1,10 +1,11 @@
 'use client';
 
-import PageContainer from './ui/PageContainer';
+import { sectionBackgrounds } from '@/config/sectionBackgrounds';
+
 import AnimatedText from './ui/AnimatedText';
 import ContentContainer from './ui/ContentContainer';
+import PageContainer from './ui/PageContainer';
 import TextBackdrop from './ui/TextBackdrop';
-import { sectionBackgrounds } from '@/config/sectionBackgrounds';
 
 export default function NotHonest() {
   const { backgroundImage, opacity = 0.8 } = sectionBackgrounds['nisi-iskren'];
@@ -15,7 +16,10 @@ export default function NotHonest() {
   ];
 
   return (
-    <PageContainer backgroundImage={backgroundImage} backgroundImageOpacity={opacity}>
+    <PageContainer
+      backgroundImage={backgroundImage}
+      backgroundImageOpacity={opacity}
+    >
       <ContentContainer spacing="lg">
         <div className="relative p-6 md:p-16">
           <TextBackdrop type="linear" />

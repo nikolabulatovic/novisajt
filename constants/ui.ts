@@ -40,4 +40,3 @@ export const SPACING = {
   MD: 'space-y-12',
   LG: 'space-y-16',
 } as const;
-

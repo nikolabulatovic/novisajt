@@ -1,11 +1,13 @@
 'use client';
 
 import { useState } from 'react';
-import PageContainer from './ui/PageContainer';
-import AnimatedText from './ui/AnimatedText';
-import TextBackdrop from './ui/TextBackdrop';
-import ContentContainer from './ui/ContentContainer';
+
 import { sectionBackgrounds } from '@/config/sectionBackgrounds';
+
+import AnimatedText from './ui/AnimatedText';
+import ContentContainer from './ui/ContentContainer';
+import PageContainer from './ui/PageContainer';
+import TextBackdrop from './ui/TextBackdrop';
 
 interface AlignBehaviourProps {
   onComplete: (answer: string) => void;
@@ -30,7 +32,8 @@ export default function AlignBehaviour({ onComplete }: AlignBehaviourProps) {
   return (
     <PageContainer
       backgroundImage={backgroundImage}
-      backgroundImageOpacity={opacity}>
+      backgroundImageOpacity={opacity}
+    >
       <ContentContainer spacing="lg">
         <div className="relative p-6 md:p-16">
           <TextBackdrop type="linear" />
@@ -52,10 +55,12 @@ export default function AlignBehaviour({ onComplete }: AlignBehaviourProps) {
               <button
                 key={option}
                 onClick={() => handleAnswer(option)}
-                className="text-center px-8 py-4 rounded-xl transition-all duration-300 transform hover:scale-[1.02] cursor-pointer bg-gray-900/70 border border-gray-800/50 hover:bg-gray-800/80 hover:border-gray-700/50">
+                className="text-center px-8 py-4 rounded-xl transition-all duration-300 transform hover:scale-[1.02] cursor-pointer bg-gray-900/70 border border-gray-800/50 hover:bg-gray-800/80 hover:border-gray-700/50"
+              >
                 <span
                   className="text-lg md:text-xl text-gray-300 font-light"
-                  style={{ fontFamily: 'var(--font-literata), serif' }}>
+                  style={{ fontFamily: 'var(--font-literata), serif' }}
+                >
                   {option}
                 </span>
               </button>

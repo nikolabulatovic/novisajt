@@ -17,9 +17,7 @@ export function easeOutCubic(t: number): number {
  * cubic-bezier(0.42, 0.0, 0.58, 1.0)
  */
 export function easeInOutCubic(t: number): number {
-  return t < 0.5
-    ? 4 * t * t * t
-    : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 }
 
 /**
@@ -40,19 +38,19 @@ function cubicBezierSolve(
 
   // Cubic bezier formula: B(t) = (1-t)³P₀ + 3(1-t)²tP₁ + 3(1-t)t²P₂ + t³P₃
   // For our case: P₀ = (0,0), P₁ = (x1,y1), P₂ = (x2,y2), P₃ = (1,1)
-  
+
   // We need to find the y value for a given x (t)
   // Since we're using t as the parameter, we can directly calculate y
-  
+
   const mt = 1 - t;
   const mt2 = mt * mt;
   const mt3 = mt2 * mt;
   const t2 = t * t;
   const t3 = t2 * t;
-  
+
   // Calculate y using the bezier formula
   const y = mt3 * 0 + 3 * mt2 * t * y1 + 3 * mt * t2 * y2 + t3 * 1;
-  
+
   return y;
 }
 
@@ -105,4 +103,3 @@ export function appleEaseInStrong(t: number): number {
   // cubic-bezier(0.25, 0.1, 0.25, 1.0) creates a stronger ease-in effect
   return cubicBezier(t, 0.25, 0.1, 0.25, 1.0);
 }
-

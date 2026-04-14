@@ -20,9 +20,9 @@ export default function PageHeading({
 
   return (
     <h1
-      className={`${sizeClasses[size]} font-light text-gray-200 leading-relaxed max-w-3xl mx-auto ${className}`}>
+      className={`${sizeClasses[size]} font-light text-gray-200 leading-relaxed max-w-3xl mx-auto ${className}`}
+    >
       {children}
     </h1>
   );
 }
-

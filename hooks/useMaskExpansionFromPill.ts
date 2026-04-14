@@ -1,6 +1,12 @@
 import { useCallback, useLayoutEffect, useState } from 'react';
+
 import { usePillContext } from '@/contexts/PillContext';
-import { useMaskExpansion, UseMaskExpansionOptions, UseMaskExpansionReturn } from './useMaskExpansion';
+
+import {
+  UseMaskExpansionOptions,
+  UseMaskExpansionReturn,
+  useMaskExpansion,
+} from './useMaskExpansion';
 
 // Fallback pill dimensions (matching Pill component: w-32 h-16 md:w-40 md:h-20)
 // Used only if pill ref is not available yet
@@ -8,7 +14,10 @@ const FALLBACK_PILL_WIDTH_PX = 160;
 const FALLBACK_PILL_HEIGHT_PX = 80;
 const FALLBACK_PILL_BORDER_RADIUS_PX = FALLBACK_PILL_HEIGHT_PX / 2; // Full rounded = 50% of height
 
-type UseMaskExpansionFromPillOptions = Omit<UseMaskExpansionOptions, 'startLeft' | 'startTop' | 'startWidth' | 'startHeight' | 'startBorderRadius'>;
+type UseMaskExpansionFromPillOptions = Omit<
+  UseMaskExpansionOptions,
+  'startLeft' | 'startTop' | 'startWidth' | 'startHeight' | 'startBorderRadius'
+>;
 
 /**
  * Hook that wraps useMaskExpansion specifically for pill-to-viewport expansion
@@ -77,4 +86,3 @@ export function useMaskExpansionFromPill({
     startExpansion,
   };
 }
-

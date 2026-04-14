@@ -1,12 +1,14 @@
 'use client';
 
 import { useState } from 'react';
+
+import { sectionBackgrounds } from '@/config/sectionBackgrounds';
+
+import AnimatedText from './ui/AnimatedText';
+import ContentContainer from './ui/ContentContainer';
 import NextButton from './ui/NextButton';
 import PageContainer from './ui/PageContainer';
-import AnimatedText from './ui/AnimatedText';
 import TextBackdrop from './ui/TextBackdrop';
-import ContentContainer from './ui/ContentContainer';
-import { sectionBackgrounds } from '@/config/sectionBackgrounds';
 
 interface SpasaStoryProps {
   onComplete: () => void;
@@ -41,18 +43,19 @@ export default function SpasaStory({ onComplete }: SpasaStoryProps) {
   return (
     <PageContainer
       backgroundImage={backgroundImage}
-      backgroundImageOpacity={opacity}>
+      backgroundImageOpacity={opacity}
+    >
       {!showFinalMessage ? (
-        <ContentContainer spacing='lg'>
-          <div className='relative p-6 md:p-16'>
-            <TextBackdrop type='linear' />
-            <div className='relative z-10'>
+        <ContentContainer spacing="lg">
+          <div className="relative p-6 md:p-16">
+            <TextBackdrop type="linear" />
+            <div className="relative z-10">
               <AnimatedText
                 text={text}
                 speed={120}
                 delayAfterComplete={1000}
-                textSize='md'
-                alignment='center'
+                textSize="md"
+                alignment="center"
                 onComplete={() => setShowButton(true)}
               />
             </div>
@@ -60,7 +63,7 @@ export default function SpasaStory({ onComplete }: SpasaStoryProps) {
 
           <NextButton
             onClick={handleContinue}
-            label='Nastavi'
+            label="Nastavi"
             show={showButton}
           />
         </ContentContainer>
@@ -68,9 +71,10 @@ export default function SpasaStory({ onComplete }: SpasaStoryProps) {
         <div
           className={`text-center transition-opacity duration-1000 relative ${
             finalMessageVisible ? 'opacity-100' : 'opacity-0'
-          }`}>
-          <TextBackdrop type='linear' className='-mx-8 -my-12' />
-          <p className='text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light text-gray-200 leading-relaxed relative z-10'>
+          }`}
+        >
+          <TextBackdrop type="linear" className="-mx-8 -my-12" />
+          <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light text-gray-200 leading-relaxed relative z-10">
             Ali postoji nešto što jesmo dužni: da sve životinje ostavimo na
             miru.
           </p>

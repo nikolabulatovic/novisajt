@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 interface Line {
   text: string;
@@ -25,7 +25,7 @@ export function useLineAnimation({
   useEffect(() => {
     setVisibleLines([]);
     setShowButton(false);
-    
+
     lines.forEach((_, index) => {
       setTimeout(() => {
         setVisibleLines((prev) => [...prev, index]);
@@ -46,4 +46,3 @@ export function useLineAnimation({
     showButton,
   };
 }
-

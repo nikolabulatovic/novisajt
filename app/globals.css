@@ -162,11 +162,13 @@ p {
 @keyframes button-glow {
   0%,
   100% {
-    box-shadow: 0 0 20px rgba(156, 163, 175, 0.1),
+    box-shadow:
+      0 0 20px rgba(156, 163, 175, 0.1),
       0 0 40px rgba(156, 163, 175, 0.05);
   }
   50% {
-    box-shadow: 0 0 30px rgba(156, 163, 175, 0.2),
+    box-shadow:
+      0 0 30px rgba(156, 163, 175, 0.2),
       0 0 60px rgba(156, 163, 175, 0.1);
   }
 }
@@ -209,7 +211,9 @@ p {
     rgba(153, 27, 27, 0.7) 100%
   );
   border-color: rgba(185, 28, 28, 0.5);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(127, 29, 29, 0.2);
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.4),
+    0 0 20px rgba(127, 29, 29, 0.2);
   color: rgba(255, 241, 242, 1);
 }
 
@@ -229,7 +233,9 @@ p {
     rgba(153, 27, 27, 0.3),
     transparent
   );
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   opacity: 0;

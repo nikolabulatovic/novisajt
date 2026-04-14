@@ -51,9 +51,15 @@ export default function MaskedContainer({
 
   return (
     <div
-      className={`min-h-screen flex items-center justify-center p-8 relative ${className}`}>
+      className={`min-h-screen flex items-center justify-center p-8 relative ${className}`}
+    >
       {/* SVG mask definition - creates a hole in the current section background */}
-      <svg className='absolute' height='100%' width='100%' style={{ pointerEvents: 'none' }}>
+      <svg
+        className="absolute"
+        height="100%"
+        width="100%"
+        style={{ pointerEvents: 'none' }}
+      >
         <defs>
           <mask id={maskId}>
             {/* Centered at centerXPercent, centerYPercent, expanding in all directions */}
@@ -71,62 +77,56 @@ export default function MaskedContainer({
       </svg>
 
       {/* Next section's background - rendered behind with clip-path to show only inside mask */}
-      {
-        nextBackgroundImage && (
+      {nextBackgroundImage && (
+        <div
+          className={`absolute inset-0 bg-cover bg-center bg-no-repeat ${expansionProgress > 0 ? 'z-[10000]' : ''}`}
+          style={{
+            backgroundImage: `url('${nextBackgroundImage}')`,
+            ...(expansionProgress > 0
+              ? {
+                  maskImage: `url(#${maskId})`,
+                  WebkitMaskImage: `url(#${maskId})`,
+                }
+              : {}),
+          }}
+        >
           <div
-            className={`absolute inset-0 bg-cover bg-center bg-no-repeat ${expansionProgress > 0 ? 'z-[10000]' : ''}`}
+            className="absolute inset-0 bg-black"
             style={{
-              backgroundImage: `url('${nextBackgroundImage}')`,
-              ...(expansionProgress > 0 ? {
-                maskImage: `url(#${maskId})`,
-                WebkitMaskImage: `url(#${maskId})`,
-              } : {}),
-            }}>
-            <div
-              className='absolute inset-0 bg-black'
-              style={{ opacity: 1 - (1 - nextBackgroundOpacity) * expansionProgress }}
-            />
-          </div>
-        )
-      }
-
-
+              opacity: 1 - (1 - nextBackgroundOpacity) * expansionProgress,
+            }}
+          />
+        </div>
+      )}
 
       {/* Current section's background with mask cutout */}
-      {
-        backgroundImage ? (
-          <div
-            className='absolute inset-0 bg-cover bg-center bg-no-repeat z-0 before:content-[""] before:absolute before:inset-0 before:bg-black/50'
-            style={{
-              backgroundImage: `url('${backgroundImage}')`,
-            }}
-          />
-        ) : null
-      }
+      {backgroundImage ? (
+        <div
+          className='absolute inset-0 bg-cover bg-center bg-no-repeat z-0 before:content-[""] before:absolute before:inset-0 before:bg-black/50'
+          style={{
+            backgroundImage: `url('${backgroundImage}')`,
+          }}
+        />
+      ) : null}
 
-      <div className='relative'>
-        {children}
-      </div>
+      <div className="relative">{children}</div>
 
       {/* Subtle glow/border around the mask */}
-      {
-        showGlow && nextBackgroundImage && expansionProgress === 0 && (
-          <div
-            className="absolute animate-pulse pointer-events-none z-[2]"
-            style={{
-              left: maskStyle.left,
-              top: maskStyle.top,
-              width: maskStyle.width,
-              height: maskStyle.height,
-              borderRadius: maskStyle.borderRadius,
-              border: '1px solid rgba(255, 100, 100, 0.3)',
-              boxShadow:
-                '0 0 40px rgba(255, 100, 100, 0.2), inset 0 0 30px rgba(255, 100, 100, 0.15)',
-            }}
-          />
-        )
-      }
-    </div >
+      {showGlow && nextBackgroundImage && expansionProgress === 0 && (
+        <div
+          className="absolute animate-pulse pointer-events-none z-[2]"
+          style={{
+            left: maskStyle.left,
+            top: maskStyle.top,
+            width: maskStyle.width,
+            height: maskStyle.height,
+            borderRadius: maskStyle.borderRadius,
+            border: '1px solid rgba(255, 100, 100, 0.3)',
+            boxShadow:
+              '0 0 40px rgba(255, 100, 100, 0.2), inset 0 0 30px rgba(255, 100, 100, 0.15)',
+          }}
+        />
+      )}
+    </div>
   );
 }
-

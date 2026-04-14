@@ -1,8 +1,9 @@
 'use client';
 
 import { ReactNode } from 'react';
-import BackgroundImage from './BackgroundImage';
+
 import BackgroundEffects from './BackgroundEffects';
+import BackgroundImage from './BackgroundImage';
 
 interface PageContainerProps {
   children: ReactNode;
@@ -32,8 +33,7 @@ export default function PageContainer({
   className = '',
 }: PageContainerProps) {
   return (
-    <div
-      className={`relative min-h-screen w-full bg-black ${className}`}>
+    <div className={`relative min-h-screen w-full bg-black ${className}`}>
       {backgroundImage && (
         <div className="pointer-events-none absolute inset-0 z-0">
           <BackgroundImage
@@ -51,4 +51,3 @@ export default function PageContainer({
     </div>
   );
 }
-

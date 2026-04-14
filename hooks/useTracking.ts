@@ -1,4 +1,5 @@
 import { usePostHog } from 'posthog-js/react';
+
 import { Stage } from '@/contexts/NavigationContext';
 
 export function useTracking() {

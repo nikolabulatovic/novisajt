@@ -32,9 +32,9 @@ export default function ContentContainer({
   return (
     <div
       className={`${spacingClasses[spacing]} ${alignmentClasses[align]} ${className}`}
-      style={maxWidth ? { maxWidth } : undefined}>
+      style={maxWidth ? { maxWidth } : undefined}
+    >
       {children}
     </div>
   );
 }
-

@@ -1,6 +1,7 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
+import { useEffect, useRef } from 'react';
+
 import { usePillContext } from '@/contexts/PillContext';
 
 interface PillProps {
@@ -33,7 +34,9 @@ export default function Pill({
   useEffect(() => {
     if (isRed && pillContext && pillShapeRef.current) {
       setTimeout(() => {
-        pillContext.registerRedPill(pillShapeRef as React.RefObject<HTMLElement | null>);
+        pillContext.registerRedPill(
+          pillShapeRef as React.RefObject<HTMLElement | null>,
+        );
       }, 500);
       return () => {
         pillContext.unregisterRedPill();
@@ -60,32 +63,39 @@ export default function Pill({
   if (isButton) {
     return (
       <div
-        className={`transition-opacity duration-500 ${className} ${show ? 'opacity-100' : 'opacity-0 pointer-events-none'
-          }`}>
+        className={`transition-opacity duration-500 ${className} ${
+          show ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        }`}
+      >
         <button
           ref={isRed ? pillShapeRef : undefined}
           onClick={handleClick}
           disabled={disabled}
-          className={`group relative flex flex-col items-center cursor-pointer ${disabled ? 'pointer-events-none' : ''
-            }`}>
-          <div className='relative w-24 h-12 sm:w-32 sm:h-16 md:w-40 md:h-20 transform transition-all duration-[4000ms] ease-out group-hover:scale-110 group-hover:rotate-3'>
+          className={`group relative flex flex-col items-center cursor-pointer ${
+            disabled ? 'pointer-events-none' : ''
+          }`}
+        >
+          <div className="relative w-24 h-12 sm:w-32 sm:h-16 md:w-40 md:h-20 transform transition-all duration-[4000ms] ease-out group-hover:scale-110 group-hover:rotate-3">
             {/* Shadow at bottom for 3D effect */}
-            <div className='absolute inset-0 rounded-full bg-black/50 blur-md translate-y-2'></div>
+            <div className="absolute inset-0 rounded-full bg-black/50 blur-md translate-y-2"></div>
             {/* Pill with top-to-bottom gradient */}
             <div
-              className='relative w-full h-full rounded-full flex items-center justify-center shadow-2xl'
+              className="relative w-full h-full rounded-full flex items-center justify-center shadow-2xl"
               style={{
                 background: gradientStyle,
-              }}>
+              }}
+            >
               {/* Subtle highlight at top */}
               <div
-                className={`absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-1/4 bg-gradient-to-b ${highlightColor} to-transparent rounded-t-full`}></div>
+                className={`absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-1/4 bg-gradient-to-b ${highlightColor} to-transparent rounded-t-full`}
+              ></div>
               {/* Vertical line down the middle (capsule seam) */}
-              <div className='absolute left-1/2 top-0 bottom-0 w-[3px] bg-black/30'></div>
+              <div className="absolute left-1/2 top-0 bottom-0 w-[3px] bg-black/30"></div>
               {/* Text label */}
               <span
-                className='relative z-10 text-white font-light text-xs sm:text-sm md:text-base'
-                style={{ fontFamily: 'var(--font-inter), sans-serif' }}>
+                className="relative z-10 text-white font-light text-xs sm:text-sm md:text-base"
+                style={{ fontFamily: 'var(--font-inter), sans-serif' }}
+              >
                 {label}
               </span>
             </div>
@@ -101,24 +111,30 @@ export default function Pill({
       ref={isRed ? pillShapeRef : undefined}
       onClick={handleClick}
       disabled={disabled}
-      className={`group relative flex flex-col items-center space-y-6 cursor-pointer ${isFadingOut && !isSelected ? 'opacity-30' : ''
-        } ${disabled ? 'pointer-events-none' : ''} ${className}`}>
+      className={`group relative flex flex-col items-center space-y-6 cursor-pointer ${
+        isFadingOut && !isSelected ? 'opacity-30' : ''
+      } ${disabled ? 'pointer-events-none' : ''} ${className}`}
+    >
       <div
-        className={`relative w-24 h-12 sm:w-32 sm:h-16 md:w-40 md:h-20 transform transition-all duration-[4000ms] ease-out group-hover:scale-110 ${isRed ? 'group-hover:-rotate-3' : 'group-hover:rotate-3'
-          }`}>
+        className={`relative w-24 h-12 sm:w-32 sm:h-16 md:w-40 md:h-20 transform transition-all duration-[4000ms] ease-out group-hover:scale-110 ${
+          isRed ? 'group-hover:-rotate-3' : 'group-hover:rotate-3'
+        }`}
+      >
         {/* Shadow at bottom for 3D effect */}
-        <div className='absolute inset-0 rounded-full bg-black/50 blur-md translate-y-2'></div>
+        <div className="absolute inset-0 rounded-full bg-black/50 blur-md translate-y-2"></div>
         {/* Pill with top-to-bottom gradient */}
         <div
-          className='relative w-full h-full rounded-full flex items-center justify-center shadow-2xl'
+          className="relative w-full h-full rounded-full flex items-center justify-center shadow-2xl"
           style={{
             background: gradientStyle,
-          }}>
+          }}
+        >
           {/* Subtle highlight at top */}
           <div
-            className={`absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-1/4 bg-gradient-to-b ${highlightColor} to-transparent rounded-t-full`}></div>
+            className={`absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-1/4 bg-gradient-to-b ${highlightColor} to-transparent rounded-t-full`}
+          ></div>
           {/* Vertical line down the middle (capsule seam) */}
-          <div className='absolute left-1/2 top-0 bottom-0 w-[3px] bg-black/30'></div>
+          <div className="absolute left-1/2 top-0 bottom-0 w-[3px] bg-black/30"></div>
         </div>
       </div>
     </button>

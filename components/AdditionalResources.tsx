@@ -1,20 +1,25 @@
 'use client';
 
 import { useState } from 'react';
-import PageContainer from './ui/PageContainer';
+
+import { sectionBackgrounds } from '@/config/sectionBackgrounds';
+
 import AnimatedText from './ui/AnimatedText';
 import ContentContainer from './ui/ContentContainer';
-import TextBackdrop from './ui/TextBackdrop';
+import PageContainer from './ui/PageContainer';
 import Pill from './ui/Pill';
-import { sectionBackgrounds } from '@/config/sectionBackgrounds';
+import TextBackdrop from './ui/TextBackdrop';
 
 interface AdditionalResourcesProps {
   onComplete: () => void;
 }
 
-export default function AdditionalResources({ onComplete }: AdditionalResourcesProps) {
+export default function AdditionalResources({
+  onComplete,
+}: AdditionalResourcesProps) {
   const [showButton, setShowButton] = useState(false);
-  const { backgroundImage, opacity = 0.8 } = sectionBackgrounds['nije-ubedilo-resursi'];
+  const { backgroundImage, opacity = 0.8 } =
+    sectionBackgrounds['nije-ubedilo-resursi'];
 
   const text = [
     '[placeholder] Razumemo tvoju sumnju. Evo dodatnih resursa i dokaza.',
@@ -22,7 +27,10 @@ export default function AdditionalResources({ onComplete }: AdditionalResourcesP
   ];
 
   return (
-    <PageContainer backgroundImage={backgroundImage} backgroundImageOpacity={opacity}>
+    <PageContainer
+      backgroundImage={backgroundImage}
+      backgroundImageOpacity={opacity}
+    >
       <ContentContainer spacing="lg">
         <div className="relative p-6 md:p-16">
           <TextBackdrop type="linear" />

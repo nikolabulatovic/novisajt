@@ -1,49 +1,50 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { NavigationProvider, Stage } from '@/contexts/NavigationContext';
-import { useTracking } from '@/hooks/useTracking';
-import { PillProvider } from '@/contexts/PillContext';
-import PillTransitionLayer from '@/components/ui/PillTransitionLayer';
-import { sectionBackgrounds } from '@/config/sectionBackgrounds';
-import ChoiceStage from '@/components/ChoiceStage';
-import CharacterEvaluation from '@/components/CharacterEvaluation';
-import RedPillIntro from '@/components/RedPillIntro';
-import QuestionExplanation from '@/components/QuestionExplanation';
-import HistoricalInjustices from '@/components/HistoricalInjustices';
-import PersonalQuestion from '@/components/PersonalQuestion';
-import WouldYouLikeToBe from '@/components/WouldYouLikeToBe';
-import RecognizingInjustice from '@/components/RecognizingInjustice';
-import BreakingQuestion from '@/components/BreakingQuestion';
-import StayComfortable from '@/components/StayComfortable';
-import ApatheticStance from '@/components/ApatheticStance';
-import SpasaStory from '@/components/SpasaStory';
-import SpasaRevelation from '@/components/SpasaRevelation';
-import OtherPigs from '@/components/OtherPigs';
-import RootOfTheProblem from '@/components/RootOfTheProblem';
-import AnimalsTreatedAsProducts from '@/components/AnimalsTreatedAsProducts';
-import LetThemLive from '@/components/LetThemLive';
+import { useEffect, useState } from 'react';
+
 import AcceptingSelfOwnership from '@/components/AcceptingSelfOwnership';
-import FromTheWild from '@/components/FromTheWild';
-import ViciousCycle from '@/components/ViciousCycle';
-import CowFate from '@/components/CowFate';
-import AnimalCostOfLiving from '@/components/AnimalCostOfLiving';
-import ReproductionControl from '@/components/ReproductionControl';
-import SolutionUse from '@/components/SolutionUse';
-import AlreadyVegan from '@/components/AlreadyVegan';
-import SolutionKnow from '@/components/SolutionKnow';
-import VeganDietHealth from '@/components/VeganDietHealth';
 import AdditionalResources from '@/components/AdditionalResources';
-import SolutionChoice from '@/components/SolutionChoice';
 import AddressingContradiction from '@/components/AddressingContradiction';
-import NotHonest from '@/components/NotHonest';
+import AfterChoice from '@/components/AfterChoice';
 import AlignBehaviour from '@/components/AlignBehaviour';
+import AlreadyVegan from '@/components/AlreadyVegan';
+import AnimalCostOfLiving from '@/components/AnimalCostOfLiving';
+import AnimalsTreatedAsProducts from '@/components/AnimalsTreatedAsProducts';
+import ApatheticStance from '@/components/ApatheticStance';
 import BackToAnswers from '@/components/BackToAnswers';
 import BackToAnswersAgain from '@/components/BackToAnswersAgain';
-import NotFollowingThrough from '@/components/NotFollowingThrough';
-import VeganismPrinciple from '@/components/VeganismPrinciple';
-import AfterChoice from '@/components/AfterChoice';
+import BreakingQuestion from '@/components/BreakingQuestion';
+import CharacterEvaluation from '@/components/CharacterEvaluation';
+import ChoiceStage from '@/components/ChoiceStage';
+import CowFate from '@/components/CowFate';
+import FromTheWild from '@/components/FromTheWild';
+import HistoricalInjustices from '@/components/HistoricalInjustices';
+import LetThemLive from '@/components/LetThemLive';
 import NavigationMenu from '@/components/NavigationMenu';
+import NotFollowingThrough from '@/components/NotFollowingThrough';
+import NotHonest from '@/components/NotHonest';
+import OtherPigs from '@/components/OtherPigs';
+import PersonalQuestion from '@/components/PersonalQuestion';
+import QuestionExplanation from '@/components/QuestionExplanation';
+import RecognizingInjustice from '@/components/RecognizingInjustice';
+import RedPillIntro from '@/components/RedPillIntro';
+import ReproductionControl from '@/components/ReproductionControl';
+import RootOfTheProblem from '@/components/RootOfTheProblem';
+import SolutionChoice from '@/components/SolutionChoice';
+import SolutionKnow from '@/components/SolutionKnow';
+import SolutionUse from '@/components/SolutionUse';
+import SpasaRevelation from '@/components/SpasaRevelation';
+import SpasaStory from '@/components/SpasaStory';
+import StayComfortable from '@/components/StayComfortable';
+import VeganDietHealth from '@/components/VeganDietHealth';
+import VeganismPrinciple from '@/components/VeganismPrinciple';
+import ViciousCycle from '@/components/ViciousCycle';
+import WouldYouLikeToBe from '@/components/WouldYouLikeToBe';
+import PillTransitionLayer from '@/components/ui/PillTransitionLayer';
+import { sectionBackgrounds } from '@/config/sectionBackgrounds';
+import { NavigationProvider, Stage } from '@/contexts/NavigationContext';
+import { PillProvider } from '@/contexts/PillContext';
+import { useTracking } from '@/hooks/useTracking';
 
 export default function Home() {
   const [stage, setStage] = useState<Stage>('choice');
@@ -51,7 +52,8 @@ export default function Home() {
   const [pendingNextStage, setPendingNextStage] = useState<Stage | null>(null);
   const [blackOverlay, setBlackOverlay] = useState(false);
   const [stageAfterFade, setStageAfterFade] = useState<Stage | null>(null);
-  const { trackStageViewed, trackAnswerSelected, trackFlowCompleted } = useTracking();
+  const { trackStageViewed, trackAnswerSelected, trackFlowCompleted } =
+    useTracking();
 
   useEffect(() => {
     trackStageViewed(stage);
@@ -289,17 +291,24 @@ export default function Home() {
   return (
     <NavigationProvider currentStage={stage} navigateToStage={navigateToStage}>
       <PillProvider>
-        <PillTransitionLayer pendingNextStage={pendingNextStage} onComplete={handleTransitionComplete} />
+        <PillTransitionLayer
+          pendingNextStage={pendingNextStage}
+          onComplete={handleTransitionComplete}
+        />
         <div
           className="fixed inset-0 bg-black z-50 pointer-events-none transition-opacity duration-[2000ms]"
           style={{ opacity: blackOverlay ? 1 : 0 }}
           onTransitionEnd={handleBlackOverlayTransitionEnd}
         />
         <NavigationMenu />
-        <main className='min-h-screen bg-black text-white overflow-hidden relative'>
+        <main className="min-h-screen bg-black text-white overflow-hidden relative">
           <>
-            {stage === 'choice' && <ChoiceStage onPillChoice={handlePillChoice} />}
-            {stage === 'intro' && <RedPillIntro onComplete={handleIntroComplete} />}
+            {stage === 'choice' && (
+              <ChoiceStage onPillChoice={handlePillChoice} />
+            )}
+            {stage === 'intro' && (
+              <RedPillIntro onComplete={handleIntroComplete} />
+            )}
             {stage === 'evaluation' && (
               <CharacterEvaluation
                 onComplete={handleEvaluationComplete}
@@ -381,23 +390,33 @@ export default function Home() {
               <VeganDietHealth onComplete={handleVeganDietHealthComplete} />
             )}
             {stage === 'nije-ubedilo-resursi' && (
-              <AdditionalResources onComplete={handleNijeUbediloResursiComplete} />
+              <AdditionalResources
+                onComplete={handleNijeUbediloResursiComplete}
+              />
             )}
             {stage === 'solution-choice' && (
               <SolutionChoice onComplete={handleSolutionChoiceComplete} />
             )}
             {stage === 'kontradiktornost-je' && (
-              <AddressingContradiction onComplete={handleKontradiktornostJeComplete} />
+              <AddressingContradiction
+                onComplete={handleKontradiktornostJeComplete}
+              />
             )}
             {stage === 'nisi-iskren' && <NotHonest />}
             {stage === 'align-behaviour' && (
               <AlignBehaviour onComplete={handleAlignBehaviourComplete} />
             )}
             {stage === 'vracanje-na-odgovore' && (
-              <BackToAnswers onComplete={handleVracanjeNaOdgovoreComplete} answers={answers} />
+              <BackToAnswers
+                onComplete={handleVracanjeNaOdgovoreComplete}
+                answers={answers}
+              />
             )}
             {stage === 'ponovo-na-odgovore' && (
-              <BackToAnswersAgain onComplete={handlePonovoNaOdgovoreComplete} answers={answers} />
+              <BackToAnswersAgain
+                onComplete={handlePonovoNaOdgovoreComplete}
+                answers={answers}
+              />
             )}
             {stage === 'ne-drzis-se' && <NotFollowingThrough />}
             {stage === 'veganism-principle' && (

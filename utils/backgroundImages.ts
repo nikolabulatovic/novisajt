@@ -1,5 +1,5 @@
-import { Stage } from '@/contexts/NavigationContext';
 import { sectionBackgrounds } from '@/config/sectionBackgrounds';
+import { Stage } from '@/contexts/NavigationContext';
 
 export function getBackgroundImageForStage(stage: Stage): string | null {
   return sectionBackgrounds[stage]?.backgroundImage || null;

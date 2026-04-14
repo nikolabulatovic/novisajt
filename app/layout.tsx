@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from 'next';
-import { Literata, Source_Serif_4, Inter } from 'next/font/google';
+import { Inter, Literata, Source_Serif_4 } from 'next/font/google';
+
 import PostHogProvider from '@/components/PostHogProvider';
+
 import './globals.css';
 
 const literata = Literata({
@@ -36,9 +38,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='sr'>
+    <html lang="sr">
       <body
-        className={`${literata.variable} ${sourceSerif4.variable} ${inter.variable} antialiased`}>
+        className={`${literata.variable} ${sourceSerif4.variable} ${inter.variable} antialiased`}
+      >
         <PostHogProvider>{children}</PostHogProvider>
       </body>
     </html>
