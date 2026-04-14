@@ -8,10 +8,10 @@ import ContentContainer from './ui/ContentContainer';
 import { sectionBackgrounds } from '@/config/sectionBackgrounds';
 
 interface LetThemLiveProps {
-  onComplete: () => void;
+  onComplete: (answer: string) => void;
 }
 
-const OPTIONS = ['Slažem se.', 'Ne slažem se.'] as const;
+const OPTIONS = ['Prihvatam', 'Ne prihvatam'] as const;
 
 export default function LetThemLive({ onComplete }: LetThemLiveProps) {
   const [showOptions, setShowOptions] = useState(false);
@@ -33,10 +33,7 @@ export default function LetThemLive({ onComplete }: LetThemLiveProps) {
     sectionBackgrounds['let-them-live'];
 
   const handleAnswer = (answer: string) => {
-    if (answer === 'Slažem se.') {
-      onComplete();
-    }
-    // "Ne slažem se." — no action for now
+    onComplete(answer);
   };
 
   return (

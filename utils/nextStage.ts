@@ -32,6 +32,7 @@ export function getNextStage(
     'root-of-the-problem': 'animals-treated-as-products',
     'animals-treated-as-products': 'let-them-live',
     'let-them-live': 'from-the-wild',
+    'accepting-self-ownership': 'from-the-wild',
     'from-the-wild': 'reproduction-control',
     'reproduction-control': 'vicious-cycle',
     'vicious-cycle': 'cow-fate',

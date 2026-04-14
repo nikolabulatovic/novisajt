@@ -20,6 +20,7 @@ export type Stage =
   | 'root-of-the-problem'
   | 'animals-treated-as-products'
   | 'let-them-live'
+  | 'accepting-self-ownership'
   | 'from-the-wild'
   | 'vicious-cycle'
   | 'cow-fate'

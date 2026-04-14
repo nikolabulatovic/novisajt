@@ -33,9 +33,9 @@ export default function PageContainer({
 }: PageContainerProps) {
   return (
     <div
-      className={`min-h-screen flex items-center justify-center p-4 md:p-8 relative bg-black ${className}`}>
+      className={`relative min-h-screen w-full bg-black ${className}`}>
       {backgroundImage && (
-        <div className="fixed inset-0 z-0">
+        <div className="pointer-events-none absolute inset-0 z-0">
           <BackgroundImage
             src={backgroundImage}
             opacity={backgroundImageOpacity}
@@ -43,8 +43,10 @@ export default function PageContainer({
         </div>
       )}
       {showBackgroundEffects && <BackgroundEffects />}
-      <div className={`relative z-10 ${maxWidthClasses[maxWidth]} mx-auto w-full`}>
-        {children}
+      <div className="relative z-10 flex min-h-screen w-full items-center justify-center p-4 md:p-8">
+        <div className={`${maxWidthClasses[maxWidth]} mx-auto w-full`}>
+          {children}
+        </div>
       </div>
     </div>
   );

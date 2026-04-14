@@ -68,6 +68,9 @@ export const sectionBackgrounds: Record<Stage, SectionBackgroundConfig> = {
     backgroundImage: '/images/farm-animals.jpg',
     opacity: 0.8,
   },
+  'accepting-self-ownership': {
+    opacity: 0.55,
+  },
   'from-the-wild': {
     backgroundImage: '/images/gallus-gallus.jpg',
     opacity: 0.8,
@@ -122,14 +125,15 @@ export const sectionBackgrounds: Record<Stage, SectionBackgroundConfig> = {
     opacity: 0.3,
   },
   'da-li-bi-voleo': {
-    opacity: 0.3,
+    backgroundImage: '/images/justitia-gray.png',
+    opacity: 0.5,
   },
   'prepoznavanje-nepravde': {
     backgroundImage: '/images/historical-weight.png',
     opacity: 0.5,
   },
   'apatican-stav': {
-    backgroundImage: '/images/izbor-da-ne-vidi-upscaled.jpg',
+    backgroundImage: '/images/izbor-da-ne-vidi.jpg',
     opacity: 0.4,
   },
   'vec-veganski': {

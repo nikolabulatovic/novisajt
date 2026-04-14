@@ -23,6 +23,7 @@ import OtherPigs from '@/components/OtherPigs';
 import RootOfTheProblem from '@/components/RootOfTheProblem';
 import AnimalsTreatedAsProducts from '@/components/AnimalsTreatedAsProducts';
 import LetThemLive from '@/components/LetThemLive';
+import AcceptingSelfOwnership from '@/components/AcceptingSelfOwnership';
 import FromTheWild from '@/components/FromTheWild';
 import ViciousCycle from '@/components/ViciousCycle';
 import CowFate from '@/components/CowFate';
@@ -156,7 +157,15 @@ export default function Home() {
     transitionToStage('let-them-live');
   };
 
-  const handleLetThemLiveComplete = () => {
+  const handleLetThemLiveComplete = (answer: string) => {
+    if (answer === 'Ne prihvatam') {
+      transitionToStage('accepting-self-ownership');
+    } else {
+      transitionToStage('from-the-wild');
+    }
+  };
+
+  const handleAcceptingSelfOwnershipComplete = () => {
     transitionToStage('from-the-wild');
   };
 
@@ -334,6 +343,11 @@ export default function Home() {
             )}
             {stage === 'let-them-live' && (
               <LetThemLive onComplete={handleLetThemLiveComplete} />
+            )}
+            {stage === 'accepting-self-ownership' && (
+              <AcceptingSelfOwnership
+                onComplete={handleAcceptingSelfOwnershipComplete}
+              />
             )}
             {stage === 'from-the-wild' && (
               <FromTheWild onComplete={handleFromTheWildComplete} />
