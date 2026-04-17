@@ -1,0 +1,11 @@
+{
+  "title": "Izaberi",
+  "blue": {
+    "label": "Odustani",
+    "description": "Ostani udoban u poznatom."
+  },
+  "red": {
+    "label": "Saznaj",
+    "description": "Otkrij istinu o sebi i svetu."
+  }
+}

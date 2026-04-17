@@ -1,11 +1,18 @@
 type Locale = 'sr' | 'en';
 
-type MessageNamespace = 'Metadata' | 'QuestionExplanation' | 'PersonalQuestion';
+type MessageNamespace =
+  | 'Metadata'
+  | 'QuestionExplanation'
+  | 'PersonalQuestion'
+  | 'WouldYouLikeToBe'
+  | 'ChoiceStage';
 
 const namespaceFiles: Record<MessageNamespace, string> = {
   Metadata: 'metadata',
   QuestionExplanation: 'question-explanation',
   PersonalQuestion: 'personal-question',
+  WouldYouLikeToBe: 'would-you-like-to-be',
+  ChoiceStage: 'choice-stage',
 };
 
 async function loadNamespace(locale: Locale, fileName: string) {
