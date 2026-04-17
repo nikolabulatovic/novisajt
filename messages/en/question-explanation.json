@@ -1,0 +1,57 @@
+{
+  "next": "I understand",
+  "blocks": [
+    {
+      "line": [
+        {
+          "text": "These questions are not a test. There are no correct answers.",
+          "bold": false,
+          "italic": false
+        }
+      ]
+    },
+    {
+      "line": [
+        {
+          "text": "We asked them because this journey only makes sense for people who care about being ",
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "honest with themselves",
+          "bold": true,
+          "italic": false
+        },
+        {
+          "text": ".",
+          "bold": false,
+          "italic": false
+        }
+      ]
+    },
+    {
+      "line": [
+        {
+          "text": "If you want to see yourself as you are - ",
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "and not as you ",
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "think you are",
+          "bold": true,
+          "italic": true
+        },
+        {
+          "text": ", continue.",
+          "bold": false,
+          "italic": false
+        }
+      ]
+    }
+  ]
+}

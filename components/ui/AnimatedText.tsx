@@ -3,15 +3,10 @@
 import { useMemo } from 'react';
 
 import { useWordAnimation } from '@/hooks/useWordAnimation';
-
-interface TextSegment {
-  text: string;
-  bold?: boolean;
-  italic?: boolean;
-}
+import { AnimatedTextBlock } from '@/lib/i18n/animatedText';
 
 interface AnimatedTextProps {
-  text: string | string[] | Array<{ line: TextSegment[] }>;
+  text: string | string[] | AnimatedTextBlock;
   speed?: number;
   delayAfterComplete?: number;
   onComplete?: () => void;
@@ -59,8 +54,8 @@ export default function AnimatedText({
   const textToAnimate = useMemo(() => {
     if (isSegmentFormat) {
       // Flatten segments for animation counting
-      const flattened = (text as Array<{ line: TextSegment[] }>).flatMap(
-        (item) => item.line.flatMap((segment) => segment.text.split(' ')),
+      const flattened = (text as AnimatedTextBlock).flatMap((item) =>
+        item.line.flatMap((segment) => segment.text.split(' ')),
       );
       return flattened.join(' ');
     } else if (Array.isArray(text)) {
@@ -80,7 +75,7 @@ export default function AnimatedText({
 
   // Render QuestionExplanation-style format
   if (isSegmentFormat) {
-    const segmentText = text as Array<{ line: TextSegment[] }>;
+    const segmentText = text as AnimatedTextBlock;
 
     // Calculate word start indices for each item
     const wordStartIndices: number[] = [];
