@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react';
 
+import { useTranslations } from 'next-intl';
+
 import { sectionBackgrounds } from '@/config/sectionBackgrounds';
 
 import NextButton from './ui/NextButton';
@@ -10,36 +12,15 @@ interface HistoricalInjusticesProps {
   onComplete: () => void;
 }
 
-const intro = [
-  'Kroz istoriju, ogromne nepravde nisu činili monstrumi.',
-  'Činili su ih obični ljudi.',
-  'Ljudi koji su voleli svoje porodice.',
-  'Ljudi koji su se smatrali dobrima.',
-];
-
-const injustices = {
-  left: {
-    content: [
-      'Robovlasništvo je bilo normalno.',
-      'Zakonito.',
-      'Trajalo je milenijumima.',
-      'Većina ljudi je to podržavalo ili barem prihvatalo.',
-      'Samo su „živeli normalno“.',
-    ],
-  },
-  right: {
-    content: [
-      'Hitler. Staljin. Mao.',
-      'Vojnici i policajci su izvršavali naredbe.',
-      'Milioni su stradali ne zato što su svi bili zli - već zato što su slušali, ćutali i prilagođavali se.',
-      'Nepravda je bila prihvaćena.',
-    ],
-  },
-};
-
 export default function HistoricalInjustices({
   onComplete,
 }: HistoricalInjusticesProps) {
+  const t = useTranslations('HistoricalInjustices');
+  const intro = t.raw('intro') as string[];
+  const injustices = t.raw('injustices') as {
+    left: { content: string[] };
+    right: { content: string[] };
+  };
   const [stage, setStage] = useState<'intro' | 'slavery' | 'nazism'>('intro');
   const [visibleLines, setVisibleLines] = useState<number[]>([]);
   const [showIntroButton, setShowIntroButton] = useState(false);
@@ -159,7 +140,7 @@ export default function HistoricalInjustices({
             {/* Intro button */}
             <NextButton
               onClick={handleIntroContinue}
-              label="Nastavi"
+              label={t('buttons.intro')}
               show={showIntroButton}
               className={`transition-opacity duration-500 ${
                 showIntroButton
@@ -256,7 +237,7 @@ export default function HistoricalInjustices({
               >
                 <NextButton
                   onClick={handleContinue}
-                  label="Dalje"
+                  label={t('buttons.slavery')}
                   show={showButton}
                   marginTop="none"
                 />
@@ -351,7 +332,7 @@ export default function HistoricalInjustices({
               >
                 <NextButton
                   onClick={handleContinue}
-                  label="Nastavi"
+                  label={t('buttons.nazism')}
                   show={showButton}
                   marginTop="none"
                 />

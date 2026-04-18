@@ -5,7 +5,13 @@ type MessageNamespace =
   | 'QuestionExplanation'
   | 'PersonalQuestion'
   | 'WouldYouLikeToBe'
-  | 'ChoiceStage';
+  | 'ChoiceStage'
+  | 'RedPillIntro'
+  | 'CharacterEvaluation'
+  | 'HistoricalInjustices'
+  | 'BreakingQuestion'
+  | 'StayComfortable'
+  | 'ApatheticStance';
 
 const namespaceFiles: Record<MessageNamespace, string> = {
   Metadata: 'metadata',
@@ -13,6 +19,12 @@ const namespaceFiles: Record<MessageNamespace, string> = {
   PersonalQuestion: 'personal-question',
   WouldYouLikeToBe: 'would-you-like-to-be',
   ChoiceStage: 'choice-stage',
+  RedPillIntro: 'red-pill-intro',
+  CharacterEvaluation: 'character-evaluation',
+  HistoricalInjustices: 'historical-injustices',
+  BreakingQuestion: 'breaking-question',
+  StayComfortable: 'stay-comfortable',
+  ApatheticStance: 'apathetic-stance',
 };
 
 async function loadNamespace(locale: Locale, fileName: string) {

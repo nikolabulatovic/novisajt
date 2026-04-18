@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 
+import { useTranslations } from 'next-intl';
+
 import { sectionBackgrounds } from '@/config/sectionBackgrounds';
 
 interface BreakingQuestionProps {
@@ -11,7 +13,9 @@ interface BreakingQuestionProps {
 export default function BreakingQuestion({
   onComplete,
 }: BreakingQuestionProps) {
+  const t = useTranslations('BreakingQuestion');
   const [selected, setSelected] = useState<string | null>(null);
+  const options = t.raw('options') as string[];
 
   const handleContinue = () => {
     if (selected) {
@@ -48,18 +52,17 @@ export default function BreakingQuestion({
         <div className="text-center space-y-12">
           {/* Question */}
           <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-gray-200 leading-relaxed max-w-3xl mx-auto">
-            Šta ako danas postoji ogromna nepravda u kojoj učestvuješ – a da to
-            ignorišeš jer je lakše?
+            {t('question')}
           </h1>
 
           {/* Sub-question */}
           <p className="text-xl sm:text-2xl md:text-3xl font-light text-gray-300">
-            Da li želiš da znaš?
+            {t('subQuestion')}
           </p>
 
           {/* Options */}
           <div className="flex flex-row gap-8">
-            {['Želim da znam', 'Radije bih da ne znam'].map((option, index) => (
+            {options.map((option, index) => (
               <button
                 key={index}
                 onClick={() => handleAnswer(option)}

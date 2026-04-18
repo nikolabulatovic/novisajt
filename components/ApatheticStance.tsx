@@ -1,5 +1,7 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
+
 import { sectionBackgrounds } from '@/config/sectionBackgrounds';
 
 import AnimatedText from './ui/AnimatedText';
@@ -8,12 +10,10 @@ import PageContainer from './ui/PageContainer';
 import TextBackdrop from './ui/TextBackdrop';
 
 export default function ApatheticStance() {
+  const t = useTranslations('ApatheticStance');
   const { backgroundImage, opacity = 0.8 } =
     sectionBackgrounds['apatican-stav'];
-
-  const text = [
-    'Ostani u neznanju i budi siguran da tvoj izbor ima ozbiljne posledice.',
-  ];
+  const text = t.raw('text') as string[];
 
   return (
     <PageContainer

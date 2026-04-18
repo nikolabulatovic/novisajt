@@ -1,0 +1,43 @@
+{
+  "questions": [
+    {
+      "id": 1,
+      "question": "How do you define your character?",
+      "options": [
+        { "text": "I am who I am and I don't need to change", "value": 0 },
+        { "text": "I am mostly good, with some flaws", "value": 1 },
+        {
+          "text": "I try to be compassionate and do the right thing",
+          "value": 2
+        },
+        {
+          "text": "I want to align my actions with my values",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "question": "When you learn something uncomfortable about yourself, you:",
+      "options": [
+        { "text": "Ignore it and continue as before", "value": 0 },
+        { "text": "Admit it, but make excuses", "value": 1 },
+        { "text": "Feel conflicted and unsure what to do", "value": 2 },
+        { "text": "Reflect deeply and consider change", "value": 3 }
+      ]
+    },
+    {
+      "id": 3,
+      "question": "What matters most to you?",
+      "options": [
+        { "text": "My comfort and convenience", "value": 0 },
+        { "text": "Following social norms and fitting in", "value": 1 },
+        { "text": "Being a good person in my own way", "value": 2 },
+        {
+          "text": "Living in alignment with my deepest values",
+          "value": 3
+        }
+      ]
+    }
+  ]
+}

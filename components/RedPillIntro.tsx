@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 
+import { useTranslations } from 'next-intl';
+
 import { sectionBackgrounds } from '@/config/sectionBackgrounds';
 
 import AnimatedText from './ui/AnimatedText';
@@ -14,13 +16,9 @@ interface RedPillIntroProps {
 }
 
 export default function RedPillIntro({ onComplete }: RedPillIntroProps) {
+  const t = useTranslations('RedPillIntro');
   const [showButton, setShowButton] = useState(false);
-
-  const text = [
-    'Tvoj izbor je da vidiš istinu i to zahteva hrabrost.',
-    'Neće biti prijatno. Ali će biti iskreno.',
-    'Prvo ćemo ti postaviti tri pitanja.',
-  ];
+  const text = t.raw('text') as string[];
 
   const { backgroundImage, opacity } = sectionBackgrounds.intro;
 
@@ -43,7 +41,7 @@ export default function RedPillIntro({ onComplete }: RedPillIntroProps) {
           />
         </div>
 
-        <NextButton onClick={onComplete} label="Nastavi" show={showButton} />
+        <NextButton onClick={onComplete} label={t('next')} show={showButton} />
       </ContentContainer>
     </PageContainer>
   );
