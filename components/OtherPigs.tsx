@@ -8,7 +8,7 @@ import AnimatedText from './ui/AnimatedText';
 import ContentContainer from './ui/ContentContainer';
 import NextButton from './ui/NextButton';
 import PageContainer from './ui/PageContainer';
-import TextBackdrop from './ui/TextBackdrop';
+import StageTextSurface from './ui/StageTextSurface';
 
 interface OtherPigsProps {
   onComplete: () => void;
@@ -32,19 +32,19 @@ export default function OtherPigs({ onComplete }: OtherPigsProps) {
       backgroundImageOpacity={opacity}
     >
       <ContentContainer spacing="lg">
-        <div className="relative p-6 md:p-16">
-          <TextBackdrop type="linear" />
-          <div className="relative z-10">
-            <AnimatedText
-              text={text}
-              speed={120}
-              delayAfterComplete={1000}
-              textSize="md"
-              alignment="center"
-              onComplete={() => setShowButton(true)}
-            />
-          </div>
-        </div>
+        <StageTextSurface
+          stage="other-pigs"
+          contentClassName="relative p-6 md:p-16"
+        >
+          <AnimatedText
+            text={text}
+            speed={120}
+            delayAfterComplete={1000}
+            textSize="md"
+            alignment="center"
+            onComplete={() => setShowButton(true)}
+          />
+        </StageTextSurface>
 
         <NextButton onClick={onComplete} label="Nastavi" show={showButton} />
       </ContentContainer>

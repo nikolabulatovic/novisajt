@@ -8,7 +8,7 @@ import AnimatedText from './ui/AnimatedText';
 import ContentContainer from './ui/ContentContainer';
 import PageContainer from './ui/PageContainer';
 import Pill from './ui/Pill';
-import TextBackdrop from './ui/TextBackdrop';
+import StageTextSurface from './ui/StageTextSurface';
 
 interface AdditionalResourcesProps {
   onComplete: () => void;
@@ -32,19 +32,19 @@ export default function AdditionalResources({
       backgroundImageOpacity={opacity}
     >
       <ContentContainer spacing="lg">
-        <div className="relative p-6 md:p-16">
-          <TextBackdrop type="linear" />
-          <div className="relative z-10">
-            <AnimatedText
-              text={text}
-              speed={120}
-              delayAfterComplete={1000}
-              textSize="md"
-              alignment="center"
-              onComplete={() => setShowButton(true)}
-            />
-          </div>
-        </div>
+        <StageTextSurface
+          stage="nije-ubedilo-resursi"
+          contentClassName="relative p-6 md:p-16"
+        >
+          <AnimatedText
+            text={text}
+            speed={120}
+            delayAfterComplete={1000}
+            textSize="md"
+            alignment="center"
+            onComplete={() => setShowButton(true)}
+          />
+        </StageTextSurface>
 
         <div className="flex justify-center mt-8 md:mt-12">
           <Pill color="red" onClick={onComplete} show={showButton} />

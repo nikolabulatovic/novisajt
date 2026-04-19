@@ -6,6 +6,8 @@ import { useTranslations } from 'next-intl';
 
 import { sectionBackgrounds } from '@/config/sectionBackgrounds';
 
+import StageTextSurface from './ui/StageTextSurface';
+
 interface BreakingQuestionProps {
   onComplete: (answer: string) => void;
 }
@@ -50,15 +52,20 @@ export default function BreakingQuestion({
 
       <div className="relative z-10 max-w-4xl mx-auto w-full">
         <div className="text-center space-y-12">
-          {/* Question */}
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-gray-200 leading-relaxed max-w-3xl mx-auto">
-            {t('question')}
-          </h1>
+          <StageTextSurface
+            stage="breaking-question"
+            contentClassName="p-6 md:p-10"
+          >
+            {/* Question */}
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-gray-200 leading-relaxed max-w-3xl mx-auto">
+              {t('question')}
+            </h1>
 
-          {/* Sub-question */}
-          <p className="text-xl sm:text-2xl md:text-3xl font-light text-gray-300">
-            {t('subQuestion')}
-          </p>
+            {/* Sub-question */}
+            <p className="text-xl sm:text-2xl md:text-3xl font-light text-gray-300 mt-8">
+              {t('subQuestion')}
+            </p>
+          </StageTextSurface>
 
           {/* Options */}
           <div className="flex flex-row gap-8">

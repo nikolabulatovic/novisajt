@@ -10,6 +10,7 @@ import AnimatedText from './ui/AnimatedText';
 import ContentContainer from './ui/ContentContainer';
 import NextButton from './ui/NextButton';
 import PageContainer from './ui/PageContainer';
+import StageTextSurface from './ui/StageTextSurface';
 
 interface RedPillIntroProps {
   onComplete: () => void;
@@ -24,13 +25,16 @@ export default function RedPillIntro({ onComplete }: RedPillIntroProps) {
 
   return (
     <PageContainer
-      className="overflow-hidden"
       backgroundImage={backgroundImage}
       backgroundImageOpacity={opacity}
       showBackgroundEffects={false}
     >
       <ContentContainer spacing="sm">
-        <div className="bg-gray-900/20 backdrop-blur-lg rounded-2xl p-8 md:p-12 border border-gray-800/20 shadow-2xl">
+        <StageTextSurface
+          stage="intro"
+          className="mx-1 sm:mx-2"
+          contentClassName="p-8 md:p-12"
+        >
           <AnimatedText
             text={text}
             delayAfterComplete={1000}
@@ -39,7 +43,7 @@ export default function RedPillIntro({ onComplete }: RedPillIntroProps) {
             wordTransitionDuration={3000}
             onComplete={() => setShowButton(true)}
           />
-        </div>
+        </StageTextSurface>
 
         <NextButton onClick={onComplete} label={t('next')} show={showButton} />
       </ContentContainer>

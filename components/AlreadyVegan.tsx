@@ -7,7 +7,7 @@ import { sectionBackgrounds } from '@/config/sectionBackgrounds';
 import AnimatedText from './ui/AnimatedText';
 import ContentContainer from './ui/ContentContainer';
 import PageContainer from './ui/PageContainer';
-import TextBackdrop from './ui/TextBackdrop';
+import StageTextSurface from './ui/StageTextSurface';
 
 interface AlreadyVeganProps {
   onComplete: (answer: string) => void;
@@ -30,19 +30,19 @@ export default function AlreadyVegan({ onComplete }: AlreadyVeganProps) {
       backgroundImageOpacity={opacity}
     >
       <ContentContainer spacing="lg">
-        <div className="relative p-6 md:p-16">
-          <TextBackdrop type="linear" />
-          <div className="relative z-10">
-            <AnimatedText
-              text={text}
-              speed={120}
-              delayAfterComplete={1000}
-              textSize="md"
-              alignment="center"
-              onComplete={() => setShowOptions(true)}
-            />
-          </div>
-        </div>
+        <StageTextSurface
+          stage="vec-veganski"
+          contentClassName="relative p-6 md:p-16"
+        >
+          <AnimatedText
+            text={text}
+            speed={120}
+            delayAfterComplete={1000}
+            textSize="md"
+            alignment="center"
+            onComplete={() => setShowOptions(true)}
+          />
+        </StageTextSurface>
 
         {showOptions && (
           <div className="flex flex-row gap-6 justify-center flex-wrap px-4">

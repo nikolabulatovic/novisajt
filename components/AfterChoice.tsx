@@ -5,7 +5,7 @@ import { sectionBackgrounds } from '@/config/sectionBackgrounds';
 import AnimatedText from './ui/AnimatedText';
 import ContentContainer from './ui/ContentContainer';
 import PageContainer from './ui/PageContainer';
-import TextBackdrop from './ui/TextBackdrop';
+import StageTextSurface from './ui/StageTextSurface';
 
 function WhatsAppIcon() {
   return (
@@ -62,49 +62,52 @@ export default function AfterChoice() {
       maxWidth="3xl"
     >
       <ContentContainer spacing="lg">
-        <div className="relative p-16">
-          <TextBackdrop type="linear" opacity={0.2} />
-          <div className="relative z-10">
-            <AnimatedText
-              text={title}
-              speed={120}
-              delayAfterComplete={800}
-              textSize="xl"
-              alignment="center"
-              // AfterChoice is the final stage; no "next" pill.
-              onComplete={() => {}}
-              className="text-gray-900"
-            />
-          </div>
-        </div>
+        <StageTextSurface
+          stage="after-choice"
+          contentClassName="relative p-8 md:p-12"
+        >
+          <AnimatedText
+            text={title}
+            speed={120}
+            delayAfterComplete={800}
+            textSize="xl"
+            alignment="center"
+            // AfterChoice is the final stage; no "next" pill.
+            onComplete={() => {}}
+            className="text-gray-900"
+          />
+        </StageTextSurface>
 
-        <div className="bg-white/80 backdrop-blur-lg rounded-2xl p-8 md:p-12 border border-gray-200 shadow-xl space-y-8">
+        <StageTextSurface
+          stage="after-choice"
+          contentClassName="px-6 py-5 md:px-8 md:py-6"
+        >
           <h2 className="text-xl sm:text-2xl md:text-3xl font-light text-gray-900 text-center">
             Pronađi nas u grupama
           </h2>
+        </StageTextSurface>
 
-          <div className="grid gap-4 sm:gap-6 sm:grid-cols-3">
-            <button className="cursor-pointer group p-6 rounded-xl border border-gray-200 bg-white/80 hover:bg-gray-50 transition-all duration-300 text-center">
-              <div className="w-14 h-14 mx-auto mb-4 rounded-full border border-gray-300 bg-gray-100 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
-                <WhatsAppIcon />
-              </div>
-              <p className="text-gray-800 text-lg font-light">WhatsApp</p>
-            </button>
+        <div className="grid gap-4 sm:gap-6 sm:grid-cols-3">
+          <button className="cursor-pointer group p-6 rounded-xl border border-gray-200 bg-white/80 hover:bg-gray-50 transition-all duration-300 text-center">
+            <div className="w-14 h-14 mx-auto mb-4 rounded-full border border-gray-300 bg-gray-100 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+              <WhatsAppIcon />
+            </div>
+            <p className="text-gray-800 text-lg font-light">WhatsApp</p>
+          </button>
 
-            <button className="cursor-pointer group p-6 rounded-xl border border-gray-200 bg-white/80 hover:bg-gray-50 transition-all duration-300 text-center">
-              <div className="w-14 h-14 mx-auto mb-4 rounded-full border border-gray-300 bg-gray-100 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
-                <DiscordIcon />
-              </div>
-              <p className="text-gray-800 text-lg font-light">Discord</p>
-            </button>
+          <button className="cursor-pointer group p-6 rounded-xl border border-gray-200 bg-white/80 hover:bg-gray-50 transition-all duration-300 text-center">
+            <div className="w-14 h-14 mx-auto mb-4 rounded-full border border-gray-300 bg-gray-100 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+              <DiscordIcon />
+            </div>
+            <p className="text-gray-800 text-lg font-light">Discord</p>
+          </button>
 
-            <button className="cursor-pointer group p-6 rounded-xl border border-gray-200 bg-white/80 hover:bg-gray-50 transition-all duration-300 text-center">
-              <div className="w-14 h-14 mx-auto mb-4 rounded-full border border-gray-300 bg-gray-100 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
-                <TelegramIcon />
-              </div>
-              <p className="text-gray-800 text-lg font-light">Telegram</p>
-            </button>
-          </div>
+          <button className="cursor-pointer group p-6 rounded-xl border border-gray-200 bg-white/80 hover:bg-gray-50 transition-all duration-300 text-center">
+            <div className="w-14 h-14 mx-auto mb-4 rounded-full border border-gray-300 bg-gray-100 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+              <TelegramIcon />
+            </div>
+            <p className="text-gray-800 text-lg font-light">Telegram</p>
+          </button>
         </div>
       </ContentContainer>
     </PageContainer>

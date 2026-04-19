@@ -8,7 +8,7 @@ import AnimatedText from './ui/AnimatedText';
 import ContentContainer from './ui/ContentContainer';
 import NextButton from './ui/NextButton';
 import PageContainer from './ui/PageContainer';
-import TextBackdrop from './ui/TextBackdrop';
+import StageTextSurface from './ui/StageTextSurface';
 
 interface SpasaStoryProps {
   onComplete: () => void;
@@ -47,19 +47,19 @@ export default function SpasaStory({ onComplete }: SpasaStoryProps) {
     >
       {!showFinalMessage ? (
         <ContentContainer spacing="lg">
-          <div className="relative p-6 md:p-16">
-            <TextBackdrop type="linear" />
-            <div className="relative z-10">
-              <AnimatedText
-                text={text}
-                speed={120}
-                delayAfterComplete={1000}
-                textSize="md"
-                alignment="center"
-                onComplete={() => setShowButton(true)}
-              />
-            </div>
-          </div>
+          <StageTextSurface
+            stage="spasa-story"
+            contentClassName="relative p-6 md:p-16"
+          >
+            <AnimatedText
+              text={text}
+              speed={120}
+              delayAfterComplete={1000}
+              textSize="md"
+              alignment="center"
+              onComplete={() => setShowButton(true)}
+            />
+          </StageTextSurface>
 
           <NextButton
             onClick={handleContinue}
@@ -73,11 +73,15 @@ export default function SpasaStory({ onComplete }: SpasaStoryProps) {
             finalMessageVisible ? 'opacity-100' : 'opacity-0'
           }`}
         >
-          <TextBackdrop type="linear" className="-mx-8 -my-12" />
-          <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light text-gray-200 leading-relaxed relative z-10">
-            Ali postoji nešto što jesmo dužni: da sve životinje ostavimo na
-            miru.
-          </p>
+          <StageTextSurface
+            stage="spasa-story"
+            contentClassName="relative px-6 py-10 md:px-10 md:py-14"
+          >
+            <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light text-gray-200 leading-relaxed relative z-10">
+              Ali postoji nešto što jesmo dužni: da sve životinje ostavimo na
+              miru.
+            </p>
+          </StageTextSurface>
         </div>
       )}
     </PageContainer>

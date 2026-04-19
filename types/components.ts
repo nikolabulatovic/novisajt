@@ -33,8 +33,5 @@ export type Spacing = 'sm' | 'md' | 'lg';
 // Background effect variants
 export type BackgroundEffectVariant = 'pulse' | 'glow' | 'float' | 'none';
 
-// Text backdrop types
-export type TextBackdropType = 'linear' | 'radial';
-
 // Re-export Stage type for convenience
 export type { Stage };

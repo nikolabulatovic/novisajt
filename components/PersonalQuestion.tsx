@@ -6,6 +6,8 @@ import { useTranslations } from 'next-intl';
 
 import { sectionBackgrounds } from '@/config/sectionBackgrounds';
 
+import StageTextSurface from './ui/StageTextSurface';
+
 interface PersonalQuestionProps {
   onComplete: (answer: string) => void;
 }
@@ -73,10 +75,14 @@ export default function PersonalQuestion({
               hideQuestion ? 'opacity-0' : 'opacity-100'
             }`}
           >
-            {/* Question */}
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-gray-200 leading-relaxed max-w-3xl mx-auto">
-              {t('question')}
-            </h1>
+            <StageTextSurface
+              stage="personal-question"
+              contentClassName="p-6 md:p-10"
+            >
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-gray-200 leading-relaxed max-w-3xl mx-auto">
+                {t('question')}
+              </h1>
+            </StageTextSurface>
 
             {/* Options */}
             <div className="flex flex-row gap-8">
@@ -104,15 +110,20 @@ export default function PersonalQuestion({
             </div>
           </div>
         ) : (
-          <div
-            className={`text-center transition-opacity duration-500 ${
-              fadeOut ? 'opacity-0' : 'opacity-100'
-            }`}
+          <StageTextSurface
+            stage="personal-question"
+            contentClassName="p-6 md:p-10"
           >
-            <p className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-light text-gray-200 italic">
-              {t('flashMessage')}
-            </p>
-          </div>
+            <div
+              className={`text-center transition-opacity duration-500 ${
+                fadeOut ? 'opacity-0' : 'opacity-100'
+              }`}
+            >
+              <p className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-light text-gray-200 italic">
+                {t('flashMessage')}
+              </p>
+            </div>
+          </StageTextSurface>
         )}
       </div>
     </div>

@@ -1,7 +1,9 @@
 'use client';
 
+export type TextBackdropGradientType = 'linear' | 'radial';
+
 interface TextBackdropProps {
-  type?: 'linear' | 'radial';
+  type?: TextBackdropGradientType;
   opacity?: number;
   className?: string;
 }

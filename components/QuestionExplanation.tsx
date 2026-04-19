@@ -11,6 +11,7 @@ import AnimatedText from './ui/AnimatedText';
 import ContentContainer from './ui/ContentContainer';
 import NextButton from './ui/NextButton';
 import PageContainer from './ui/PageContainer';
+import StageTextSurface from './ui/StageTextSurface';
 
 interface QuestionExplanationProps {
   onComplete: () => void;
@@ -32,7 +33,10 @@ export default function QuestionExplanation({
       maxWidth="lg"
     >
       <ContentContainer spacing="sm">
-        <div className="px-2">
+        <StageTextSurface
+          stage="explanation"
+          contentClassName="px-4 py-4 md:px-6 md:py-6"
+        >
           <AnimatedText
             text={text}
             speed={100}
@@ -42,7 +46,7 @@ export default function QuestionExplanation({
             wordTransitionDuration={5000}
             onComplete={() => setShowButton(true)}
           />
-        </div>
+        </StageTextSurface>
 
         <NextButton onClick={onComplete} label={t('next')} show={showButton} />
       </ContentContainer>

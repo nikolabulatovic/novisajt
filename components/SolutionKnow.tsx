@@ -6,6 +6,7 @@ import { sectionBackgrounds } from '@/config/sectionBackgrounds';
 
 import ContentContainer from './ui/ContentContainer';
 import PageContainer from './ui/PageContainer';
+import StageTextSurface from './ui/StageTextSurface';
 
 interface SolutionKnowProps {
   onComplete: (answer: string) => void;
@@ -30,14 +31,19 @@ export default function SolutionKnow({ onComplete }: SolutionKnowProps) {
       backgroundImageOpacity={opacity}
     >
       <ContentContainer spacing="lg">
-        <div className="relative p-6 md:p-16 text-center space-y-12">
-          <h1
-            className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light text-gray-200 leading-relaxed max-w-3xl mx-auto"
-            style={{ fontFamily: 'var(--font-literata), serif' }}
+        <div className="text-center space-y-12">
+          <StageTextSurface
+            stage="solution-know"
+            contentClassName="p-6 md:p-16"
           >
-            Da li znaš da je moguće živeti zdrav život bez korišćenja životinja,
-            kao milioni ljudi danas?
-          </h1>
+            <h1
+              className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light text-gray-200 leading-relaxed max-w-3xl mx-auto"
+              style={{ fontFamily: 'var(--font-literata), serif' }}
+            >
+              Da li znaš da je moguće živeti zdrav život bez korišćenja
+              životinja, kao milioni ljudi danas?
+            </h1>
+          </StageTextSurface>
 
           <div className="flex flex-row gap-6 justify-center flex-wrap">
             {OPTIONS.map((option) => (

@@ -6,6 +6,7 @@ import { sectionBackgrounds } from '@/config/sectionBackgrounds';
 
 import ContentContainer from './ui/ContentContainer';
 import PageContainer from './ui/PageContainer';
+import StageTextSurface from './ui/StageTextSurface';
 
 interface SolutionUseProps {
   onComplete: (answer: string) => void;
@@ -29,16 +30,18 @@ export default function SolutionUse({ onComplete }: SolutionUseProps) {
       backgroundImageOpacity={opacity}
     >
       <ContentContainer spacing="lg">
-        <div className="relative p-6 md:p-16 text-center space-y-12">
-          <h1
-            className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light text-gray-200 leading-relaxed max-w-3xl mx-auto"
-            style={{ fontFamily: 'var(--font-literata), serif' }}
-          >
-            A sada da se osvrnemo na rešenje.
-            <br />
-            <br />
-            Da li koristiš životinje?
-          </h1>
+        <div className="text-center space-y-12">
+          <StageTextSurface stage="solution-use" contentClassName="p-6 md:p-16">
+            <h1
+              className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light text-gray-200 leading-relaxed max-w-3xl mx-auto"
+              style={{ fontFamily: 'var(--font-literata), serif' }}
+            >
+              A sada da se osvrnemo na rešenje.
+              <br />
+              <br />
+              Da li koristiš životinje?
+            </h1>
+          </StageTextSurface>
 
           <div className="flex flex-row gap-6 justify-center flex-wrap">
             {OPTIONS.map((option) => (

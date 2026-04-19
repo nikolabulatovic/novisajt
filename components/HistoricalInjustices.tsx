@@ -7,6 +7,7 @@ import { useTranslations } from 'next-intl';
 import { sectionBackgrounds } from '@/config/sectionBackgrounds';
 
 import NextButton from './ui/NextButton';
+import StageTextSurface from './ui/StageTextSurface';
 
 interface HistoricalInjusticesProps {
   onComplete: () => void;
@@ -118,26 +119,33 @@ export default function HistoricalInjustices({
       <div className="relative z-10 mx-auto w-full">
         {stage === 'intro' ? (
           // Intro stage - unique layout
-          <div className="space-y-8 md:space-y-12">
-            {intro.map((line, index) => {
-              if (line === '') {
-                return <div key={index} className="h-8" />;
-              }
-              return (
-                <p
-                  key={index}
-                  className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light text-gray-200 text-center leading-relaxed transition-all duration-1000 ease-out px-4 ${
-                    visibleLines.includes(index)
-                      ? 'opacity-100 translate-y-0'
-                      : 'opacity-0 translate-y-8'
-                  }`}
-                >
-                  {line}
-                </p>
-              );
-            })}
+          <div className="max-w-3xl mx-auto flex flex-col items-center gap-8 md:gap-10">
+            <StageTextSurface
+              stage="historical"
+              className="w-full"
+              contentClassName="px-4 py-8 md:px-8 md:py-14"
+            >
+              <div className="space-y-8 md:space-y-12">
+                {intro.map((line, index) => {
+                  if (line === '') {
+                    return <div key={index} className="h-8" />;
+                  }
+                  return (
+                    <p
+                      key={index}
+                      className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light text-gray-200 text-center leading-relaxed transition-all duration-1000 ease-out px-4 ${
+                        visibleLines.includes(index)
+                          ? 'opacity-100 translate-y-0'
+                          : 'opacity-0 translate-y-8'
+                      }`}
+                    >
+                      {line}
+                    </p>
+                  );
+                })}
+              </div>
+            </StageTextSurface>
 
-            {/* Intro button */}
             <NextButton
               onClick={handleIntroContinue}
               label={t('buttons.intro')}
@@ -175,57 +183,66 @@ export default function HistoricalInjustices({
 
                 {/* Text - right side */}
                 <div className="flex-1 space-y-6 pt-4">
-                  <div className="space-y-4 text-right">
-                    {injustices.left.content.map((sentence, sentenceIndex) => {
-                      // Handle empty lines
-                      if (sentence.trim() === '') {
-                        return <div key={sentenceIndex} className="h-6" />;
-                      }
+                  <StageTextSurface
+                    stage="historical"
+                    surface="panel"
+                    contentClassName="p-4 md:p-6"
+                  >
+                    <div className="space-y-4 text-right">
+                      {injustices.left.content.map(
+                        (sentence, sentenceIndex) => {
+                          // Handle empty lines
+                          if (sentence.trim() === '') {
+                            return <div key={sentenceIndex} className="h-6" />;
+                          }
 
-                      const sentenceWords = sentence.split(' ');
-                      let wordStartIndex = 0;
-                      for (let i = 0; i < sentenceIndex; i++) {
-                        if (injustices.left.content[i].trim() !== '') {
-                          wordStartIndex +=
-                            injustices.left.content[i].split(' ').length;
-                        }
-                      }
+                          const sentenceWords = sentence.split(' ');
+                          let wordStartIndex = 0;
+                          for (let i = 0; i < sentenceIndex; i++) {
+                            if (injustices.left.content[i].trim() !== '') {
+                              wordStartIndex +=
+                                injustices.left.content[i].split(' ').length;
+                            }
+                          }
 
-                      return (
-                        <p
-                          key={sentenceIndex}
-                          className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl leading-relaxed font-light text-gray-300"
-                        >
-                          {sentenceWords.map((word, wordIndex) => {
-                            const currentWordIndex = wordStartIndex + wordIndex;
-                            const isVisible =
-                              currentWordIndex < visibleWordCount;
+                          return (
+                            <p
+                              key={sentenceIndex}
+                              className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl leading-relaxed font-light text-gray-300"
+                            >
+                              {sentenceWords.map((word, wordIndex) => {
+                                const currentWordIndex =
+                                  wordStartIndex + wordIndex;
+                                const isVisible =
+                                  currentWordIndex < visibleWordCount;
 
-                            return (
-                              <span
-                                key={wordIndex}
-                                className={`transition-all duration-700 ease-out ${
-                                  isVisible
-                                    ? 'opacity-100 translate-y-0'
-                                    : 'opacity-0 translate-y-4'
-                                }`}
-                                style={{
-                                  transitionDelay: isVisible
-                                    ? `${currentWordIndex * 20}ms`
-                                    : '0ms',
-                                }}
-                              >
-                                {word}
-                                {wordIndex < sentenceWords.length - 1
-                                  ? ' '
-                                  : ''}
-                              </span>
-                            );
-                          })}
-                        </p>
-                      );
-                    })}
-                  </div>
+                                return (
+                                  <span
+                                    key={wordIndex}
+                                    className={`transition-all duration-700 ease-out ${
+                                      isVisible
+                                        ? 'opacity-100 translate-y-0'
+                                        : 'opacity-0 translate-y-4'
+                                    }`}
+                                    style={{
+                                      transitionDelay: isVisible
+                                        ? `${currentWordIndex * 20}ms`
+                                        : '0ms',
+                                    }}
+                                  >
+                                    {word}
+                                    {wordIndex < sentenceWords.length - 1
+                                      ? ' '
+                                      : ''}
+                                  </span>
+                                );
+                              })}
+                            </p>
+                          );
+                        },
+                      )}
+                    </div>
+                  </StageTextSurface>
                 </div>
               </div>
 
@@ -270,57 +287,66 @@ export default function HistoricalInjustices({
 
                 {/* Text - left side */}
                 <div className="flex-1 space-y-6 pt-4">
-                  <div className="space-y-4 text-left">
-                    {injustices.right.content.map((sentence, sentenceIndex) => {
-                      // Handle empty lines
-                      if (sentence.trim() === '') {
-                        return <div key={sentenceIndex} className="h-6" />;
-                      }
+                  <StageTextSurface
+                    stage="historical"
+                    surface="panel"
+                    contentClassName="p-4 md:p-6"
+                  >
+                    <div className="space-y-4 text-left">
+                      {injustices.right.content.map(
+                        (sentence, sentenceIndex) => {
+                          // Handle empty lines
+                          if (sentence.trim() === '') {
+                            return <div key={sentenceIndex} className="h-6" />;
+                          }
 
-                      const sentenceWords = sentence.split(' ');
-                      let wordStartIndex = 0;
-                      for (let i = 0; i < sentenceIndex; i++) {
-                        if (injustices.right.content[i].trim() !== '') {
-                          wordStartIndex +=
-                            injustices.right.content[i].split(' ').length;
-                        }
-                      }
+                          const sentenceWords = sentence.split(' ');
+                          let wordStartIndex = 0;
+                          for (let i = 0; i < sentenceIndex; i++) {
+                            if (injustices.right.content[i].trim() !== '') {
+                              wordStartIndex +=
+                                injustices.right.content[i].split(' ').length;
+                            }
+                          }
 
-                      return (
-                        <p
-                          key={sentenceIndex}
-                          className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl leading-relaxed font-light text-gray-300"
-                        >
-                          {sentenceWords.map((word, wordIndex) => {
-                            const currentWordIndex = wordStartIndex + wordIndex;
-                            const isVisible =
-                              currentWordIndex < visibleWordCount;
+                          return (
+                            <p
+                              key={sentenceIndex}
+                              className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl leading-relaxed font-light text-gray-300"
+                            >
+                              {sentenceWords.map((word, wordIndex) => {
+                                const currentWordIndex =
+                                  wordStartIndex + wordIndex;
+                                const isVisible =
+                                  currentWordIndex < visibleWordCount;
 
-                            return (
-                              <span
-                                key={wordIndex}
-                                className={`transition-all duration-700 ease-out ${
-                                  isVisible
-                                    ? 'opacity-100 translate-y-0'
-                                    : 'opacity-0 translate-y-4'
-                                }`}
-                                style={{
-                                  transitionDelay: isVisible
-                                    ? `${currentWordIndex * 20}ms`
-                                    : '0ms',
-                                }}
-                              >
-                                {word}
-                                {wordIndex < sentenceWords.length - 1
-                                  ? ' '
-                                  : ''}
-                              </span>
-                            );
-                          })}
-                        </p>
-                      );
-                    })}
-                  </div>
+                                return (
+                                  <span
+                                    key={wordIndex}
+                                    className={`transition-all duration-700 ease-out ${
+                                      isVisible
+                                        ? 'opacity-100 translate-y-0'
+                                        : 'opacity-0 translate-y-4'
+                                    }`}
+                                    style={{
+                                      transitionDelay: isVisible
+                                        ? `${currentWordIndex * 20}ms`
+                                        : '0ms',
+                                    }}
+                                  >
+                                    {word}
+                                    {wordIndex < sentenceWords.length - 1
+                                      ? ' '
+                                      : ''}
+                                  </span>
+                                );
+                              })}
+                            </p>
+                          );
+                        },
+                      )}
+                    </div>
+                  </StageTextSurface>
                 </div>
               </div>
 

@@ -1,11 +1,26 @@
 import { Stage } from '@/contexts/NavigationContext';
 
+/**
+ * How narrative text sits on the stage background (forks tune per stage in this file).
+ * - `panel` — frosted `GlassPanel` (default when omitted).
+ * - `backdrop` — gradient `TextBackdrop` + text (no glass card).
+ * - `none` — plain text on the image.
+ */
+export type StageTextSurfaceMode = 'backdrop' | 'panel' | 'none';
+
 export interface SectionBackgroundConfig {
   backgroundImage?: string;
   opacity?: number;
   pillTransition?: boolean; // Whether to use the pill mask expansion transition when leaving this stage
   pillTransitionOverlayColor?: 'black' | 'white'; // Overlay color used during pill mask expansion into this stage
   gradientOverlayClasses?: string[]; // Extra gradient overlay divs to replicate in PillTransitionLayer so transition end matches page start
+  /**
+   * Text chrome for this stage. Defaults to `panel` (frosted glass) when omitted.
+   * `backdrop` = gradient vignette; `none` = raw text on the image.
+   */
+  textSurface?: StageTextSurfaceMode;
+  /** Used when `textSurface` is `panel`. Defaults to `dark`. */
+  glassVariant?: 'dark' | 'light';
 }
 
 export const sectionBackgrounds: Record<Stage, SectionBackgroundConfig> = {
@@ -31,6 +46,7 @@ export const sectionBackgrounds: Record<Stage, SectionBackgroundConfig> = {
     backgroundImage: '/images/ogledalo.png',
     opacity: 0.35,
     pillTransition: true,
+    textSurface: 'none',
   },
   historical: {
     backgroundImage: '/images/historical-weight.png',
@@ -119,6 +135,7 @@ export const sectionBackgrounds: Record<Stage, SectionBackgroundConfig> = {
   'after-choice': {
     backgroundImage: '/images/animals-picturesque.png',
     opacity: 0.8,
+    glassVariant: 'light',
   },
   'ostani-komforan': {
     backgroundImage: '/images/holding-out-hands.png',

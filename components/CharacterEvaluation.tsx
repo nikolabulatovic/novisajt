@@ -8,6 +8,7 @@ import { sectionBackgrounds } from '@/config/sectionBackgrounds';
 
 import AnswerOption from './ui/AnswerOption';
 import ProgressDots from './ui/ProgressDots';
+import StageTextSurface from './ui/StageTextSurface';
 
 interface CharacterEvaluationProps {
   onComplete: (answers: Record<string, string>) => void;
@@ -151,7 +152,7 @@ export default function CharacterEvaluation({
           <ProgressDots current={currentQuestion} total={questions.length} />
         </div>
 
-        {/* Question and Options */}
+        {/* Question (glass) and options outside */}
         <div
           className={`text-center space-y-12 transition-all duration-700 ease-out ${
             isTransitioning
@@ -161,14 +162,16 @@ export default function CharacterEvaluation({
                 : 'opacity-0 translate-y-8 scale-95'
           }`}
         >
-          {/* Question with subtle glow effect */}
-          <div className="relative">
-            <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light text-gray-200 leading-relaxed max-w-3xl mx-auto relative z-10 drop-shadow-lg">
-              {questions[currentQuestion].question}
-            </h1>
-            {/* Subtle glow behind question */}
-            <div className="absolute inset-0 blur-2xl opacity-20 bg-gray-400/30 -z-0" />
-          </div>
+          <StageTextSurface stage="evaluation" contentClassName="p-6 md:p-10">
+            {/* Question with subtle glow effect */}
+            <div className="relative">
+              <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light text-gray-200 leading-relaxed max-w-3xl mx-auto relative z-10 drop-shadow-lg">
+                {questions[currentQuestion].question}
+              </h1>
+              {/* Subtle glow behind question */}
+              <div className="absolute inset-0 blur-2xl opacity-20 bg-gray-400/30 -z-0" />
+            </div>
+          </StageTextSurface>
 
           {/* Options with staggered animations */}
           <div className="space-y-6 max-w-3xl mx-auto">
