@@ -2,13 +2,9 @@
 
 import { useState } from 'react';
 
-import { sectionBackgrounds } from '@/config/sectionBackgrounds';
-
 import AnimatedText from './ui/AnimatedText';
-import ContentContainer from './ui/ContentContainer';
 import NextButton from './ui/NextButton';
-import PageContainer from './ui/PageContainer';
-import StageTextSurface from './ui/StageTextSurface';
+import StoryStage from './ui/StoryStage';
 
 interface FromTheWildProps {
   onComplete: () => void;
@@ -23,31 +19,22 @@ export default function FromTheWild({ onComplete }: FromTheWildProps) {
     'Životinje nemaju nikakav izbor.',
   ];
 
-  const { backgroundImage, opacity = 0.8 } =
-    sectionBackgrounds['from-the-wild'];
-
   return (
-    <PageContainer
-      backgroundImage={backgroundImage}
-      backgroundImageOpacity={opacity}
-    >
-      <ContentContainer spacing="lg">
-        <StageTextSurface
-          stage="from-the-wild"
-          contentClassName="relative p-6 md:p-16"
-        >
-          <AnimatedText
-            text={text}
-            speed={120}
-            delayAfterComplete={1000}
-            textSize="md"
-            alignment="center"
-            onComplete={() => setShowButton(true)}
-          />
-        </StageTextSurface>
-
+    <StoryStage
+      stage="from-the-wild"
+      textContentClassName="relative p-6 md:p-16"
+      footer={
         <NextButton onClick={onComplete} label="Nastavi" show={showButton} />
-      </ContentContainer>
-    </PageContainer>
+      }
+    >
+      <AnimatedText
+        text={text}
+        speed={120}
+        delayAfterComplete={1000}
+        textSize="md"
+        alignment="center"
+        onComplete={() => setShowButton(true)}
+      />
+    </StoryStage>
   );
 }

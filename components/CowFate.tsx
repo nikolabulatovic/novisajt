@@ -2,13 +2,9 @@
 
 import { useState } from 'react';
 
-import { sectionBackgrounds } from '@/config/sectionBackgrounds';
-
 import AnimatedText from './ui/AnimatedText';
-import ContentContainer from './ui/ContentContainer';
 import NextButton from './ui/NextButton';
-import PageContainer from './ui/PageContainer';
-import StageTextSurface from './ui/StageTextSurface';
+import StoryStage from './ui/StoryStage';
 
 interface CowFateProps {
   onComplete: () => void;
@@ -23,30 +19,22 @@ export default function CowFate({ onComplete }: CowFateProps) {
     'Ženke su prisiljene da postanu mašine za mleko, kao njihove majke.',
   ];
 
-  const { backgroundImage, opacity = 0.8 } = sectionBackgrounds['cow-fate'];
-
   return (
-    <PageContainer
-      backgroundImage={backgroundImage}
-      backgroundImageOpacity={opacity}
-    >
-      <ContentContainer spacing="lg">
-        <StageTextSurface
-          stage="cow-fate"
-          contentClassName="relative p-6 md:p-16"
-        >
-          <AnimatedText
-            text={text}
-            speed={120}
-            delayAfterComplete={1000}
-            textSize="md"
-            alignment="center"
-            onComplete={() => setShowButton(true)}
-          />
-        </StageTextSurface>
-
+    <StoryStage
+      stage="cow-fate"
+      textContentClassName="relative p-6 md:p-16"
+      footer={
         <NextButton onClick={onComplete} label="Nastavi" show={showButton} />
-      </ContentContainer>
-    </PageContainer>
+      }
+    >
+      <AnimatedText
+        text={text}
+        speed={120}
+        delayAfterComplete={1000}
+        textSize="md"
+        alignment="center"
+        onComplete={() => setShowButton(true)}
+      />
+    </StoryStage>
   );
 }

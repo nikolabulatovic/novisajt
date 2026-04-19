@@ -2,12 +2,8 @@
 
 import { useState } from 'react';
 
-import { sectionBackgrounds } from '@/config/sectionBackgrounds';
-
 import AnimatedText from './ui/AnimatedText';
-import ContentContainer from './ui/ContentContainer';
-import PageContainer from './ui/PageContainer';
-import StageTextSurface from './ui/StageTextSurface';
+import StoryStage from './ui/StoryStage';
 
 interface SolutionChoiceProps {
   onComplete: (answer: string) => void;
@@ -28,34 +24,16 @@ export default function SolutionChoice({ onComplete }: SolutionChoiceProps) {
     'To je biranje suprotno sopstvenom uverenju.',
   ];
 
-  const { backgroundImage, opacity = 0.8 } =
-    sectionBackgrounds['solution-choice'];
-
   const handleAnswer = (value: string) => {
     onComplete(value);
   };
 
   return (
-    <PageContainer
-      backgroundImage={backgroundImage}
-      backgroundImageOpacity={opacity}
-    >
-      <ContentContainer spacing="lg">
-        <StageTextSurface
-          stage="solution-choice"
-          contentClassName="relative p-6 md:p-16"
-        >
-          <AnimatedText
-            text={text}
-            speed={120}
-            delayAfterComplete={1000}
-            textSize="md"
-            alignment="center"
-            onComplete={() => setShowOptions(true)}
-          />
-        </StageTextSurface>
-
-        {showOptions && (
+    <StoryStage
+      stage="solution-choice"
+      textContentClassName="relative p-6 md:p-16"
+      footer={
+        showOptions ? (
           <div className="flex flex-row gap-6 justify-center flex-wrap px-4">
             {OPTIONS.map((option) => (
               <button
@@ -72,8 +50,17 @@ export default function SolutionChoice({ onComplete }: SolutionChoiceProps) {
               </button>
             ))}
           </div>
-        )}
-      </ContentContainer>
-    </PageContainer>
+        ) : null
+      }
+    >
+      <AnimatedText
+        text={text}
+        speed={120}
+        delayAfterComplete={1000}
+        textSize="md"
+        alignment="center"
+        onComplete={() => setShowOptions(true)}
+      />
+    </StoryStage>
   );
 }

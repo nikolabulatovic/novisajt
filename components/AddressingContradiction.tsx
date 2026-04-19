@@ -2,12 +2,8 @@
 
 import { useState } from 'react';
 
-import { sectionBackgrounds } from '@/config/sectionBackgrounds';
-
 import AnimatedText from './ui/AnimatedText';
-import ContentContainer from './ui/ContentContainer';
-import PageContainer from './ui/PageContainer';
-import StageTextSurface from './ui/StageTextSurface';
+import StoryStage from './ui/StoryStage';
 
 interface AddressingContradictionProps {
   onComplete: (answer: string) => void;
@@ -19,8 +15,6 @@ export default function AddressingContradiction({
   onComplete,
 }: AddressingContradictionProps) {
   const [showOptions, setShowOptions] = useState(false);
-  const { backgroundImage, opacity = 0.8 } =
-    sectionBackgrounds['kontradiktornost-je'];
 
   const text = [
     '[placeholder] Postoji kontradiktornost između tvojih uverenja i ponašanja.',
@@ -28,26 +22,11 @@ export default function AddressingContradiction({
   ];
 
   return (
-    <PageContainer
-      backgroundImage={backgroundImage}
-      backgroundImageOpacity={opacity}
-    >
-      <ContentContainer spacing="lg">
-        <StageTextSurface
-          stage="kontradiktornost-je"
-          contentClassName="relative p-6 md:p-16"
-        >
-          <AnimatedText
-            text={text}
-            speed={120}
-            delayAfterComplete={1000}
-            textSize="md"
-            alignment="center"
-            onComplete={() => setShowOptions(true)}
-          />
-        </StageTextSurface>
-
-        {showOptions && (
+    <StoryStage
+      stage="kontradiktornost-je"
+      textContentClassName="relative p-6 md:p-16"
+      footer={
+        showOptions ? (
           <div className="flex flex-row gap-6 justify-center flex-wrap px-4">
             {OPTIONS.map((option) => (
               <button
@@ -64,8 +43,17 @@ export default function AddressingContradiction({
               </button>
             ))}
           </div>
-        )}
-      </ContentContainer>
-    </PageContainer>
+        ) : null
+      }
+    >
+      <AnimatedText
+        text={text}
+        speed={120}
+        delayAfterComplete={1000}
+        textSize="md"
+        alignment="center"
+        onComplete={() => setShowOptions(true)}
+      />
+    </StoryStage>
   );
 }

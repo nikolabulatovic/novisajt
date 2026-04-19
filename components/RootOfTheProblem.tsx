@@ -2,13 +2,9 @@
 
 import { useState } from 'react';
 
-import { sectionBackgrounds } from '@/config/sectionBackgrounds';
-
 import AnimatedText from './ui/AnimatedText';
-import ContentContainer from './ui/ContentContainer';
 import NextButton from './ui/NextButton';
-import PageContainer from './ui/PageContainer';
-import StageTextSurface from './ui/StageTextSurface';
+import StoryStage from './ui/StoryStage';
 
 interface RootOfTheProblemProps {
   onComplete: () => void;
@@ -26,31 +22,22 @@ export default function RootOfTheProblem({
     'Verovanje da druga bića postoje da bi bila korišćena. Da je normalno pretvoriti nekoga u proizvod ili sredstvo.',
   ];
 
-  const { backgroundImage, opacity = 0.8 } =
-    sectionBackgrounds['root-of-the-problem'];
-
   return (
-    <PageContainer
-      backgroundImage={backgroundImage}
-      backgroundImageOpacity={opacity}
-    >
-      <ContentContainer spacing="lg">
-        <StageTextSurface
-          stage="root-of-the-problem"
-          contentClassName="relative p-6 md:p-16"
-        >
-          <AnimatedText
-            text={text}
-            speed={120}
-            delayAfterComplete={1000}
-            textSize="md"
-            alignment="center"
-            onComplete={() => setShowButton(true)}
-          />
-        </StageTextSurface>
-
+    <StoryStage
+      stage="root-of-the-problem"
+      textContentClassName="relative p-6 md:p-16"
+      footer={
         <NextButton onClick={onComplete} label="Nastavi" show={showButton} />
-      </ContentContainer>
-    </PageContainer>
+      }
+    >
+      <AnimatedText
+        text={text}
+        speed={120}
+        delayAfterComplete={1000}
+        textSize="md"
+        alignment="center"
+        onComplete={() => setShowButton(true)}
+      />
+    </StoryStage>
   );
 }

@@ -2,12 +2,8 @@
 
 import { useState } from 'react';
 
-import { sectionBackgrounds } from '@/config/sectionBackgrounds';
-
 import AnimatedText from './ui/AnimatedText';
-import ContentContainer from './ui/ContentContainer';
-import PageContainer from './ui/PageContainer';
-import StageTextSurface from './ui/StageTextSurface';
+import StoryStage from './ui/StoryStage';
 
 interface BackToAnswersProps {
   onComplete: (answer: string) => void;
@@ -18,8 +14,6 @@ const OPTIONS = ['Tako je', 'Ne'] as const;
 
 export default function BackToAnswers({ onComplete }: BackToAnswersProps) {
   const [showOptions, setShowOptions] = useState(false);
-  const { backgroundImage, opacity = 0.8 } =
-    sectionBackgrounds['vracanje-na-odgovore'];
 
   const text = [
     '[placeholder] Rekao si da...',
@@ -27,26 +21,11 @@ export default function BackToAnswers({ onComplete }: BackToAnswersProps) {
   ];
 
   return (
-    <PageContainer
-      backgroundImage={backgroundImage}
-      backgroundImageOpacity={opacity}
-    >
-      <ContentContainer spacing="lg">
-        <StageTextSurface
-          stage="vracanje-na-odgovore"
-          contentClassName="relative p-6 md:p-16"
-        >
-          <AnimatedText
-            text={text}
-            speed={120}
-            delayAfterComplete={1000}
-            textSize="md"
-            alignment="center"
-            onComplete={() => setShowOptions(true)}
-          />
-        </StageTextSurface>
-
-        {showOptions && (
+    <StoryStage
+      stage="vracanje-na-odgovore"
+      textContentClassName="relative p-6 md:p-16"
+      footer={
+        showOptions ? (
           <div className="flex flex-row gap-6 justify-center flex-wrap px-4">
             {OPTIONS.map((option) => (
               <button
@@ -63,8 +42,17 @@ export default function BackToAnswers({ onComplete }: BackToAnswersProps) {
               </button>
             ))}
           </div>
-        )}
-      </ContentContainer>
-    </PageContainer>
+        ) : null
+      }
+    >
+      <AnimatedText
+        text={text}
+        speed={120}
+        delayAfterComplete={1000}
+        textSize="md"
+        alignment="center"
+        onComplete={() => setShowOptions(true)}
+      />
+    </StoryStage>
   );
 }

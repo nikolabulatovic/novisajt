@@ -2,12 +2,8 @@
 
 import { useState } from 'react';
 
-import { sectionBackgrounds } from '@/config/sectionBackgrounds';
-
 import AnimatedText from './ui/AnimatedText';
-import ContentContainer from './ui/ContentContainer';
-import PageContainer from './ui/PageContainer';
-import StageTextSurface from './ui/StageTextSurface';
+import StoryStage from './ui/StoryStage';
 
 interface AlignBehaviourProps {
   onComplete: (answer: string) => void;
@@ -22,34 +18,16 @@ export default function AlignBehaviour({ onComplete }: AlignBehaviourProps) {
     'Da li si spreman da usaglasiš svoje ponašanje sa svojim uverenjima i da prestaneš da iskorišćavaš životinje?',
   ];
 
-  const { backgroundImage, opacity = 0.8 } =
-    sectionBackgrounds['align-behaviour'];
-
   const handleAnswer = (value: string) => {
     onComplete(value);
   };
 
   return (
-    <PageContainer
-      backgroundImage={backgroundImage}
-      backgroundImageOpacity={opacity}
-    >
-      <ContentContainer spacing="lg">
-        <StageTextSurface
-          stage="align-behaviour"
-          contentClassName="relative p-6 md:p-16"
-        >
-          <AnimatedText
-            text={text}
-            speed={120}
-            delayAfterComplete={1000}
-            textSize="md"
-            alignment="center"
-            onComplete={() => setShowOptions(true)}
-          />
-        </StageTextSurface>
-
-        {showOptions && (
+    <StoryStage
+      stage="align-behaviour"
+      textContentClassName="relative p-6 md:p-16"
+      footer={
+        showOptions ? (
           <div className="flex flex-row gap-6 justify-center flex-wrap px-4">
             {OPTIONS.map((option) => (
               <button
@@ -66,8 +44,17 @@ export default function AlignBehaviour({ onComplete }: AlignBehaviourProps) {
               </button>
             ))}
           </div>
-        )}
-      </ContentContainer>
-    </PageContainer>
+        ) : null
+      }
+    >
+      <AnimatedText
+        text={text}
+        speed={120}
+        delayAfterComplete={1000}
+        textSize="md"
+        alignment="center"
+        onComplete={() => setShowOptions(true)}
+      />
+    </StoryStage>
   );
 }

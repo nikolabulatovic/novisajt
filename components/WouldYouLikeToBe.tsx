@@ -3,13 +3,8 @@
 import { useState } from 'react';
 
 import { useTranslations } from 'next-intl';
-
-import { sectionBackgrounds } from '@/config/sectionBackgrounds';
-
 import AnimatedText from './ui/AnimatedText';
-import ContentContainer from './ui/ContentContainer';
-import PageContainer from './ui/PageContainer';
-import StageTextSurface from './ui/StageTextSurface';
+import StoryStage from './ui/StoryStage';
 
 interface WouldYouLikeToBeProps {
   onComplete: (answer: string) => void;
@@ -20,33 +15,16 @@ export default function WouldYouLikeToBe({
 }: WouldYouLikeToBeProps) {
   const t = useTranslations('WouldYouLikeToBe');
   const [showOptions, setShowOptions] = useState(false);
-  const { backgroundImage, opacity = 0.8 } =
-    sectionBackgrounds['da-li-bi-voleo'];
 
   const text = t.raw('text') as string[];
   const options = t.raw('options') as string[];
 
   return (
-    <PageContainer
-      backgroundImage={backgroundImage}
-      backgroundImageOpacity={opacity}
-    >
-      <ContentContainer spacing="lg">
-        <StageTextSurface
-          stage="da-li-bi-voleo"
-          contentClassName="relative p-6 md:p-16"
-        >
-          <AnimatedText
-            text={text}
-            speed={120}
-            delayAfterComplete={1000}
-            textSize="md"
-            alignment="center"
-            onComplete={() => setShowOptions(true)}
-          />
-        </StageTextSurface>
-
-        {showOptions && (
+    <StoryStage
+      stage="da-li-bi-voleo"
+      textContentClassName="relative p-6 md:p-16"
+      footer={
+        showOptions ? (
           <div className="flex flex-row gap-6 justify-center flex-wrap px-4">
             {options.map((option) => (
               <button
@@ -63,8 +41,17 @@ export default function WouldYouLikeToBe({
               </button>
             ))}
           </div>
-        )}
-      </ContentContainer>
-    </PageContainer>
+        ) : null
+      }
+    >
+      <AnimatedText
+        text={text}
+        speed={120}
+        delayAfterComplete={1000}
+        textSize="md"
+        alignment="center"
+        onComplete={() => setShowOptions(true)}
+      />
+    </StoryStage>
   );
 }
