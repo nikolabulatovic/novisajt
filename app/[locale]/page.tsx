@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import AcceptingSelfOwnership from '@/components/AcceptingSelfOwnership';
 import AdditionalResources from '@/components/AdditionalResources';
@@ -44,61 +44,8 @@ import PillTransitionLayer from '@/components/ui/PillTransitionLayer';
 import { sectionBackgrounds } from '@/config/sectionBackgrounds';
 import { NavigationProvider, Stage } from '@/contexts/NavigationContext';
 import { PillProvider } from '@/contexts/PillContext';
+import { useStoryFlowHandlers } from '@/hooks/useStoryFlowHandlers';
 import { useTracking } from '@/hooks/useTracking';
-
-const answerAliases = {
-  'personal-question': {
-    unknown: ['Ne znam', "I don't know"],
-  },
-  'da-li-bi-voleo': {
-    notImportant: ['Nije bitno', 'Nije mi bitno', "It doesn't matter"],
-  },
-  'breaking-question': {
-    avoidKnowing: ['Radije bih da ne znam', "I'd rather not know"],
-  },
-  'let-them-live': {
-    reject: ['Ne prihvatam', 'I do not accept'],
-  },
-  'solution-use': {
-    no: ['Ne', 'No'],
-  },
-  'vec-veganski': {
-    ready: ['Spreman sam', 'I am ready'],
-  },
-  'solution-know': {
-    unsure: ['Nisam siguran', 'Not sure'],
-    impossible: ['Ne možemo', "We can't"],
-  },
-  'vegan-diet-health': {
-    notConvinced: ['Nije me ubedilo', "I'm not convinced"],
-  },
-  'solution-choice': {
-    disagree: ['Ne slažem se', 'I disagree'],
-  },
-  'kontradiktornost-je': {
-    notTrue: ['Nije tačno', "That's not true"],
-  },
-  'align-behaviour': {
-    no: ['Ne', 'No'],
-  },
-  'vracanje-na-odgovore': {
-    no: ['Ne', 'No'],
-  },
-  'ponovo-na-odgovore': {
-    no: ['Ne', 'No'],
-  },
-} as const;
-
-const normalizeAnswer = (
-  stage: keyof typeof answerAliases,
-  answer: string,
-  key: string,
-) => {
-  const options = (answerAliases[stage] as Record<string, readonly string[]>)[
-    key
-  ];
-  return options?.includes(answer) ?? false;
-};
 
 export default function Home() {
   const [stage, setStage] = useState<Stage>('choice');
@@ -120,13 +67,54 @@ export default function Home() {
     setPendingNextStage(null);
   };
 
-  const transitionToStage = (newStage: Stage) => {
-    if (sectionBackgrounds[stage]?.pillTransition) {
-      setPendingNextStage(newStage);
-    } else {
-      setStage(newStage);
-    }
-  };
+  const transitionToStage = useCallback(
+    (newStage: Stage) => {
+      if (sectionBackgrounds[stage]?.pillTransition) {
+        setPendingNextStage(newStage);
+      } else {
+        setStage(newStage);
+      }
+    },
+    [stage],
+  );
+
+  const {
+    handleIntroComplete,
+    handleEvaluationComplete,
+    handleExplanationComplete,
+    handleHistoricalComplete,
+    handlePersonalQuestionComplete,
+    handleDaLiBiVoleoComplete,
+    handleBreakingQuestionComplete,
+    handleSpasaStoryComplete,
+    handleSpasaRevelationComplete,
+    handleOtherPigsComplete,
+    handleRootOfTheProblemComplete,
+    handleAnimalsTreatedAsProductsComplete,
+    handleLetThemLiveComplete,
+    handleAcceptingSelfOwnershipComplete,
+    handleFromTheWildComplete,
+    handleReproductionControlComplete,
+    handleViciousCycleComplete,
+    handleCowFateComplete,
+    handleAnimalCostOfLivingComplete,
+    handleSolutionUseComplete,
+    handleVecVeganskiComplete,
+    handleSolutionKnowComplete,
+    handleVeganDietHealthComplete,
+    handleNijeUbediloResursiComplete,
+    handleSolutionChoiceComplete,
+    handleKontradiktornostJeComplete,
+    handleAlignBehaviourComplete,
+    handleVracanjeNaOdgovoreComplete,
+    handlePonovoNaOdgovoreComplete,
+    handleVeganismPrincipleComplete,
+  } = useStoryFlowHandlers({
+    transitionToStage,
+    setAnswers,
+    trackAnswerSelected,
+    trackFlowCompleted,
+  });
 
   const handlePillChoice = (pill: 'red' | 'blue') => {
     trackAnswerSelected('choice', pill);
@@ -144,201 +132,6 @@ export default function Home() {
       setStageAfterFade(null);
       setBlackOverlay(false);
     }
-  };
-
-  const handleIntroComplete = () => {
-    transitionToStage('evaluation');
-  };
-
-  const handleEvaluationComplete = (userAnswers: Record<string, string>) => {
-    setAnswers(userAnswers);
-    Object.entries(userAnswers).forEach(([question, answer]) => {
-      trackAnswerSelected('evaluation', `${question}:${answer}`);
-    });
-    transitionToStage('explanation');
-  };
-
-  const handleExplanationComplete = () => {
-    transitionToStage('historical');
-  };
-
-  const handleHistoricalComplete = () => {
-    transitionToStage('personal-question');
-  };
-
-  const handlePersonalQuestionComplete = (answer: string) => {
-    trackAnswerSelected('personal-question', answer);
-    if (normalizeAnswer('personal-question', answer, 'unknown')) {
-      transitionToStage('da-li-bi-voleo');
-    } else {
-      transitionToStage('breaking-question');
-    }
-  };
-
-  const handleDaLiBiVoleoComplete = (answer: string) => {
-    trackAnswerSelected('da-li-bi-voleo', answer);
-    if (normalizeAnswer('da-li-bi-voleo', answer, 'notImportant')) {
-      transitionToStage('prepoznavanje-nepravde');
-    } else {
-      transitionToStage('breaking-question');
-    }
-  };
-
-  const handleBreakingQuestionComplete = (answer: string) => {
-    trackAnswerSelected('breaking-question', answer);
-    if (normalizeAnswer('breaking-question', answer, 'avoidKnowing')) {
-      transitionToStage('apatican-stav');
-    } else {
-      transitionToStage('spasa-story');
-    }
-  };
-
-  const handleSpasaStoryComplete = () => {
-    transitionToStage('spasa-revelation');
-  };
-
-  const handleSpasaRevelationComplete = () => {
-    transitionToStage('other-pigs');
-  };
-
-  const handleOtherPigsComplete = () => {
-    transitionToStage('root-of-the-problem');
-  };
-
-  const handleRootOfTheProblemComplete = () => {
-    transitionToStage('animals-treated-as-products');
-  };
-
-  const handleAnimalsTreatedAsProductsComplete = () => {
-    transitionToStage('let-them-live');
-  };
-
-  const handleLetThemLiveComplete = (answer: string) => {
-    if (normalizeAnswer('let-them-live', answer, 'reject')) {
-      transitionToStage('accepting-self-ownership');
-    } else {
-      transitionToStage('from-the-wild');
-    }
-  };
-
-  const handleAcceptingSelfOwnershipComplete = () => {
-    transitionToStage('from-the-wild');
-  };
-
-  const handleFromTheWildComplete = () => {
-    transitionToStage('reproduction-control');
-  };
-
-  const handleReproductionControlComplete = () => {
-    transitionToStage('vicious-cycle');
-  };
-
-  const handleViciousCycleComplete = () => {
-    transitionToStage('cow-fate');
-  };
-
-  const handleCowFateComplete = () => {
-    transitionToStage('animal-cost-of-living');
-  };
-
-  const handleAnimalCostOfLivingComplete = () => {
-    transitionToStage('solution-use');
-  };
-
-  const handleSolutionUseComplete = (answer: string) => {
-    trackAnswerSelected('solution-use', answer);
-    if (normalizeAnswer('solution-use', answer, 'no')) {
-      transitionToStage('vec-veganski');
-    } else {
-      transitionToStage('solution-know');
-    }
-  };
-
-  const handleVecVeganskiComplete = (answer: string) => {
-    trackAnswerSelected('vec-veganski', answer);
-    if (normalizeAnswer('vec-veganski', answer, 'ready')) {
-      trackFlowCompleted();
-      transitionToStage('after-choice');
-    } else {
-      transitionToStage('solution-know');
-    }
-  };
-
-  const handleSolutionKnowComplete = (answer: string) => {
-    trackAnswerSelected('solution-know', answer);
-    if (
-      normalizeAnswer('solution-know', answer, 'unsure') ||
-      normalizeAnswer('solution-know', answer, 'impossible')
-    ) {
-      transitionToStage('vegan-diet-health');
-    } else {
-      transitionToStage('solution-choice');
-    }
-  };
-
-  const handleVeganDietHealthComplete = (answer: string) => {
-    setAnswers((prev) => ({ ...prev, 'vegan-diet-health': answer }));
-    trackAnswerSelected('vegan-diet-health', answer);
-    if (normalizeAnswer('vegan-diet-health', answer, 'notConvinced')) {
-      transitionToStage('nije-ubedilo-resursi');
-    } else {
-      transitionToStage('solution-choice');
-    }
-  };
-
-  const handleNijeUbediloResursiComplete = () => {
-    transitionToStage('solution-choice');
-  };
-
-  const handleSolutionChoiceComplete = (answer: string) => {
-    trackAnswerSelected('solution-choice', answer);
-    if (normalizeAnswer('solution-choice', answer, 'disagree')) {
-      transitionToStage('kontradiktornost-je');
-    } else {
-      transitionToStage('align-behaviour');
-    }
-  };
-
-  const handleKontradiktornostJeComplete = (answer: string) => {
-    trackAnswerSelected('kontradiktornost-je', answer);
-    if (normalizeAnswer('kontradiktornost-je', answer, 'notTrue')) {
-      transitionToStage('nisi-iskren');
-    } else {
-      transitionToStage('align-behaviour');
-    }
-  };
-
-  const handleAlignBehaviourComplete = (answer: string) => {
-    setAnswers((prev) => ({ ...prev, 'align-behaviour': answer }));
-    trackAnswerSelected('align-behaviour', answer);
-    if (normalizeAnswer('align-behaviour', answer, 'no')) {
-      transitionToStage('vracanje-na-odgovore');
-    } else {
-      transitionToStage('veganism-principle');
-    }
-  };
-
-  const handleVracanjeNaOdgovoreComplete = (answer: string) => {
-    trackAnswerSelected('vracanje-na-odgovore', answer);
-    if (normalizeAnswer('vracanje-na-odgovore', answer, 'no')) {
-      transitionToStage('ponovo-na-odgovore');
-    } else {
-      transitionToStage('veganism-principle');
-    }
-  };
-
-  const handlePonovoNaOdgovoreComplete = (answer: string) => {
-    trackAnswerSelected('ponovo-na-odgovore', answer);
-    if (normalizeAnswer('ponovo-na-odgovore', answer, 'no')) {
-      transitionToStage('ne-drzis-se');
-    } else {
-      transitionToStage('veganism-principle');
-    }
-  };
-
-  const handleVeganismPrincipleComplete = () => {
-    trackFlowCompleted();
-    transitionToStage('after-choice');
   };
 
   const navigateToStage = (newStage: Stage) => {
