@@ -1,5 +1,7 @@
 'use client';
 
+import { StageId } from '@/contexts/NavigationContext';
+
 import AnimatedText from './ui/AnimatedText';
 import StoryStage from './ui/StoryStage';
 
@@ -10,7 +12,10 @@ export default function NotFollowingThrough() {
   ];
 
   return (
-    <StoryStage stage="ne-drzis-se" textContentClassName="relative p-6 md:p-16">
+    <StoryStage
+      stage={StageId.NotFollowingThrough}
+      textContentClassName="relative p-6 md:p-16"
+    >
       <AnimatedText
         text={text}
         speed={120}

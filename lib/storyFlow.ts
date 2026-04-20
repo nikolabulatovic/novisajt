@@ -1,4 +1,4 @@
-import type { Stage } from '@/contexts/NavigationContext';
+import { type Stage, StageId } from '@/contexts/NavigationContext';
 
 const isAny = (answer: string, aliases: readonly string[]) =>
   aliases.includes(answer);
@@ -6,72 +6,80 @@ const isAny = (answer: string, aliases: readonly string[]) =>
 /** Branching after the “personal question” screen. */
 export function nextAfterPersonalQuestion(answer: string): Stage {
   return isAny(answer, ['Ne znam', "I don't know"])
-    ? 'da-li-bi-voleo'
-    : 'breaking-question';
+    ? StageId.WouldYouLikeToBe
+    : StageId.BreakingQuestion;
 }
 
 export function nextAfterDaLiBiVoleo(answer: string): Stage {
   return isAny(answer, ['Nije bitno', 'Nije mi bitno', "It doesn't matter"])
-    ? 'prepoznavanje-nepravde'
-    : 'breaking-question';
+    ? StageId.RecognizingInjustice
+    : StageId.BreakingQuestion;
 }
 
 export function nextAfterBreakingQuestion(answer: string): Stage {
   return isAny(answer, ['Radije bih da ne znam', "I'd rather not know"])
-    ? 'apatican-stav'
-    : 'spasa-story';
+    ? StageId.ApatheticStance
+    : StageId.SpasaStory;
 }
 
 export function nextAfterLetThemLive(answer: string): Stage {
   return isAny(answer, ['Ne prihvatam', 'I do not accept'])
-    ? 'accepting-self-ownership'
-    : 'from-the-wild';
+    ? StageId.AcceptingSelfOwnership
+    : StageId.FromTheWild;
 }
 
 export function nextAfterSolutionUse(answer: string): Stage {
-  return isAny(answer, ['Ne', 'No']) ? 'vec-veganski' : 'solution-know';
+  return isAny(answer, ['Ne', 'No'])
+    ? StageId.AlreadyVegan
+    : StageId.SolutionKnow;
 }
 
 /** `Spreman sam` ends the flow early; otherwise continue to solution-know. */
 export function nextAfterVecVeganski(answer: string): Stage {
   return isAny(answer, ['Spreman sam', 'I am ready'])
-    ? 'after-choice'
-    : 'solution-know';
+    ? StageId.AfterChoice
+    : StageId.SolutionKnow;
 }
 
 export function nextAfterSolutionKnow(answer: string): Stage {
   if (isAny(answer, ['Nisam siguran', 'Not sure', 'Ne možemo', "We can't"])) {
-    return 'vegan-diet-health';
+    return StageId.VeganDietHealth;
   }
-  return 'solution-choice';
+  return StageId.SolutionChoice;
 }
 
 export function nextAfterVeganDietHealth(answer: string): Stage {
   return isAny(answer, ['Nije me ubedilo', "I'm not convinced"])
-    ? 'nije-ubedilo-resursi'
-    : 'solution-choice';
+    ? StageId.AdditionalResources
+    : StageId.SolutionChoice;
 }
 
 export function nextAfterSolutionChoice(answer: string): Stage {
   return isAny(answer, ['Ne slažem se', 'I disagree'])
-    ? 'kontradiktornost-je'
-    : 'align-behaviour';
+    ? StageId.AddressingContradiction
+    : StageId.AlignBehaviour;
 }
 
 export function nextAfterKontradiktornostJe(answer: string): Stage {
   return isAny(answer, ['Nije tačno', "That's not true"])
-    ? 'nisi-iskren'
-    : 'align-behaviour';
+    ? StageId.NotHonest
+    : StageId.AlignBehaviour;
 }
 
 export function nextAfterAlignBehaviour(answer: string): Stage {
-  return isAny(answer, ['Ne', 'No']) ? 'vracanje-na-odgovore' : 'veganism-principle';
+  return isAny(answer, ['Ne', 'No'])
+    ? StageId.BackToAnswers
+    : StageId.VeganismPrinciple;
 }
 
 export function nextAfterVracanjeNaOdgovore(answer: string): Stage {
-  return isAny(answer, ['Ne', 'No']) ? 'ponovo-na-odgovore' : 'veganism-principle';
+  return isAny(answer, ['Ne', 'No'])
+    ? StageId.BackToAnswersAgain
+    : StageId.VeganismPrinciple;
 }
 
 export function nextAfterPonovoNaOdgovore(answer: string): Stage {
-  return isAny(answer, ['Ne', 'No']) ? 'ne-drzis-se' : 'veganism-principle';
+  return isAny(answer, ['Ne', 'No'])
+    ? StageId.NotFollowingThrough
+    : StageId.VeganismPrinciple;
 }

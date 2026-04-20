@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 
+import { StageId } from '@/contexts/NavigationContext';
+
 import AnimatedText from './ui/AnimatedText';
 import StoryStage from './ui/StoryStage';
 
@@ -22,7 +24,7 @@ export default function BackToAnswers({ onComplete }: BackToAnswersProps) {
 
   return (
     <StoryStage
-      stage="vracanje-na-odgovore"
+      stage={StageId.BackToAnswers}
       textContentClassName="relative p-6 md:p-16"
       footer={
         showOptions ? (

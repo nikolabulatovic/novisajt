@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 
+import { StageId } from '@/contexts/NavigationContext';
+
 import AnimatedText from './ui/AnimatedText';
 import StoryStage from './ui/StoryStage';
 
@@ -23,7 +25,7 @@ export default function AddressingContradiction({
 
   return (
     <StoryStage
-      stage="kontradiktornost-je"
+      stage={StageId.AddressingContradiction}
       textContentClassName="relative p-6 md:p-16"
       footer={
         showOptions ? (

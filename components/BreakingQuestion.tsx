@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 
 import { sectionBackgrounds } from '@/config/sectionBackgrounds';
+import { StageId } from '@/contexts/NavigationContext';
 
 import StageTextSurface from './ui/StageTextSurface';
 
@@ -36,7 +37,7 @@ export default function BreakingQuestion({
     <div className="min-h-screen flex items-center justify-center p-4 md:p-8 relative bg-black">
       {(() => {
         const { backgroundImage, opacity = 0.8 } =
-          sectionBackgrounds['breaking-question'];
+          sectionBackgrounds[StageId.BreakingQuestion];
         return backgroundImage ? (
           <div className="absolute inset-0 w-full h-full overflow-hidden">
             <div
@@ -53,7 +54,7 @@ export default function BreakingQuestion({
       <div className="relative z-10 max-w-4xl mx-auto w-full">
         <div className="text-center space-y-12">
           <StageTextSurface
-            stage="breaking-question"
+            stage={StageId.BreakingQuestion}
             contentClassName="p-6 md:p-10"
           >
             {/* Question */}

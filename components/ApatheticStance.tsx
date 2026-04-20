@@ -1,6 +1,9 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
+
+import { StageId } from '@/contexts/NavigationContext';
+
 import AnimatedText from './ui/AnimatedText';
 import StoryStage from './ui/StoryStage';
 
@@ -10,7 +13,7 @@ export default function ApatheticStance() {
 
   return (
     <StoryStage
-      stage="apatican-stav"
+      stage={StageId.ApatheticStance}
       textContentClassName="relative p-6 md:p-16"
     >
       <AnimatedText

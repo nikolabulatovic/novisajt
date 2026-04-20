@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 
 import { sectionBackgrounds } from '@/config/sectionBackgrounds';
+import { StageId } from '@/contexts/NavigationContext';
 
 import StageTextSurface from './ui/StageTextSurface';
 
@@ -54,7 +55,7 @@ export default function PersonalQuestion({
       */}
       {(() => {
         const { backgroundImage, opacity = 0.8 } =
-          sectionBackgrounds['personal-question'];
+          sectionBackgrounds[StageId.PersonalQuestion];
         return backgroundImage ? (
           <div className="absolute inset-0 w-full h-full overflow-hidden">
             <div
@@ -76,7 +77,7 @@ export default function PersonalQuestion({
             }`}
           >
             <StageTextSurface
-              stage="personal-question"
+              stage={StageId.PersonalQuestion}
               contentClassName="p-6 md:p-10"
             >
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-gray-200 leading-relaxed max-w-3xl mx-auto">
@@ -111,7 +112,7 @@ export default function PersonalQuestion({
           </div>
         ) : (
           <StageTextSurface
-            stage="personal-question"
+            stage={StageId.PersonalQuestion}
             contentClassName="p-6 md:p-10"
           >
             <div

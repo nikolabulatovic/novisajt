@@ -3,6 +3,9 @@
 import { useState } from 'react';
 
 import { useTranslations } from 'next-intl';
+
+import { StageId } from '@/contexts/NavigationContext';
+
 import AnimatedText from './ui/AnimatedText';
 import StoryStage from './ui/StoryStage';
 
@@ -21,7 +24,7 @@ export default function WouldYouLikeToBe({
 
   return (
     <StoryStage
-      stage="da-li-bi-voleo"
+      stage={StageId.WouldYouLikeToBe}
       textContentClassName="relative p-6 md:p-16"
       footer={
         showOptions ? (

@@ -1,6 +1,6 @@
 import { type Dispatch, type SetStateAction, useMemo } from 'react';
 
-import type { Stage } from '@/contexts/NavigationContext';
+import { type Stage, StageId } from '@/contexts/NavigationContext';
 import {
   nextAfterAlignBehaviour,
   nextAfterBreakingQuestion,
@@ -33,58 +33,58 @@ export function useStoryFlowHandlers({
   return useMemo(
     () => ({
       handleIntroComplete: () => {
-        transitionToStage('evaluation');
+        transitionToStage(StageId.Evaluation);
       },
 
       handleEvaluationComplete: (userAnswers: Record<string, string>) => {
         setAnswers(userAnswers);
         Object.entries(userAnswers).forEach(([question, answer]) => {
-          trackAnswerSelected('evaluation', `${question}:${answer}`);
+          trackAnswerSelected(StageId.Evaluation, `${question}:${answer}`);
         });
-        transitionToStage('explanation');
+        transitionToStage(StageId.Explanation);
       },
 
       handleExplanationComplete: () => {
-        transitionToStage('historical');
+        transitionToStage(StageId.Historical);
       },
 
       handleHistoricalComplete: () => {
-        transitionToStage('personal-question');
+        transitionToStage(StageId.PersonalQuestion);
       },
 
       handlePersonalQuestionComplete: (answer: string) => {
-        trackAnswerSelected('personal-question', answer);
+        trackAnswerSelected(StageId.PersonalQuestion, answer);
         transitionToStage(nextAfterPersonalQuestion(answer));
       },
 
       handleDaLiBiVoleoComplete: (answer: string) => {
-        trackAnswerSelected('da-li-bi-voleo', answer);
+        trackAnswerSelected(StageId.WouldYouLikeToBe, answer);
         transitionToStage(nextAfterDaLiBiVoleo(answer));
       },
 
       handleBreakingQuestionComplete: (answer: string) => {
-        trackAnswerSelected('breaking-question', answer);
+        trackAnswerSelected(StageId.BreakingQuestion, answer);
         transitionToStage(nextAfterBreakingQuestion(answer));
       },
 
       handleSpasaStoryComplete: () => {
-        transitionToStage('spasa-revelation');
+        transitionToStage(StageId.SpasaRevelation);
       },
 
       handleSpasaRevelationComplete: () => {
-        transitionToStage('other-pigs');
+        transitionToStage(StageId.OtherPigs);
       },
 
       handleOtherPigsComplete: () => {
-        transitionToStage('root-of-the-problem');
+        transitionToStage(StageId.RootOfTheProblem);
       },
 
       handleRootOfTheProblemComplete: () => {
-        transitionToStage('animals-treated-as-products');
+        transitionToStage(StageId.AnimalsTreatedAsProducts);
       },
 
       handleAnimalsTreatedAsProductsComplete: () => {
-        transitionToStage('let-them-live');
+        transitionToStage(StageId.LetThemLive);
       },
 
       handleLetThemLiveComplete: (answer: string) => {
@@ -92,36 +92,36 @@ export function useStoryFlowHandlers({
       },
 
       handleAcceptingSelfOwnershipComplete: () => {
-        transitionToStage('from-the-wild');
+        transitionToStage(StageId.FromTheWild);
       },
 
       handleFromTheWildComplete: () => {
-        transitionToStage('reproduction-control');
+        transitionToStage(StageId.ReproductionControl);
       },
 
       handleReproductionControlComplete: () => {
-        transitionToStage('vicious-cycle');
+        transitionToStage(StageId.ViciousCycle);
       },
 
       handleViciousCycleComplete: () => {
-        transitionToStage('cow-fate');
+        transitionToStage(StageId.CowFate);
       },
 
       handleCowFateComplete: () => {
-        transitionToStage('animal-cost-of-living');
+        transitionToStage(StageId.AnimalCostOfLiving);
       },
 
       handleAnimalCostOfLivingComplete: () => {
-        transitionToStage('solution-use');
+        transitionToStage(StageId.SolutionUse);
       },
 
       handleSolutionUseComplete: (answer: string) => {
-        trackAnswerSelected('solution-use', answer);
+        trackAnswerSelected(StageId.SolutionUse, answer);
         transitionToStage(nextAfterSolutionUse(answer));
       },
 
       handleVecVeganskiComplete: (answer: string) => {
-        trackAnswerSelected('vec-veganski', answer);
+        trackAnswerSelected(StageId.AlreadyVegan, answer);
         if (answer === 'Spreman sam') {
           trackFlowCompleted();
         }
@@ -129,49 +129,49 @@ export function useStoryFlowHandlers({
       },
 
       handleSolutionKnowComplete: (answer: string) => {
-        trackAnswerSelected('solution-know', answer);
+        trackAnswerSelected(StageId.SolutionKnow, answer);
         transitionToStage(nextAfterSolutionKnow(answer));
       },
 
       handleVeganDietHealthComplete: (answer: string) => {
-        setAnswers((prev) => ({ ...prev, 'vegan-diet-health': answer }));
-        trackAnswerSelected('vegan-diet-health', answer);
+        setAnswers((prev) => ({ ...prev, [StageId.VeganDietHealth]: answer }));
+        trackAnswerSelected(StageId.VeganDietHealth, answer);
         transitionToStage(nextAfterVeganDietHealth(answer));
       },
 
       handleNijeUbediloResursiComplete: () => {
-        transitionToStage('solution-choice');
+        transitionToStage(StageId.SolutionChoice);
       },
 
       handleSolutionChoiceComplete: (answer: string) => {
-        trackAnswerSelected('solution-choice', answer);
+        trackAnswerSelected(StageId.SolutionChoice, answer);
         transitionToStage(nextAfterSolutionChoice(answer));
       },
 
       handleKontradiktornostJeComplete: (answer: string) => {
-        trackAnswerSelected('kontradiktornost-je', answer);
+        trackAnswerSelected(StageId.AddressingContradiction, answer);
         transitionToStage(nextAfterKontradiktornostJe(answer));
       },
 
       handleAlignBehaviourComplete: (answer: string) => {
-        setAnswers((prev) => ({ ...prev, 'align-behaviour': answer }));
-        trackAnswerSelected('align-behaviour', answer);
+        setAnswers((prev) => ({ ...prev, [StageId.AlignBehaviour]: answer }));
+        trackAnswerSelected(StageId.AlignBehaviour, answer);
         transitionToStage(nextAfterAlignBehaviour(answer));
       },
 
       handleVracanjeNaOdgovoreComplete: (answer: string) => {
-        trackAnswerSelected('vracanje-na-odgovore', answer);
+        trackAnswerSelected(StageId.BackToAnswers, answer);
         transitionToStage(nextAfterVracanjeNaOdgovore(answer));
       },
 
       handlePonovoNaOdgovoreComplete: (answer: string) => {
-        trackAnswerSelected('ponovo-na-odgovore', answer);
+        trackAnswerSelected(StageId.BackToAnswersAgain, answer);
         transitionToStage(nextAfterPonovoNaOdgovore(answer));
       },
 
       handleVeganismPrincipleComplete: () => {
         trackFlowCompleted();
-        transitionToStage('after-choice');
+        transitionToStage(StageId.AfterChoice);
       },
     }),
     [transitionToStage, setAnswers, trackAnswerSelected, trackFlowCompleted],

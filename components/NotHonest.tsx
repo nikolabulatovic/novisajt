@@ -1,5 +1,7 @@
 'use client';
 
+import { StageId } from '@/contexts/NavigationContext';
+
 import AnimatedText from './ui/AnimatedText';
 import StoryStage from './ui/StoryStage';
 
@@ -10,7 +12,10 @@ export default function NotHonest() {
   ];
 
   return (
-    <StoryStage stage="nisi-iskren" textContentClassName="relative p-6 md:p-16">
+    <StoryStage
+      stage={StageId.NotHonest}
+      textContentClassName="relative p-6 md:p-16"
+    >
       <AnimatedText
         text={text}
         speed={120}

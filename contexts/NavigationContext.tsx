@@ -2,44 +2,47 @@
 
 import { ReactNode, createContext, useContext } from 'react';
 
-export type Stage =
-  | 'choice'
-  | 'intro'
-  | 'evaluation'
-  | 'explanation'
-  | 'historical'
-  | 'personal-question'
-  | 'da-li-bi-voleo'
-  | 'prepoznavanje-nepravde'
-  | 'breaking-question'
-  | 'ostani-komforan'
-  | 'apatican-stav'
-  | 'spasa-story'
-  | 'spasa-revelation'
-  | 'other-pigs'
-  | 'root-of-the-problem'
-  | 'animals-treated-as-products'
-  | 'let-them-live'
-  | 'accepting-self-ownership'
-  | 'from-the-wild'
-  | 'vicious-cycle'
-  | 'cow-fate'
-  | 'animal-cost-of-living'
-  | 'reproduction-control'
-  | 'solution-use'
-  | 'vec-veganski'
-  | 'solution-know'
-  | 'vegan-diet-health'
-  | 'nije-ubedilo-resursi'
-  | 'solution-choice'
-  | 'kontradiktornost-je'
-  | 'nisi-iskren'
-  | 'align-behaviour'
-  | 'vracanje-na-odgovore'
-  | 'ponovo-na-odgovore'
-  | 'ne-drzis-se'
-  | 'veganism-principle'
-  | 'after-choice';
+export const StageId = {
+  Choice: 'choice',
+  Intro: 'intro',
+  Evaluation: 'evaluation',
+  Explanation: 'explanation',
+  Historical: 'historical',
+  PersonalQuestion: 'personal-question',
+  WouldYouLikeToBe: 'would-you-like-to-be',
+  RecognizingInjustice: 'recognizing-injustice',
+  BreakingQuestion: 'breaking-question',
+  StayComfortable: 'stay-comfortable',
+  ApatheticStance: 'apathetic-stance',
+  SpasaStory: 'spasa-story',
+  SpasaRevelation: 'spasa-revelation',
+  OtherPigs: 'other-pigs',
+  RootOfTheProblem: 'root-of-the-problem',
+  AnimalsTreatedAsProducts: 'animals-treated-as-products',
+  LetThemLive: 'let-them-live',
+  AcceptingSelfOwnership: 'accepting-self-ownership',
+  FromTheWild: 'from-the-wild',
+  ViciousCycle: 'vicious-cycle',
+  CowFate: 'cow-fate',
+  AnimalCostOfLiving: 'animal-cost-of-living',
+  ReproductionControl: 'reproduction-control',
+  SolutionUse: 'solution-use',
+  AlreadyVegan: 'already-vegan',
+  SolutionKnow: 'solution-know',
+  VeganDietHealth: 'vegan-diet-health',
+  AdditionalResources: 'additional-resources',
+  SolutionChoice: 'solution-choice',
+  AddressingContradiction: 'addressing-contradiction',
+  NotHonest: 'not-honest',
+  AlignBehaviour: 'align-behaviour',
+  BackToAnswers: 'back-to-answers',
+  BackToAnswersAgain: 'back-to-answers-again',
+  NotFollowingThrough: 'not-following-through',
+  VeganismPrinciple: 'veganism-principle',
+  AfterChoice: 'after-choice',
+} as const;
+
+export type Stage = (typeof StageId)[keyof typeof StageId];
 
 interface NavigationContextType {
   currentStage: Stage;

@@ -1,5 +1,7 @@
 'use client';
 
+import { StageId } from '@/contexts/NavigationContext';
+
 import AnimatedText from './ui/AnimatedText';
 import StoryStage from './ui/StoryStage';
 
@@ -11,7 +13,7 @@ export default function RecognizingInjustice() {
 
   return (
     <StoryStage
-      stage="prepoznavanje-nepravde"
+      stage={StageId.RecognizingInjustice}
       textContentClassName="relative p-6 md:p-16"
     >
       <AnimatedText

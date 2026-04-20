@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 
+import { StageId } from '@/contexts/NavigationContext';
+
 import AnimatedText from './ui/AnimatedText';
 import Pill from './ui/Pill';
 import StoryStage from './ui/StoryStage';
@@ -22,7 +24,7 @@ export default function AdditionalResources({
 
   return (
     <StoryStage
-      stage="nije-ubedilo-resursi"
+      stage={StageId.AdditionalResources}
       textContentClassName="relative p-6 md:p-16"
       footer={
         <div className="flex justify-center mt-8 md:mt-12">

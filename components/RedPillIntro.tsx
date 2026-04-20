@@ -3,6 +3,9 @@
 import { useState } from 'react';
 
 import { useTranslations } from 'next-intl';
+
+import { StageId } from '@/contexts/NavigationContext';
+
 import AnimatedText from './ui/AnimatedText';
 import NextButton from './ui/NextButton';
 import StoryStage from './ui/StoryStage';
@@ -18,7 +21,7 @@ export default function RedPillIntro({ onComplete }: RedPillIntroProps) {
 
   return (
     <StoryStage
-      stage="intro"
+      stage={StageId.Intro}
       contentSpacing="sm"
       showBackgroundEffects={false}
       textSurfaceClassName="mx-1 sm:mx-2"

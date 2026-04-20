@@ -1,4 +1,4 @@
-import { Stage } from '@/contexts/NavigationContext';
+import { Stage, StageId } from '@/contexts/NavigationContext';
 
 /**
  * How narrative text sits on the stage background (forks tune per stage in this file).
@@ -24,17 +24,17 @@ export interface SectionBackgroundConfig {
 }
 
 export const sectionBackgrounds: Record<Stage, SectionBackgroundConfig> = {
-  choice: {
+  [StageId.Choice]: {
     backgroundImage: '/images/holding-out-hands.png',
     opacity: 0.2,
     pillTransition: true,
   },
-  intro: {
+  [StageId.Intro]: {
     backgroundImage: '/images/intro-reflection.jpeg',
     opacity: 0.2,
     pillTransition: true,
   },
-  evaluation: {
+  [StageId.Evaluation]: {
     backgroundImage: '/images/character-introspection.jpeg',
     opacity: 0.5,
     gradientOverlayClasses: [
@@ -42,142 +42,142 @@ export const sectionBackgrounds: Record<Stage, SectionBackgroundConfig> = {
       'absolute inset-0 bg-gradient-to-r from-transparent via-black/20 to-transparent pointer-events-none',
     ],
   },
-  explanation: {
+  [StageId.Explanation]: {
     backgroundImage: '/images/ogledalo.png',
     opacity: 0.35,
     pillTransition: true,
     textSurface: 'none',
   },
-  historical: {
+  [StageId.Historical]: {
     backgroundImage: '/images/historical-weight.png',
     opacity: 0.75,
   },
-  'personal-question': {
+  [StageId.PersonalQuestion]: {
     backgroundImage: '/images/covek-u-grupi.jpeg',
     opacity: 0.3,
   },
-  'breaking-question': {
+  [StageId.BreakingQuestion]: {
     backgroundImage: '/images/odluka-put.jpg',
     opacity: 0.5,
   },
-  'spasa-story': {
+  [StageId.SpasaStory]: {
     backgroundImage: '/images/spasa-rescue-hope.png',
     opacity: 0.8,
   },
-  'spasa-revelation': {
+  [StageId.SpasaRevelation]: {
     backgroundImage: '/images/spasa-prasa.jpg',
     opacity: 0.8,
   },
-  'other-pigs': {
+  [StageId.OtherPigs]: {
     backgroundImage: '/images/enslaved-pigs.jpg',
     opacity: 0.8,
   },
-  'root-of-the-problem': {
+  [StageId.RootOfTheProblem]: {
     backgroundImage: '/images/horse-stable-gray.jpg',
     opacity: 0.8,
   },
-  'animals-treated-as-products': {
+  [StageId.AnimalsTreatedAsProducts]: {
     backgroundImage: '/images/industrija-koze.png',
     opacity: 0.8,
   },
-  'let-them-live': {
+  [StageId.LetThemLive]: {
     backgroundImage: '/images/farm-animals.jpg',
     opacity: 0.8,
   },
-  'accepting-self-ownership': {
+  [StageId.AcceptingSelfOwnership]: {
     opacity: 0.55,
   },
-  'from-the-wild': {
+  [StageId.FromTheWild]: {
     backgroundImage: '/images/gallus-gallus.jpg',
     opacity: 0.8,
   },
-  'vicious-cycle': {
+  [StageId.ViciousCycle]: {
     backgroundImage: '/images/chicks-in-bucket.png',
     opacity: 0.8,
   },
-  'cow-fate': {
+  [StageId.CowFate]: {
     backgroundImage: '/images/cow-slave.jpg',
     opacity: 0.8,
   },
-  'animal-cost-of-living': {
+  [StageId.AnimalCostOfLiving]: {
     backgroundImage: '/images/cows-transported.png',
     opacity: 0.8,
   },
-  'reproduction-control': {
+  [StageId.ReproductionControl]: {
     backgroundImage: '/images/cow-silhouettes.png',
     opacity: 0.8,
   },
-  'solution-use': {
+  [StageId.SolutionUse]: {
     backgroundImage: '/images/farm-animals2.jpg',
     opacity: 0.8,
   },
-  'solution-know': {
+  [StageId.SolutionKnow]: {
     backgroundImage: '/images/djokovic-trophy.jpg',
     opacity: 0.8,
   },
-  'vegan-diet-health': {
+  [StageId.VeganDietHealth]: {
     backgroundImage: '/images/farm-animals2.jpg',
     opacity: 0.8,
   },
-  'solution-choice': {
+  [StageId.SolutionChoice]: {
     backgroundImage: '/images/silhouette-cracked-mirror.png',
     opacity: 0.8,
   },
-  'align-behaviour': {
+  [StageId.AlignBehaviour]: {
     backgroundImage: '/images/farm-animals2.jpg',
     opacity: 0.8,
   },
-  'veganism-principle': {
+  [StageId.VeganismPrinciple]: {
     backgroundImage: '/images/farm-animals2.jpg',
     opacity: 0.8,
     pillTransition: true,
   },
-  'after-choice': {
+  [StageId.AfterChoice]: {
     backgroundImage: '/images/animals-picturesque.png',
     opacity: 0.8,
     glassVariant: 'light',
   },
-  'ostani-komforan': {
+  [StageId.StayComfortable]: {
     backgroundImage: '/images/holding-out-hands.png',
     opacity: 0.3,
   },
-  'da-li-bi-voleo': {
+  [StageId.WouldYouLikeToBe]: {
     backgroundImage: '/images/justitia-gray.png',
     opacity: 0.5,
   },
-  'prepoznavanje-nepravde': {
+  [StageId.RecognizingInjustice]: {
     backgroundImage: '/images/historical-weight.png',
     opacity: 0.5,
   },
-  'apatican-stav': {
+  [StageId.ApatheticStance]: {
     backgroundImage: '/images/izbor-da-ne-vidi.jpg',
     opacity: 0.4,
   },
-  'vec-veganski': {
+  [StageId.AlreadyVegan]: {
     backgroundImage: '/images/animals-picturesque.png',
     opacity: 0.5,
   },
-  'nije-ubedilo-resursi': {
+  [StageId.AdditionalResources]: {
     backgroundImage: '/images/farm-animals2.jpg',
     opacity: 0.8,
   },
-  'kontradiktornost-je': {
+  [StageId.AddressingContradiction]: {
     backgroundImage: '/images/silhouette-cracked-mirror.png',
     opacity: 0.6,
   },
-  'nisi-iskren': {
+  [StageId.NotHonest]: {
     backgroundImage: '/images/silhouette-cracked-mirror.png',
     opacity: 0.5,
   },
-  'vracanje-na-odgovore': {
+  [StageId.BackToAnswers]: {
     backgroundImage: '/images/ogledalo.png',
     opacity: 0.4,
   },
-  'ponovo-na-odgovore': {
+  [StageId.BackToAnswersAgain]: {
     backgroundImage: '/images/ogledalo.png',
     opacity: 0.4,
   },
-  'ne-drzis-se': {
+  [StageId.NotFollowingThrough]: {
     backgroundImage: '/images/farm-animals2.jpg',
     opacity: 0.4,
   },

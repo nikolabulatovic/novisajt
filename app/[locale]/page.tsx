@@ -42,13 +42,17 @@ import ViciousCycle from '@/components/ViciousCycle';
 import WouldYouLikeToBe from '@/components/WouldYouLikeToBe';
 import PillTransitionLayer from '@/components/ui/PillTransitionLayer';
 import { sectionBackgrounds } from '@/config/sectionBackgrounds';
-import { NavigationProvider, Stage } from '@/contexts/NavigationContext';
+import {
+  NavigationProvider,
+  Stage,
+  StageId,
+} from '@/contexts/NavigationContext';
 import { PillProvider } from '@/contexts/PillContext';
 import { useStoryFlowHandlers } from '@/hooks/useStoryFlowHandlers';
 import { useTracking } from '@/hooks/useTracking';
 
 export default function Home() {
-  const [stage, setStage] = useState<Stage>('choice');
+  const [stage, setStage] = useState<Stage>(StageId.Choice);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [pendingNextStage, setPendingNextStage] = useState<Stage | null>(null);
   const [blackOverlay, setBlackOverlay] = useState(false);
@@ -117,11 +121,11 @@ export default function Home() {
   });
 
   const handlePillChoice = (pill: 'red' | 'blue') => {
-    trackAnswerSelected('choice', pill);
+    trackAnswerSelected(StageId.Choice, pill);
     if (pill === 'red') {
-      transitionToStage('intro');
+      transitionToStage(StageId.Intro);
     } else {
-      setStageAfterFade('ostani-komforan');
+      setStageAfterFade(StageId.StayComfortable);
       setBlackOverlay(true);
     }
   };
@@ -153,126 +157,126 @@ export default function Home() {
         <NavigationMenu />
         <main className="min-h-screen bg-black text-white overflow-hidden relative">
           <>
-            {stage === 'choice' && (
+            {stage === StageId.Choice && (
               <ChoiceStage onPillChoice={handlePillChoice} />
             )}
-            {stage === 'intro' && (
+            {stage === StageId.Intro && (
               <RedPillIntro onComplete={handleIntroComplete} />
             )}
-            {stage === 'evaluation' && (
+            {stage === StageId.Evaluation && (
               <CharacterEvaluation
                 onComplete={handleEvaluationComplete}
                 answers={answers}
               />
             )}
-            {stage === 'explanation' && (
+            {stage === StageId.Explanation && (
               <QuestionExplanation onComplete={handleExplanationComplete} />
             )}
-            {stage === 'historical' && (
+            {stage === StageId.Historical && (
               <HistoricalInjustices onComplete={handleHistoricalComplete} />
             )}
-            {stage === 'personal-question' && (
+            {stage === StageId.PersonalQuestion && (
               <PersonalQuestion onComplete={handlePersonalQuestionComplete} />
             )}
-            {stage === 'da-li-bi-voleo' && (
+            {stage === StageId.WouldYouLikeToBe && (
               <WouldYouLikeToBe onComplete={handleDaLiBiVoleoComplete} />
             )}
-            {stage === 'prepoznavanje-nepravde' && <RecognizingInjustice />}
-            {stage === 'breaking-question' && (
+            {stage === StageId.RecognizingInjustice && <RecognizingInjustice />}
+            {stage === StageId.BreakingQuestion && (
               <BreakingQuestion onComplete={handleBreakingQuestionComplete} />
             )}
-            {stage === 'ostani-komforan' && <StayComfortable />}
-            {stage === 'apatican-stav' && <ApatheticStance />}
-            {stage === 'spasa-story' && (
+            {stage === StageId.StayComfortable && <StayComfortable />}
+            {stage === StageId.ApatheticStance && <ApatheticStance />}
+            {stage === StageId.SpasaStory && (
               <SpasaStory onComplete={handleSpasaStoryComplete} />
             )}
-            {stage === 'spasa-revelation' && (
+            {stage === StageId.SpasaRevelation && (
               <SpasaRevelation onComplete={handleSpasaRevelationComplete} />
             )}
-            {stage === 'other-pigs' && (
+            {stage === StageId.OtherPigs && (
               <OtherPigs onComplete={handleOtherPigsComplete} />
             )}
-            {stage === 'root-of-the-problem' && (
+            {stage === StageId.RootOfTheProblem && (
               <RootOfTheProblem onComplete={handleRootOfTheProblemComplete} />
             )}
-            {stage === 'animals-treated-as-products' && (
+            {stage === StageId.AnimalsTreatedAsProducts && (
               <AnimalsTreatedAsProducts
                 onComplete={handleAnimalsTreatedAsProductsComplete}
               />
             )}
-            {stage === 'let-them-live' && (
+            {stage === StageId.LetThemLive && (
               <LetThemLive onComplete={handleLetThemLiveComplete} />
             )}
-            {stage === 'accepting-self-ownership' && (
+            {stage === StageId.AcceptingSelfOwnership && (
               <AcceptingSelfOwnership
                 onComplete={handleAcceptingSelfOwnershipComplete}
               />
             )}
-            {stage === 'from-the-wild' && (
+            {stage === StageId.FromTheWild && (
               <FromTheWild onComplete={handleFromTheWildComplete} />
             )}
-            {stage === 'vicious-cycle' && (
+            {stage === StageId.ViciousCycle && (
               <ViciousCycle onComplete={handleViciousCycleComplete} />
             )}
-            {stage === 'cow-fate' && (
+            {stage === StageId.CowFate && (
               <CowFate onComplete={handleCowFateComplete} />
             )}
-            {stage === 'animal-cost-of-living' && (
+            {stage === StageId.AnimalCostOfLiving && (
               <AnimalCostOfLiving
                 onComplete={handleAnimalCostOfLivingComplete}
               />
             )}
-            {stage === 'reproduction-control' && (
+            {stage === StageId.ReproductionControl && (
               <ReproductionControl
                 onComplete={handleReproductionControlComplete}
               />
             )}
-            {stage === 'solution-use' && (
+            {stage === StageId.SolutionUse && (
               <SolutionUse onComplete={handleSolutionUseComplete} />
             )}
-            {stage === 'vec-veganski' && (
+            {stage === StageId.AlreadyVegan && (
               <AlreadyVegan onComplete={handleVecVeganskiComplete} />
             )}
-            {stage === 'solution-know' && (
+            {stage === StageId.SolutionKnow && (
               <SolutionKnow onComplete={handleSolutionKnowComplete} />
             )}
-            {stage === 'vegan-diet-health' && (
+            {stage === StageId.VeganDietHealth && (
               <VeganDietHealth onComplete={handleVeganDietHealthComplete} />
             )}
-            {stage === 'nije-ubedilo-resursi' && (
+            {stage === StageId.AdditionalResources && (
               <AdditionalResources
                 onComplete={handleNijeUbediloResursiComplete}
               />
             )}
-            {stage === 'solution-choice' && (
+            {stage === StageId.SolutionChoice && (
               <SolutionChoice onComplete={handleSolutionChoiceComplete} />
             )}
-            {stage === 'kontradiktornost-je' && (
+            {stage === StageId.AddressingContradiction && (
               <AddressingContradiction
                 onComplete={handleKontradiktornostJeComplete}
               />
             )}
-            {stage === 'nisi-iskren' && <NotHonest />}
-            {stage === 'align-behaviour' && (
+            {stage === StageId.NotHonest && <NotHonest />}
+            {stage === StageId.AlignBehaviour && (
               <AlignBehaviour onComplete={handleAlignBehaviourComplete} />
             )}
-            {stage === 'vracanje-na-odgovore' && (
+            {stage === StageId.BackToAnswers && (
               <BackToAnswers
                 onComplete={handleVracanjeNaOdgovoreComplete}
                 answers={answers}
               />
             )}
-            {stage === 'ponovo-na-odgovore' && (
+            {stage === StageId.BackToAnswersAgain && (
               <BackToAnswersAgain
                 onComplete={handlePonovoNaOdgovoreComplete}
                 answers={answers}
               />
             )}
-            {stage === 'ne-drzis-se' && <NotFollowingThrough />}
-            {stage === 'veganism-principle' && (
+            {stage === StageId.NotFollowingThrough && <NotFollowingThrough />}
+            {stage === StageId.VeganismPrinciple && (
               <VeganismPrinciple onComplete={handleVeganismPrincipleComplete} />
             )}
-            {stage === 'after-choice' && <AfterChoice />}
+            {stage === StageId.AfterChoice && <AfterChoice />}
           </>
         </main>
       </PillProvider>
