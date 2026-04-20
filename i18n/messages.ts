@@ -2,6 +2,7 @@ type Locale = 'sr' | 'en';
 
 type MessageNamespace =
   | 'Metadata'
+  | 'NavigationMenu'
   | 'QuestionExplanation'
   | 'PersonalQuestion'
   | 'WouldYouLikeToBe'
@@ -15,6 +16,7 @@ type MessageNamespace =
 
 const namespaceFiles: Record<MessageNamespace, string> = {
   Metadata: 'metadata',
+  NavigationMenu: 'navigation-menu',
   QuestionExplanation: 'question-explanation',
   PersonalQuestion: 'personal-question',
   WouldYouLikeToBe: 'would-you-like-to-be',

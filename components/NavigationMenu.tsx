@@ -2,46 +2,48 @@
 
 import { useEffect, useRef, useState } from 'react';
 
+import { useTranslations } from 'next-intl';
+
 import { Stage, StageId, useNavigation } from '@/contexts/NavigationContext';
 
-const stageLabels: Record<Stage, string> = {
-  [StageId.Choice]: 'Izbor',
-  [StageId.Intro]: 'Uvod',
-  [StageId.Evaluation]: 'Procena karaktera',
-  [StageId.Explanation]: 'Objašnjenje',
-  [StageId.Historical]: 'Istorijske nepravde',
-  [StageId.PersonalQuestion]: 'Lično pitanje',
-  [StageId.WouldYouLikeToBe]: 'Da li bi voleo?',
-  [StageId.RecognizingInjustice]: 'Prepoznavanje nepravde',
-  [StageId.BreakingQuestion]: 'Prelomno pitanje',
-  [StageId.StayComfortable]: 'Ostani komforan',
-  [StageId.ApatheticStance]: 'Apatičan stav',
-  [StageId.SpasaStory]: 'Spasina priča',
-  [StageId.SpasaRevelation]: 'Spasino otkriće',
-  [StageId.OtherPigs]: 'Ostali prasići',
-  [StageId.RootOfTheProblem]: 'Koren problema',
-  [StageId.AnimalsTreatedAsProducts]: 'Gde se koriste',
-  [StageId.LetThemLive]: 'Da žive svoj život',
-  [StageId.AcceptingSelfOwnership]: 'Sopstveno vlasništvo',
-  [StageId.FromTheWild]: 'Resurs i kontrola',
-  [StageId.ViciousCycle]: 'Začarani krug',
-  [StageId.CowFate]: 'Sudbina krava',
-  [StageId.AnimalCostOfLiving]: 'U životu dok donosi prihod',
-  [StageId.ReproductionControl]: 'Biološka dominacija',
-  [StageId.SolutionUse]: 'Da li koristiš životinje?',
-  [StageId.AlreadyVegan]: 'Već veganski',
-  [StageId.SolutionKnow]: 'Da li znaš da je moguće?',
-  [StageId.VeganDietHealth]: 'Veganska ishrana i zdravlje',
-  [StageId.AdditionalResources]: 'Dodatni resursi',
-  [StageId.SolutionChoice]: 'Biranje suprotno uverenju',
-  [StageId.AddressingContradiction]: 'Kontradiktornost',
-  [StageId.NotHonest]: 'Nisi iskren',
-  [StageId.AlignBehaviour]: 'Usaglašavanje ponašanja',
-  [StageId.BackToAnswers]: 'Vraćanje na odgovore',
-  [StageId.BackToAnswersAgain]: 'Ponovo na odgovore',
-  [StageId.NotFollowingThrough]: 'Ne držiš se',
-  [StageId.VeganismPrinciple]: 'Princip veganstva',
-  [StageId.AfterChoice]: 'Nakon izbora',
+const stageLabelKeys: Record<Stage, string> = {
+  [StageId.Choice]: 'stages.choice',
+  [StageId.Intro]: 'stages.intro',
+  [StageId.Evaluation]: 'stages.evaluation',
+  [StageId.Explanation]: 'stages.explanation',
+  [StageId.Historical]: 'stages.historical',
+  [StageId.PersonalQuestion]: 'stages.personalQuestion',
+  [StageId.WouldYouLikeToBe]: 'stages.wouldYouLikeToBe',
+  [StageId.RecognizingInjustice]: 'stages.recognizingInjustice',
+  [StageId.BreakingQuestion]: 'stages.breakingQuestion',
+  [StageId.StayComfortable]: 'stages.stayComfortable',
+  [StageId.ApatheticStance]: 'stages.apatheticStance',
+  [StageId.SpasaStory]: 'stages.spasaStory',
+  [StageId.SpasaRevelation]: 'stages.spasaRevelation',
+  [StageId.OtherPigs]: 'stages.otherPigs',
+  [StageId.RootOfTheProblem]: 'stages.rootOfTheProblem',
+  [StageId.AnimalsTreatedAsProducts]: 'stages.animalsTreatedAsProducts',
+  [StageId.LetThemLive]: 'stages.letThemLive',
+  [StageId.AcceptingSelfOwnership]: 'stages.acceptingSelfOwnership',
+  [StageId.FromTheWild]: 'stages.fromTheWild',
+  [StageId.ViciousCycle]: 'stages.viciousCycle',
+  [StageId.CowFate]: 'stages.cowFate',
+  [StageId.AnimalCostOfLiving]: 'stages.animalCostOfLiving',
+  [StageId.ReproductionControl]: 'stages.reproductionControl',
+  [StageId.SolutionUse]: 'stages.solutionUse',
+  [StageId.AlreadyVegan]: 'stages.alreadyVegan',
+  [StageId.SolutionKnow]: 'stages.solutionKnow',
+  [StageId.VeganDietHealth]: 'stages.veganDietHealth',
+  [StageId.AdditionalResources]: 'stages.additionalResources',
+  [StageId.SolutionChoice]: 'stages.solutionChoice',
+  [StageId.AddressingContradiction]: 'stages.addressingContradiction',
+  [StageId.NotHonest]: 'stages.notHonest',
+  [StageId.AlignBehaviour]: 'stages.alignBehaviour',
+  [StageId.BackToAnswers]: 'stages.backToAnswers',
+  [StageId.BackToAnswersAgain]: 'stages.backToAnswersAgain',
+  [StageId.NotFollowingThrough]: 'stages.notFollowingThrough',
+  [StageId.VeganismPrinciple]: 'stages.veganismPrinciple',
+  [StageId.AfterChoice]: 'stages.afterChoice',
 };
 
 const stageOrder: Stage[] = [
@@ -74,6 +76,7 @@ const stageOrder: Stage[] = [
 ];
 
 export default function NavigationMenu() {
+  const t = useTranslations('NavigationMenu');
   const { currentStage, navigateToStage } = useNavigation();
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -106,7 +109,7 @@ export default function NavigationMenu() {
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="w-12 h-12 rounded-full bg-gray-900/80 backdrop-blur-md border border-gray-800/50 hover:bg-gray-800/80 transition-all duration-300 flex items-center justify-center group hover:scale-110 shadow-lg"
-        aria-label="Toggle navigation menu"
+        aria-label={t('toggleAriaLabel')}
       >
         <svg
           className={`w-6 h-6 text-gray-300 transition-transform duration-300 ${
@@ -136,7 +139,7 @@ export default function NavigationMenu() {
         <div className="p-2 max-h-[70vh] overflow-y-auto">
           <div className="px-3 py-2 border-b border-gray-800/50 mb-2">
             <h3 className="text-sm font-medium text-gray-400 uppercase tracking-wide">
-              Navigacija
+              {t('title')}
             </h3>
           </div>
           {stageOrder.map((stage) => {
@@ -156,7 +159,7 @@ export default function NavigationMenu() {
                     className="text-sm font-light"
                     style={{ fontFamily: 'var(--font-inter), sans-serif' }}
                   >
-                    {stageLabels[stage]}
+                    {t(stageLabelKeys[stage])}
                   </span>
                   {isActive && (
                     <div className="w-2 h-2 rounded-full bg-red-500/80"></div>
