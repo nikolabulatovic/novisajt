@@ -1,6 +1,7 @@
 import { type Dispatch, type SetStateAction, useMemo } from 'react';
 
 import { type Stage, StageId } from '@/contexts/NavigationContext';
+import { AnswerId } from '@/lib/answerIds';
 import {
   nextAfterAlignBehaviour,
   nextAfterBreakingQuestion,
@@ -122,7 +123,7 @@ export function useStoryFlowHandlers({
 
       handleVecVeganskiComplete: (answer: string) => {
         trackAnswerSelected(StageId.AlreadyVegan, answer);
-        if (answer === 'Spreman sam') {
+        if (answer === AnswerId.YES) {
           trackFlowCompleted();
         }
         transitionToStage(nextAfterVecVeganski(answer));

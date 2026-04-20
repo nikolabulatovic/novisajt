@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 
 import { sectionBackgrounds } from '@/config/sectionBackgrounds';
 import { StageId } from '@/contexts/NavigationContext';
+import type { LocalizedAnswerOption } from '@/lib/answerIds';
 
 import StageTextSurface from './ui/StageTextSurface';
 
@@ -18,7 +19,7 @@ export default function BreakingQuestion({
 }: BreakingQuestionProps) {
   const t = useTranslations('BreakingQuestion');
   const [selected, setSelected] = useState<string | null>(null);
-  const options = t.raw('options') as string[];
+  const options = t.raw('options') as LocalizedAnswerOption[];
 
   const handleContinue = () => {
     if (selected) {
@@ -70,12 +71,12 @@ export default function BreakingQuestion({
 
           {/* Options */}
           <div className="flex flex-row gap-8">
-            {options.map((option, index) => (
+            {options.map((option) => (
               <button
-                key={index}
-                onClick={() => handleAnswer(option)}
+                key={option.id}
+                onClick={() => handleAnswer(option.id)}
                 className={`w-full text-center p-6 rounded-xl transition-all duration-300 transform hover:scale-[1.02] cursor-pointer ${
-                  selected === option
+                  selected === option.id
                     ? 'bg-gray-800/60 border-2 border-gray-600'
                     : 'bg-gray-900/70 border border-gray-800/50 hover:bg-gray-800/80 hover:border-gray-700/50'
                 }`}
@@ -84,7 +85,7 @@ export default function BreakingQuestion({
                   className="text-lg md:text-xl lg:text-2xl text-gray-300 font-light"
                   style={{ fontFamily: 'var(--font-literata), serif' }}
                 >
-                  {option}
+                  {option.label}
                 </span>
               </button>
             ))}

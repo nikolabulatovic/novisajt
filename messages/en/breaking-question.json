@@ -1,5 +1,8 @@
 {
   "question": "What if there is a massive injustice today that you are part of - but you ignore it because it is easier?",
   "subQuestion": "Do you want to know?",
-  "options": ["I want to know", "I'd rather not know"]
+  "options": [
+    { "id": "ACCEPT", "label": "I want to know" },
+    { "id": "REJECT", "label": "I'd rather not know" }
+  ]
 }

@@ -1,5 +1,9 @@
 {
   "question": "Da li bi bio (ili bila) protiv ovih nepravdi tada kada su se zaista dešavale?",
-  "options": ["Da", "Nadam se", "Ne znam"],
+  "options": [
+    { "id": "YES", "label": "Da" },
+    { "id": "HOPEFULLY", "label": "Nadam se" },
+    { "id": "DONT_KNOW", "label": "Ne znam" }
+  ],
   "flashMessage": "Većina ljudi veruje da bi bila."
 }

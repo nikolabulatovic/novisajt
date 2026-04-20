@@ -1,5 +1,8 @@
 {
   "question": "Šta ako danas postoji ogromna nepravda u kojoj učestvuješ – a da to ignorišeš jer je lakše?",
   "subQuestion": "Da li želiš da znaš?",
-  "options": ["Želim da znam", "Radije bih da ne znam"]
+  "options": [
+    { "id": "ACCEPT", "label": "Želim da znam" },
+    { "id": "REJECT", "label": "Radije bih da ne znam" }
+  ]
 }
