@@ -2,6 +2,8 @@
 
 import { MouseEvent, useRef, useState } from 'react';
 
+import { useTranslations } from 'next-intl';
+
 import { sectionBackgrounds } from '@/config/sectionBackgrounds';
 
 import AnswerOption from './ui/AnswerOption';
@@ -12,49 +14,23 @@ interface CharacterEvaluationProps {
   answers?: Record<string, string>;
 }
 
-const questions = [
-  {
-    id: 1,
-    question: 'Kako definišeš svoj karakter?',
-    options: [
-      { text: 'Ja sam ono što jesam i ne treba mi da se menjam', value: 0 },
-      { text: 'Uglavnom sam dobar, sa nekim manama', value: 1 },
-      {
-        text: 'Pokušavam da budem saosećajan i da radim pravu stvar',
-        value: 2,
-      },
-      {
-        text: 'Hoću da uskladim svoje postupke sa svojim vrednostima',
-        value: 3,
-      },
-    ],
-  },
-  {
-    id: 2,
-    question: 'Kada saznaš nešto neprijatno o sebi, ti:',
-    options: [
-      { text: 'Ignorišeš to i nastavljaš kao ranije', value: 0 },
-      { text: 'Priznaš to, ali praviš izgovore', value: 1 },
-      { text: 'Osećaš se konfliktno i nisi siguran šta da radiš', value: 2 },
-      { text: 'Duboko razmišljaš i razmatraš promenu', value: 3 },
-    ],
-  },
-  {
-    id: 3,
-    question: 'Šta ti je najvažnije?',
-    options: [
-      { text: 'Moj komfor i udobnost', value: 0 },
-      { text: 'Pridržavanje društvenih normi i uklapanje', value: 1 },
-      { text: 'Biti dobra osoba na svoj način', value: 2 },
-      { text: 'Živeti u skladu sa svojim najdubljim vrednostima', value: 3 },
-    ],
-  },
-];
+interface EvaluationOption {
+  text: string;
+  value: number;
+}
+
+interface EvaluationQuestion {
+  id: number;
+  question: string;
+  options: EvaluationOption[];
+}
 
 export default function CharacterEvaluation({
   onComplete,
   answers: existingAnswers = {},
 }: CharacterEvaluationProps) {
+  const t = useTranslations('CharacterEvaluation');
+  const questions = t.raw('questions') as EvaluationQuestion[];
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] =
     useState<Record<string, string>>(existingAnswers);

@@ -9,12 +9,14 @@
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
+    "i18n:check": "node scripts/check-i18n.mjs",
     "format": "prettier . --write",
     "format:check": "prettier . --check",
     "prepare": "husky"
   },
   "dependencies": {
     "next": "16.0.10",
+    "next-intl": "^4.9.1",
     "posthog-js": "^1.363.5",
     "react": "19.2.0",
     "react-dom": "19.2.0"

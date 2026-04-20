@@ -2,7 +2,10 @@
 
 import { useState } from 'react';
 
+import { useTranslations } from 'next-intl';
+
 import { sectionBackgrounds } from '@/config/sectionBackgrounds';
+import { AnimatedTextBlock } from '@/lib/i18n/animatedText';
 
 import AnimatedText from './ui/AnimatedText';
 import ContentContainer from './ui/ContentContainer';
@@ -17,41 +20,8 @@ export default function QuestionExplanation({
   onComplete,
 }: QuestionExplanationProps) {
   const [showButton, setShowButton] = useState(false);
-
-  const text = [
-    {
-      line: [
-        {
-          text: 'Ova pitanja nisu test. Nema tačnih odgovora.',
-          bold: false,
-          italic: false,
-        },
-      ],
-    },
-    {
-      line: [
-        {
-          text: 'Postavili smo ih jer ovo putovanje ima smisla samo za ljude kojima je stalo da budu ',
-          bold: false,
-          italic: false,
-        },
-        { text: 'iskreni prema sebi', bold: true, italic: false },
-        { text: '.', bold: false, italic: false },
-      ],
-    },
-    {
-      line: [
-        {
-          text: 'Ako želiš da se vidiš onakvim kakav jesi - ',
-          bold: false,
-          italic: false,
-        },
-        { text: 'a ne onakvim kakvim ', bold: false, italic: false },
-        { text: 'misliš da jesi', bold: true, italic: true },
-        { text: ', nastavi dalje.', bold: false, italic: false },
-      ],
-    },
-  ];
+  const t = useTranslations('QuestionExplanation');
+  const text = t.raw('blocks') as AnimatedTextBlock;
 
   const { backgroundImage, opacity = 0.8 } = sectionBackgrounds.explanation;
 
@@ -74,7 +44,7 @@ export default function QuestionExplanation({
           />
         </div>
 
-        <NextButton onClick={onComplete} label="Razumem" show={showButton} />
+        <NextButton onClick={onComplete} label={t('next')} show={showButton} />
       </ContentContainer>
     </PageContainer>
   );

@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 
+import { useTranslations } from 'next-intl';
+
 import { sectionBackgrounds } from '@/config/sectionBackgrounds';
 
 import AnimatedText from './ui/AnimatedText';
@@ -13,19 +15,16 @@ interface WouldYouLikeToBeProps {
   onComplete: (answer: string) => void;
 }
 
-const OPTIONS = ['Da, bitno mi je', 'Nije mi bitno'] as const;
-
 export default function WouldYouLikeToBe({
   onComplete,
 }: WouldYouLikeToBeProps) {
+  const t = useTranslations('WouldYouLikeToBe');
   const [showOptions, setShowOptions] = useState(false);
   const { backgroundImage, opacity = 0.8 } =
     sectionBackgrounds['da-li-bi-voleo'];
 
-  const text = [
-    'Tvoj odgovor je da ne znaš da li bi bio/la protiv velikih nepravdi.',
-    'Da li ti je inače bitno da budeš pravedan/na, odnosno da ne ugrožavaš nevine?',
-  ];
+  const text = t.raw('text') as string[];
+  const options = t.raw('options') as string[];
 
   return (
     <PageContainer
@@ -49,7 +48,7 @@ export default function WouldYouLikeToBe({
 
         {showOptions && (
           <div className="flex flex-row gap-6 justify-center flex-wrap px-4">
-            {OPTIONS.map((option) => (
+            {options.map((option) => (
               <button
                 key={option}
                 onClick={() => onComplete(option)}

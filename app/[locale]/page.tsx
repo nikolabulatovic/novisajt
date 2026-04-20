@@ -46,6 +46,60 @@ import { NavigationProvider, Stage } from '@/contexts/NavigationContext';
 import { PillProvider } from '@/contexts/PillContext';
 import { useTracking } from '@/hooks/useTracking';
 
+const answerAliases = {
+  'personal-question': {
+    unknown: ['Ne znam', "I don't know"],
+  },
+  'da-li-bi-voleo': {
+    notImportant: ['Nije bitno', 'Nije mi bitno', "It doesn't matter"],
+  },
+  'breaking-question': {
+    avoidKnowing: ['Radije bih da ne znam', "I'd rather not know"],
+  },
+  'let-them-live': {
+    reject: ['Ne prihvatam', 'I do not accept'],
+  },
+  'solution-use': {
+    no: ['Ne', 'No'],
+  },
+  'vec-veganski': {
+    ready: ['Spreman sam', 'I am ready'],
+  },
+  'solution-know': {
+    unsure: ['Nisam siguran', 'Not sure'],
+    impossible: ['Ne možemo', "We can't"],
+  },
+  'vegan-diet-health': {
+    notConvinced: ['Nije me ubedilo', "I'm not convinced"],
+  },
+  'solution-choice': {
+    disagree: ['Ne slažem se', 'I disagree'],
+  },
+  'kontradiktornost-je': {
+    notTrue: ['Nije tačno', "That's not true"],
+  },
+  'align-behaviour': {
+    no: ['Ne', 'No'],
+  },
+  'vracanje-na-odgovore': {
+    no: ['Ne', 'No'],
+  },
+  'ponovo-na-odgovore': {
+    no: ['Ne', 'No'],
+  },
+} as const;
+
+const normalizeAnswer = (
+  stage: keyof typeof answerAliases,
+  answer: string,
+  key: string,
+) => {
+  const options = (answerAliases[stage] as Record<string, readonly string[]>)[
+    key
+  ];
+  return options?.includes(answer) ?? false;
+};
+
 export default function Home() {
   const [stage, setStage] = useState<Stage>('choice');
   const [answers, setAnswers] = useState<Record<string, string>>({});
@@ -114,7 +168,7 @@ export default function Home() {
 
   const handlePersonalQuestionComplete = (answer: string) => {
     trackAnswerSelected('personal-question', answer);
-    if (answer === 'Ne znam') {
+    if (normalizeAnswer('personal-question', answer, 'unknown')) {
       transitionToStage('da-li-bi-voleo');
     } else {
       transitionToStage('breaking-question');
@@ -123,7 +177,7 @@ export default function Home() {
 
   const handleDaLiBiVoleoComplete = (answer: string) => {
     trackAnswerSelected('da-li-bi-voleo', answer);
-    if (answer === 'Nije bitno') {
+    if (normalizeAnswer('da-li-bi-voleo', answer, 'notImportant')) {
       transitionToStage('prepoznavanje-nepravde');
     } else {
       transitionToStage('breaking-question');
@@ -132,7 +186,7 @@ export default function Home() {
 
   const handleBreakingQuestionComplete = (answer: string) => {
     trackAnswerSelected('breaking-question', answer);
-    if (answer === 'Radije bih da ne znam') {
+    if (normalizeAnswer('breaking-question', answer, 'avoidKnowing')) {
       transitionToStage('apatican-stav');
     } else {
       transitionToStage('spasa-story');
@@ -160,7 +214,7 @@ export default function Home() {
   };
 
   const handleLetThemLiveComplete = (answer: string) => {
-    if (answer === 'Ne prihvatam') {
+    if (normalizeAnswer('let-them-live', answer, 'reject')) {
       transitionToStage('accepting-self-ownership');
     } else {
       transitionToStage('from-the-wild');
@@ -193,7 +247,7 @@ export default function Home() {
 
   const handleSolutionUseComplete = (answer: string) => {
     trackAnswerSelected('solution-use', answer);
-    if (answer === 'Ne') {
+    if (normalizeAnswer('solution-use', answer, 'no')) {
       transitionToStage('vec-veganski');
     } else {
       transitionToStage('solution-know');
@@ -202,7 +256,7 @@ export default function Home() {
 
   const handleVecVeganskiComplete = (answer: string) => {
     trackAnswerSelected('vec-veganski', answer);
-    if (answer === 'Spreman sam') {
+    if (normalizeAnswer('vec-veganski', answer, 'ready')) {
       trackFlowCompleted();
       transitionToStage('after-choice');
     } else {
@@ -212,7 +266,10 @@ export default function Home() {
 
   const handleSolutionKnowComplete = (answer: string) => {
     trackAnswerSelected('solution-know', answer);
-    if (answer === 'Nisam siguran' || answer === 'Ne možemo') {
+    if (
+      normalizeAnswer('solution-know', answer, 'unsure') ||
+      normalizeAnswer('solution-know', answer, 'impossible')
+    ) {
       transitionToStage('vegan-diet-health');
     } else {
       transitionToStage('solution-choice');
@@ -222,7 +279,7 @@ export default function Home() {
   const handleVeganDietHealthComplete = (answer: string) => {
     setAnswers((prev) => ({ ...prev, 'vegan-diet-health': answer }));
     trackAnswerSelected('vegan-diet-health', answer);
-    if (answer === 'Nije me ubedilo') {
+    if (normalizeAnswer('vegan-diet-health', answer, 'notConvinced')) {
       transitionToStage('nije-ubedilo-resursi');
     } else {
       transitionToStage('solution-choice');
@@ -235,7 +292,7 @@ export default function Home() {
 
   const handleSolutionChoiceComplete = (answer: string) => {
     trackAnswerSelected('solution-choice', answer);
-    if (answer === 'Ne slažem se') {
+    if (normalizeAnswer('solution-choice', answer, 'disagree')) {
       transitionToStage('kontradiktornost-je');
     } else {
       transitionToStage('align-behaviour');
@@ -244,7 +301,7 @@ export default function Home() {
 
   const handleKontradiktornostJeComplete = (answer: string) => {
     trackAnswerSelected('kontradiktornost-je', answer);
-    if (answer === 'Nije tačno') {
+    if (normalizeAnswer('kontradiktornost-je', answer, 'notTrue')) {
       transitionToStage('nisi-iskren');
     } else {
       transitionToStage('align-behaviour');
@@ -254,7 +311,7 @@ export default function Home() {
   const handleAlignBehaviourComplete = (answer: string) => {
     setAnswers((prev) => ({ ...prev, 'align-behaviour': answer }));
     trackAnswerSelected('align-behaviour', answer);
-    if (answer === 'Ne') {
+    if (normalizeAnswer('align-behaviour', answer, 'no')) {
       transitionToStage('vracanje-na-odgovore');
     } else {
       transitionToStage('veganism-principle');
@@ -263,7 +320,7 @@ export default function Home() {
 
   const handleVracanjeNaOdgovoreComplete = (answer: string) => {
     trackAnswerSelected('vracanje-na-odgovore', answer);
-    if (answer === 'Ne') {
+    if (normalizeAnswer('vracanje-na-odgovore', answer, 'no')) {
       transitionToStage('ponovo-na-odgovore');
     } else {
       transitionToStage('veganism-principle');
@@ -272,7 +329,7 @@ export default function Home() {
 
   const handlePonovoNaOdgovoreComplete = (answer: string) => {
     trackAnswerSelected('ponovo-na-odgovore', answer);
-    if (answer === 'Ne') {
+    if (normalizeAnswer('ponovo-na-odgovore', answer, 'no')) {
       transitionToStage('ne-drzis-se');
     } else {
       transitionToStage('veganism-principle');

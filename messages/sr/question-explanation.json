@@ -1,0 +1,57 @@
+{
+  "next": "Razumem",
+  "blocks": [
+    {
+      "line": [
+        {
+          "text": "Ova pitanja nisu test. Nema tačnih odgovora.",
+          "bold": false,
+          "italic": false
+        }
+      ]
+    },
+    {
+      "line": [
+        {
+          "text": "Postavili smo ih jer ovo putovanje ima smisla samo za ljude kojima je stalo da budu ",
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "iskreni prema sebi",
+          "bold": true,
+          "italic": false
+        },
+        {
+          "text": ".",
+          "bold": false,
+          "italic": false
+        }
+      ]
+    },
+    {
+      "line": [
+        {
+          "text": "Ako želiš da se vidiš onakvim kakav jesi - ",
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "a ne onakvim kakvim ",
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "misliš da jesi",
+          "bold": true,
+          "italic": true
+        },
+        {
+          "text": ", nastavi dalje.",
+          "bold": false,
+          "italic": false
+        }
+      ]
+    }
+  ]
+}

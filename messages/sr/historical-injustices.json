@@ -1,0 +1,32 @@
+{
+  "intro": [
+    "Kroz istoriju, ogromne nepravde nisu činili monstrumi.",
+    "Činili su ih obični ljudi.",
+    "Ljudi koji su voleli svoje porodice.",
+    "Ljudi koji su se smatrali dobrima."
+  ],
+  "injustices": {
+    "left": {
+      "content": [
+        "Robovlasništvo je bilo normalno.",
+        "Zakonito.",
+        "Trajalo je milenijumima.",
+        "Većina ljudi je to podržavalo ili barem prihvatalo.",
+        "Samo su „živeli normalno“."
+      ]
+    },
+    "right": {
+      "content": [
+        "Hitler. Staljin. Mao.",
+        "Vojnici i policajci su izvršavali naredbe.",
+        "Milioni su stradali ne zato što su svi bili zli - već zato što su slušali, ćutali i prilagođavali se.",
+        "Nepravda je bila prihvaćena."
+      ]
+    }
+  },
+  "buttons": {
+    "intro": "Nastavi",
+    "slavery": "Dalje",
+    "nazism": "Nastavi"
+  }
+}

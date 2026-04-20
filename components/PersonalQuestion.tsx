@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 
+import { useTranslations } from 'next-intl';
+
 import { sectionBackgrounds } from '@/config/sectionBackgrounds';
 
 interface PersonalQuestionProps {
@@ -11,10 +13,12 @@ interface PersonalQuestionProps {
 export default function PersonalQuestion({
   onComplete,
 }: PersonalQuestionProps) {
+  const t = useTranslations('PersonalQuestion');
   const [selected, setSelected] = useState<string | null>(null);
   const [hideQuestion, setHideQuestion] = useState(false);
   const [showFlashMessage, setShowFlashMessage] = useState(false);
   const [fadeOut, setFadeOut] = useState(false);
+  const options = t.raw('options') as string[];
 
   const handleAnswer = (value: string) => {
     setSelected(value);
@@ -71,13 +75,12 @@ export default function PersonalQuestion({
           >
             {/* Question */}
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-gray-200 leading-relaxed max-w-3xl mx-auto">
-              Da li bi bio (ili bila) protiv ovih nepravdi tada kada su se
-              zaista dešavale?
+              {t('question')}
             </h1>
 
             {/* Options */}
             <div className="flex flex-row gap-8">
-              {['Da', 'Nadam se', 'Ne znam'].map((option, index) => (
+              {options.map((option, index) => (
                 <button
                   key={index}
                   onClick={() => handleAnswer(option)}
@@ -107,7 +110,7 @@ export default function PersonalQuestion({
             }`}
           >
             <p className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-light text-gray-200 italic">
-              Većina ljudi veruje da bi bila.
+              {t('flashMessage')}
             </p>
           </div>
         )}

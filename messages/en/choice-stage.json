@@ -1,0 +1,11 @@
+{
+  "title": "Choose",
+  "blue": {
+    "label": "Walk Away",
+    "description": "Stay comfortable in the familiar."
+  },
+  "red": {
+    "label": "Discover",
+    "description": "Uncover the truth about yourself and the world."
+  }
+}
