@@ -12,10 +12,7 @@ export default function ApatheticStance() {
   const text = t.raw('text') as string[];
 
   return (
-    <StoryStage
-      stage={StageId.ApatheticStance}
-      textContentClassName="relative p-6 md:p-16"
-    >
+    <StoryStage stage={StageId.ApatheticStance}>
       <AnimatedText
         text={text}
         speed={120}

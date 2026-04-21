@@ -22,10 +22,6 @@ export default function RedPillIntro({ onComplete }: RedPillIntroProps) {
   return (
     <StoryStage
       stage={StageId.Intro}
-      contentSpacing="sm"
-      showBackgroundEffects={false}
-      textSurfaceClassName="mx-1 sm:mx-2"
-      textContentClassName="p-8 md:p-12"
       footer={
         <NextButton onClick={onComplete} label={t('next')} show={showButton} />
       }

@@ -25,7 +25,6 @@ export default function RootOfTheProblem({
   return (
     <StoryStage
       stage="root-of-the-problem"
-      textContentClassName="relative p-6 md:p-16"
       footer={
         <NextButton onClick={onComplete} label="Nastavi" show={showButton} />
       }

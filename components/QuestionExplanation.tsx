@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 
 import { AnimatedTextBlock } from '@/lib/i18n/animatedText';
+
 import AnimatedText from './ui/AnimatedText';
 import NextButton from './ui/NextButton';
 import StoryStage from './ui/StoryStage';
@@ -23,9 +24,6 @@ export default function QuestionExplanation({
   return (
     <StoryStage
       stage="explanation"
-      maxWidth="lg"
-      contentSpacing="sm"
-      textContentClassName="px-4 py-4 md:px-6 md:py-6"
       footer={
         <NextButton onClick={onComplete} label={t('next')} show={showButton} />
       }

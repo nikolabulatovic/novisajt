@@ -23,7 +23,6 @@ export default function OtherPigs({ onComplete }: OtherPigsProps) {
   return (
     <StoryStage
       stage="other-pigs"
-      textContentClassName="relative p-6 md:p-16"
       footer={
         <NextButton onClick={onComplete} label="Nastavi" show={showButton} />
       }

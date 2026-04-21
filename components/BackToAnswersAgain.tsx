@@ -37,7 +37,6 @@ export default function BackToAnswersAgain({
   return (
     <StoryStage
       stage={StageId.BackToAnswersAgain}
-      textContentClassName="relative p-6 md:p-16"
       footer={
         showOptions ? (
           <AnswerOptions options={options} onSelect={onComplete} />

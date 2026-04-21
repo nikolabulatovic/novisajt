@@ -42,7 +42,6 @@ export default function SolutionChoice({ onComplete }: SolutionChoiceProps) {
   return (
     <StoryStage
       stage="solution-choice"
-      textContentClassName="relative p-6 md:p-16"
       footer={
         showOptions ? (
           <AnswerOptions options={options} onSelect={handleAnswer} />

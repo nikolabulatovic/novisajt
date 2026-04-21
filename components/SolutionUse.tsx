@@ -32,7 +32,6 @@ export default function SolutionUse({ onComplete }: SolutionUseProps) {
   return (
     <StoryStage
       stage="solution-use"
-      textContentClassName="p-6 md:p-16"
       footer={
         <AnswerOptions
           options={options}

@@ -8,6 +8,20 @@ import { Stage, StageId } from '@/contexts/NavigationContext';
  */
 export type StageTextSurfaceMode = 'backdrop' | 'panel' | 'none';
 
+export interface StoryStageUiConfig {
+  maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
+  showBackgroundEffects?: boolean;
+  pageClassName?: string;
+  contentSpacing?: 'sm' | 'md' | 'lg';
+  contentAlign?: 'left' | 'center' | 'right';
+  contentContainerClassName?: string;
+  textContentClassName?: string;
+  textSurfaceClassName?: string;
+  surface?: StageTextSurfaceMode;
+  backdropType?: 'linear' | 'radial';
+  backdropOpacity?: number;
+}
+
 export interface StageConfig {
   backgroundImage?: string;
   opacity?: number;
@@ -21,6 +35,8 @@ export interface StageConfig {
   textSurface?: StageTextSurfaceMode;
   /** Used when `textSurface` is `panel`. Defaults to `dark`. */
   glassVariant?: 'dark' | 'light';
+  /** Optional StoryStage layout defaults for this stage. */
+  storyStage?: StoryStageUiConfig;
 }
 
 export const stageConfig: Record<Stage, StageConfig> = {
@@ -33,6 +49,12 @@ export const stageConfig: Record<Stage, StageConfig> = {
     backgroundImage: '/images/intro-reflection.jpeg',
     opacity: 0.2,
     pillTransition: true,
+    storyStage: {
+      contentSpacing: 'sm',
+      showBackgroundEffects: false,
+      textSurfaceClassName: 'mx-1 sm:mx-2',
+      textContentClassName: 'p-8 md:p-12',
+    },
   },
   [StageId.Evaluation]: {
     backgroundImage: '/images/character-introspection.jpeg',
@@ -47,6 +69,11 @@ export const stageConfig: Record<Stage, StageConfig> = {
     opacity: 0.35,
     pillTransition: true,
     textSurface: 'none',
+    storyStage: {
+      maxWidth: 'lg',
+      contentSpacing: 'sm',
+      textContentClassName: 'px-4 py-4 md:px-6 md:py-6',
+    },
   },
   [StageId.Historical]: {
     backgroundImage: '/images/historical-weight.png',

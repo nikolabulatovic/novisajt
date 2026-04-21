@@ -12,10 +12,7 @@ export default function NotHonest() {
   ];
 
   return (
-    <StoryStage
-      stage={StageId.NotHonest}
-      textContentClassName="relative p-6 md:p-16"
-    >
+    <StoryStage stage={StageId.NotHonest}>
       <AnimatedText
         text={text}
         speed={120}

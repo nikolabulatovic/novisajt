@@ -32,7 +32,6 @@ export default function WouldYouLikeToBe({
   return (
     <StoryStage
       stage={StageId.WouldYouLikeToBe}
-      textContentClassName="relative p-6 md:p-16"
       footer={
         showOptions ? (
           <AnswerOptions options={options} onSelect={onComplete} />

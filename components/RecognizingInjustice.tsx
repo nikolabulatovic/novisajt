@@ -12,10 +12,7 @@ export default function RecognizingInjustice() {
   ];
 
   return (
-    <StoryStage
-      stage={StageId.RecognizingInjustice}
-      textContentClassName="relative p-6 md:p-16"
-    >
+    <StoryStage stage={StageId.RecognizingInjustice}>
       <AnimatedText
         text={text}
         speed={120}

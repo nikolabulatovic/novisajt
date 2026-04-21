@@ -22,7 +22,6 @@ export default function FromTheWild({ onComplete }: FromTheWildProps) {
   return (
     <StoryStage
       stage="from-the-wild"
-      textContentClassName="relative p-6 md:p-16"
       footer={
         <NextButton onClick={onComplete} label="Nastavi" show={showButton} />
       }

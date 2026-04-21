@@ -45,7 +45,6 @@ export default function LetThemLive({ onComplete }: LetThemLiveProps) {
   return (
     <StoryStage
       stage="let-them-live"
-      textContentClassName="relative p-6 md:p-16"
       footer={
         showOptions ? (
           <AnswerOptions options={options} onSelect={handleAnswer} />

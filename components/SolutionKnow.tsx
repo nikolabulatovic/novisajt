@@ -33,7 +33,6 @@ export default function SolutionKnow({ onComplete }: SolutionKnowProps) {
   return (
     <StoryStage
       stage="solution-know"
-      textContentClassName="p-6 md:p-16"
       footer={
         <AnswerOptions
           options={options}

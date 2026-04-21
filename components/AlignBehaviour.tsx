@@ -36,7 +36,6 @@ export default function AlignBehaviour({ onComplete }: AlignBehaviourProps) {
   return (
     <StoryStage
       stage="align-behaviour"
-      textContentClassName="relative p-6 md:p-16"
       footer={
         showOptions ? (
           <AnswerOptions options={options} onSelect={handleAnswer} />

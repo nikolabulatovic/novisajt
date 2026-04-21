@@ -25,7 +25,6 @@ export default function AnimalCostOfLiving({
   return (
     <StoryStage
       stage="animal-cost-of-living"
-      textContentClassName="relative p-6 md:p-16"
       footer={
         <NextButton onClick={onComplete} label="Nastavi" show={showButton} />
       }

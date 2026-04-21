@@ -24,7 +24,6 @@ export default function AcceptingSelfOwnership({
   return (
     <StoryStage
       stage="accepting-self-ownership"
-      textContentClassName="relative p-6 md:p-16"
       footer={
         <NextButton onClick={onComplete} label="Nastavi" show={showButton} />
       }

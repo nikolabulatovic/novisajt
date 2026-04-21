@@ -12,10 +12,7 @@ export default function NotFollowingThrough() {
   ];
 
   return (
-    <StoryStage
-      stage={StageId.NotFollowingThrough}
-      textContentClassName="relative p-6 md:p-16"
-    >
+    <StoryStage stage={StageId.NotFollowingThrough}>
       <AnimatedText
         text={text}
         speed={120}

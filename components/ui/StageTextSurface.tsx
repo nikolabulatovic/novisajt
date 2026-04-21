@@ -53,10 +53,8 @@ export default function StageTextSurface({
 
   if (surface === 'backdrop') {
     const opacity = backdropOpacity ?? 0.65;
-    const outer =
-      contentClassName.length > 0 ? `relative ${contentClassName}` : 'relative';
     return (
-      <div className={outer}>
+      <div className={contentClassName}>
         <TextBackdrop type={backdropType} opacity={opacity} />
         <div className="relative z-10">{children}</div>
       </div>

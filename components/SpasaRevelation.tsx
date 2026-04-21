@@ -41,7 +41,6 @@ export default function SpasaRevelation({ onComplete }: SpasaRevelationProps) {
   return (
     <StoryStage
       stage="spasa-revelation"
-      textContentClassName="relative p-6 md:p-16"
       footer={
         <NextButton onClick={onComplete} label="Nastavi" show={showButton} />
       }

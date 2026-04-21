@@ -31,7 +31,6 @@ export default function AlreadyVegan({ onComplete }: AlreadyVeganProps) {
   return (
     <StoryStage
       stage={StageId.AlreadyVegan}
-      textContentClassName="relative p-6 md:p-16"
       footer={
         showOptions ? (
           <AnswerOptions options={options} onSelect={onComplete} />

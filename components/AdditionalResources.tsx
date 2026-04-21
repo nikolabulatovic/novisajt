@@ -25,7 +25,6 @@ export default function AdditionalResources({
   return (
     <StoryStage
       stage={StageId.AdditionalResources}
-      textContentClassName="relative p-6 md:p-16"
       footer={
         <div className="flex justify-center mt-8 md:mt-12">
           <Pill color="red" onClick={onComplete} show={showButton} />

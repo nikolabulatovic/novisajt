@@ -24,7 +24,6 @@ export default function VeganismPrinciple({
   return (
     <StoryStage
       stage="veganism-principle"
-      textContentClassName="relative p-6 md:p-16"
       footer={
         <div className="flex justify-center mt-8 md:mt-12">
           <Pill color="red" onClick={onComplete} show={showButton} />

@@ -27,7 +27,6 @@ export default function AnimalsTreatedAsProducts({
   return (
     <StoryStage
       stage="animals-treated-as-products"
-      textContentClassName="relative p-6 md:p-16"
       footer={
         <NextButton onClick={onComplete} label="Nastavi" show={showButton} />
       }

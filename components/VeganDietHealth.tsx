@@ -38,7 +38,6 @@ export default function VeganDietHealth({ onComplete }: VeganDietHealthProps) {
   return (
     <StoryStage
       stage="vegan-diet-health"
-      textContentClassName="relative p-6 md:p-16"
       footer={
         showOptions ? (
           <AnswerOptions options={options} onSelect={handleAnswer} />

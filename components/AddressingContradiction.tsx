@@ -36,7 +36,6 @@ export default function AddressingContradiction({
   return (
     <StoryStage
       stage={StageId.AddressingContradiction}
-      textContentClassName="relative p-6 md:p-16"
       footer={
         showOptions ? (
           <AnswerOptions options={options} onSelect={onComplete} />

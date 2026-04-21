@@ -22,7 +22,6 @@ export default function CowFate({ onComplete }: CowFateProps) {
   return (
     <StoryStage
       stage="cow-fate"
-      textContentClassName="relative p-6 md:p-16"
       footer={
         <NextButton onClick={onComplete} label="Nastavi" show={showButton} />
       }

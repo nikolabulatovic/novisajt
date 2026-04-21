@@ -27,7 +27,6 @@ export default function ReproductionControl({
   return (
     <StoryStage
       stage="reproduction-control"
-      textContentClassName="relative p-6 md:p-16"
       footer={
         <NextButton onClick={onComplete} label="Nastavi" show={showButton} />
       }

@@ -2,37 +2,15 @@
 
 import { ReactNode } from 'react';
 
-import { type StageTextSurfaceMode, stageConfig } from '@/config/stageConfig';
+import { stageConfig } from '@/config/stageConfig';
 import type { Stage } from '@/contexts/NavigationContext';
 
 import ContentContainer from './ContentContainer';
-import type { GlassPanelVariant } from './GlassPanel';
 import PageContainer from './PageContainer';
 import StageTextSurface from './StageTextSurface';
-import type { TextBackdropGradientType } from './TextBackdrop';
 
 export interface StoryStageProps {
   stage: Stage;
-  /** Passed to `PageContainer` (defaults from `stagePresentation[stage]`). */
-  maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
-  showBackgroundEffects?: boolean;
-  pageClassName?: string;
-  /** Overrides config background when you need a one-off image. */
-  backgroundImage?: string;
-  /** Overrides config opacity. */
-  backgroundImageOpacity?: number;
-  /** `ContentContainer` */
-  contentSpacing?: 'sm' | 'md' | 'lg';
-  contentAlign?: 'left' | 'center' | 'right';
-  contentContainerClassName?: string;
-  /** Passed to `StageTextSurface` as `contentClassName` (padding around text). */
-  textContentClassName?: string;
-  /** Passed to `StageTextSurface` as `className` (e.g. horizontal margin on the glass shell). */
-  textSurfaceClassName?: string;
-  surface?: StageTextSurfaceMode;
-  glassVariant?: GlassPanelVariant;
-  backdropType?: TextBackdropGradientType;
-  backdropOpacity?: number;
   /** Narrative body — always wrapped in `StageTextSurface` for this stage. */
   children: ReactNode;
   /** CTAs / pills / answer rows — below the text chrome, still inside `ContentContainer`. */
@@ -45,49 +23,38 @@ export interface StoryStageProps {
  */
 export default function StoryStage({
   stage,
-  maxWidth,
-  showBackgroundEffects = true,
-  pageClassName = '',
-  backgroundImage: backgroundImageProp,
-  backgroundImageOpacity: backgroundImageOpacityProp,
-  contentSpacing = 'lg',
-  contentAlign = 'center',
-  contentContainerClassName = '',
-  textContentClassName = '',
-  textSurfaceClassName = '',
-  surface,
-  glassVariant,
-  backdropType,
-  backdropOpacity,
   children,
   footer,
 }: StoryStageProps) {
   const cfg = stageConfig[stage];
-  const backgroundImage = backgroundImageProp ?? cfg.backgroundImage;
-  const backgroundImageOpacity =
-    backgroundImageOpacityProp ?? cfg.opacity ?? 0.8;
+  const storyDefaults = cfg.storyStage ?? {};
+
+  const backgroundImage = cfg.backgroundImage;
+  const backgroundImageOpacity = cfg.opacity ?? 0.8;
 
   return (
     <PageContainer
       backgroundImage={backgroundImage}
       backgroundImageOpacity={backgroundImageOpacity}
-      maxWidth={maxWidth ?? 'md'}
-      showBackgroundEffects={showBackgroundEffects}
-      className={pageClassName}
+      maxWidth={storyDefaults.maxWidth ?? 'md'}
+      showBackgroundEffects={storyDefaults.showBackgroundEffects ?? true}
+      className={storyDefaults.pageClassName ?? ''}
     >
       <ContentContainer
-        spacing={contentSpacing}
-        align={contentAlign}
-        className={contentContainerClassName}
+        spacing={storyDefaults.contentSpacing ?? 'lg'}
+        align={storyDefaults.contentAlign ?? 'center'}
+        className={storyDefaults.contentContainerClassName ?? ''}
       >
         <StageTextSurface
           stage={stage}
-          surface={surface}
-          glassVariant={glassVariant}
-          className={textSurfaceClassName}
-          contentClassName={textContentClassName}
-          backdropType={backdropType}
-          backdropOpacity={backdropOpacity}
+          surface={storyDefaults.surface}
+          glassVariant={cfg.glassVariant}
+          className={storyDefaults.textSurfaceClassName ?? ''}
+          contentClassName={
+            storyDefaults.textContentClassName ?? 'relative p-6 md:p-16'
+          }
+          backdropType={storyDefaults.backdropType}
+          backdropOpacity={storyDefaults.backdropOpacity}
         >
           {children}
         </StageTextSurface>
