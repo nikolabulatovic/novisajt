@@ -3,20 +3,9 @@ import { type Dispatch, type SetStateAction, useMemo } from 'react';
 import { type Stage, StageId } from '@/contexts/NavigationContext';
 import { AnswerId } from '@/lib/answerIds';
 import {
-  nextAfterAlignBehaviour,
-  nextAfterBreakingQuestion,
-  nextAfterDaLiBiVoleo,
-  nextAfterKontradiktornostJe,
-  nextAfterLetThemLive,
-  nextAfterPersonalQuestion,
-  nextAfterPonovoNaOdgovore,
-  nextAfterSolutionChoice,
-  nextAfterSolutionKnow,
-  nextAfterSolutionUse,
-  nextAfterVecVeganski,
-  nextAfterVeganDietHealth,
-  nextAfterVracanjeNaOdgovore,
-} from '@/lib/storyFlow';
+  answerStageTransitions,
+  directStageTransitions,
+} from '@/lib/story/transitions';
 
 export interface StoryFlowHandlerDeps {
   transitionToStage: (stage: Stage) => void;
@@ -24,6 +13,8 @@ export interface StoryFlowHandlerDeps {
   trackAnswerSelected: (stage: Stage, answer: string) => void;
   trackFlowCompleted: () => void;
 }
+
+type StageCompletionAnswer = string | Record<string, string>;
 
 export function useStoryFlowHandlers({
   transitionToStage,
@@ -33,148 +24,50 @@ export function useStoryFlowHandlers({
 }: StoryFlowHandlerDeps) {
   return useMemo(
     () => ({
-      handleIntroComplete: () => {
-        transitionToStage(StageId.Evaluation);
-      },
-
-      handleEvaluationComplete: (userAnswers: Record<string, string>) => {
-        setAnswers(userAnswers);
-        Object.entries(userAnswers).forEach(([question, answer]) => {
-          trackAnswerSelected(StageId.Evaluation, `${question}:${answer}`);
-        });
-        transitionToStage(StageId.Explanation);
-      },
-
-      handleExplanationComplete: () => {
-        transitionToStage(StageId.Historical);
-      },
-
-      handleHistoricalComplete: () => {
-        transitionToStage(StageId.PersonalQuestion);
-      },
-
-      handlePersonalQuestionComplete: (answer: string) => {
-        trackAnswerSelected(StageId.PersonalQuestion, answer);
-        transitionToStage(nextAfterPersonalQuestion(answer));
-      },
-
-      handleDaLiBiVoleoComplete: (answer: string) => {
-        trackAnswerSelected(StageId.WouldYouLikeToBe, answer);
-        transitionToStage(nextAfterDaLiBiVoleo(answer));
-      },
-
-      handleBreakingQuestionComplete: (answer: string) => {
-        trackAnswerSelected(StageId.BreakingQuestion, answer);
-        transitionToStage(nextAfterBreakingQuestion(answer));
-      },
-
-      handleSpasaStoryComplete: () => {
-        transitionToStage(StageId.SpasaRevelation);
-      },
-
-      handleSpasaRevelationComplete: () => {
-        transitionToStage(StageId.OtherPigs);
-      },
-
-      handleOtherPigsComplete: () => {
-        transitionToStage(StageId.RootOfTheProblem);
-      },
-
-      handleRootOfTheProblemComplete: () => {
-        transitionToStage(StageId.AnimalsTreatedAsProducts);
-      },
-
-      handleAnimalsTreatedAsProductsComplete: () => {
-        transitionToStage(StageId.LetThemLive);
-      },
-
-      handleLetThemLiveComplete: (answer: string) => {
-        transitionToStage(nextAfterLetThemLive(answer));
-      },
-
-      handleAcceptingSelfOwnershipComplete: () => {
-        transitionToStage(StageId.FromTheWild);
-      },
-
-      handleFromTheWildComplete: () => {
-        transitionToStage(StageId.ReproductionControl);
-      },
-
-      handleReproductionControlComplete: () => {
-        transitionToStage(StageId.ViciousCycle);
-      },
-
-      handleViciousCycleComplete: () => {
-        transitionToStage(StageId.CowFate);
-      },
-
-      handleCowFateComplete: () => {
-        transitionToStage(StageId.AnimalCostOfLiving);
-      },
-
-      handleAnimalCostOfLivingComplete: () => {
-        transitionToStage(StageId.SolutionUse);
-      },
-
-      handleSolutionUseComplete: (answer: string) => {
-        trackAnswerSelected(StageId.SolutionUse, answer);
-        transitionToStage(nextAfterSolutionUse(answer));
-      },
-
-      handleVecVeganskiComplete: (answer: string) => {
-        trackAnswerSelected(StageId.AlreadyVegan, answer);
-        if (answer === AnswerId.YES) {
-          trackFlowCompleted();
+      completeStage: (
+        completedStage: Stage,
+        answer?: StageCompletionAnswer,
+      ) => {
+        if (completedStage === StageId.Evaluation) {
+          if (answer && typeof answer !== 'string') {
+            setAnswers(answer);
+            Object.entries(answer).forEach(([question, value]) => {
+              trackAnswerSelected(StageId.Evaluation, `${question}:${value}`);
+            });
+            transitionToStage(StageId.Explanation);
+          }
+          return;
         }
-        transitionToStage(nextAfterVecVeganski(answer));
-      },
 
-      handleSolutionKnowComplete: (answer: string) => {
-        trackAnswerSelected(StageId.SolutionKnow, answer);
-        transitionToStage(nextAfterSolutionKnow(answer));
-      },
+        if (typeof answer === 'string') {
+          trackAnswerSelected(completedStage, answer);
 
-      handleVeganDietHealthComplete: (answer: string) => {
-        setAnswers((prev) => ({ ...prev, [StageId.VeganDietHealth]: answer }));
-        trackAnswerSelected(StageId.VeganDietHealth, answer);
-        transitionToStage(nextAfterVeganDietHealth(answer));
-      },
+          if (
+            completedStage === StageId.AlreadyVegan &&
+            answer === AnswerId.YES
+          ) {
+            trackFlowCompleted();
+          }
 
-      handleNijeUbediloResursiComplete: () => {
-        transitionToStage(StageId.SolutionChoice);
-      },
+          const nextForAnswer = answerStageTransitions[completedStage];
+          if (nextForAnswer) {
+            transitionToStage(nextForAnswer(answer));
+            return;
+          }
+        }
 
-      handleSolutionChoiceComplete: (answer: string) => {
-        trackAnswerSelected(StageId.SolutionChoice, answer);
-        transitionToStage(nextAfterSolutionChoice(answer));
-      },
+        if (completedStage === StageId.VeganismPrinciple) {
+          trackFlowCompleted();
+          transitionToStage(StageId.AfterChoice);
+          return;
+        }
 
-      handleKontradiktornostJeComplete: (answer: string) => {
-        trackAnswerSelected(StageId.AddressingContradiction, answer);
-        transitionToStage(nextAfterKontradiktornostJe(answer));
-      },
-
-      handleAlignBehaviourComplete: (answer: string) => {
-        setAnswers((prev) => ({ ...prev, [StageId.AlignBehaviour]: answer }));
-        trackAnswerSelected(StageId.AlignBehaviour, answer);
-        transitionToStage(nextAfterAlignBehaviour(answer));
-      },
-
-      handleVracanjeNaOdgovoreComplete: (answer: string) => {
-        trackAnswerSelected(StageId.BackToAnswers, answer);
-        transitionToStage(nextAfterVracanjeNaOdgovore(answer));
-      },
-
-      handlePonovoNaOdgovoreComplete: (answer: string) => {
-        trackAnswerSelected(StageId.BackToAnswersAgain, answer);
-        transitionToStage(nextAfterPonovoNaOdgovore(answer));
-      },
-
-      handleVeganismPrincipleComplete: () => {
-        trackFlowCompleted();
-        transitionToStage(StageId.AfterChoice);
+        const nextStage = directStageTransitions[completedStage];
+        if (nextStage) {
+          transitionToStage(nextStage);
+        }
       },
     }),
-    [transitionToStage, setAnswers, trackAnswerSelected, trackFlowCompleted],
+    [setAnswers, trackAnswerSelected, trackFlowCompleted, transitionToStage],
   );
 }
