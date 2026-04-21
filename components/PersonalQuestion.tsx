@@ -8,6 +8,7 @@ import { sectionBackgrounds } from '@/config/sectionBackgrounds';
 import { StageId } from '@/contexts/NavigationContext';
 import type { LocalizedAnswerOption } from '@/lib/answerIds';
 
+import AnswerOptions from './ui/AnswerOptions';
 import StageTextSurface from './ui/StageTextSurface';
 
 interface PersonalQuestionProps {
@@ -22,7 +23,12 @@ export default function PersonalQuestion({
   const [hideQuestion, setHideQuestion] = useState(false);
   const [showFlashMessage, setShowFlashMessage] = useState(false);
   const [fadeOut, setFadeOut] = useState(false);
-  const options = t.raw('options') as LocalizedAnswerOption[];
+  const options = (t.raw('options') as LocalizedAnswerOption[]).map(
+    (option) => ({
+      id: option.id,
+      label: option.label,
+    }),
+  );
 
   const handleAnswer = (value: string) => {
     setSelected(value);
@@ -87,29 +93,23 @@ export default function PersonalQuestion({
             </StageTextSurface>
 
             {/* Options */}
-            <div className="flex flex-row gap-8">
-              {options.map((option) => (
-                <button
-                  key={option.id}
-                  onClick={() => handleAnswer(option.id)}
-                  disabled={selected !== null}
-                  className={`w-full text-center px-2 py-6 rounded-xl transition-all duration-300 transform hover:scale-[1.02] ${
-                    selected === option.id
-                      ? 'bg-gray-800/60 border-2 border-gray-600 cursor-pointer'
-                      : selected !== null
-                        ? 'opacity-50 cursor-not-allowed'
-                        : 'bg-gray-900/70 border border-gray-800/50 hover:bg-gray-800/80 hover:border-gray-700/50 cursor-pointer'
-                  }`}
-                >
-                  <span
-                    className="text-lg md:text-xl lg:text-2xl text-gray-300 font-light"
-                    style={{ fontFamily: 'var(--font-literata), serif' }}
-                  >
-                    {option.label}
-                  </span>
-                </button>
-              ))}
-            </div>
+            <AnswerOptions
+              options={options}
+              onSelect={handleAnswer}
+              selectedId={selected}
+              disableUnselectedWhenSelected
+              containerClassName="flex flex-row gap-8"
+              textClassName="text-lg md:text-xl lg:text-2xl text-gray-300 font-light"
+              getButtonClassName={(isSelected, isDisabled) =>
+                `w-full text-center px-2 py-6 rounded-xl transition-all duration-300 transform hover:scale-[1.02] ${
+                  isSelected
+                    ? 'bg-gray-800/60 border-2 border-gray-600 cursor-pointer'
+                    : isDisabled
+                      ? 'opacity-50 cursor-not-allowed'
+                      : 'bg-gray-900/70 border border-gray-800/50 hover:bg-gray-800/80 hover:border-gray-700/50 cursor-pointer'
+                }`
+              }
+            />
           </div>
         ) : (
           <StageTextSurface
