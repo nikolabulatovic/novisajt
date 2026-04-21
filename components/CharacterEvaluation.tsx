@@ -4,7 +4,7 @@ import { MouseEvent, useRef, useState } from 'react';
 
 import { useTranslations } from 'next-intl';
 
-import { sectionBackgrounds } from '@/config/sectionBackgrounds';
+import { stageConfig } from '@/config/stageConfig';
 
 import AnswerOption from './ui/AnswerOption';
 import ProgressDots from './ui/ProgressDots';
@@ -118,7 +118,7 @@ export default function CharacterEvaluation({
     }, 500); // Non-selected fade (500ms) + keep selected visible (1000ms)
   };
 
-  const { backgroundImage, opacity = 0.8 } = sectionBackgrounds.evaluation;
+  const { backgroundImage, opacity = 0.8 } = stageConfig.evaluation;
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 md:p-8 relative bg-black overflow-hidden">

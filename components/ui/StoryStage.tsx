@@ -2,10 +2,7 @@
 
 import { ReactNode } from 'react';
 
-import {
-  type StageTextSurfaceMode,
-  sectionBackgrounds,
-} from '@/config/sectionBackgrounds';
+import { type StageTextSurfaceMode, stageConfig } from '@/config/stageConfig';
 import type { Stage } from '@/contexts/NavigationContext';
 
 import ContentContainer from './ContentContainer';
@@ -16,7 +13,7 @@ import type { TextBackdropGradientType } from './TextBackdrop';
 
 export interface StoryStageProps {
   stage: Stage;
-  /** Passed to `PageContainer` (defaults from `sectionBackgrounds[stage]`). */
+  /** Passed to `PageContainer` (defaults from `stagePresentation[stage]`). */
   maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
   showBackgroundEffects?: boolean;
   pageClassName?: string;
@@ -44,7 +41,7 @@ export interface StoryStageProps {
 
 /**
  * One shell for the common flow: full-page stage image + centered column + config-driven
- * text surface (`backdrop` | `panel` | `none` from `sectionBackgrounds[stage]`) + optional footer.
+ * text surface (`backdrop` | `panel` | `none` from `stagePresentation[stage]`) + optional footer.
  */
 export default function StoryStage({
   stage,
@@ -65,7 +62,7 @@ export default function StoryStage({
   children,
   footer,
 }: StoryStageProps) {
-  const cfg = sectionBackgrounds[stage];
+  const cfg = stageConfig[stage];
   const backgroundImage = backgroundImageProp ?? cfg.backgroundImage;
   const backgroundImageOpacity =
     backgroundImageOpacityProp ?? cfg.opacity ?? 0.8;

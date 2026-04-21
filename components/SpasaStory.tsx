@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-import { sectionBackgrounds } from '@/config/sectionBackgrounds';
+import { stageConfig } from '@/config/stageConfig';
 
 import AnimatedText from './ui/AnimatedText';
 import ContentContainer from './ui/ContentContainer';
@@ -38,7 +38,7 @@ export default function SpasaStory({ onComplete }: SpasaStoryProps) {
     }
   };
 
-  const { backgroundImage, opacity = 0.8 } = sectionBackgrounds['spasa-story'];
+  const { backgroundImage, opacity = 0.8 } = stageConfig['spasa-story'];
 
   return (
     <PageContainer

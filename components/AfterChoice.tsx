@@ -1,6 +1,6 @@
 'use client';
 
-import { sectionBackgrounds } from '@/config/sectionBackgrounds';
+import { stageConfig } from '@/config/stageConfig';
 
 import AnimatedText from './ui/AnimatedText';
 import ContentContainer from './ui/ContentContainer';
@@ -47,7 +47,7 @@ function TelegramIcon() {
 }
 
 export default function AfterChoice() {
-  const { backgroundImage, opacity = 0.8 } = sectionBackgrounds['after-choice'];
+  const { backgroundImage, opacity = 0.8 } = stageConfig['after-choice'];
 
   const title = [
     'Svaka čast! Izabrao si stranu pravde i empatije.',

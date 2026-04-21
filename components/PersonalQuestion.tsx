@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import { useTranslations } from 'next-intl';
 
-import { sectionBackgrounds } from '@/config/sectionBackgrounds';
+import { stageConfig } from '@/config/stageConfig';
 import { StageId } from '@/contexts/NavigationContext';
 import type { LocalizedAnswerOption } from '@/lib/answerIds';
 
@@ -62,7 +62,7 @@ export default function PersonalQuestion({
       */}
       {(() => {
         const { backgroundImage, opacity = 0.8 } =
-          sectionBackgrounds[StageId.PersonalQuestion];
+          stageConfig[StageId.PersonalQuestion];
         return backgroundImage ? (
           <div className="absolute inset-0 w-full h-full overflow-hidden">
             <div

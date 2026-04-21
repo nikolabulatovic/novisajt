@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 import { useTranslations } from 'next-intl';
 
-import { sectionBackgrounds } from '@/config/sectionBackgrounds';
+import { stageConfig } from '@/config/stageConfig';
 
 import NextButton from './ui/NextButton';
 import StageTextSurface from './ui/StageTextSurface';
@@ -97,7 +97,7 @@ export default function HistoricalInjustices({
     }
   };
 
-  const { backgroundImage, opacity = 0.8 } = sectionBackgrounds.historical;
+  const { backgroundImage, opacity = 0.8 } = stageConfig.historical;
 
   return (
     <div className="min-h-screen flex items-center justify-center relative bg-black">

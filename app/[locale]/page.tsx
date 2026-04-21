@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from 'react';
 
 import NavigationMenu from '@/components/NavigationMenu';
 import PillTransitionLayer from '@/components/ui/PillTransitionLayer';
-import { sectionBackgrounds } from '@/config/sectionBackgrounds';
+import { stageConfig } from '@/config/stageConfig';
 import {
   NavigationProvider,
   Stage,
@@ -37,7 +37,7 @@ export default function Home() {
 
   const transitionToStage = useCallback(
     (newStage: Stage) => {
-      if (sectionBackgrounds[stage]?.pillTransition) {
+      if (stageConfig[stage]?.pillTransition) {
         setPendingNextStage(newStage);
       } else {
         setStage(newStage);

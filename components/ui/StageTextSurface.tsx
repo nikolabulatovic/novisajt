@@ -2,10 +2,7 @@
 
 import { ReactNode } from 'react';
 
-import {
-  type StageTextSurfaceMode,
-  sectionBackgrounds,
-} from '@/config/sectionBackgrounds';
+import { type StageTextSurfaceMode, stageConfig } from '@/config/stageConfig';
 import type { Stage } from '@/contexts/NavigationContext';
 
 import GlassPanel, { GlassPanelVariant } from './GlassPanel';
@@ -15,13 +12,13 @@ export type { StageTextSurfaceMode };
 
 export interface StageTextSurfaceProps {
   /**
-   * When set, `textSurface` / `glassVariant` fall back to `sectionBackgrounds[stage]`
+   * When set, `textSurface` / `glassVariant` fall back to `stagePresentation[stage]`
    * unless overridden by props below.
    */
   stage?: Stage;
-  /** Overrides `sectionBackgrounds[stage].textSurface`. */
+  /** Overrides `stagePresentation[stage].textSurface`. */
   surface?: StageTextSurfaceMode;
-  /** Overrides `sectionBackgrounds[stage].glassVariant` (only used when surface is `panel`). */
+  /** Overrides `stagePresentation[stage].glassVariant` (only used when surface is `panel`). */
   glassVariant?: GlassPanelVariant;
   className?: string;
   contentClassName?: string;
@@ -32,7 +29,7 @@ export interface StageTextSurfaceProps {
 
 /**
  * Renders story text on either a gradient backdrop, a frosted `GlassPanel`, or plain content —
- * driven by `sectionBackgrounds[stage].textSurface` (default `panel`) or explicit props.
+ * driven by `stagePresentation[stage].textSurface` (default `panel`) or explicit props.
  */
 export default function StageTextSurface({
   stage,
@@ -44,7 +41,7 @@ export default function StageTextSurface({
   backdropOpacity,
   children,
 }: StageTextSurfaceProps) {
-  const cfg = stage != null ? sectionBackgrounds[stage] : undefined;
+  const cfg = stage != null ? stageConfig[stage] : undefined;
   const surface: StageTextSurfaceMode =
     surfaceProp ?? cfg?.textSurface ?? 'panel';
   const glassVariant: GlassPanelVariant =

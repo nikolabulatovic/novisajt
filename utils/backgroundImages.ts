@@ -1,10 +1,10 @@
-import { sectionBackgrounds } from '@/config/sectionBackgrounds';
+import { stageConfig } from '@/config/stageConfig';
 import { Stage } from '@/contexts/NavigationContext';
 
 export function getBackgroundImageForStage(stage: Stage): string | null {
-  return sectionBackgrounds[stage]?.backgroundImage || null;
+  return stageConfig[stage]?.backgroundImage || null;
 }
 
 export function getBackgroundOpacityForStage(stage: Stage): number {
-  return sectionBackgrounds[stage]?.opacity ?? 0.8;
+  return stageConfig[stage]?.opacity ?? 0.8;
 }

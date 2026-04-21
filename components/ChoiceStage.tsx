@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import { useTranslations } from 'next-intl';
 
-import { sectionBackgrounds } from '@/config/sectionBackgrounds';
+import { stageConfig } from '@/config/stageConfig';
 
 import PageContainer from './ui/PageContainer';
 import Pill from './ui/Pill';
@@ -23,7 +23,7 @@ export default function ChoiceStage({ onPillChoice }: ChoiceStageProps) {
     onPillChoice(pill);
   };
 
-  const { backgroundImage, opacity } = sectionBackgrounds.choice;
+  const { backgroundImage, opacity } = stageConfig.choice;
 
   return (
     <PageContainer

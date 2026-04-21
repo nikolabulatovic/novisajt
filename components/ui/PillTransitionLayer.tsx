@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { sectionBackgrounds } from '@/config/sectionBackgrounds';
+import { stageConfig } from '@/config/stageConfig';
 import { Stage } from '@/contexts/NavigationContext';
 import { useMaskExpansionFromPill } from '@/hooks/useMaskExpansionFromPill';
 
@@ -95,7 +95,7 @@ export default function PillTransitionLayer({
     return null;
   if (!activeStage) return null;
 
-  const nextConfig = sectionBackgrounds[activeStage];
+  const nextConfig = stageConfig[activeStage];
   const nextBackgroundImage = nextConfig?.backgroundImage;
   const transitionOverlayColor =
     nextConfig?.pillTransitionOverlayColor ?? 'black';

@@ -8,7 +8,7 @@ import { Stage, StageId } from '@/contexts/NavigationContext';
  */
 export type StageTextSurfaceMode = 'backdrop' | 'panel' | 'none';
 
-export interface SectionBackgroundConfig {
+export interface StageConfig {
   backgroundImage?: string;
   opacity?: number;
   pillTransition?: boolean; // Whether to use the pill mask expansion transition when leaving this stage
@@ -23,7 +23,7 @@ export interface SectionBackgroundConfig {
   glassVariant?: 'dark' | 'light';
 }
 
-export const sectionBackgrounds: Record<Stage, SectionBackgroundConfig> = {
+export const stageConfig: Record<Stage, StageConfig> = {
   [StageId.Choice]: {
     backgroundImage: '/images/holding-out-hands.png',
     opacity: 0.2,
