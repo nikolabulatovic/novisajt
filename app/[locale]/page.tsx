@@ -13,7 +13,7 @@ import {
 import { PillProvider } from '@/contexts/PillContext';
 import { useStoryFlowHandlers } from '@/hooks/useStoryFlowHandlers';
 import { useTracking } from '@/hooks/useTracking';
-import { renderStage } from '@/lib/story/stageRegistry';
+import { STAGE_REGISTRY } from '@/lib/story/stageRegistry';
 
 export default function Home() {
   const [stage, setStage] = useState<Stage>(StageId.Choice);
@@ -74,6 +74,8 @@ export default function Home() {
   const navigateToStage = (newStage: Stage) => {
     setStage(newStage);
   };
+  const stageDefinition = STAGE_REGISTRY[stage];
+  const StageComponent = stageDefinition.Component;
 
   return (
     <NavigationProvider currentStage={stage} navigateToStage={navigateToStage}>
@@ -89,12 +91,13 @@ export default function Home() {
         />
         <NavigationMenu />
         <main className="min-h-screen bg-black text-white overflow-hidden relative">
-          {renderStage({
-            stage,
-            answers,
-            onStageComplete: completeStage,
-            onPillChoice: handlePillChoice,
-          })}
+          <StageComponent
+            {...stageDefinition.getProps({
+              answers,
+              onStageComplete: completeStage,
+              onPillChoice: handlePillChoice,
+            })}
+          />
         </main>
       </PillProvider>
     </NavigationProvider>
