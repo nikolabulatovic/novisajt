@@ -43,7 +43,7 @@ export default function StageTextSurface({
 }: StageTextSurfaceProps) {
   const cfg = stage != null ? stageConfig[stage] : undefined;
   const surface: StageTextSurfaceMode =
-    surfaceProp ?? cfg?.textSurface ?? 'panel';
+    surfaceProp ?? cfg?.textSurface ?? 'none';
   const glassVariant: GlassPanelVariant =
     glassVariantProp ?? cfg?.glassVariant ?? 'dark';
 
