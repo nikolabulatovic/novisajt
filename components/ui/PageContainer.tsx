@@ -29,7 +29,7 @@ export default function PageContainer({
   backgroundImage,
   backgroundImageOpacity = 0.8,
   maxWidth = 'md',
-  showBackgroundEffects = true,
+  showBackgroundEffects = false,
   className = '',
 }: PageContainerProps) {
   return (

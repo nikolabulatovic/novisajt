@@ -31,7 +31,7 @@ export default function StoryStage({
   footer,
 }: StoryStageProps) {
   const cfg = stageConfig[stage];
-  const storyDefaults = cfg.storyStage ?? {};
+  const storyDefaults = cfg.additionalUiConfig ?? {};
 
   const backgroundImage = cfg.backgroundImage;
   const backgroundImageOpacity = cfg.opacity ?? 0.8;
@@ -41,7 +41,7 @@ export default function StoryStage({
       backgroundImage={backgroundImage}
       backgroundImageOpacity={backgroundImageOpacity}
       maxWidth={storyDefaults.maxWidth ?? 'md'}
-      showBackgroundEffects={storyDefaults.showBackgroundEffects ?? true}
+      showBackgroundEffects={cfg.showBackgroundEffects ?? false}
     >
       <ContentContainer
         spacing={storyDefaults.contentSpacing ?? 'lg'}
@@ -49,7 +49,7 @@ export default function StoryStage({
       >
         <StageTextSurface
           stage={stage}
-          surface={storyDefaults.surface}
+          surface={cfg.textSurface}
           glassVariant={cfg.glassVariant}
           className={
             STORY_STAGE_SURFACE_FRAME_CLASS[

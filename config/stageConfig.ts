@@ -12,12 +12,10 @@ export type StoryStageSurfaceFrame = 'default' | 'inset-compact';
 
 export interface StoryStageUiConfig {
   maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
-  showBackgroundEffects?: boolean;
   contentSpacing?: 'sm' | 'md' | 'lg';
   contentAlign?: 'left' | 'center' | 'right';
   textPadding?: StoryStageTextPadding;
   textSurfaceFrame?: StoryStageSurfaceFrame;
-  surface?: StageTextSurfaceMode;
   backdropType?: 'linear' | 'radial';
   backdropOpacity?: number;
 }
@@ -35,8 +33,10 @@ export interface StageConfig {
   textSurface?: StageTextSurfaceMode;
   /** Used when `textSurface` is `panel`. Defaults to `dark`. */
   glassVariant?: 'dark' | 'light';
+  /** Whether to show background effects on the stage. Defaults to `false` when omitted. */
+  showBackgroundEffects?: boolean;
   /** Optional StoryStage layout defaults for this stage. */
-  storyStage?: StoryStageUiConfig;
+  additionalUiConfig?: StoryStageUiConfig;
 }
 
 export const stageConfig: Record<Stage, StageConfig> = {
@@ -49,9 +49,9 @@ export const stageConfig: Record<Stage, StageConfig> = {
     backgroundImage: '/images/intro-reflection.jpeg',
     opacity: 0.2,
     pillTransition: true,
-    storyStage: {
+    showBackgroundEffects: false,
+    additionalUiConfig: {
       contentSpacing: 'sm',
-      showBackgroundEffects: false,
       textSurfaceFrame: 'inset-compact',
       textPadding: 'intro',
     },
@@ -69,7 +69,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     opacity: 0.35,
     pillTransition: true,
     textSurface: 'none',
-    storyStage: {
+    additionalUiConfig: {
       maxWidth: 'lg',
       contentSpacing: 'sm',
       textPadding: 'explanation',
