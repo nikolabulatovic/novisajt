@@ -48,35 +48,51 @@ const stageLabelKeys: Record<Stage, string> = {
   [StageId.AfterChoice]: 'stages.afterChoice',
 };
 
-const stageOrder: Stage[] = [
-  StageId.Choice,
-  StageId.Intro,
-  StageId.Evaluation,
-  StageId.Explanation,
-  StageId.HistoricalIntro,
-  StageId.HistoricalSlavery,
-  StageId.HistoricalAuthoritarianism,
-  StageId.PersonalQuestion,
-  StageId.BreakingQuestion,
-  StageId.SpasaStory,
-  StageId.SpasaRevelation,
-  StageId.OtherPigs,
-  StageId.RootOfTheProblem,
-  StageId.AnimalsTreatedAsProducts,
-  StageId.LetThemLive,
-  StageId.AcceptingSelfOwnership,
-  StageId.FromTheWild,
-  StageId.ReproductionControl,
-  StageId.ViciousCycle,
-  StageId.CowFate,
-  StageId.AnimalCostOfLiving,
-  StageId.SolutionUse,
-  StageId.SolutionKnow,
-  StageId.VeganDietHealth,
-  StageId.SolutionChoice,
-  StageId.AlignBehaviour,
-  StageId.VeganismPrinciple,
-  StageId.AfterChoice,
+interface StageNavItem {
+  stage: Stage;
+  depth: number;
+}
+
+const stageNavItems: StageNavItem[] = [
+  { stage: StageId.Choice, depth: 0 },
+  { stage: StageId.StayComfortable, depth: 1 },
+  { stage: StageId.Intro, depth: 0 },
+  { stage: StageId.Evaluation, depth: 0 },
+  { stage: StageId.Explanation, depth: 0 },
+  { stage: StageId.HistoricalIntro, depth: 0 },
+  { stage: StageId.HistoricalSlavery, depth: 0 },
+  { stage: StageId.HistoricalAuthoritarianism, depth: 0 },
+  { stage: StageId.PersonalQuestion, depth: 0 },
+  { stage: StageId.WouldYouLikeToBe, depth: 1 },
+  { stage: StageId.RecognizingInjustice, depth: 2 },
+  { stage: StageId.BreakingQuestion, depth: 0 },
+  { stage: StageId.ApatheticStance, depth: 1 },
+  { stage: StageId.SpasaStory, depth: 0 },
+  { stage: StageId.SpasaRevelation, depth: 0 },
+  { stage: StageId.OtherPigs, depth: 0 },
+  { stage: StageId.RootOfTheProblem, depth: 0 },
+  { stage: StageId.AnimalsTreatedAsProducts, depth: 0 },
+  { stage: StageId.LetThemLive, depth: 0 },
+  { stage: StageId.AcceptingSelfOwnership, depth: 1 },
+  { stage: StageId.FromTheWild, depth: 0 },
+  { stage: StageId.ReproductionControl, depth: 0 },
+  { stage: StageId.ViciousCycle, depth: 0 },
+  { stage: StageId.CowFate, depth: 0 },
+  { stage: StageId.AnimalCostOfLiving, depth: 0 },
+  { stage: StageId.SolutionUse, depth: 0 },
+  { stage: StageId.AlreadyVegan, depth: 1 },
+  { stage: StageId.SolutionKnow, depth: 0 },
+  { stage: StageId.VeganDietHealth, depth: 1 },
+  { stage: StageId.AdditionalResources, depth: 2 },
+  { stage: StageId.SolutionChoice, depth: 0 },
+  { stage: StageId.AddressingContradiction, depth: 1 },
+  { stage: StageId.NotHonest, depth: 2 },
+  { stage: StageId.AlignBehaviour, depth: 0 },
+  { stage: StageId.BackToAnswers, depth: 1 },
+  { stage: StageId.BackToAnswersAgain, depth: 2 },
+  { stage: StageId.NotFollowingThrough, depth: 3 },
+  { stage: StageId.VeganismPrinciple, depth: 0 },
+  { stage: StageId.AfterChoice, depth: 0 },
 ];
 
 export default function NavigationMenu() {
@@ -146,8 +162,9 @@ export default function NavigationMenu() {
               {t('title')}
             </h3>
           </div>
-          {stageOrder.map((stage) => {
+          {stageNavItems.map(({ stage, depth }) => {
             const isActive = currentStage === stage;
+            const hasIndent = depth > 0;
             return (
               <button
                 key={stage}
@@ -157,14 +174,24 @@ export default function NavigationMenu() {
                     ? 'bg-gray-800/60 border border-gray-700/50 text-gray-100'
                     : 'text-gray-300 hover:bg-gray-800/40 hover:text-gray-100'
                 }`}
+                style={{
+                  paddingLeft: `${16 + depth * 12}px`,
+                }}
               >
                 <div className="flex items-center justify-between">
-                  <span
-                    className="text-sm font-light"
-                    style={{ fontFamily: 'var(--font-inter), sans-serif' }}
-                  >
-                    {t(stageLabelKeys[stage])}
-                  </span>
+                  <div className="flex items-center gap-2">
+                    {hasIndent ? (
+                      <span className="text-gray-500 text-xs leading-none">
+                        └
+                      </span>
+                    ) : null}
+                    <span
+                      className="text-sm font-light"
+                      style={{ fontFamily: 'var(--font-inter), sans-serif' }}
+                    >
+                      {t(stageLabelKeys[stage])}
+                    </span>
+                  </div>
                   {isActive && (
                     <div className="w-2 h-2 rounded-full bg-red-500/80"></div>
                   )}
