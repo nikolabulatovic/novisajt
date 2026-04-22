@@ -5,6 +5,10 @@ import { ReactNode } from 'react';
 import { stageConfig } from '@/config/stageConfig';
 import type { Stage } from '@/contexts/NavigationContext';
 
+import {
+  STORY_STAGE_SURFACE_FRAME_CLASS,
+  STORY_STAGE_TEXT_PADDING_CLASS,
+} from '../../constants/storyStageTokens';
 import ContentContainer from './ContentContainer';
 import PageContainer from './PageContainer';
 import StageTextSurface from './StageTextSurface';
@@ -38,20 +42,24 @@ export default function StoryStage({
       backgroundImageOpacity={backgroundImageOpacity}
       maxWidth={storyDefaults.maxWidth ?? 'md'}
       showBackgroundEffects={storyDefaults.showBackgroundEffects ?? true}
-      className={storyDefaults.pageClassName ?? ''}
     >
       <ContentContainer
         spacing={storyDefaults.contentSpacing ?? 'lg'}
         align={storyDefaults.contentAlign ?? 'center'}
-        className={storyDefaults.contentContainerClassName ?? ''}
       >
         <StageTextSurface
           stage={stage}
           surface={storyDefaults.surface}
           glassVariant={cfg.glassVariant}
-          className={storyDefaults.textSurfaceClassName ?? ''}
+          className={
+            STORY_STAGE_SURFACE_FRAME_CLASS[
+              storyDefaults.textSurfaceFrame ?? 'default'
+            ]
+          }
           contentClassName={
-            storyDefaults.textContentClassName ?? 'relative p-6 md:p-16'
+            STORY_STAGE_TEXT_PADDING_CLASS[
+              storyDefaults.textPadding ?? 'default'
+            ]
           }
           backdropType={storyDefaults.backdropType}
           backdropOpacity={storyDefaults.backdropOpacity}

@@ -7,16 +7,16 @@ import { Stage, StageId } from '@/contexts/NavigationContext';
  * - `none` — plain text on the image.
  */
 export type StageTextSurfaceMode = 'backdrop' | 'panel' | 'none';
+export type StoryStageTextPadding = 'default' | 'intro' | 'explanation';
+export type StoryStageSurfaceFrame = 'default' | 'inset-compact';
 
 export interface StoryStageUiConfig {
   maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
   showBackgroundEffects?: boolean;
-  pageClassName?: string;
   contentSpacing?: 'sm' | 'md' | 'lg';
   contentAlign?: 'left' | 'center' | 'right';
-  contentContainerClassName?: string;
-  textContentClassName?: string;
-  textSurfaceClassName?: string;
+  textPadding?: StoryStageTextPadding;
+  textSurfaceFrame?: StoryStageSurfaceFrame;
   surface?: StageTextSurfaceMode;
   backdropType?: 'linear' | 'radial';
   backdropOpacity?: number;
@@ -52,8 +52,8 @@ export const stageConfig: Record<Stage, StageConfig> = {
     storyStage: {
       contentSpacing: 'sm',
       showBackgroundEffects: false,
-      textSurfaceClassName: 'mx-1 sm:mx-2',
-      textContentClassName: 'p-8 md:p-12',
+      textSurfaceFrame: 'inset-compact',
+      textPadding: 'intro',
     },
   },
   [StageId.Evaluation]: {
@@ -72,7 +72,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     storyStage: {
       maxWidth: 'lg',
       contentSpacing: 'sm',
-      textContentClassName: 'px-4 py-4 md:px-6 md:py-6',
+      textPadding: 'explanation',
     },
   },
   [StageId.Historical]: {
