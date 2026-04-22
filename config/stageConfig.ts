@@ -75,9 +75,17 @@ export const stageConfig: Record<Stage, StageConfig> = {
       textPadding: 'explanation',
     },
   },
-  [StageId.Historical]: {
+  [StageId.HistoricalIntro]: {
     backgroundImage: '/images/historical-weight.png',
     opacity: 0.75,
+  },
+  [StageId.HistoricalSlavery]: {
+    backgroundImage: '/images/robovi.jpg',
+    opacity: 0.8,
+  },
+  [StageId.HistoricalAuthoritarianism]: {
+    backgroundImage: '/images/nacizam.jpg',
+    opacity: 0.8,
   },
   [StageId.PersonalQuestion]: {
     backgroundImage: '/images/covek-u-grupi.jpeg',

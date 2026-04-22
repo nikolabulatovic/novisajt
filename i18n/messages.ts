@@ -9,7 +9,9 @@ type MessageNamespace =
   | 'ChoiceStage'
   | 'RedPillIntro'
   | 'CharacterEvaluation'
-  | 'HistoricalInjustices'
+  | 'HistoricalIntro'
+  | 'HistoricalSlavery'
+  | 'HistoricalAuthoritarianism'
   | 'BreakingQuestion'
   | 'StayComfortable'
   | 'ApatheticStance'
@@ -33,7 +35,9 @@ const namespaceFiles: Record<MessageNamespace, string> = {
   ChoiceStage: 'choice-stage',
   RedPillIntro: 'red-pill-intro',
   CharacterEvaluation: 'character-evaluation',
-  HistoricalInjustices: 'historical-injustices',
+  HistoricalIntro: 'historical-intro',
+  HistoricalSlavery: 'historical-slavery',
+  HistoricalAuthoritarianism: 'historical-authoritarianism',
   BreakingQuestion: 'breaking-question',
   StayComfortable: 'stay-comfortable',
   ApatheticStance: 'apathetic-stance',

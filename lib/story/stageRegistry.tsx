@@ -18,7 +18,9 @@ import CharacterEvaluation from '@/components/CharacterEvaluation';
 import ChoiceStage from '@/components/ChoiceStage';
 import CowFate from '@/components/CowFate';
 import FromTheWild from '@/components/FromTheWild';
-import HistoricalInjustices from '@/components/HistoricalInjustices';
+import HistoricalAuthoritarianism from '@/components/HistoricalAuthoritarianism';
+import HistoricalIntro from '@/components/HistoricalIntro';
+import HistoricalSlavery from '@/components/HistoricalSlavery';
 import LetThemLive from '@/components/LetThemLive';
 import NotFollowingThrough from '@/components/NotFollowingThrough';
 import NotHonest from '@/components/NotHonest';
@@ -104,9 +106,17 @@ export const STAGE_REGISTRY: Record<Stage, StageDefinition> = {
     Component: QuestionExplanation,
     getProps: withComplete(StageId.Explanation),
   },
-  [StageId.Historical]: {
-    Component: HistoricalInjustices,
-    getProps: withComplete(StageId.Historical),
+  [StageId.HistoricalIntro]: {
+    Component: HistoricalIntro,
+    getProps: withComplete(StageId.HistoricalIntro),
+  },
+  [StageId.HistoricalSlavery]: {
+    Component: HistoricalSlavery,
+    getProps: withComplete(StageId.HistoricalSlavery),
+  },
+  [StageId.HistoricalAuthoritarianism]: {
+    Component: HistoricalAuthoritarianism,
+    getProps: withComplete(StageId.HistoricalAuthoritarianism),
   },
   [StageId.PersonalQuestion]: {
     Component: PersonalQuestion,

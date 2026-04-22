@@ -17,8 +17,10 @@ import {
 
 export const directStageTransitions: Partial<Record<Stage, Stage>> = {
   [StageId.Intro]: StageId.Evaluation,
-  [StageId.Explanation]: StageId.Historical,
-  [StageId.Historical]: StageId.PersonalQuestion,
+  [StageId.Explanation]: StageId.HistoricalIntro,
+  [StageId.HistoricalIntro]: StageId.HistoricalSlavery,
+  [StageId.HistoricalSlavery]: StageId.HistoricalAuthoritarianism,
+  [StageId.HistoricalAuthoritarianism]: StageId.PersonalQuestion,
   [StageId.SpasaStory]: StageId.SpasaRevelation,
   [StageId.SpasaRevelation]: StageId.OtherPigs,
   [StageId.OtherPigs]: StageId.RootOfTheProblem,
