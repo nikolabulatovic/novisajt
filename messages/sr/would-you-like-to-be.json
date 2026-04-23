@@ -3,5 +3,8 @@
     "Tvoj odgovor je da ne znaš da li bi bio/la protiv velikih nepravdi.",
     "Da li ti je inače bitno da budeš pravedan/na, odnosno da ne ugrožavaš nevine?"
   ],
-  "options": ["Da, bitno mi je", "Nije mi bitno"]
+  "options": [
+    { "id": "AGREE", "label": "Da, bitno mi je" },
+    { "id": "DISAGREE", "label": "Nije mi bitno" }
+  ]
 }

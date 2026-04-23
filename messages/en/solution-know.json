@@ -1,0 +1,7 @@
+{
+  "options": {
+    "yes": "I know",
+    "dontKnow": "I'm not sure",
+    "no": "We can't"
+  }
+}

@@ -1,0 +1,202 @@
+'use client';
+
+import { useMemo } from 'react';
+
+import { useWordAnimation } from '@/src/hooks/useWordAnimation';
+import { AnimatedTextBlock } from '@/src/lib/i18n/animatedText';
+
+interface AnimatedTextProps {
+  text: string | string[] | AnimatedTextBlock;
+  speed?: number;
+  delayAfterComplete?: number;
+  onComplete?: () => void;
+  textSize?: 'sm' | 'md' | 'lg' | 'xl';
+  alignment?: 'left' | 'center' | 'right';
+  className?: string;
+  wordTransitionDelay?: number;
+  wordTransitionDuration?: number;
+  mode?: 'word' | 'char';
+}
+
+const textSizeClasses = {
+  sm: 'text-base sm:text-lg md:text-xl lg:text-2xl',
+  md: 'text-lg sm:text-xl md:text-2xl lg:text-3xl',
+  lg: 'text-xl sm:text-2xl md:text-3xl lg:text-4xl',
+  xl: 'text-2xl sm:text-3xl md:text-4xl lg:text-5xl',
+};
+
+const alignmentClasses = {
+  left: 'text-left',
+  center: 'text-center',
+  right: 'text-right',
+};
+
+export default function AnimatedText({
+  text,
+  speed = 150,
+  delayAfterComplete = 1000,
+  onComplete,
+  textSize = 'md',
+  alignment = 'center',
+  className = '',
+  wordTransitionDelay = 15,
+  wordTransitionDuration = 3000,
+  mode = 'word',
+}: AnimatedTextProps) {
+  // Handle QuestionExplanation-style text with segments
+  const isSegmentFormat =
+    Array.isArray(text) &&
+    text.length > 0 &&
+    typeof text[0] === 'object' &&
+    'line' in text[0];
+
+  // Memoize text preparation to prevent unnecessary hook resets
+  const textToAnimate = useMemo(() => {
+    if (isSegmentFormat) {
+      // Flatten segments for animation counting
+      const flattened = (text as AnimatedTextBlock).flatMap((item) =>
+        item.line.flatMap((segment) => segment.text.split(' ')),
+      );
+      return flattened.join(' ');
+    } else if (Array.isArray(text)) {
+      return text as string[];
+    } else {
+      return text as string;
+    }
+  }, [text, isSegmentFormat]);
+
+  const { visibleWordCount } = useWordAnimation({
+    text: textToAnimate,
+    speed,
+    delayAfterComplete,
+    onComplete,
+    mode: isSegmentFormat ? 'word' : mode,
+  });
+
+  // Render QuestionExplanation-style format
+  if (isSegmentFormat) {
+    const segmentText = text as AnimatedTextBlock;
+
+    // Calculate word start indices for each item
+    const wordStartIndices: number[] = [];
+    let currentIndex = 0;
+    segmentText.forEach((item) => {
+      wordStartIndices.push(currentIndex);
+      currentIndex += item.line.reduce(
+        (acc, segment) => acc + segment.text.split(' ').length,
+        0,
+      );
+    });
+
+    return (
+      <div className={`space-y-4 ${alignmentClasses[alignment]} ${className}`}>
+        {segmentText.map((item, itemIndex) => {
+          const currentWordStartIndex = wordStartIndices[itemIndex];
+
+          return (
+            <p
+              key={itemIndex}
+              className={`${textSizeClasses[textSize]} leading-relaxed`}
+            >
+              {item.line.map((segment, segmentIndex) => {
+                const segmentWords = segment.text.split(' ');
+                const segmentStartIndex =
+                  currentWordStartIndex +
+                  item.line
+                    .slice(0, segmentIndex)
+                    .reduce((acc, s) => acc + s.text.split(' ').length, 0);
+
+                return segmentWords.map((word, wordIndex) => {
+                  const currentWordIndex = segmentStartIndex + wordIndex;
+                  const isVisible = currentWordIndex < visibleWordCount;
+                  // Apply delay only when word becomes visible, not on every render
+                  // Once visible, delay should be 0 to prevent re-animation
+                  const transitionDelay = isVisible
+                    ? `${currentWordIndex * 15}ms`
+                    : '0ms';
+
+                  return (
+                    <span
+                      key={`${segmentIndex}-${wordIndex}`}
+                      className={`transition-all ease-in-out ${
+                        isVisible
+                          ? 'opacity-100 translate-y-0'
+                          : 'opacity-0 translate-y-8'
+                      } ${segment.bold ? 'font-bold' : ''} ${segment.italic ? 'italic' : ''}`}
+                      style={{
+                        transitionDuration: isVisible
+                          ? `${wordTransitionDuration}ms`
+                          : '0ms',
+                        transitionDelay: isVisible ? transitionDelay : '0ms',
+                      }}
+                    >
+                      {word}
+                      {wordIndex < segmentWords.length - 1 ? ' ' : ''}
+                    </span>
+                  );
+                });
+              })}
+            </p>
+          );
+        })}
+      </div>
+    );
+  }
+
+  // Render simple string array format
+  const textArray = Array.isArray(text) ? text : [text];
+
+  // Calculate unit start indices for each sentence (units = words or chars depending on mode)
+  const unitStartIndices: number[] = [];
+  let currentIndex = 0;
+  textArray.forEach((sentence) => {
+    unitStartIndices.push(currentIndex);
+    const s = typeof sentence === 'string' ? sentence : '';
+    currentIndex += mode === 'char' ? s.length : s.split(' ').length;
+  });
+
+  return (
+    <div className={`space-y-6 ${alignmentClasses[alignment]} ${className}`}>
+      {textArray.map((sentence, sentenceIndex) => {
+        const sentenceText = typeof sentence === 'string' ? sentence : '';
+        const units =
+          mode === 'char' ? sentenceText.split('') : sentenceText.split(' ');
+        const currentUnitStartIndex = unitStartIndices[sentenceIndex];
+
+        return (
+          <p
+            key={sentenceIndex}
+            className={`${textSizeClasses[textSize]} leading-relaxed`}
+          >
+            {units.map((unit, unitIndex) => {
+              const currentUnitIndex = currentUnitStartIndex + unitIndex;
+              const isVisible = currentUnitIndex < visibleWordCount;
+
+              return (
+                <span
+                  key={unitIndex}
+                  className={`transition-all ease-out ${
+                    isVisible
+                      ? 'opacity-100 translate-y-0'
+                      : 'opacity-0 translate-y-4'
+                  }`}
+                  style={{
+                    transitionDuration: isVisible
+                      ? `${wordTransitionDuration}ms`
+                      : '0ms',
+                    transitionDelay: isVisible
+                      ? `${currentUnitIndex * wordTransitionDelay}ms`
+                      : '0ms',
+                  }}
+                >
+                  {unit}
+                  {mode === 'word' && unitIndex < units.length - 1 ? ' ' : ''}
+                </span>
+              );
+            })}
+          </p>
+        );
+      })}
+    </div>
+  );
+}

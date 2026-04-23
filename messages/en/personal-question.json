@@ -1,5 +1,9 @@
 {
   "question": "Would you have stood against these injustices when they were actually happening?",
-  "options": ["Yes", "I hope so", "I don't know"],
+  "options": [
+    { "id": "YES", "label": "Yes" },
+    { "id": "HOPEFULLY", "label": "I hope so" },
+    { "id": "DONT_KNOW", "label": "I don't know" }
+  ],
   "flashMessage": "Most people believe they would."
 }

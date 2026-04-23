@@ -1,0 +1,7 @@
+{
+  "options": {
+    "yes": "Znam",
+    "dontKnow": "Nisam siguran",
+    "no": "Ne možemo"
+  }
+}
