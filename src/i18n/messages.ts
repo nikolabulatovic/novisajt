@@ -54,7 +54,7 @@ const namespaceFiles: Record<MessageNamespace, string> = {
 };
 
 async function loadNamespace(locale: Locale, fileName: string) {
-  return (await import(`../messages/${locale}/${fileName}.json`)).default;
+  return (await import(`../../messages/${locale}/${fileName}.json`)).default;
 }
 
 export async function loadMessages(locale: Locale) {
