@@ -176,7 +176,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     opacity: 0.5,
   },
   [StageId.RecognizingInjustice]: {
-    backgroundImage: '/images/historical-weight.png',
+    backgroundImage: '/images/jarak.jpg',
     opacity: 0.5,
   },
   [StageId.ApatheticStance]: {
