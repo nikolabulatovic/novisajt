@@ -1,15 +1,15 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
+
 import { StageId } from '@/src/contexts/NavigationContext';
 
 import AnimatedText from './ui/AnimatedText';
 import StoryStage from './ui/StoryStage';
 
 export default function RecognizingInjustice() {
-  const text = [
-    '[placeholder] Prepoznao si nepravdu, ali si odlučio da ne deluješ.',
-    'Ovaj ekran treba da bude popunjen sadržajem.',
-  ];
+  const t = useTranslations('RecognizingInjustice');
+  const text = t.raw('text') as string[];
 
   return (
     <StoryStage stage={StageId.RecognizingInjustice}>
@@ -19,7 +19,6 @@ export default function RecognizingInjustice() {
         delayAfterComplete={800}
         textSize="md"
         alignment="center"
-        onComplete={() => {}}
       />
     </StoryStage>
   );
