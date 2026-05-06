@@ -10,6 +10,17 @@ export type StageTextSurfaceMode = 'backdrop' | 'panel' | 'none';
 export type StoryStageTextPadding = 'default' | 'intro' | 'explanation';
 export type StoryStageSurfaceFrame = 'default' | 'inset-compact';
 
+/** Two narrative beats on one stage: same background; mid-stage advance; final footer after beat 2 animation. */
+export interface NarrativeTwoBeatConfig {
+  /** next-intl namespace (e.g. AcceptingSelfOwnership). */
+  translationNamespace: string;
+  /** Raw JSON keys whose values are `string[]` for AnimatedText. */
+  beat1TextKey: string;
+  beat2TextKey: string;
+  /** Label key for the single advance control (same namespace). */
+  advanceLabelKey: string;
+}
+
 export interface StoryStageUiConfig {
   maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
   contentSpacing?: 'sm' | 'md' | 'lg';
@@ -36,6 +47,8 @@ export interface StageConfig {
   showBackgroundEffects?: boolean;
   /** Optional StoryStage layout defaults for this stage. */
   additionalUiConfig?: StoryStageUiConfig;
+  /** When set, StoryStage renders two beats + advance + deferred footer; `children` are ignored. */
+  narrativeTwoBeat?: NarrativeTwoBeatConfig;
 }
 
 export const stageConfig: Record<Stage, StageConfig> = {
@@ -117,6 +130,12 @@ export const stageConfig: Record<Stage, StageConfig> = {
   },
   [StageId.AcceptingSelfOwnership]: {
     opacity: 0.55,
+    narrativeTwoBeat: {
+      translationNamespace: 'AcceptingSelfOwnership',
+      beat1TextKey: 'beat1',
+      beat2TextKey: 'beat2',
+      advanceLabelKey: 'advance',
+    },
   },
   [StageId.FromTheWild]: {
     backgroundImage: '/images/gallus-gallus.jpg',

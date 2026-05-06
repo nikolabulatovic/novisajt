@@ -25,7 +25,8 @@ type MessageNamespace =
   | 'AddressingContradiction'
   | 'BackToAnswers'
   | 'BackToAnswersAgain'
-  | 'RecognizingInjustice';
+  | 'RecognizingInjustice'
+  | 'AcceptingSelfOwnership';
 
 const namespaceFiles: Record<MessageNamespace, string> = {
   Metadata: 'metadata',
@@ -53,6 +54,7 @@ const namespaceFiles: Record<MessageNamespace, string> = {
   BackToAnswers: 'back-to-answers',
   BackToAnswersAgain: 'back-to-answers-again',
   RecognizingInjustice: 'recognizing-injustice',
+  AcceptingSelfOwnership: 'accepting-self-ownership',
 };
 
 async function loadNamespace(locale: Locale, fileName: string) {

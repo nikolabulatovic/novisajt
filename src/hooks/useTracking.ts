@@ -17,5 +17,14 @@ export function useTracking() {
     posthog?.capture('flow_completed');
   };
 
-  return { trackStageViewed, trackAnswerSelected, trackFlowCompleted };
+  const trackNarrativeAdvanceClicked = (stage: Stage) => {
+    posthog?.capture('narrative_advance_clicked', { stage });
+  };
+
+  return {
+    trackStageViewed,
+    trackAnswerSelected,
+    trackFlowCompleted,
+    trackNarrativeAdvanceClicked,
+  };
 }
