@@ -6,6 +6,7 @@ import type { Stage } from '@/src/contexts/NavigationContext';
 import { useStoryFlow } from '@/src/contexts/StoryFlowContext';
 import { mapLocalizedAnswerOptions } from '@/src/lib/mapLocalizedAnswerOptions';
 import { NEXT_LABEL, stageConfig } from '@/src/lib/story/stageUiConfig';
+import type { AnswerChoiceShellState } from '@/src/lib/ui/answerChoiceInteraction';
 
 import AnswerOptions from './AnswerOptions';
 import StoryStageNextPill from './StoryStageNextPillFooter';
@@ -15,6 +16,8 @@ interface StoryStageNextInteractionProps {
   visible: boolean;
   isMultiStep?: boolean;
   step?: 1 | 2;
+  /** When provided (answer-stage chrome), answer presses animate the shared shell like evaluation. */
+  onAnswerChoiceShellChange?: (state: AnswerChoiceShellState) => void;
 }
 
 export default function StoryStageNextInteraction({
@@ -22,6 +25,7 @@ export default function StoryStageNextInteraction({
   visible,
   isMultiStep = false,
   step = 1,
+  onAnswerChoiceShellChange,
 }: StoryStageNextInteractionProps) {
   const { completeStage, goToNextStep } = useStoryFlow();
   const stageCfg = stageConfig[stage];
@@ -43,6 +47,7 @@ export default function StoryStageNextInteraction({
         <AnswerOptions
           options={[{ id: 'next-step', label: t(NEXT_LABEL) }]}
           onSelect={() => goToNextStep()}
+          onAnswerChoiceShellChange={onAnswerChoiceShellChange}
         />
       </div>
     );
@@ -57,6 +62,7 @@ export default function StoryStageNextInteraction({
         <AnswerOptions
           options={mapLocalizedAnswerOptions(stageCfg.answerOptions, t)}
           onSelect={(answerId) => completeStage(stage, answerId)}
+          onAnswerChoiceShellChange={onAnswerChoiceShellChange}
         />
       </div>
     );

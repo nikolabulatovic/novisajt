@@ -245,3 +245,14 @@ p {
 .button-next:hover::before {
   opacity: 1;
 }
+
+/** Answer-route photo crossfade: subtle dip-to-black mid-blend (duration set inline from TS). */
+@keyframes answer-crossfade-dim {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0;
+  }
+}

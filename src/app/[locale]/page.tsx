@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import NavigationMenu from '@/src/components/NavigationMenu';
+import AnswerTransitionLayer from '@/src/components/ui/AnswerTransitionLayer';
 import PillTransitionLayer from '@/src/components/ui/PillTransitionLayer';
 import {
   NavigationProvider,
@@ -31,11 +32,24 @@ function shouldUsePillTransitionForStage(
   return stageInteractionType[stage] === 'next-pill';
 }
 
+function shouldUseAnswerFadeTransition(
+  stage: Stage,
+  style: StoryTransitionStyle,
+): boolean {
+  if (style === 'pill' || style === 'none') {
+    return false;
+  }
+  return stageInteractionType[stage] === 'answer-options';
+}
+
 /** Locale story route: owns stage state, transitions, overlays, and {@link StoryFlowContextValue}. */
 export default function Home() {
   const [stage, setStage] = useState<Stage>(StageId.Choice);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [pendingNextStage, setPendingNextStage] = useState<Stage | null>(null);
+  const [pendingAnswerStage, setPendingAnswerStage] = useState<Stage | null>(
+    null,
+  );
   const [blackOverlay, setBlackOverlay] = useState(false);
   const [stageAfterFade, setStageAfterFade] = useState<Stage | null>(null);
   const { trackStageViewed, trackAnswerSelected, trackFlowCompleted } =
@@ -52,6 +66,15 @@ export default function Home() {
     setPendingNextStage(null);
   };
 
+  const handleAnswerFadeComplete = useCallback(() => {
+    setPendingAnswerStage((pending) => {
+      if (pending !== null) {
+        setStage(pending);
+      }
+      return null;
+    });
+  }, []);
+
   const transitionToStage = useCallback(
     (newStage: Stage, style: StoryTransitionStyle = 'auto') => {
       const shouldUsePillTransition = shouldUsePillTransitionForStage(
@@ -60,6 +83,8 @@ export default function Home() {
       );
       if (shouldUsePillTransition) {
         setPendingNextStage(newStage);
+      } else if (shouldUseAnswerFadeTransition(stage, style)) {
+        setPendingAnswerStage(newStage);
       } else {
         setStage(newStage);
       }
@@ -117,6 +142,11 @@ export default function Home() {
         <PillTransitionLayer
           pendingNextStage={pendingNextStage}
           onComplete={handleTransitionComplete}
+        />
+        <AnswerTransitionLayer
+          pendingNextStage={pendingAnswerStage}
+          fromStage={stage}
+          onComplete={handleAnswerFadeComplete}
         />
         <div
           className="fixed inset-0 bg-black z-50 pointer-events-none transition-opacity duration-[2000ms]"

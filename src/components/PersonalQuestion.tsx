@@ -93,6 +93,7 @@ export default function PersonalQuestion() {
               options={options}
               onSelect={handleAnswer}
               selectedId={selected}
+              animateBeforeSelect={false}
               disableUnselectedWhenSelected
               containerClassName="flex flex-row gap-8"
               textClassName="text-lg md:text-xl lg:text-2xl text-gray-300 font-light"

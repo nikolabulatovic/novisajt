@@ -1,13 +1,20 @@
 'use client';
 
-import { MouseEvent, useRef, useState } from 'react';
+import { MouseEvent, useState } from 'react';
 
 import { useTranslations } from 'next-intl';
 
 import { useStoryFlow } from '@/src/contexts/StoryFlowContext';
+import { useAnswerChoiceRipples } from '@/src/hooks/useAnswerChoiceRipples';
+import { useScheduledTimeouts } from '@/src/hooks/useScheduledTimeouts';
 import { stageConfig } from '@/src/lib/story/stageUiConfig';
+import {
+  answerChoiceShellClassName,
+  scheduleAnswerChoiceExit,
+} from '@/src/lib/ui/answerChoiceInteraction';
 
 import { StageId } from '../contexts/NavigationContext';
+import AnswerChoiceRippleSpans from './ui/AnswerChoiceRippleSpans';
 import AnswerOption from './ui/AnswerOption';
 import ProgressDots from './ui/ProgressDots';
 import StageTextSurface from './ui/StageTextSurface';
@@ -25,6 +32,10 @@ interface EvaluationQuestion {
 
 export default function CharacterEvaluation() {
   const { completeStage, answers: existingAnswers = {} } = useStoryFlow();
+  const schedule = useScheduledTimeouts();
+  const { ripples, createRipple, clearRipples } =
+    useAnswerChoiceRipples<number>(schedule);
+
   const t = useTranslations('character-evaluation');
   const questions = t.raw('questions') as EvaluationQuestion[];
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -37,43 +48,12 @@ export default function CharacterEvaluation() {
     null,
   );
   const [nonSelectedFading, setNonSelectedFading] = useState(false);
-  const [ripples, setRipples] = useState<
-    Record<number, Array<{ id: number; x: number; y: number }>>
-  >({});
-  const rippleIdCounter = useRef(0);
-
-  const createRipple = (
-    event: MouseEvent<HTMLButtonElement>,
-    optionIndex: number,
-  ) => {
-    const button = event.currentTarget;
-    const rect = button.getBoundingClientRect();
-    const x = event.clientX - rect.left;
-    const y = event.clientY - rect.top;
-    const rippleId = ++rippleIdCounter.current;
-
-    setRipples((prev) => ({
-      ...prev,
-      [optionIndex]: [...(prev[optionIndex] || []), { id: rippleId, x, y }],
-    }));
-
-    // Remove ripple after animation
-    setTimeout(() => {
-      setRipples((prev) => ({
-        ...prev,
-        [optionIndex]: (prev[optionIndex] || []).filter(
-          (r) => r.id !== rippleId,
-        ),
-      }));
-    }, 600);
-  };
 
   const handleAnswer = (
     value: number,
     event: MouseEvent<HTMLButtonElement>,
     optionIndex: number,
   ) => {
-    // Create ripple first
     createRipple(event, optionIndex);
     setSelectedOptionIndex(optionIndex);
 
@@ -81,36 +61,31 @@ export default function CharacterEvaluation() {
     const newAnswers = { ...answers, [questionId]: value.toString() };
     setAnswers(newAnswers);
 
-    // Fade out non-selected answers immediately
     setNonSelectedFading(true);
 
-    // After non-selected fade (500ms) + keep selected visible (1000ms), fade it out
-    setTimeout(() => {
-      // Selected answer fades out
-      setIsTransitioning(true);
-      setShowContent(false);
-
-      // After selected fades out (300ms), move to next question or complete
-      setTimeout(() => {
+    scheduleAnswerChoiceExit(
+      schedule,
+      () => {
+        setIsTransitioning(true);
+        setShowContent(false);
+      },
+      () => {
         if (currentQuestion < questions.length - 1) {
           setCurrentQuestion(currentQuestion + 1);
           setIsTransitioning(false);
           setNonSelectedFading(false);
           setSelectedOptionIndex(null);
-          // Clear ripples when moving to next question
-          setRipples({});
-          // Show content after transition completes
+          clearRipples();
           setTimeout(() => {
             setShowContent(true);
           }, 50);
         } else {
-          // All questions answered
           setTimeout(() => {
             completeStage(StageId.Evaluation, newAnswers);
           }, 1500);
         }
-      }, 300); // Selected fade out duration
-    }, 500); // Non-selected fade (500ms) + keep selected visible (1000ms)
+      },
+    );
   };
 
   const { backgroundImage, opacity = 0.8 } = stageConfig[StageId.Evaluation];
@@ -149,13 +124,10 @@ export default function CharacterEvaluation() {
 
         {/* Question (glass) and options outside */}
         <div
-          className={`text-center space-y-12 transition-all duration-700 ease-out ${
-            isTransitioning
-              ? 'opacity-0 translate-y-8 scale-95'
-              : showContent
-                ? 'opacity-100 translate-y-0 scale-100'
-                : 'opacity-0 translate-y-8 scale-95'
-          }`}
+          className={`text-center space-y-12 ${answerChoiceShellClassName(
+            isTransitioning,
+            showContent,
+          )}`}
         >
           <StageTextSurface
             stage={StageId.Evaluation}
@@ -177,7 +149,6 @@ export default function CharacterEvaluation() {
               const isSelected = selectedOptionIndex === index;
               const shouldFade = nonSelectedFading && !isSelected;
               const shouldFadeOut = isTransitioning && isSelected;
-              // Keep selected button highlighted (not just on hover) until it fades out
               const isHighlighted =
                 isSelected || (hoveredOption === index && !nonSelectedFading);
 
@@ -196,21 +167,9 @@ export default function CharacterEvaluation() {
                   shouldFade={shouldFade}
                   shouldFadeOut={shouldFadeOut}
                 >
-                  {/* Ripple effects for this specific button */}
-                  {(ripples[index] || []).map((ripple) => (
-                    <span
-                      key={ripple.id}
-                      className="ripple"
-                      style={{
-                        left: ripple.x,
-                        top: ripple.y,
-                        width: '30px',
-                        height: '30px',
-                        marginLeft: '-15px',
-                        marginTop: '-15px',
-                      }}
-                    />
-                  ))}
+                  <AnswerChoiceRippleSpans
+                    ripples={ripples[String(index)] ?? []}
+                  />
                 </AnswerOption>
               );
             })}
