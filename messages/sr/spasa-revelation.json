@@ -1,0 +1,41 @@
+{
+  "text": [
+    {
+      "line": [
+        {
+          "text": "Spasa je prase.",
+          "bold": true,
+          "italic": false
+        }
+      ]
+    },
+    {
+      "line": [
+        {
+          "text": "Baš kao i mi, ona je svesna. Oseća strah, radoznalost, vezanost. Želi da živi.",
+          "bold": false,
+          "italic": false
+        }
+      ]
+    },
+    {
+      "line": [
+        {
+          "text": "Spašena je jer je bila slatka. Jer se nekome učinila posebnom. Jer je pogled na nju probudio empatiju.",
+          "bold": false,
+          "italic": false
+        }
+      ]
+    },
+    {
+      "line": [
+        {
+          "text": "Završila je u azilu. Danas se igra. Uči. Povezuje se sa ljudima i drugim životinjama.",
+          "bold": false,
+          "italic": false
+        }
+      ]
+    }
+  ],
+  "next": "Nastavi"
+}

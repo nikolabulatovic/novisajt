@@ -3,8 +3,8 @@
     "Your answer is that you don't know whether you would have stood against major injustices.",
     "Is it generally important to you to be just and avoid harming innocent beings?"
   ],
-  "options": [
-    { "id": "AGREE", "label": "Yes, it matters to me" },
-    { "id": "DISAGREE", "label": "It doesn't matter to me" }
-  ]
+  "options": {
+    "agree": { "label": "Yes, it matters to me" },
+    "disagree": { "label": "It doesn't matter to me" }
+  }
 }

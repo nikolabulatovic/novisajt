@@ -100,7 +100,7 @@ const stageNavItems: StageNavItem[] = [
 ];
 
 export default function NavigationMenu() {
-  const t = useTranslations('NavigationMenu');
+  const t = useTranslations('navigation-menu');
   const { currentStage, navigateToStage } = useNavigation();
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);

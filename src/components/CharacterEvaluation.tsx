@@ -4,16 +4,13 @@ import { MouseEvent, useRef, useState } from 'react';
 
 import { useTranslations } from 'next-intl';
 
+import { useStoryFlow } from '@/src/contexts/StoryFlowContext';
 import { stageConfig } from '@/src/lib/story/stageUiConfig';
 
+import { StageId } from '../contexts/NavigationContext';
 import AnswerOption from './ui/AnswerOption';
 import ProgressDots from './ui/ProgressDots';
 import StageTextSurface from './ui/StageTextSurface';
-
-interface CharacterEvaluationProps {
-  onComplete: (answers: Record<string, string>) => void;
-  answers?: Record<string, string>;
-}
 
 interface EvaluationOption {
   text: string;
@@ -26,11 +23,9 @@ interface EvaluationQuestion {
   options: EvaluationOption[];
 }
 
-export default function CharacterEvaluation({
-  onComplete,
-  answers: existingAnswers = {},
-}: CharacterEvaluationProps) {
-  const t = useTranslations('CharacterEvaluation');
+export default function CharacterEvaluation() {
+  const { completeStage, answers: existingAnswers = {} } = useStoryFlow();
+  const t = useTranslations('character-evaluation');
   const questions = t.raw('questions') as EvaluationQuestion[];
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] =
@@ -111,14 +106,14 @@ export default function CharacterEvaluation({
         } else {
           // All questions answered
           setTimeout(() => {
-            onComplete(newAnswers);
+            completeStage(StageId.Evaluation, newAnswers);
           }, 1500);
         }
       }, 300); // Selected fade out duration
     }, 500); // Non-selected fade (500ms) + keep selected visible (1000ms)
   };
 
-  const { backgroundImage, opacity = 0.8 } = stageConfig.evaluation;
+  const { backgroundImage, opacity = 0.8 } = stageConfig[StageId.Evaluation];
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 md:p-8 relative bg-black overflow-hidden">
@@ -162,7 +157,10 @@ export default function CharacterEvaluation({
                 : 'opacity-0 translate-y-8 scale-95'
           }`}
         >
-          <StageTextSurface stage="evaluation" contentClassName="p-6 md:p-10">
+          <StageTextSurface
+            stage={StageId.Evaluation}
+            contentClassName="p-6 md:p-10"
+          >
             {/* Question with subtle glow effect */}
             <div className="relative">
               <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light text-gray-200 leading-relaxed max-w-3xl mx-auto relative z-10 drop-shadow-lg">

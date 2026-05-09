@@ -1,35 +1,50 @@
 'use client';
 
-import { ReactNode } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+
+import { useTranslations } from 'next-intl';
 
 import type { Stage } from '@/src/contexts/NavigationContext';
+import { AnimatedTextBlock } from '@/src/lib/i18n/animatedText';
 import { stageConfig } from '@/src/lib/story/stageUiConfig';
 
 import {
   STORY_STAGE_SURFACE_FRAME_CLASS,
   STORY_STAGE_TEXT_PADDING_CLASS,
 } from '../../constants/storyStageTokens';
+import AnimatedText from './AnimatedText';
 import ContentContainer from './ContentContainer';
 import PageContainer from './PageContainer';
 import StageTextSurface from './StageTextSurface';
+import StoryStageNextInteraction from './StoryStageNextInteraction';
 
 export interface StoryStageChromeProps {
   stage: Stage;
-  /** Rendered inside `StageTextSurface`. */
-  textSurfaceContent: ReactNode;
-  /** Rendered below the text surface, still inside `ContentContainer` (e.g. footer, advance control). */
-  belowSurface?: ReactNode;
+  /** Step inside one stage (default final step = 2). */
+  step?: 1 | 2;
 }
 
-/**
- * Shared shell: stage background + column + text chrome. Used by `StoryStage` and `StoryStageNarrativeTwoBeat`.
- */
+/** Config-driven default stage renderer (body + next interaction). */
 export default function StoryStageChrome({
   stage,
-  textSurfaceContent,
-  belowSurface,
+  step = 2,
 }: StoryStageChromeProps) {
   const cfg = stageConfig[stage];
+  const bodyCfg = cfg.body;
+  const bodyTextKey = bodyCfg?.textKey ?? 'text';
+  const tBody = useTranslations(cfg.translationNamespace ?? stage);
+
+  const [nextInteraction, setNextInteractionVisible] = useState(false);
+
+  useEffect(() => {
+    setNextInteractionVisible(false);
+  }, [stage]);
+
+  const revealNextInteraction = useCallback(
+    () => setNextInteractionVisible(true),
+    [],
+  );
+
   const storyDefaults = cfg.additionalUiConfig ?? {};
   const backgroundImage = cfg.backgroundImage;
   const backgroundImageOpacity = cfg.opacity ?? 0.8;
@@ -62,9 +77,21 @@ export default function StoryStageChrome({
           backdropType={storyDefaults.backdropType}
           backdropOpacity={storyDefaults.backdropOpacity}
         >
-          {textSurfaceContent}
+          <AnimatedText
+            text={tBody.raw(bodyTextKey) as AnimatedTextBlock}
+            speed={bodyCfg?.speed}
+            delayAfterComplete={bodyCfg?.delayAfterComplete}
+            textSize={bodyCfg?.textSize}
+            alignment={bodyCfg?.alignment}
+            wordTransitionDuration={bodyCfg?.wordTransitionDuration}
+            onComplete={revealNextInteraction}
+          />
         </StageTextSurface>
-        {belowSurface}
+        <StoryStageNextInteraction
+          stage={stage}
+          visible={nextInteraction}
+          step={step}
+        />
       </ContentContainer>
     </PageContainer>
   );

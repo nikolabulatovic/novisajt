@@ -33,7 +33,7 @@ const alignmentClasses = {
 
 export default function AnimatedText({
   text,
-  speed = 150,
+  speed = 120,
   delayAfterComplete = 1000,
   onComplete,
   textSize = 'md',
