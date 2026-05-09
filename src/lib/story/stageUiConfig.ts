@@ -237,6 +237,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.AcceptingSelfOwnership]: {
+    backgroundImage: '/images/mountain-sheep.png',
     opacity: 0.55,
     narrativeTwoBeat: {
       translationNamespace: 'AcceptingSelfOwnership',
@@ -407,7 +408,6 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.RecognizingInjustice]: {
-    backgroundImage: '/images/jarak.jpg',
     opacity: 0.5,
     nextInteraction: 'none',
     body: {
