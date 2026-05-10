@@ -2,8 +2,11 @@
 
 export const ANSWER_CHOICE_NON_SELECTED_FADE_MS = 500;
 
+/** Story chrome shell fade-out duration (Tailwind `duration-*` must stay in sync). */
+export const ANSWER_CHOICE_SHELL_FADE_MS = 1000;
+
 /** Delay after bulk transition starts before committing navigation / next step. */
-export const ANSWER_CHOICE_COMMIT_AFTER_BULK_MS = 300;
+export const ANSWER_CHOICE_COMMIT_AFTER_BULK_MS = ANSWER_CHOICE_SHELL_FADE_MS;
 
 /** Evaluation-only: fade + slide down + slight shrink on exit. */
 export const ANSWER_CHOICE_SHELL_TRANSITION_CLASS =
@@ -11,7 +14,7 @@ export const ANSWER_CHOICE_SHELL_TRANSITION_CLASS =
 
 /** Story / chrome: fade only — no vertical motion or scale (background fade handled separately). */
 export const ANSWER_CHOICE_SHELL_FADE_TRANSITION_CLASS =
-  'transition-opacity duration-700 ease-out';
+  'transition-opacity duration-1000 ease-out';
 
 export interface AnswerChoiceShellState {
   isTransitioning: boolean;

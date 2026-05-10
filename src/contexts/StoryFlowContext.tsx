@@ -16,8 +16,8 @@ export interface StoryFlowContextValue {
   /** Advances to the next internal step inside a stage (e.g. beat 1 -> beat 2). */
   goToNextStep: () => void;
   /**
-   * Navigate to another stage; respects pill mask, answer-stage fade, or immediate
-   * swap based on `style` and the current stage’s interaction type.
+   * Navigate to another stage; uses pill mask when configured, otherwise fades the main shell
+   * out, swaps the stage, then fades back in (see Home `pendingCrossfadeStage`).
    */
   transitionToStage: (newStage: Stage, style?: StoryTransitionStyle) => void;
   /** Fade to black, then swap to `targetStage` (used by the choice branch UI). */

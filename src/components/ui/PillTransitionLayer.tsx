@@ -1,6 +1,12 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 
 import { Stage } from '@/src/contexts/NavigationContext';
 import { useMaskExpansionFromPill } from '@/src/hooks/useMaskExpansionFromPill';
@@ -79,7 +85,7 @@ export default function PillTransitionLayer({
 
   const startedForStageRef = useRef<typeof pendingNextStage>(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (pendingNextStage && startedForStageRef.current !== pendingNextStage) {
       startedForStageRef.current = pendingNextStage;
       startExpansion();
@@ -91,8 +97,8 @@ export default function PillTransitionLayer({
 
   const activeStage = pendingNextStage ?? persistedStage;
 
-  if ((!pendingNextStage && !isFadingOut) || expansionProgress === 0)
-    return null;
+  /** Omitting expansionProgress===0 avoids a blank gap before the first RAF; stale progress 1 is handled via parent remount (`pillTransitionEpoch`). */
+  if (!pendingNextStage && !isFadingOut) return null;
   if (!activeStage) return null;
 
   const nextConfig = stageConfig[activeStage];

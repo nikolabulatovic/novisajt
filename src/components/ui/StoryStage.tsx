@@ -13,5 +13,9 @@ export interface StoryStageProps {
  * text surface (`backdrop` | `panel` | `none` from `stagePresentation[stage]`) + optional footer.
  */
 export default function StoryStage({ stage }: StoryStageProps) {
-  return <StoryStageChrome stage={stage} />;
+  return (
+    <div key={stage} className="min-h-screen w-full">
+      <StoryStageChrome stage={stage} />
+    </div>
+  );
 }
