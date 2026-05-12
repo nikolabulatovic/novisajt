@@ -9,6 +9,7 @@ const MESSAGE_FILES = [
   'choice-stage',
   'red-pill-intro',
   'character-evaluation',
+  'character-incompatible',
   'historical-intro',
   'historical-slavery',
   'historical-authoritarianism',

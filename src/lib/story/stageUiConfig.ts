@@ -119,6 +119,16 @@ export const stageConfig: Record<Stage, StageConfig> = {
       'absolute inset-0 bg-gradient-to-r from-transparent via-black/20 to-transparent pointer-events-none',
     ],
   },
+  [StageId.CharacterIncompatible]: {
+    backgroundImage: '/images/zatvorena-vrata.png',
+    opacity: 0.6,
+    body: {
+      speed: 120,
+      delayAfterComplete: 1000,
+      textSize: 'md',
+      alignment: 'center',
+    },
+  },
   [StageId.Explanation]: {
     backgroundImage: '/images/ogledalo.png',
     opacity: 0.35,

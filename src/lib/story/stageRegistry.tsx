@@ -15,6 +15,7 @@ import BackToAnswers from '@/src/components/BackToAnswers';
 import BackToAnswersAgain from '@/src/components/BackToAnswersAgain';
 import BreakingQuestion from '@/src/components/BreakingQuestion';
 import CharacterEvaluation from '@/src/components/CharacterEvaluation';
+import CharacterIncompatible from '@/src/components/CharacterIncompatible';
 import ChoiceStage from '@/src/components/ChoiceStage';
 import CowFate from '@/src/components/CowFate';
 import FromTheWild from '@/src/components/FromTheWild';
@@ -49,6 +50,7 @@ export const STAGE_REGISTRY: Record<Stage, ComponentType<any>> = {
   [StageId.Choice]: ChoiceStage,
   [StageId.Intro]: RedPillIntro,
   [StageId.Evaluation]: CharacterEvaluation,
+  [StageId.CharacterIncompatible]: CharacterIncompatible,
   [StageId.Explanation]: QuestionExplanation,
   [StageId.HistoricalIntro]: HistoricalIntro,
   [StageId.HistoricalSlavery]: HistoricalSlavery,

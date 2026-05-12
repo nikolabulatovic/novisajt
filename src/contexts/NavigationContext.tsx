@@ -6,6 +6,7 @@ export const StageId = {
   Choice: 'choice-stage',
   Intro: 'red-pill-intro',
   Evaluation: 'character-evaluation',
+  CharacterIncompatible: 'character-incompatible',
   Explanation: 'question-explanation',
   HistoricalIntro: 'historical-intro',
   HistoricalSlavery: 'historical-slavery',

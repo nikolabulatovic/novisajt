@@ -18,6 +18,7 @@ import {
 export const directStageTransitions: Partial<Record<Stage, Stage>> = {
   [StageId.RecognizingInjustice]: StageId.BreakingQuestion,
   [StageId.Intro]: StageId.Evaluation,
+  [StageId.CharacterIncompatible]: StageId.Choice,
   [StageId.Explanation]: StageId.HistoricalIntro,
   [StageId.HistoricalIntro]: StageId.HistoricalSlavery,
   [StageId.HistoricalSlavery]: StageId.HistoricalAuthoritarianism,
