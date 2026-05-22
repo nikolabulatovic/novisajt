@@ -1,76 +1,56 @@
 type Locale = 'sr' | 'en';
 
-type MessageNamespace =
-  | 'Metadata'
-  | 'NavigationMenu'
-  | 'QuestionExplanation'
-  | 'PersonalQuestion'
-  | 'WouldYouLikeToBe'
-  | 'ChoiceStage'
-  | 'RedPillIntro'
-  | 'CharacterEvaluation'
-  | 'HistoricalIntro'
-  | 'HistoricalSlavery'
-  | 'HistoricalAuthoritarianism'
-  | 'BreakingQuestion'
-  | 'StayComfortable'
-  | 'ApatheticStance'
-  | 'AlreadyVegan'
-  | 'LetThemLive'
-  | 'AlignBehaviour'
-  | 'SolutionChoice'
-  | 'VeganDietHealth'
-  | 'SolutionUse'
-  | 'SolutionKnow'
-  | 'AddressingContradiction'
-  | 'BackToAnswers'
-  | 'BackToAnswersAgain'
-  | 'RecognizingInjustice'
-  | 'AcceptingSelfOwnership';
-
-const namespaceFiles: Record<MessageNamespace, string> = {
-  Metadata: 'metadata',
-  NavigationMenu: 'navigation-menu',
-  QuestionExplanation: 'question-explanation',
-  PersonalQuestion: 'personal-question',
-  WouldYouLikeToBe: 'would-you-like-to-be',
-  ChoiceStage: 'choice-stage',
-  RedPillIntro: 'red-pill-intro',
-  CharacterEvaluation: 'character-evaluation',
-  HistoricalIntro: 'historical-intro',
-  HistoricalSlavery: 'historical-slavery',
-  HistoricalAuthoritarianism: 'historical-authoritarianism',
-  BreakingQuestion: 'breaking-question',
-  StayComfortable: 'stay-comfortable',
-  ApatheticStance: 'apathetic-stance',
-  AlreadyVegan: 'already-vegan',
-  LetThemLive: 'let-them-live',
-  AlignBehaviour: 'align-behaviour',
-  SolutionChoice: 'solution-choice',
-  VeganDietHealth: 'vegan-diet-health',
-  SolutionUse: 'solution-use',
-  SolutionKnow: 'solution-know',
-  AddressingContradiction: 'addressing-contradiction',
-  BackToAnswers: 'back-to-answers',
-  BackToAnswersAgain: 'back-to-answers-again',
-  RecognizingInjustice: 'recognizing-injustice',
-  AcceptingSelfOwnership: 'accepting-self-ownership',
-};
+const MESSAGE_FILES = [
+  'metadata',
+  'navigation-menu',
+  'question-explanation',
+  'personal-question',
+  'would-you-like-to-be',
+  'choice-stage',
+  'red-pill-intro',
+  'character-evaluation',
+  'character-incompatible',
+  'historical-intro',
+  'historical-slavery',
+  'historical-authoritarianism',
+  'spasa-revelation',
+  'other-pigs',
+  'root-of-the-problem',
+  'animals-treated-as-products',
+  'breaking-question',
+  'stay-comfortable',
+  'apathetic-stance',
+  'already-vegan',
+  'let-them-live',
+  'align-behaviour',
+  'veganism-principle',
+  'solution-choice',
+  'vegan-diet-health',
+  'solution-use',
+  'solution-know',
+  'addressing-contradiction',
+  'not-honest',
+  'back-to-answers',
+  'back-to-answers-again',
+  'recognizing-injustice',
+  'accepting-self-ownership',
+  'from-the-wild',
+  'reproduction-control',
+  'vicious-cycle',
+  'cow-fate',
+  'animal-cost-of-living',
+] as const;
 
 async function loadNamespace(locale: Locale, fileName: string) {
   return (await import(`../../messages/${locale}/${fileName}.json`)).default;
 }
 
 export async function loadMessages(locale: Locale) {
-  const entries = await Promise.all(
-    (Object.keys(namespaceFiles) as MessageNamespace[]).map(
-      async (namespace) => {
-        const fileName = namespaceFiles[namespace];
-        const messages = await loadNamespace(locale, fileName);
-        return [namespace, messages] as const;
-      },
-    ),
+  const fileEntries = await Promise.all(
+    MESSAGE_FILES.map(async (fileName) => {
+      const messages = await loadNamespace(locale, fileName);
+      return [fileName, messages] as const;
+    }),
   );
-
-  return Object.fromEntries(entries);
+  return Object.fromEntries(fileEntries);
 }

@@ -1,0 +1,41 @@
+{
+  "text": [
+    {
+      "line": [
+        {
+          "text": "Spasa is a pig.",
+          "bold": true,
+          "italic": false
+        }
+      ]
+    },
+    {
+      "line": [
+        {
+          "text": "Just like us, she is conscious. She feels fear, curiosity, and attachment. She wants to live.",
+          "bold": false,
+          "italic": false
+        }
+      ]
+    },
+    {
+      "line": [
+        {
+          "text": "She was saved because she was cute. Because someone found her special. Because seeing her awakened empathy.",
+          "bold": false,
+          "italic": false
+        }
+      ]
+    },
+    {
+      "line": [
+        {
+          "text": "She ended up in a sanctuary. Today she plays. Learns. Bonds with people and other animals.",
+          "bold": false,
+          "italic": false
+        }
+      ]
+    }
+  ],
+  "next": "Continue"
+}

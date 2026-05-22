@@ -1,24 +1,15 @@
 {
   "next": "Razumem",
-  "blocks": [
+  "text": [
     {
       "line": [
         {
-          "text": "Ova pitanja nisu test. Nema tačnih odgovora.",
-          "bold": false,
-          "italic": false
-        }
-      ]
-    },
-    {
-      "line": [
-        {
-          "text": "Postavili smo ih jer ovo putovanje ima smisla samo za ljude kojima je stalo da budu ",
+          "text": "Na osnovu tvojih odgovora, deluje kao da želiš da imaš ",
           "bold": false,
           "italic": false
         },
         {
-          "text": "iskreni prema sebi",
+          "text": "iskrenu sliku o sebi",
           "bold": true,
           "italic": false
         },
@@ -32,22 +23,17 @@
     {
       "line": [
         {
-          "text": "Ako želiš da se vidiš onakvim kakav jesi - ",
+          "text": "Ovo putovanje je za ljude koji žele da vide sebe onakvim kakvi jesu — a ne onakvim kakvima ",
           "bold": false,
           "italic": false
         },
         {
-          "text": "a ne onakvim kakvim ",
+          "text": "misle da jesu",
           "bold": false,
-          "italic": false
-        },
-        {
-          "text": "misliš da jesi",
-          "bold": true,
           "italic": true
         },
         {
-          "text": ", nastavi dalje.",
+          "text": ".",
           "bold": false,
           "italic": false
         }

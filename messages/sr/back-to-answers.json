@@ -1,4 +1,8 @@
 {
+  "text": [
+    "[placeholder] Rekao si da...",
+    "Ovaj ekran prikazuje prethodne odgovore korisnika i vraća ih na razmišljanje."
+  ],
   "options": {
     "agree": "Tako je",
     "no": "Ne"

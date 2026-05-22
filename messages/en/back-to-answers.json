@@ -1,4 +1,8 @@
 {
+  "text": [
+    "[placeholder] You said that…",
+    "This screen shows the user’s previous answers and invites reflection."
+  ],
   "options": {
     "agree": "That's right",
     "no": "No"

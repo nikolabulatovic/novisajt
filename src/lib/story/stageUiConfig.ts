@@ -1,5 +1,7 @@
 import { Stage, StageId } from '@/src/contexts/NavigationContext';
 
+export const NEXT_LABEL = 'next';
+
 /**
  * How narrative text sits on the stage background (forks tune per stage in this file).
  * - `panel` — frosted `GlassPanel` (default when omitted).
@@ -31,10 +33,28 @@ export interface StoryStageUiConfig {
   backdropOpacity?: number;
 }
 
-export interface StageConfig {
+export interface StageBodyAnimatedText {
+  /** Defaults to `120` (most common project value). */
+  speed?: number;
+  /** Defaults to `1000` (most common project value). */
+  delayAfterComplete?: number;
+  /** Translation key for body text (defaults to `text`). */
+  textKey?: string;
+  /** Defaults to `md` (most common project value). */
+  textSize?: 'sm' | 'md' | 'lg';
+  /** Defaults to `center` (most common project value). */
+  alignment?: 'left' | 'center' | 'right';
+  wordTransitionDuration?: number;
+}
+
+export interface StageAnswerOptionConfig {
+  id: string;
+  labelKey: string;
+}
+
+interface BaseStageConfig {
   backgroundImage?: string;
   opacity?: number;
-  pillTransitionOverlayColor?: 'black' | 'white'; // Overlay color used during pill mask expansion into this stage
   gradientOverlayClasses?: string[]; // Extra gradient overlay divs to replicate in PillTransitionLayer so transition end matches page start
   /**
    * Text chrome for this stage. Defaults to `panel` (frosted glass) when omitted.
@@ -49,7 +69,32 @@ export interface StageConfig {
   additionalUiConfig?: StoryStageUiConfig;
   /** When set, StoryStage renders two beats + advance + deferred footer; `children` are ignored. */
   narrativeTwoBeat?: NarrativeTwoBeatConfig;
+  /** Optional body rendered by `StoryStage` when no children are passed. */
+  body?: StageBodyAnimatedText;
+  /** Next interaction translation namespace. */
+  translationNamespace?: string;
 }
+
+type StageInteractionConfig =
+  | {
+      nextInteraction?: 'none';
+      answerOptions?: never;
+      pillTransitionOverlayColor?: never;
+    }
+  | {
+      nextInteraction: 'pill';
+      answerOptions?: never;
+      /** Overlay color used during pill mask expansion into this stage. */
+      pillTransitionOverlayColor?: 'black' | 'white';
+    }
+  | {
+      nextInteraction: 'answer';
+      /** Required when `nextInteraction` is `answer`. */
+      answerOptions: StageAnswerOptionConfig[];
+      pillTransitionOverlayColor?: never;
+    };
+
+export type StageConfig = BaseStageConfig & StageInteractionConfig;
 
 export const stageConfig: Record<Stage, StageConfig> = {
   [StageId.Choice]: {
@@ -74,27 +119,60 @@ export const stageConfig: Record<Stage, StageConfig> = {
       'absolute inset-0 bg-gradient-to-r from-transparent via-black/20 to-transparent pointer-events-none',
     ],
   },
+  [StageId.CharacterIncompatible]: {
+    backgroundImage: '/images/zatvorena-vrata.png',
+    opacity: 0.6,
+    body: {
+      speed: 120,
+      delayAfterComplete: 1000,
+      textSize: 'md',
+      alignment: 'center',
+    },
+  },
   [StageId.Explanation]: {
     backgroundImage: '/images/ogledalo.png',
     opacity: 0.35,
+    nextInteraction: 'pill',
     textSurface: 'none',
     additionalUiConfig: {
       maxWidth: 'lg',
       contentSpacing: 'sm',
       textPadding: 'explanation',
     },
+    body: {
+      speed: 100,
+      delayAfterComplete: 1200,
+      textSize: 'lg',
+      wordTransitionDuration: 5000,
+    },
   },
   [StageId.HistoricalIntro]: {
     backgroundImage: '/images/historical-weight.png',
     opacity: 0.75,
+    body: {
+      delayAfterComplete: 1000,
+      textSize: 'lg',
+    },
   },
   [StageId.HistoricalSlavery]: {
     backgroundImage: '/images/robovi.jpg',
     opacity: 0.8,
+    body: {
+      speed: 150,
+      delayAfterComplete: 1000,
+      textSize: 'lg',
+      alignment: 'right',
+    },
   },
   [StageId.HistoricalAuthoritarianism]: {
     backgroundImage: '/images/nacizam.jpg',
     opacity: 0.8,
+    body: {
+      speed: 150,
+      delayAfterComplete: 1000,
+      textSize: 'lg',
+      alignment: 'left',
+    },
   },
   [StageId.PersonalQuestion]: {
     backgroundImage: '/images/covek-u-grupi.jpeg',
@@ -103,6 +181,17 @@ export const stageConfig: Record<Stage, StageConfig> = {
   [StageId.BreakingQuestion]: {
     backgroundImage: '/images/odluka-put.jpg',
     opacity: 0.5,
+    nextInteraction: 'answer',
+    answerOptions: [
+      { id: 'ACCEPT', labelKey: 'options.accept.label' },
+      { id: 'REJECT', labelKey: 'options.reject.label' },
+    ],
+    body: {
+      speed: 120,
+      delayAfterComplete: 1000,
+      textSize: 'md',
+      alignment: 'center',
+    },
   },
   [StageId.SpasaStory]: {
     backgroundImage: '/images/spasa-rescue-hope.png',
@@ -115,20 +204,50 @@ export const stageConfig: Record<Stage, StageConfig> = {
   [StageId.OtherPigs]: {
     backgroundImage: '/images/enslaved-pigs.jpg',
     opacity: 0.8,
+    body: {
+      speed: 120,
+      delayAfterComplete: 1000,
+      textSize: 'md',
+      alignment: 'center',
+    },
   },
   [StageId.RootOfTheProblem]: {
     backgroundImage: '/images/horse-stable-gray.jpg',
     opacity: 0.8,
+    body: {
+      speed: 120,
+      delayAfterComplete: 1000,
+      textSize: 'md',
+      alignment: 'center',
+    },
   },
   [StageId.AnimalsTreatedAsProducts]: {
     backgroundImage: '/images/industrija-koze.png',
     opacity: 0.8,
+    body: {
+      speed: 120,
+      delayAfterComplete: 1000,
+      textSize: 'md',
+      alignment: 'center',
+    },
   },
   [StageId.LetThemLive]: {
     backgroundImage: '/images/farm-animals.jpg',
     opacity: 0.8,
+    nextInteraction: 'answer',
+    answerOptions: [
+      { id: 'ACCEPT', labelKey: 'options.accept' },
+      { id: 'REJECT', labelKey: 'options.reject' },
+    ],
+    body: {
+      speed: 120,
+      delayAfterComplete: 1000,
+      textSize: 'md',
+      alignment: 'center',
+    },
   },
   [StageId.AcceptingSelfOwnership]: {
+    backgroundImage: '/images/mountain-sheep.png',
     opacity: 0.55,
     narrativeTwoBeat: {
       translationNamespace: 'AcceptingSelfOwnership',
@@ -140,46 +259,139 @@ export const stageConfig: Record<Stage, StageConfig> = {
   [StageId.FromTheWild]: {
     backgroundImage: '/images/gallus-gallus.jpg',
     opacity: 0.8,
+    body: {
+      speed: 120,
+      delayAfterComplete: 1000,
+      textSize: 'md',
+      alignment: 'center',
+    },
   },
   [StageId.ViciousCycle]: {
     backgroundImage: '/images/chicks-in-bucket.png',
     opacity: 0.8,
+    body: {
+      speed: 120,
+      delayAfterComplete: 1000,
+      textSize: 'md',
+      alignment: 'center',
+    },
   },
   [StageId.CowFate]: {
     backgroundImage: '/images/cow-slave.jpg',
     opacity: 0.8,
+    body: {
+      speed: 120,
+      delayAfterComplete: 1000,
+      textSize: 'md',
+      alignment: 'center',
+    },
   },
   [StageId.AnimalCostOfLiving]: {
     backgroundImage: '/images/cows-transported.png',
     opacity: 0.8,
+    body: {
+      speed: 120,
+      delayAfterComplete: 1000,
+      textSize: 'md',
+      alignment: 'center',
+    },
   },
   [StageId.ReproductionControl]: {
     backgroundImage: '/images/cow-silhouettes.png',
     opacity: 0.8,
+    body: {
+      speed: 120,
+      delayAfterComplete: 1000,
+      textSize: 'md',
+      alignment: 'center',
+    },
   },
   [StageId.SolutionUse]: {
     backgroundImage: '/images/farm-animals2.jpg',
     opacity: 0.8,
+    nextInteraction: 'answer',
+    answerOptions: [
+      { id: 'YES', labelKey: 'options.yes' },
+      { id: 'NO', labelKey: 'options.no' },
+    ],
+    body: {
+      speed: 120,
+      delayAfterComplete: 1000,
+      textSize: 'md',
+      alignment: 'center',
+    },
   },
   [StageId.SolutionKnow]: {
     backgroundImage: '/images/djokovic-trophy.jpg',
     opacity: 0.8,
+    nextInteraction: 'answer',
+    answerOptions: [
+      { id: 'YES', labelKey: 'options.yes' },
+      { id: 'DONT_KNOW', labelKey: 'options.dontKnow' },
+      { id: 'NO', labelKey: 'options.no' },
+    ],
+    body: {
+      speed: 120,
+      delayAfterComplete: 1000,
+      textSize: 'md',
+      alignment: 'center',
+    },
   },
   [StageId.VeganDietHealth]: {
     backgroundImage: '/images/farm-animals2.jpg',
     opacity: 0.8,
+    nextInteraction: 'answer',
+    answerOptions: [
+      { id: 'ACCEPT', labelKey: 'options.accept' },
+      { id: 'REJECT', labelKey: 'options.reject' },
+    ],
+    body: {
+      speed: 120,
+      delayAfterComplete: 1000,
+      textSize: 'md',
+      alignment: 'center',
+    },
   },
   [StageId.SolutionChoice]: {
-    backgroundImage: '/images/silhouette-cracked-mirror.png',
+    backgroundImage: '/images/silhouette-mirror.png',
     opacity: 0.8,
+    nextInteraction: 'answer',
+    answerOptions: [
+      { id: 'AGREE', labelKey: 'options.agree' },
+      { id: 'DISAGREE', labelKey: 'options.disagree' },
+    ],
+    body: {
+      speed: 120,
+      delayAfterComplete: 1000,
+      textSize: 'md',
+      alignment: 'center',
+    },
   },
   [StageId.AlignBehaviour]: {
     backgroundImage: '/images/farm-animals2.jpg',
     opacity: 0.8,
+    nextInteraction: 'answer',
+    answerOptions: [
+      { id: 'YES', labelKey: 'options.yes' },
+      { id: 'NO', labelKey: 'options.no' },
+    ],
+    body: {
+      speed: 120,
+      delayAfterComplete: 1000,
+      textSize: 'md',
+      alignment: 'center',
+    },
   },
   [StageId.VeganismPrinciple]: {
     backgroundImage: '/images/farm-animals2.jpg',
     opacity: 0.8,
+    nextInteraction: 'pill',
+    body: {
+      speed: 120,
+      delayAfterComplete: 1000,
+      textSize: 'md',
+      alignment: 'center',
+    },
   },
   [StageId.AfterChoice]: {
     backgroundImage: '/images/animals-picturesque.png',
@@ -193,14 +405,38 @@ export const stageConfig: Record<Stage, StageConfig> = {
   [StageId.WouldYouLikeToBe]: {
     backgroundImage: '/images/justitia-gray.png',
     opacity: 0.5,
+    nextInteraction: 'answer',
+    answerOptions: [
+      { id: 'AGREE', labelKey: 'options.agree.label' },
+      { id: 'DISAGREE', labelKey: 'options.disagree.label' },
+    ],
+    body: {
+      speed: 120,
+      delayAfterComplete: 1000,
+      textSize: 'md',
+      alignment: 'center',
+    },
   },
   [StageId.RecognizingInjustice]: {
-    backgroundImage: '/images/jarak.jpg',
     opacity: 0.5,
+    nextInteraction: 'none',
+    body: {
+      speed: 120,
+      delayAfterComplete: 800,
+      textSize: 'md',
+      alignment: 'center',
+    },
   },
   [StageId.ApatheticStance]: {
     backgroundImage: '/images/izbor-da-ne-vidi.jpg',
     opacity: 0.4,
+    nextInteraction: 'none',
+    body: {
+      speed: 120,
+      delayAfterComplete: 800,
+      textSize: 'md',
+      alignment: 'center',
+    },
   },
   [StageId.AlreadyVegan]: {
     backgroundImage: '/images/animals-picturesque.png',
@@ -213,10 +449,28 @@ export const stageConfig: Record<Stage, StageConfig> = {
   [StageId.AddressingContradiction]: {
     backgroundImage: '/images/silhouette-cracked-mirror.png',
     opacity: 0.6,
+    nextInteraction: 'answer',
+    answerOptions: [
+      { id: 'AGREE', labelKey: 'options.agree' },
+      { id: 'DISAGREE', labelKey: 'options.disagree' },
+    ],
+    body: {
+      speed: 120,
+      delayAfterComplete: 1000,
+      textSize: 'md',
+      alignment: 'center',
+    },
   },
   [StageId.NotHonest]: {
-    backgroundImage: '/images/silhouette-cracked-mirror.png',
+    backgroundImage: '/images/silhouette-broken-mirror.png',
     opacity: 0.5,
+    nextInteraction: 'none',
+    body: {
+      speed: 120,
+      delayAfterComplete: 800,
+      textSize: 'md',
+      alignment: 'center',
+    },
   },
   [StageId.BackToAnswers]: {
     backgroundImage: '/images/ogledalo.png',

@@ -1,4 +1,42 @@
 {
+  "text": [
+    {
+      "line": [
+        {
+          "text": "Other conscious beings do not exist to serve us.",
+          "bold": false,
+          "italic": false
+        }
+      ]
+    },
+    {
+      "line": [
+        {
+          "text": "They do not exist to be exploited. They do not exist to be consumed.",
+          "bold": false,
+          "italic": false
+        }
+      ]
+    },
+    {
+      "line": [
+        {
+          "text": "They exist for the same reason we do:",
+          "bold": false,
+          "italic": false
+        }
+      ]
+    },
+    {
+      "line": [
+        {
+          "text": "To live their own life.",
+          "bold": true,
+          "italic": false
+        }
+      ]
+    }
+  ],
   "options": {
     "accept": "I accept",
     "reject": "I do not accept"

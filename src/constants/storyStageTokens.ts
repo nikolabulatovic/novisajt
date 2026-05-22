@@ -7,7 +7,7 @@ export const STORY_STAGE_TEXT_PADDING_CLASS: Record<
   StoryStageTextPadding,
   string
 > = {
-  default: 'relative p-6 md:p-16',
+  default: 'relative p-6',
   intro: 'p-8 md:p-12',
   explanation: 'px-4 py-4 md:px-6 md:py-6',
 };

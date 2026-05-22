@@ -4,26 +4,34 @@ import { useState } from 'react';
 
 import { useTranslations } from 'next-intl';
 
+import { StageId } from '@/src/contexts/NavigationContext';
+import { useStoryFlow } from '@/src/contexts/StoryFlowContext';
 import { stageConfig } from '@/src/lib/story/stageUiConfig';
 
 import PageContainer from './ui/PageContainer';
 import Pill from './ui/Pill';
 
-interface ChoiceStageProps {
-  onPillChoice: (pill: 'red' | 'blue') => void;
-}
-
-export default function ChoiceStage({ onPillChoice }: ChoiceStageProps) {
-  const t = useTranslations('ChoiceStage');
+export default function ChoiceStage() {
+  const {
+    transitionToStage,
+    transitionViaBlackOverlayTo,
+    trackAnswerSelected,
+  } = useStoryFlow();
+  const t = useTranslations(StageId.Choice);
   const [selectedPill, setSelectedPill] = useState<'red' | 'blue' | null>(null);
 
   const handlePillClick = (pill: 'red' | 'blue') => {
     if (selectedPill !== null) return;
     setSelectedPill(pill);
-    onPillChoice(pill);
+    trackAnswerSelected(StageId.Choice, pill);
+    if (pill === 'red') {
+      transitionToStage(StageId.Intro, 'pill');
+    } else {
+      transitionViaBlackOverlayTo(StageId.StayComfortable);
+    }
   };
 
-  const { backgroundImage, opacity } = stageConfig.choice;
+  const { backgroundImage, opacity } = stageConfig[StageId.Choice];
 
   return (
     <PageContainer

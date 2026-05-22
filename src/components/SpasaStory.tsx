@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 
+import { StageId } from '@/src/contexts/NavigationContext';
+import { useStoryFlow } from '@/src/contexts/StoryFlowContext';
 import { stageConfig } from '@/src/lib/story/stageUiConfig';
 
 import AnimatedText from './ui/AnimatedText';
@@ -10,11 +12,8 @@ import NextButton from './ui/NextButton';
 import PageContainer from './ui/PageContainer';
 import StageTextSurface from './ui/StageTextSurface';
 
-interface SpasaStoryProps {
-  onComplete: () => void;
-}
-
-export default function SpasaStory({ onComplete }: SpasaStoryProps) {
+export default function SpasaStory() {
+  const { completeStage } = useStoryFlow();
   const [showButton, setShowButton] = useState(false);
   const [showFinalMessage, setShowFinalMessage] = useState(false);
   const [finalMessageVisible, setFinalMessageVisible] = useState(false);
@@ -32,13 +31,13 @@ export default function SpasaStory({ onComplete }: SpasaStoryProps) {
       setTimeout(() => {
         setFinalMessageVisible(true);
         setTimeout(() => {
-          onComplete();
+          completeStage(StageId.SpasaStory);
         }, 3000); // Show final message for 3 seconds before moving on
       }, 500);
     }
   };
 
-  const { backgroundImage, opacity = 0.8 } = stageConfig['spasa-story'];
+  const { backgroundImage, opacity = 0.8 } = stageConfig[StageId.SpasaStory];
 
   return (
     <PageContainer
@@ -48,7 +47,7 @@ export default function SpasaStory({ onComplete }: SpasaStoryProps) {
       {!showFinalMessage ? (
         <ContentContainer spacing="lg">
           <StageTextSurface
-            stage="spasa-story"
+            stage={StageId.SpasaStory}
             contentClassName="relative p-6 md:p-16"
           >
             <AnimatedText
@@ -74,7 +73,7 @@ export default function SpasaStory({ onComplete }: SpasaStoryProps) {
           }`}
         >
           <StageTextSurface
-            stage="spasa-story"
+            stage={StageId.SpasaStory}
             contentClassName="relative px-6 py-10 md:px-10 md:py-14"
           >
             <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light text-gray-200 leading-relaxed relative z-10">

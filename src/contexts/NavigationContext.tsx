@@ -3,10 +3,11 @@
 import { ReactNode, createContext, useContext } from 'react';
 
 export const StageId = {
-  Choice: 'choice',
-  Intro: 'intro',
-  Evaluation: 'evaluation',
-  Explanation: 'explanation',
+  Choice: 'choice-stage',
+  Intro: 'red-pill-intro',
+  Evaluation: 'character-evaluation',
+  CharacterIncompatible: 'character-incompatible',
+  Explanation: 'question-explanation',
   HistoricalIntro: 'historical-intro',
   HistoricalSlavery: 'historical-slavery',
   HistoricalAuthoritarianism: 'historical-authoritarianism',

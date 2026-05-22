@@ -2,6 +2,7 @@ import { type Dispatch, type SetStateAction, useMemo } from 'react';
 
 import { type Stage, StageId } from '@/src/contexts/NavigationContext';
 import { AnswerId } from '@/src/lib/answerIds';
+import { characterEvaluationAnswersMeetBar } from '@/src/lib/story/characterEvaluationBar';
 import {
   answerStageTransitions,
   directStageTransitions,
@@ -34,7 +35,11 @@ export function useStoryFlowHandlers({
             Object.entries(answer).forEach(([question, value]) => {
               trackAnswerSelected(StageId.Evaluation, `${question}:${value}`);
             });
-            transitionToStage(StageId.Explanation);
+            if (characterEvaluationAnswersMeetBar(answer)) {
+              transitionToStage(StageId.Explanation);
+            } else {
+              transitionToStage(StageId.CharacterIncompatible);
+            }
           }
           return;
         }

@@ -5,20 +5,16 @@ import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 
 import { StageId } from '@/src/contexts/NavigationContext';
+import { useStoryFlow } from '@/src/contexts/StoryFlowContext';
 import type { LocalizedAnswerOption } from '@/src/lib/answerIds';
 import { stageConfig } from '@/src/lib/story/stageUiConfig';
 
 import AnswerOptions from './ui/AnswerOptions';
 import StageTextSurface from './ui/StageTextSurface';
 
-interface PersonalQuestionProps {
-  onComplete: (answer: string) => void;
-}
-
-export default function PersonalQuestion({
-  onComplete,
-}: PersonalQuestionProps) {
-  const t = useTranslations('PersonalQuestion');
+export default function PersonalQuestion() {
+  const t = useTranslations(StageId.PersonalQuestion);
+  const { completeStage } = useStoryFlow();
   const [selected, setSelected] = useState<string | null>(null);
   const [hideQuestion, setHideQuestion] = useState(false);
   const [showFlashMessage, setShowFlashMessage] = useState(false);
@@ -42,7 +38,7 @@ export default function PersonalQuestion({
         setTimeout(() => {
           setFadeOut(true);
           setTimeout(() => {
-            onComplete(value);
+            completeStage(StageId.PersonalQuestion, value);
           }, 500); // Fade out duration
         }, 3000);
       }, 300); // Wait for question to fade out
@@ -97,6 +93,7 @@ export default function PersonalQuestion({
               options={options}
               onSelect={handleAnswer}
               selectedId={selected}
+              animateBeforeSelect={false}
               disableUnselectedWhenSelected
               containerClassName="flex flex-row gap-8"
               textClassName="text-lg md:text-xl lg:text-2xl text-gray-300 font-light"

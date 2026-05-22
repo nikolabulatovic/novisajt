@@ -14,6 +14,7 @@ const stageLabelKeys: Record<Stage, string> = {
   [StageId.Choice]: 'stages.choice',
   [StageId.Intro]: 'stages.intro',
   [StageId.Evaluation]: 'stages.evaluation',
+  [StageId.CharacterIncompatible]: 'stages.characterIncompatible',
   [StageId.Explanation]: 'stages.explanation',
   [StageId.HistoricalIntro]: 'stages.historicalIntro',
   [StageId.HistoricalSlavery]: 'stages.historicalSlavery',
@@ -62,6 +63,7 @@ const stageNavItems: StageNavItem[] = [
   { stage: StageId.StayComfortable, depth: 1 },
   { stage: StageId.Intro, depth: 0 },
   { stage: StageId.Evaluation, depth: 0 },
+  { stage: StageId.CharacterIncompatible, depth: 1 },
   { stage: StageId.Explanation, depth: 0 },
   { stage: StageId.HistoricalIntro, depth: 0 },
   { stage: StageId.HistoricalSlavery, depth: 0 },
@@ -100,7 +102,7 @@ const stageNavItems: StageNavItem[] = [
 ];
 
 export default function NavigationMenu() {
-  const t = useTranslations('NavigationMenu');
+  const t = useTranslations('navigation-menu');
   const { currentStage, navigateToStage } = useNavigation();
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);

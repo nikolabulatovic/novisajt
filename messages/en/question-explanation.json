@@ -1,24 +1,15 @@
 {
   "next": "I understand",
-  "blocks": [
+  "text": [
     {
       "line": [
         {
-          "text": "These questions are not a test. There are no correct answers.",
-          "bold": false,
-          "italic": false
-        }
-      ]
-    },
-    {
-      "line": [
-        {
-          "text": "We asked them because this journey only makes sense for people who care about being ",
+          "text": "Based on your answers, it seems you want ",
           "bold": false,
           "italic": false
         },
         {
-          "text": "honest with themselves",
+          "text": "an honest picture of yourself",
           "bold": true,
           "italic": false
         },
@@ -32,22 +23,17 @@
     {
       "line": [
         {
-          "text": "If you want to see yourself as you are - ",
+          "text": "This journey is for people who want to see themselves as they are—not as they ",
           "bold": false,
           "italic": false
         },
         {
-          "text": "and not as you ",
+          "text": "think they are",
           "bold": false,
-          "italic": false
-        },
-        {
-          "text": "think you are",
-          "bold": true,
           "italic": true
         },
         {
-          "text": ", continue.",
+          "text": ".",
           "bold": false,
           "italic": false
         }

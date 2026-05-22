@@ -1,4 +1,42 @@
 {
+  "text": [
+    {
+      "line": [
+        {
+          "text": "Druga svesna bića ne postoje da bi služila nama.",
+          "bold": false,
+          "italic": false
+        }
+      ]
+    },
+    {
+      "line": [
+        {
+          "text": "Ne postoje da bi bila iskorišćena. Ne postoje da bi bila potrošena.",
+          "bold": false,
+          "italic": false
+        }
+      ]
+    },
+    {
+      "line": [
+        {
+          "text": "Postoje iz istog razloga kao i mi:",
+          "bold": false,
+          "italic": false
+        }
+      ]
+    },
+    {
+      "line": [
+        {
+          "text": "Da žive svoj život.",
+          "bold": true,
+          "italic": false
+        }
+      ]
+    }
+  ],
   "options": {
     "accept": "Prihvatam",
     "reject": "Ne prihvatam"

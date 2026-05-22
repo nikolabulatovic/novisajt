@@ -52,7 +52,7 @@ export default function StoryStageNarrativeTwoBeat({
   return (
     <StoryStageChrome
       stage={stage}
-      textSurfaceContent={
+      textSurfaceContentOverride={
         <>
           {phase === 1 && (
             <div
@@ -82,7 +82,7 @@ export default function StoryStageNarrativeTwoBeat({
           )}
         </>
       }
-      belowSurface={
+      belowSurfaceOverride={
         <>
           {phase === 1 && showAdvanceButton && (
             <AnswerOptions

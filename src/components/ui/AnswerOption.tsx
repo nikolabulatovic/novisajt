@@ -7,12 +7,16 @@ interface AnswerOptionProps {
   onClick: (e: MouseEvent<HTMLButtonElement>) => void;
   isSelected?: boolean;
   isDisabled?: boolean;
+  /** When false, width is not forced to full row (e.g. horizontal {@link AnswerOptions}). */
+  fullWidth?: boolean;
   index?: number;
   className?: string;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
   shouldFade?: boolean;
   shouldFadeOut?: boolean;
+  /** Override label typography (e.g. compact story pills); defaults to evaluation-sized responsive text. */
+  labelClassName?: string;
   children?: ReactNode; // For ripple effects
 }
 
@@ -21,11 +25,13 @@ export default function AnswerOption({
   onClick,
   isSelected = false,
   isDisabled = false,
+  fullWidth = true,
   className = '',
   onMouseEnter,
   onMouseLeave,
   shouldFade = false,
   shouldFadeOut = false,
+  labelClassName,
   children,
 }: AnswerOptionProps) {
   return (
@@ -34,7 +40,7 @@ export default function AnswerOption({
       disabled={isDisabled}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-      className={`w-full text-center p-4 sm:p-5 md:p-6 lg:p-8 rounded-xl transition-all duration-500 transform cursor-pointer backdrop-blur-md group relative overflow-hidden animate-fade-in border ${
+      className={`${fullWidth ? 'w-full ' : ''}text-center p-4 sm:p-5 md:p-6 lg:p-8 rounded-xl transition-all duration-500 transform cursor-pointer backdrop-blur-md group relative overflow-hidden animate-fade-in border ${
         shouldFade
           ? 'opacity-0 pointer-events-none border-transparent'
           : shouldFadeOut
@@ -50,10 +56,15 @@ export default function AnswerOption({
       {children}
 
       <span
-        className={`relative z-10 text-base sm:text-lg md:text-xl lg:text-2xl font-light transition-colors duration-300 ${
+        className={`relative z-10 transition-colors duration-300 ${
+          labelClassName ??
+          'text-base sm:text-lg md:text-xl lg:text-2xl font-light'
+        } ${
           isSelected
             ? 'text-gray-200'
-            : 'text-gray-300 group-hover:text-gray-200'
+            : labelClassName
+              ? 'group-hover:text-gray-200'
+              : 'text-gray-300 group-hover:text-gray-200'
         }`}
         style={{ fontFamily: 'var(--font-literata), serif' }}
       >
