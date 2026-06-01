@@ -121,6 +121,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
   },
   [StageId.CharacterIncompatible]: {
     backgroundImage: '/images/zatvorena-vrata.png',
+    nextInteraction: 'none',
     opacity: 0.6,
     body: {
       speed: 120,
@@ -475,6 +476,11 @@ export const stageConfig: Record<Stage, StageConfig> = {
   [StageId.BackToAnswers]: {
     backgroundImage: '/images/ogledalo.png',
     opacity: 0.4,
+    nextInteraction: 'answer',
+    answerOptions: [
+      { id: 'NO', labelKey: 'options.no' },
+      { id: 'YES', labelKey: 'options.yes' },
+    ],
   },
   [StageId.BackToAnswersAgain]: {
     backgroundImage: '/images/ogledalo.png',

@@ -6,10 +6,10 @@
     "Složili smo se da životinje treba pustiti da žive svoj život.",
     "Nastaviti da ih koristiš znači da će se i dalje uzgajati, eksploatisati i ubijati kao direktna posledica tvog izbora.",
     "",
-    "To je biranje suprotno sopstvenom uverenju."
+    "Da li shvataš da je to biranje suprotno sopstvenom uverenju?"
   ],
   "options": {
-    "agree": "Slažem se",
-    "disagree": "Ne slažem se"
+    "agree": "Shvatam",
+    "disagree": "Ne..."
   }
 }

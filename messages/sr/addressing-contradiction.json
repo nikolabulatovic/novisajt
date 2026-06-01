@@ -1,10 +1,11 @@
 {
   "text": [
-    "[placeholder] Postoji kontradiktornost između tvojih uverenja i ponašanja.",
-    "Ovaj ekran treba da bude popunjen sadržajem."
+    "Promisli o svojim ranijim odgovorima.",
+    "Slažeš se da životinje treba pustiti da žive svoj život i istovremeno smatraš da je u redu eksploatisati ih protiv njihove volje.",
+    "Ako si iskren, uvidečeš kontradiktornost u ovome."
   ],
   "options": {
-    "agree": "Tačno",
-    "disagree": "Nije tačno"
+    "agree": "Uviđam",
+    "disagree": "Ne uviđam"
   }
 }

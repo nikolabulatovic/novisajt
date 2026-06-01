@@ -1,10 +1,11 @@
 {
   "text": [
-    "[placeholder] Rekao si da...",
-    "Ovaj ekran prikazuje prethodne odgovore korisnika i vraća ih na razmišljanje."
+    "Tvoji izbori imaju posledice, hteo to ili ne.",
+    "Posledica tvog izbora je da će nevina bića i dalje biti porobljavana i ubijana zbog tebe.",
+    "Da li bi razlog zbog kojeg praviš taj izbor smatrao dovoljnim kada bi ti bio na njihovom mestu?"
   ],
   "options": {
-    "agree": "Tako je",
-    "no": "Ne"
+    "no": "Ne",
+    "yes": "Prihvatio bih"
   }
 }

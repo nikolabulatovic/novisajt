@@ -9,7 +9,7 @@
     "That is choosing against your own conviction."
   ],
   "options": {
-    "agree": "I agree",
-    "disagree": "I disagree"
+    "agree": "I accept",
+    "disagree": "I don't accept"
   }
 }
