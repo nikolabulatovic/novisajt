@@ -1,10 +1,11 @@
 {
   "text": [
-    "[placeholder] You said that…",
-    "This screen shows the user’s previous answers and invites reflection."
+    "Your choices have consequences, whether you want them to or not.",
+    "The consequence of your choice is that innocent beings will continue to be enslaved and killed because of you.",
+    "Would you consider the reason for that choice sufficient if you were in their place?"
   ],
   "options": {
-    "agree": "That's right",
-    "no": "No"
+    "no": "No",
+    "yes": "I would accept it"
   }
 }

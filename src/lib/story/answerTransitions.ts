@@ -29,6 +29,12 @@ export function nextAfterLetThemLive(answer: string): Stage {
     : StageId.FromTheWild;
 }
 
+export function nextAfterAcceptingSelfOwnership(answer: string): Stage {
+  return isAny(answer, [AnswerId.REJECT])
+    ? StageId.DishonestSelfOwnership
+    : StageId.FromTheWild;
+}
+
 export function nextAfterSolutionUse(answer: string): Stage {
   return isAny(answer, [AnswerId.NO])
     ? StageId.AlreadyVegan
@@ -52,6 +58,12 @@ export function nextAfterSolutionKnow(answer: string): Stage {
 export function nextAfterVeganDietHealth(answer: string): Stage {
   return isAny(answer, [AnswerId.REJECT])
     ? StageId.AdditionalResources
+    : StageId.SolutionChoice;
+}
+
+export function nextAfterAdditionalResources(answer: string): Stage {
+  return isAny(answer, [AnswerId.REJECT])
+    ? StageId.NotAcceptingHealth
     : StageId.SolutionChoice;
 }
 

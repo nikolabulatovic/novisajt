@@ -12,5 +12,8 @@
     "Međutim, jasno je kome čije telo pripada. Ta granica postoji bez obzira na to da li je poštujemo."
   ],
   "advance": "Razumem",
-  "next": "Nastavi"
+  "options": {
+    "accept": "Prihvatam",
+    "reject": "Ne prihvatam"
+  }
 }

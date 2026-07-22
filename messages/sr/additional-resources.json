@@ -1,7 +1,52 @@
 {
-  "text": [
-    "[placeholder] Razumemo tvoju sumnju. Evo dodatnih resursa i dokaza.",
-    "Ovaj ekran treba da bude popunjen sadržajem."
-  ],
-  "next": "Nastavi"
+  "intro": "Neki od mnogih zvaničnih stavova stručnih institucija o biljnoj ishrani:",
+  "linkLabel": "Izvor",
+  "options": {
+    "accept": "U redu, prihvatam",
+    "reject": "Nije me ubedilo"
+  },
+  "items": [
+    {
+      "id": "who",
+      "title": "Svetska zdravstvena organizacija (SZO)",
+      "quotes": [
+        "Ishrana bogata biljnim namirnicama i sa manje namirnica životinjskog porekla povezuje se sa boljim zdravstvenim ishodima i nižim rizikom od mnogih nezaraznih bolesti.",
+        "Dobro isplanirane vegetarijanske i veganske dijete mogu biti nutritivno adekvatne, ali mogu zahtevati pažnju na određene nutrijente."
+      ],
+      "linkUrl": "https://iris.who.int/server/api/core/bitstreams/f0fadbba-3ba7-4689-be95-63574cdff400/content"
+    },
+    {
+      "id": "ada",
+      "title": "Američko dijetetičko udruženje i dijetetičari Kanade",
+      "quotes": [
+        "Dobro isplanirana veganska i druge vrste vegetarijanske ishrane su prikladne za sve faze životnog ciklusa, uključujući trudnoću, dojenje, odojčad, detinjstvo i adolescenciju. Vegetarijanska ishrana nudi brojne nutritivne prednosti, uključujući niže nivoe zasićenih masti, holesterola i životinjskih proteina, kao i više nivoe ugljenih hidrata, vlakana, magnezijuma, kalijuma, folata i antioksidanata kao što su vitamini C i E i fitohemikalije."
+      ],
+      "linkUrl": "https://www.sciencedirect.com/science/article/abs/pii/S0002822303002943"
+    },
+    {
+      "id": "bda",
+      "title": "Udruženje dijetetičara Velike Britanije",
+      "quotes": [
+        "Ishrana zasnovana na biljkama može podržati zdravo življenje u svakom uzrastu i fazi života. Ali, kao i kod svake dijete, trebalo bi da planirate svoje biljno ishranjivanje da biste zadovoljili svoje nutritivne potrebe.",
+        "Biljna ishrana se prepoznaje kao intervencija za poboljšanje zdravstvenih ishoda. Može smanjiti rizik od dijabetesa tip 2, hipertenzije, kardiovaskularnih bolesti i nekih vrsta raka, i može pomoći u upravljanju telesnom težinom."
+      ],
+      "linkUrl": "https://www.bda.uk.com/resource/vegetarian-vegan-plant-based-diet.html"
+    },
+    {
+      "id": "malaysia",
+      "title": "Ministarstvo zdravlja Malezije",
+      "quotes": [
+        "…ishrana zasnovana na biljkama za sve starosne grupe… smernice prioritizuju promociju zdravlja i prevenciju bolesti, promovišući usvajanje ishrane zasnovane na biljkama za sve starosne grupe."
+      ],
+      "linkUrl": "https://hq.moh.gov.my/nutrition/wp-content/uploads/2024/08/01.Buku-MDGV-Web-_12.07.24.pdf"
+    },
+    {
+      "id": "israel",
+      "title": "Ministarstvo zdravlja Izraela",
+      "quotes": [
+        "Uravnotežena, zdrava i raznovrsna vegetarijanska ili veganska ishrana može zadovoljiti sve naše prehrambene potrebe od dojenačkog uzrasta do starosti, istovremeno dajući zdravstvene benefite."
+      ],
+      "linkUrl": "https://me.health.gov.il/en/parenting/raising-children/baby-nutrition/solid-food/vegetarian-vegan-feeding/"
+    }
+  ]
 }

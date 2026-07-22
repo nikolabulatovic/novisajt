@@ -18,11 +18,13 @@ import CharacterEvaluation from '@/src/components/CharacterEvaluation';
 import CharacterIncompatible from '@/src/components/CharacterIncompatible';
 import ChoiceStage from '@/src/components/ChoiceStage';
 import CowFate from '@/src/components/CowFate';
+import DishonestSelfOwnership from '@/src/components/DishonestSelfOwnership';
 import FromTheWild from '@/src/components/FromTheWild';
 import HistoricalAuthoritarianism from '@/src/components/HistoricalAuthoritarianism';
 import HistoricalIntro from '@/src/components/HistoricalIntro';
 import HistoricalSlavery from '@/src/components/HistoricalSlavery';
 import LetThemLive from '@/src/components/LetThemLive';
+import NotAcceptingHealth from '@/src/components/NotAcceptingHealth';
 import NotFollowingThrough from '@/src/components/NotFollowingThrough';
 import NotHonest from '@/src/components/NotHonest';
 import OtherPigs from '@/src/components/OtherPigs';
@@ -68,6 +70,7 @@ export const STAGE_REGISTRY: Record<Stage, ComponentType<any>> = {
   [StageId.AnimalsTreatedAsProducts]: AnimalsTreatedAsProducts,
   [StageId.LetThemLive]: LetThemLive,
   [StageId.AcceptingSelfOwnership]: AcceptingSelfOwnership,
+  [StageId.DishonestSelfOwnership]: DishonestSelfOwnership,
   [StageId.FromTheWild]: FromTheWild,
   [StageId.ViciousCycle]: ViciousCycle,
   [StageId.CowFate]: CowFate,
@@ -78,6 +81,7 @@ export const STAGE_REGISTRY: Record<Stage, ComponentType<any>> = {
   [StageId.SolutionKnow]: SolutionKnow,
   [StageId.VeganDietHealth]: VeganDietHealth,
   [StageId.AdditionalResources]: AdditionalResources,
+  [StageId.NotAcceptingHealth]: NotAcceptingHealth,
   [StageId.SolutionChoice]: SolutionChoice,
   [StageId.AddressingContradiction]: AddressingContradiction,
   [StageId.NotHonest]: NotHonest,

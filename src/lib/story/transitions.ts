@@ -1,5 +1,7 @@
 import { type Stage, StageId } from '@/src/contexts/NavigationContext';
 import {
+  nextAfterAcceptingSelfOwnership,
+  nextAfterAdditionalResources,
   nextAfterAlignBehaviour,
   nextAfterBreakingQuestion,
   nextAfterDaLiBiVoleo,
@@ -28,13 +30,11 @@ export const directStageTransitions: Partial<Record<Stage, Stage>> = {
   [StageId.OtherPigs]: StageId.RootOfTheProblem,
   [StageId.RootOfTheProblem]: StageId.AnimalsTreatedAsProducts,
   [StageId.AnimalsTreatedAsProducts]: StageId.LetThemLive,
-  [StageId.AcceptingSelfOwnership]: StageId.FromTheWild,
   [StageId.FromTheWild]: StageId.ReproductionControl,
   [StageId.ReproductionControl]: StageId.ViciousCycle,
   [StageId.ViciousCycle]: StageId.CowFate,
   [StageId.CowFate]: StageId.AnimalCostOfLiving,
   [StageId.AnimalCostOfLiving]: StageId.SolutionUse,
-  [StageId.AdditionalResources]: StageId.SolutionChoice,
 };
 
 export const answerStageTransitions: Partial<
@@ -44,10 +44,12 @@ export const answerStageTransitions: Partial<
   [StageId.WouldYouLikeToBe]: nextAfterDaLiBiVoleo,
   [StageId.BreakingQuestion]: nextAfterBreakingQuestion,
   [StageId.LetThemLive]: nextAfterLetThemLive,
+  [StageId.AcceptingSelfOwnership]: nextAfterAcceptingSelfOwnership,
   [StageId.SolutionUse]: nextAfterSolutionUse,
   [StageId.AlreadyVegan]: nextAfterVecVeganski,
   [StageId.SolutionKnow]: nextAfterSolutionKnow,
   [StageId.VeganDietHealth]: nextAfterVeganDietHealth,
+  [StageId.AdditionalResources]: nextAfterAdditionalResources,
   [StageId.SolutionChoice]: nextAfterSolutionChoice,
   [StageId.AddressingContradiction]: nextAfterKontradiktornostJe,
   [StageId.AlignBehaviour]: nextAfterAlignBehaviour,

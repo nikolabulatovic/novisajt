@@ -12,5 +12,8 @@
     "Yet it's clear whose body belongs to whom. That boundary exists whether we respect it or not."
   ],
   "advance": "I understand",
-  "next": "Continue"
+  "options": {
+    "accept": "I accept",
+    "reject": "I do not accept"
+  }
 }

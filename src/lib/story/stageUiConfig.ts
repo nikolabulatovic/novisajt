@@ -98,11 +98,11 @@ export type StageConfig = BaseStageConfig & StageInteractionConfig;
 
 export const stageConfig: Record<Stage, StageConfig> = {
   [StageId.Choice]: {
-    backgroundImage: '/images/holding-out-hands.png',
+    backgroundImage: '/images/holding-out-hands.jpg',
     opacity: 0.2,
   },
   [StageId.Intro]: {
-    backgroundImage: '/images/intro-reflection.jpeg',
+    backgroundImage: '/images/intro-reflection.jpg',
     opacity: 0.2,
     showBackgroundEffects: false,
     additionalUiConfig: {
@@ -112,7 +112,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.Evaluation]: {
-    backgroundImage: '/images/character-introspection.jpeg',
+    backgroundImage: '/images/character-introspection.jpg',
     opacity: 0.5,
     gradientOverlayClasses: [
       'absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60 pointer-events-none',
@@ -120,7 +120,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     ],
   },
   [StageId.CharacterIncompatible]: {
-    backgroundImage: '/images/zatvorena-vrata.png',
+    backgroundImage: '/images/zatvorena-vrata.jpg',
     nextInteraction: 'none',
     opacity: 0.6,
     body: {
@@ -131,10 +131,9 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.Explanation]: {
-    backgroundImage: '/images/ogledalo.png',
+    backgroundImage: '/images/ogledalo.jpg',
     opacity: 0.35,
     nextInteraction: 'pill',
-    textSurface: 'none',
     additionalUiConfig: {
       maxWidth: 'lg',
       contentSpacing: 'sm',
@@ -148,7 +147,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.HistoricalIntro]: {
-    backgroundImage: '/images/historical-weight.png',
+    backgroundImage: '/images/historical-weight.jpg',
     opacity: 0.75,
     body: {
       delayAfterComplete: 1000,
@@ -158,6 +157,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
   [StageId.HistoricalSlavery]: {
     backgroundImage: '/images/robovi.jpg',
     opacity: 0.8,
+    textSurface: 'panel',
     body: {
       speed: 150,
       delayAfterComplete: 1000,
@@ -168,6 +168,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
   [StageId.HistoricalAuthoritarianism]: {
     backgroundImage: '/images/nacizam.jpg',
     opacity: 0.8,
+    textSurface: 'panel',
     body: {
       speed: 150,
       delayAfterComplete: 1000,
@@ -176,11 +177,12 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.PersonalQuestion]: {
-    backgroundImage: '/images/covek-u-grupi.jpeg',
+    backgroundImage: '/images/covek-u-grupi.jpg',
     opacity: 0.3,
   },
   [StageId.BreakingQuestion]: {
     backgroundImage: '/images/odluka-put.jpg',
+    textSurface: 'backdrop',
     opacity: 0.5,
     nextInteraction: 'answer',
     answerOptions: [
@@ -195,7 +197,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.SpasaStory]: {
-    backgroundImage: '/images/spasa-rescue-hope.png',
+    backgroundImage: '/images/spasa-rescue-hope.jpg',
     opacity: 0.8,
   },
   [StageId.SpasaRevelation]: {
@@ -223,7 +225,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.AnimalsTreatedAsProducts]: {
-    backgroundImage: '/images/industrija-koze.png',
+    backgroundImage: '/images/industrija-koze.jpg',
     opacity: 0.8,
     body: {
       speed: 120,
@@ -248,13 +250,29 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.AcceptingSelfOwnership]: {
-    backgroundImage: '/images/mountain-sheep.png',
+    backgroundImage: '/images/mountain-sheep.jpg',
     opacity: 0.55,
-    narrativeTwoBeat: {
-      translationNamespace: 'AcceptingSelfOwnership',
-      beat1TextKey: 'beat1',
-      beat2TextKey: 'beat2',
-      advanceLabelKey: 'advance',
+    nextInteraction: 'answer',
+    answerOptions: [
+      { id: 'ACCEPT', labelKey: 'options.accept' },
+      { id: 'REJECT', labelKey: 'options.reject' },
+    ],
+    body: {
+      speed: 120,
+      delayAfterComplete: 800,
+      textSize: 'md',
+      alignment: 'center',
+    },
+  },
+  [StageId.DishonestSelfOwnership]: {
+    backgroundImage: '/images/lanci-i-zid.jpg',
+    opacity: 0.5,
+    nextInteraction: 'none',
+    body: {
+      speed: 120,
+      delayAfterComplete: 800,
+      textSize: 'md',
+      alignment: 'center',
     },
   },
   [StageId.FromTheWild]: {
@@ -268,7 +286,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.ViciousCycle]: {
-    backgroundImage: '/images/chicks-in-bucket.png',
+    backgroundImage: '/images/chicks-in-bucket.jpg',
     opacity: 0.8,
     body: {
       speed: 120,
@@ -288,7 +306,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.AnimalCostOfLiving]: {
-    backgroundImage: '/images/cows-transported.png',
+    backgroundImage: '/images/cows-transported.jpg',
     opacity: 0.8,
     body: {
       speed: 120,
@@ -298,7 +316,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.ReproductionControl]: {
-    backgroundImage: '/images/cow-silhouettes.png',
+    backgroundImage: '/images/cow-silhouettes.jpg',
     opacity: 0.8,
     body: {
       speed: 120,
@@ -339,8 +357,8 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.VeganDietHealth]: {
-    backgroundImage: '/images/farm-animals2.jpg',
-    opacity: 0.8,
+    backgroundImage: '/images/naucnici-u-laboratoriji.png',
+    opacity: 0.4,
     nextInteraction: 'answer',
     answerOptions: [
       { id: 'ACCEPT', labelKey: 'options.accept' },
@@ -354,7 +372,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.SolutionChoice]: {
-    backgroundImage: '/images/silhouette-mirror.png',
+    backgroundImage: '/images/silhouette-mirror.jpg',
     opacity: 0.8,
     nextInteraction: 'answer',
     answerOptions: [
@@ -395,16 +413,16 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.AfterChoice]: {
-    backgroundImage: '/images/animals-picturesque.png',
+    backgroundImage: '/images/animals-picturesque.jpg',
     opacity: 0.8,
     glassVariant: 'light',
   },
   [StageId.StayComfortable]: {
-    backgroundImage: '/images/holding-out-hands.png',
+    backgroundImage: '/images/holding-out-hands.jpg',
     opacity: 0.3,
   },
   [StageId.WouldYouLikeToBe]: {
-    backgroundImage: '/images/justitia-gray.png',
+    backgroundImage: '/images/justitia-gray.jpg',
     opacity: 0.5,
     nextInteraction: 'answer',
     answerOptions: [
@@ -440,15 +458,30 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.AlreadyVegan]: {
-    backgroundImage: '/images/animals-picturesque.png',
+    backgroundImage: '/images/animals-picturesque.jpg',
     opacity: 0.5,
   },
   [StageId.AdditionalResources]: {
-    backgroundImage: '/images/farm-animals2.jpg',
+    backgroundImage: '/images/temp-building.png',
+    opacity: 0.4,
+    nextInteraction: 'answer',
+    answerOptions: [
+      { id: 'ACCEPT', labelKey: 'options.accept' },
+      { id: 'REJECT', labelKey: 'options.reject' },
+    ],
+  },
+  [StageId.NotAcceptingHealth]: {
     opacity: 0.8,
+    nextInteraction: 'none',
+    body: {
+      speed: 120,
+      delayAfterComplete: 800,
+      textSize: 'md',
+      alignment: 'center',
+    },
   },
   [StageId.AddressingContradiction]: {
-    backgroundImage: '/images/silhouette-cracked-mirror.png',
+    backgroundImage: '/images/silhouette-cracked-mirror.jpg',
     opacity: 0.6,
     nextInteraction: 'answer',
     answerOptions: [
@@ -463,7 +496,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.NotHonest]: {
-    backgroundImage: '/images/silhouette-broken-mirror.png',
+    backgroundImage: '/images/silhouette-broken-mirror.jpg',
     opacity: 0.5,
     nextInteraction: 'none',
     body: {
@@ -474,7 +507,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.BackToAnswers]: {
-    backgroundImage: '/images/ogledalo.png',
+    backgroundImage: '/images/ogledalo.jpg',
     opacity: 0.4,
     nextInteraction: 'answer',
     answerOptions: [
@@ -483,7 +516,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     ],
   },
   [StageId.BackToAnswersAgain]: {
-    backgroundImage: '/images/ogledalo.png',
+    backgroundImage: '/images/ogledalo.jpg',
     opacity: 0.4,
   },
   [StageId.NotFollowingThrough]: {

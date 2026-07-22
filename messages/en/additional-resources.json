@@ -1,7 +1,52 @@
 {
-  "text": [
-    "[placeholder] We understand your doubt. Here are additional resources and evidence.",
-    "This screen should be filled with content."
-  ],
-  "next": "Continue"
+  "intro": "Some official positions of professional institutions on plant-based diets:",
+  "linkLabel": "Source",
+  "options": {
+    "accept": "All right, I accept",
+    "reject": "I'm not convinced"
+  },
+  "items": [
+    {
+      "id": "who",
+      "title": "World Health Organization (WHO)",
+      "quotes": [
+        "Diets rich in plant-based foods and with fewer animal source foods are associated with improved health outcomes and a lower risk of many noncommunicable diseases.",
+        "Well-planned vegetarian and vegan diets can be nutritionally adequate, but may require attention to specific nutrients."
+      ],
+      "linkUrl": "https://iris.who.int/server/api/core/bitstreams/f0fadbba-3ba7-4689-be95-63574cdff400/content"
+    },
+    {
+      "id": "ada",
+      "title": "Academy of Nutrition and Dietetics and Dietitians of Canada",
+      "quotes": [
+        "Well-planned vegan and other types of vegetarian diets are appropriate for all stages of the life cycle, including during pregnancy, lactation, infancy, childhood, and adolescence. Vegetarian diets offer a number of nutritional benefits, including lower levels of saturated fat, cholesterol, and animal protein as well as higher levels of carbohydrates, fiber, magnesium, potassium, folate, and antioxidants such as vitamins C and E and phytochemicals."
+      ],
+      "linkUrl": "https://www.sciencedirect.com/science/article/abs/pii/S0002822303002943"
+    },
+    {
+      "id": "bda",
+      "title": "British Dietetic Association",
+      "quotes": [
+        "Plant-based diets can support healthy living at every age and life stage. But as with any diet, you should plan your plant-based eating to meet your nutritional needs.",
+        "Plant-based eating is recognised as an intervention to improve health outcomes. They could reduce your risk of type 2 diabetes, hypertension, cardiovascular disease and some cancers and may help you manage your weight."
+      ],
+      "linkUrl": "https://www.bda.uk.com/resource/vegetarian-vegan-plant-based-diet.html"
+    },
+    {
+      "id": "malaysia",
+      "title": "Ministry of Health Malaysia",
+      "quotes": [
+        "…plant-based diets for all age groups… the dietary guideline prioritises health promotion and disease prevention, promoting the adoption of plant-based diets for all age groups."
+      ],
+      "linkUrl": "https://hq.moh.gov.my/nutrition/wp-content/uploads/2024/08/01.Buku-MDGV-Web-_12.07.24.pdf"
+    },
+    {
+      "id": "israel",
+      "title": "Ministry of Health Israel",
+      "quotes": [
+        "A balanced, healthy and diverse vegetarian or vegan diet can satisfy all our dietary requirements from infancy to old age, while also providing health benefits."
+      ],
+      "linkUrl": "https://me.health.gov.il/en/parenting/raising-children/baby-nutrition/solid-food/vegetarian-vegan-feeding/"
+    }
+  ]
 }

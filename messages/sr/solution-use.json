@@ -1,5 +1,8 @@
 {
-  "text": ["A sada da se osvrnemo na rešenje.", "Da li koristiš životinje?"],
+  "text": [
+    "A sada da se osvrnemo na rešenje.",
+    "Da li koristiš životinje, bilo za hranu, odeću, zabavu ili za druge namene?"
+  ],
   "options": {
     "yes": "Da",
     "no": "Ne"

@@ -1,10 +1,11 @@
 {
   "text": [
-    "[placeholder] There is a contradiction between your beliefs and your behavior.",
-    "This screen still needs to be filled with final content."
+    "Think back to your earlier answers.",
+    "You agree that animals should be left to live their own lives, and at the same time you consider it acceptable to exploit them against their will.",
+    "If you are honest, you will see the contradiction in this."
   ],
   "options": {
-    "agree": "That's right",
-    "disagree": "That's not true"
+    "agree": "I see it",
+    "disagree": "I don't see it"
   }
 }
