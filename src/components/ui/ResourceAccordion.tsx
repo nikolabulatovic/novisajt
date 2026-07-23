@@ -50,7 +50,7 @@ export default function ResourceAccordion({
         return (
           <div
             key={item.id}
-            className="overflow-hidden rounded-2xl border border-gray-700/40 bg-gray-800/25 backdrop-blur-xs"
+            className="overflow-hidden rounded-2xl border border-gray-700/50 bg-gray-800/60 backdrop-blur-xs"
           >
             <button
               type="button"
@@ -58,7 +58,7 @@ export default function ResourceAccordion({
               aria-expanded={expanded}
               aria-controls={panelId}
               onClick={() => toggle(item.id)}
-              className="flex w-full cursor-pointer items-start justify-between gap-4 px-5 py-4 text-left transition-colors hover:bg-gray-800/40"
+              className="flex w-full cursor-pointer items-start justify-between gap-4 px-5 py-4 text-left transition-colors hover:bg-gray-800/80"
             >
               <span className="text-lg font-light leading-relaxed text-gray-100 md:text-xl">
                 {item.title}
@@ -75,7 +75,7 @@ export default function ResourceAccordion({
               }`}
             >
               <div className="overflow-hidden">
-                <div className="space-y-4 border-t border-gray-700/40 px-5 pb-5 pt-4">
+                <div className="space-y-4 border-t border-gray-700/50 bg-gray-900/30 px-5 pb-5 pt-4">
                   {item.quotes.map((quote) => (
                     <blockquote
                       key={quote}

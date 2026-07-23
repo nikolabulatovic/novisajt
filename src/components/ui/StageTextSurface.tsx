@@ -27,6 +27,8 @@ export interface StageTextSurfaceProps {
   contentClassName?: string;
   backdropType?: TextBackdropGradientType;
   backdropOpacity?: number;
+  backdropFade?: number;
+  backdropColor?: string;
   children: ReactNode;
 }
 
@@ -42,6 +44,8 @@ export default function StageTextSurface({
   contentClassName = '',
   backdropType = 'linear',
   backdropOpacity,
+  backdropFade,
+  backdropColor,
   children,
 }: StageTextSurfaceProps) {
   const cfg = stage != null ? stageConfig[stage] : undefined;
@@ -58,7 +62,12 @@ export default function StageTextSurface({
     const opacity = backdropOpacity ?? 0.65;
     return (
       <div className={contentClassName}>
-        <TextBackdrop type={backdropType} opacity={opacity} />
+        <TextBackdrop
+          type={backdropType}
+          opacity={opacity}
+          fade={backdropFade}
+          color={backdropColor}
+        />
         <div className="relative z-10">{children}</div>
       </div>
     );

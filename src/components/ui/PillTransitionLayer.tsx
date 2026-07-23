@@ -103,6 +103,7 @@ export default function PillTransitionLayer({
 
   const nextConfig = stageConfig[activeStage];
   const nextBackgroundImage = nextConfig?.backgroundImage;
+  const nextBackgroundPosition = nextConfig?.backgroundPosition ?? 'center';
   const transitionOverlayColor =
     nextConfig?.pillTransitionOverlayColor ?? 'black';
   const targetBgOpacity = nextConfig?.opacity ?? 0.8;
@@ -154,9 +155,10 @@ export default function PillTransitionLayer({
         <div className="absolute inset-0 bg-black" />
         {nextBackgroundImage && (
           <div
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            className="absolute inset-0 bg-cover bg-no-repeat"
             style={{
               backgroundImage: `url('${nextBackgroundImage}')`,
+              backgroundPosition: nextBackgroundPosition,
               opacity: targetBgOpacity,
             }}
           />

@@ -31,6 +31,9 @@ export interface StoryStageUiConfig {
   textSurfaceFrame?: StoryStageSurfaceFrame;
   backdropType?: 'linear' | 'radial';
   backdropOpacity?: number;
+  backdropFade?: number;
+  /** Backdrop gradient color (`#rgb`, `#rrggbb`, or `rgb(r, g, b)`). Defaults to black. */
+  backdropColor?: string;
 }
 
 export interface StageBodyAnimatedText {
@@ -55,6 +58,8 @@ export interface StageAnswerOptionConfig {
 interface BaseStageConfig {
   backgroundImage?: string;
   opacity?: number;
+  /** CSS background-position for the stage image. Defaults to `center`. */
+  backgroundPosition?: string;
   gradientOverlayClasses?: string[]; // Extra gradient overlay divs to replicate in PillTransitionLayer so transition end matches page start
   /**
    * Text chrome for this stage. Defaults to `panel` (frosted glass) when omitted.
@@ -156,8 +161,12 @@ export const stageConfig: Record<Stage, StageConfig> = {
   },
   [StageId.HistoricalSlavery]: {
     backgroundImage: '/images/robovi.jpg',
-    opacity: 0.8,
-    textSurface: 'panel',
+    opacity: 0.6,
+    textSurface: 'backdrop',
+    additionalUiConfig: {
+      backdropOpacity: 0.35,
+      backdropFade: 0.15,
+    },
     body: {
       speed: 150,
       delayAfterComplete: 1000,
@@ -167,8 +176,12 @@ export const stageConfig: Record<Stage, StageConfig> = {
   },
   [StageId.HistoricalAuthoritarianism]: {
     backgroundImage: '/images/nacizam.jpg',
-    opacity: 0.8,
-    textSurface: 'panel',
+    opacity: 0.65,
+    textSurface: 'backdrop',
+    additionalUiConfig: {
+      backdropOpacity: 0.55,
+      backdropFade: 0.2,
+    },
     body: {
       speed: 150,
       delayAfterComplete: 1000,
@@ -198,15 +211,31 @@ export const stageConfig: Record<Stage, StageConfig> = {
   },
   [StageId.SpasaStory]: {
     backgroundImage: '/images/spasa-rescue-hope.jpg',
-    opacity: 0.8,
+    opacity: 0.7,
+    textSurface: 'backdrop',
+    additionalUiConfig: {
+      backdropOpacity: 0.2,
+      backdropFade: 0.1,
+    },
   },
   [StageId.SpasaRevelation]: {
     backgroundImage: '/images/spasa-prasa.jpg',
-    opacity: 0.8,
+    opacity: 0.7,
+    textSurface: 'backdrop',
+    additionalUiConfig: {
+      backdropOpacity: 0.15,
+      backdropFade: 0.1,
+      backdropColor: '#AA8282',
+    },
   },
   [StageId.OtherPigs]: {
     backgroundImage: '/images/enslaved-pigs.jpg',
-    opacity: 0.8,
+    opacity: 0.6,
+    textSurface: 'backdrop',
+    additionalUiConfig: {
+      backdropOpacity: 0.45,
+      backdropFade: 0.25,
+    },
     body: {
       speed: 120,
       delayAfterComplete: 1000,
@@ -216,7 +245,12 @@ export const stageConfig: Record<Stage, StageConfig> = {
   },
   [StageId.RootOfTheProblem]: {
     backgroundImage: '/images/horse-stable-gray.jpg',
-    opacity: 0.8,
+    opacity: 0.7,
+    textSurface: 'backdrop',
+    additionalUiConfig: {
+      backdropOpacity: 0.4,
+      backdropFade: 0.1,
+    },
     body: {
       speed: 120,
       delayAfterComplete: 1000,
@@ -226,7 +260,12 @@ export const stageConfig: Record<Stage, StageConfig> = {
   },
   [StageId.AnimalsTreatedAsProducts]: {
     backgroundImage: '/images/industrija-koze.jpg',
-    opacity: 0.8,
+    opacity: 0.7,
+    textSurface: 'backdrop',
+    additionalUiConfig: {
+      backdropOpacity: 0.4,
+      backdropFade: 0.1,
+    },
     body: {
       speed: 120,
       delayAfterComplete: 1000,
@@ -236,7 +275,13 @@ export const stageConfig: Record<Stage, StageConfig> = {
   },
   [StageId.LetThemLive]: {
     backgroundImage: '/images/farm-animals.jpg',
-    opacity: 0.8,
+    opacity: 0.65,
+    textSurface: 'backdrop',
+    additionalUiConfig: {
+      backdropOpacity: 0.5,
+      backdropFade: 0.25,
+      backdropColor: '#61635D',
+    },
     nextInteraction: 'answer',
     answerOptions: [
       { id: 'ACCEPT', labelKey: 'options.accept' },
@@ -252,6 +297,12 @@ export const stageConfig: Record<Stage, StageConfig> = {
   [StageId.AcceptingSelfOwnership]: {
     backgroundImage: '/images/mountain-sheep.jpg',
     opacity: 0.55,
+    textSurface: 'backdrop',
+    additionalUiConfig: {
+      backdropOpacity: 0.1,
+      backdropFade: 0.1,
+    },
+    backgroundPosition: 'right',
     nextInteraction: 'answer',
     answerOptions: [
       { id: 'ACCEPT', labelKey: 'options.accept' },
@@ -277,37 +328,12 @@ export const stageConfig: Record<Stage, StageConfig> = {
   },
   [StageId.FromTheWild]: {
     backgroundImage: '/images/gallus-gallus.jpg',
-    opacity: 0.8,
-    body: {
-      speed: 120,
-      delayAfterComplete: 1000,
-      textSize: 'md',
-      alignment: 'center',
+    opacity: 0.65,
+    textSurface: 'backdrop',
+    additionalUiConfig: {
+      backdropOpacity: 0.35,
+      backdropFade: 0.1,
     },
-  },
-  [StageId.ViciousCycle]: {
-    backgroundImage: '/images/chicks-in-bucket.jpg',
-    opacity: 0.8,
-    body: {
-      speed: 120,
-      delayAfterComplete: 1000,
-      textSize: 'md',
-      alignment: 'center',
-    },
-  },
-  [StageId.CowFate]: {
-    backgroundImage: '/images/cow-slave.jpg',
-    opacity: 0.8,
-    body: {
-      speed: 120,
-      delayAfterComplete: 1000,
-      textSize: 'md',
-      alignment: 'center',
-    },
-  },
-  [StageId.AnimalCostOfLiving]: {
-    backgroundImage: '/images/cows-transported.jpg',
-    opacity: 0.8,
     body: {
       speed: 120,
       delayAfterComplete: 1000,
@@ -317,7 +343,59 @@ export const stageConfig: Record<Stage, StageConfig> = {
   },
   [StageId.ReproductionControl]: {
     backgroundImage: '/images/cow-silhouettes.jpg',
-    opacity: 0.8,
+    opacity: 0.7,
+    textSurface: 'backdrop',
+    additionalUiConfig: {
+      backdropOpacity: 0.3,
+      backdropFade: 0.1,
+      backdropColor: '#263841',
+    },
+    body: {
+      speed: 120,
+      delayAfterComplete: 1000,
+      textSize: 'md',
+      alignment: 'center',
+    },
+  },
+  [StageId.ViciousCycle]: {
+    backgroundImage: '/images/chicks-in-bucket.jpg',
+    opacity: 0.6,
+    textSurface: 'backdrop',
+    additionalUiConfig: {
+      backdropOpacity: 0.35,
+      backdropFade: 0.1,
+      backdropColor: '#655942',
+    },
+    body: {
+      speed: 120,
+      delayAfterComplete: 1000,
+      textSize: 'md',
+      alignment: 'center',
+    },
+  },
+  [StageId.CowFate]: {
+    backgroundImage: '/images/cow-slave.jpg',
+    opacity: 0.65,
+    textSurface: 'backdrop',
+    additionalUiConfig: {
+      backdropOpacity: 0.4,
+      backdropFade: 0.25,
+    },
+    body: {
+      speed: 120,
+      delayAfterComplete: 1000,
+      textSize: 'md',
+      alignment: 'center',
+    },
+  },
+  [StageId.AnimalCostOfLiving]: {
+    backgroundImage: '/images/cows-transported.jpg',
+    opacity: 0.7,
+    textSurface: 'backdrop',
+    additionalUiConfig: {
+      backdropOpacity: 0.25,
+      backdropFade: 0.1,
+    },
     body: {
       speed: 120,
       delayAfterComplete: 1000,
@@ -342,7 +420,12 @@ export const stageConfig: Record<Stage, StageConfig> = {
   },
   [StageId.SolutionKnow]: {
     backgroundImage: '/images/djokovic-trophy.jpg',
-    opacity: 0.8,
+    opacity: 0.7,
+    textSurface: 'backdrop',
+    additionalUiConfig: {
+      backdropOpacity: 0.3,
+      backdropFade: 0.25,
+    },
     nextInteraction: 'answer',
     answerOptions: [
       { id: 'YES', labelKey: 'options.yes' },
@@ -371,9 +454,23 @@ export const stageConfig: Record<Stage, StageConfig> = {
       alignment: 'center',
     },
   },
+  [StageId.AdditionalResources]: {
+    backgroundImage: '/images/temp-building.png',
+    opacity: 0.55,
+    nextInteraction: 'answer',
+    answerOptions: [
+      { id: 'ACCEPT', labelKey: 'options.accept' },
+      { id: 'REJECT', labelKey: 'options.reject' },
+    ],
+  },
   [StageId.SolutionChoice]: {
     backgroundImage: '/images/silhouette-mirror.jpg',
-    opacity: 0.8,
+    opacity: 0.7,
+    textSurface: 'backdrop',
+    additionalUiConfig: {
+      backdropOpacity: 0.35,
+      backdropFade: 0.1,
+    },
     nextInteraction: 'answer',
     answerOptions: [
       { id: 'AGREE', labelKey: 'options.agree' },
@@ -382,6 +479,42 @@ export const stageConfig: Record<Stage, StageConfig> = {
     body: {
       speed: 120,
       delayAfterComplete: 1000,
+      textSize: 'md',
+      alignment: 'center',
+    },
+  },
+  [StageId.AddressingContradiction]: {
+    backgroundImage: '/images/silhouette-cracked-mirror.jpg',
+    opacity: 0.5,
+    textSurface: 'backdrop',
+    additionalUiConfig: {
+      backdropOpacity: 0.35,
+      backdropFade: 0.1,
+    },
+    nextInteraction: 'answer',
+    answerOptions: [
+      { id: 'AGREE', labelKey: 'options.agree' },
+      { id: 'DISAGREE', labelKey: 'options.disagree' },
+    ],
+    body: {
+      speed: 120,
+      delayAfterComplete: 1000,
+      textSize: 'md',
+      alignment: 'center',
+    },
+  },
+  [StageId.NotHonest]: {
+    backgroundImage: '/images/silhouette-broken-mirror.jpg',
+    opacity: 0.5,
+    textSurface: 'backdrop',
+    additionalUiConfig: {
+      backdropOpacity: 0.1,
+      backdropFade: 0.1,
+    },
+    nextInteraction: 'none',
+    body: {
+      speed: 120,
+      delayAfterComplete: 800,
       textSize: 'md',
       alignment: 'center',
     },
@@ -424,6 +557,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
   [StageId.WouldYouLikeToBe]: {
     backgroundImage: '/images/justitia-gray.jpg',
     opacity: 0.5,
+    textSurface: 'backdrop',
     nextInteraction: 'answer',
     answerOptions: [
       { id: 'AGREE', labelKey: 'options.agree.label' },
@@ -434,6 +568,10 @@ export const stageConfig: Record<Stage, StageConfig> = {
       delayAfterComplete: 1000,
       textSize: 'md',
       alignment: 'center',
+    },
+    additionalUiConfig: {
+      backdropOpacity: 0.2,
+      backdropFade: 0.2,
     },
   },
   [StageId.RecognizingInjustice]: {
@@ -461,43 +599,8 @@ export const stageConfig: Record<Stage, StageConfig> = {
     backgroundImage: '/images/animals-picturesque.jpg',
     opacity: 0.5,
   },
-  [StageId.AdditionalResources]: {
-    backgroundImage: '/images/temp-building.png',
-    opacity: 0.4,
-    nextInteraction: 'answer',
-    answerOptions: [
-      { id: 'ACCEPT', labelKey: 'options.accept' },
-      { id: 'REJECT', labelKey: 'options.reject' },
-    ],
-  },
   [StageId.NotAcceptingHealth]: {
     opacity: 0.8,
-    nextInteraction: 'none',
-    body: {
-      speed: 120,
-      delayAfterComplete: 800,
-      textSize: 'md',
-      alignment: 'center',
-    },
-  },
-  [StageId.AddressingContradiction]: {
-    backgroundImage: '/images/silhouette-cracked-mirror.jpg',
-    opacity: 0.6,
-    nextInteraction: 'answer',
-    answerOptions: [
-      { id: 'AGREE', labelKey: 'options.agree' },
-      { id: 'DISAGREE', labelKey: 'options.disagree' },
-    ],
-    body: {
-      speed: 120,
-      delayAfterComplete: 1000,
-      textSize: 'md',
-      alignment: 'center',
-    },
-  },
-  [StageId.NotHonest]: {
-    backgroundImage: '/images/silhouette-broken-mirror.jpg',
-    opacity: 0.5,
     nextInteraction: 'none',
     body: {
       speed: 120,

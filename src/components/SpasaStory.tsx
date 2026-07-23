@@ -37,7 +37,11 @@ export default function SpasaStory() {
     }
   };
 
-  const { backgroundImage, opacity = 0.8 } = stageConfig[StageId.SpasaStory];
+  const {
+    backgroundImage,
+    opacity = 0.8,
+    additionalUiConfig,
+  } = stageConfig[StageId.SpasaStory];
 
   return (
     <PageContainer
@@ -49,6 +53,10 @@ export default function SpasaStory() {
           <StageTextSurface
             stage={StageId.SpasaStory}
             contentClassName="relative p-6 md:p-16"
+            backdropType={additionalUiConfig?.backdropType}
+            backdropOpacity={additionalUiConfig?.backdropOpacity}
+            backdropFade={additionalUiConfig?.backdropFade}
+            backdropColor={additionalUiConfig?.backdropColor}
           >
             <AnimatedText
               text={text}
@@ -75,6 +83,10 @@ export default function SpasaStory() {
           <StageTextSurface
             stage={StageId.SpasaStory}
             contentClassName="relative px-6 py-10 md:px-10 md:py-14"
+            backdropType={additionalUiConfig?.backdropType}
+            backdropOpacity={additionalUiConfig?.backdropOpacity}
+            backdropFade={additionalUiConfig?.backdropFade}
+            backdropColor={additionalUiConfig?.backdropColor}
           >
             <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light text-gray-200 leading-relaxed relative z-10">
               Ali postoji nešto što jesmo dužni: da sve životinje ostavimo na

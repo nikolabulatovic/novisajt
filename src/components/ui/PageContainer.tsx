@@ -9,6 +9,8 @@ interface PageContainerProps {
   children: ReactNode;
   backgroundImage?: string;
   backgroundImageOpacity?: number;
+  /** CSS background-position for the stage image. Defaults to `center`. */
+  backgroundImagePosition?: string;
   maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
   showBackgroundEffects?: boolean;
   className?: string;
@@ -28,6 +30,7 @@ export default function PageContainer({
   children,
   backgroundImage,
   backgroundImageOpacity = 0.8,
+  backgroundImagePosition = 'center',
   maxWidth = 'md',
   showBackgroundEffects = false,
   className = '',
@@ -39,6 +42,7 @@ export default function PageContainer({
           <BackgroundImage
             src={backgroundImage}
             opacity={backgroundImageOpacity}
+            position={backgroundImagePosition}
           />
         </div>
       )}

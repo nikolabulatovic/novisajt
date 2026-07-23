@@ -68,6 +68,7 @@ export default function StoryStageChrome({
 
   const backgroundImage = cfg.backgroundImage;
   const backgroundImageOpacity = cfg.opacity ?? 0.8;
+  const backgroundImagePosition = cfg.backgroundPosition ?? 'center';
 
   const stackGapClass = ANSWER_SHELL_STACK_GAP[contentSpacing];
 
@@ -87,6 +88,8 @@ export default function StoryStageChrome({
         }
         backdropType={storyDefaults.backdropType}
         backdropOpacity={storyDefaults.backdropOpacity}
+        backdropFade={storyDefaults.backdropFade}
+        backdropColor={storyDefaults.backdropColor}
       >
         <AnimatedText
           text={tBody.raw(bodyTextKey) as AnimatedTextBlock}
@@ -113,6 +116,7 @@ export default function StoryStageChrome({
     <PageContainer
       backgroundImage={backgroundImage}
       backgroundImageOpacity={backgroundImageOpacity}
+      backgroundImagePosition={backgroundImagePosition}
       maxWidth={storyDefaults.maxWidth ?? 'md'}
       showBackgroundEffects={cfg.showBackgroundEffects ?? false}
     >
