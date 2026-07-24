@@ -1,12 +1,12 @@
 'use client';
 
-import { useLayoutEffect, useRef } from 'react';
+import { useRef } from 'react';
 
-import { usePillContext } from '@/src/contexts/PillContext';
+import { type PillOrigin, pillOriginFromRect } from '@/src/lib/pillOrigin';
 
 interface PillProps {
   color: 'red' | 'blue';
-  onClick: () => void;
+  onClick: (origin?: PillOrigin) => void;
   disabled?: boolean;
   isSelected?: boolean;
   isFadingOut?: boolean;
@@ -25,23 +25,9 @@ export default function Pill({
   show = true,
   className = '',
 }: PillProps) {
-  const pillContext = usePillContext();
-  const registerRedPill = pillContext?.registerRedPill;
-  const unregisterRedPill = pillContext?.unregisterRedPill;
-  const captureRedPillOrigin = pillContext?.captureRedPillOrigin;
   const pillShapeRef = useRef<HTMLButtonElement>(null);
   const isRed = color === 'red';
   const isButton = !!label;
-
-  // Depend only on stable register/unregister callbacks — not the whole context
-  // object (which changes when originRect updates and would loop forever).
-  useLayoutEffect(() => {
-    if (!isRed || !registerRedPill || !unregisterRedPill) return;
-    registerRedPill(pillShapeRef as React.RefObject<HTMLElement | null>);
-    return () => {
-      unregisterRedPill();
-    };
-  }, [isRed, registerRedPill, unregisterRedPill]);
 
   const gradientStyle = isRed
     ? 'linear-gradient(to bottom, rgb(140, 35, 35) 0%, rgb(220, 60, 60) 15%, rgb(69, 10, 10) 90%, rgb(55, 11, 11) 95%, rgb(48, 9, 9) 98%, rgb(42, 8, 8) 100%)'
@@ -52,12 +38,13 @@ export default function Pill({
   const handleClick = () => {
     if (disabled) return;
 
-    if (isRed) {
-      captureRedPillOrigin?.();
-    }
+    const el = pillShapeRef.current;
+    const origin = el
+      ? pillOriginFromRect(el.getBoundingClientRect())
+      : undefined;
 
     setTimeout(() => {
-      onClick();
+      onClick(origin);
     }, 100);
   };
 
@@ -69,7 +56,7 @@ export default function Pill({
         }`}
       >
         <button
-          ref={isRed ? pillShapeRef : undefined}
+          ref={pillShapeRef}
           onClick={handleClick}
           disabled={disabled}
           className={`group relative flex flex-col items-center cursor-pointer ${
@@ -103,7 +90,7 @@ export default function Pill({
 
   return (
     <button
-      ref={isRed ? pillShapeRef : undefined}
+      ref={pillShapeRef}
       onClick={handleClick}
       disabled={disabled}
       className={`group relative flex flex-col items-center space-y-6 cursor-pointer ${

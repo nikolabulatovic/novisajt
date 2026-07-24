@@ -1,9 +1,11 @@
 'use client';
 
+import type { PillOrigin } from '@/src/lib/pillOrigin';
+
 import Pill from './Pill';
 
 interface NextButtonProps {
-  onClick: () => void;
+  onClick: (origin?: PillOrigin) => void;
   label?: string;
   show?: boolean;
   align?: 'left' | 'center' | 'right';

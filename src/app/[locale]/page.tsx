@@ -1,7 +1,7 @@
 'use client';
 
 import type { TransitionEvent } from 'react';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import NavigationMenu from '@/src/components/NavigationMenu';
 import PillTransitionLayer from '@/src/components/ui/PillTransitionLayer';
@@ -10,7 +10,6 @@ import {
   Stage,
   StageId,
 } from '@/src/contexts/NavigationContext';
-import { PillProvider } from '@/src/contexts/PillContext';
 import {
   type StoryFlowContextValue,
   StoryFlowProvider,
@@ -18,6 +17,7 @@ import {
 } from '@/src/contexts/StoryFlowContext';
 import { useStoryFlowHandlers } from '@/src/hooks/useStoryFlowHandlers';
 import { useTracking } from '@/src/hooks/useTracking';
+import type { PillOrigin } from '@/src/lib/pillOrigin';
 import { stageInteractionType } from '@/src/lib/story/stageInteraction';
 import { STAGE_REGISTRY } from '@/src/lib/story/stageRegistry';
 
@@ -28,7 +28,9 @@ function shouldUsePillTransitionForStage(
   if (style === 'pill') {
     return true;
   }
-
+  if (style === 'none') {
+    return false;
+  }
   return stageInteractionType[stage] === 'next-pill';
 }
 
@@ -37,8 +39,9 @@ export default function Home() {
   const [stage, setStage] = useState<Stage>(StageId.Choice);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [pendingNextStage, setPendingNextStage] = useState<Stage | null>(null);
-  /** Bump when starting a pill transition so {@link PillTransitionLayer} remounts with expansion reset (avoids one frame at progress 1 = fullscreen next bg). */
-  const [pillTransitionEpoch, setPillTransitionEpoch] = useState(0);
+  const [pendingPillOrigin, setPendingPillOrigin] = useState<PillOrigin | null>(
+    null,
+  );
   /** Target stage after main shell fades out (non-pill transitions + menu jumps). */
   const [pendingCrossfadeStage, setPendingCrossfadeStage] =
     useState<Stage | null>(null);
@@ -51,22 +54,33 @@ export default function Home() {
     trackStageViewed(stage);
   }, [stage]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const handleTransitionComplete = () => {
-    if (pendingNextStage) {
-      setStage(pendingNextStage);
+  const pendingNextStageRef = useRef(pendingNextStage);
+  useEffect(() => {
+    pendingNextStageRef.current = pendingNextStage;
+  }, [pendingNextStage]);
+
+  const handleTransitionComplete = useCallback(() => {
+    const next = pendingNextStageRef.current;
+    if (next) {
+      setStage(next);
     }
     setPendingNextStage(null);
-  };
+    setPendingPillOrigin(null);
+  }, []);
 
   const transitionToStage = useCallback(
-    (newStage: Stage, style: StoryTransitionStyle = 'auto') => {
+    (
+      newStage: Stage,
+      style: StoryTransitionStyle = 'auto',
+      pillOrigin?: PillOrigin,
+    ) => {
       if (newStage === stage) return;
       const shouldUsePillTransition = shouldUsePillTransitionForStage(
         stage,
         style,
       );
       if (shouldUsePillTransition) {
-        setPillTransitionEpoch((n) => n + 1);
+        setPendingPillOrigin(pillOrigin ?? null);
         setPendingNextStage(newStage);
       } else {
         setPendingCrossfadeStage(newStage);
@@ -140,33 +154,31 @@ export default function Home() {
 
   return (
     <NavigationProvider currentStage={stage} navigateToStage={navigateToStage}>
-      <PillProvider>
-        <PillTransitionLayer
-          key={pillTransitionEpoch}
-          pendingNextStage={pendingNextStage}
-          onComplete={handleTransitionComplete}
-        />
-        <div
-          className="fixed inset-0 bg-black z-50 pointer-events-none transition-opacity duration-[2000ms]"
-          style={{ opacity: blackOverlay ? 1 : 0 }}
-          onTransitionEnd={handleBlackOverlayTransitionEnd}
-        />
-        <NavigationMenu />
-        <main className="min-h-screen bg-black text-white overflow-hidden relative">
-          <StoryFlowProvider value={flowContextValue}>
-            <div
-              className={`min-h-screen w-full transition-opacity ease-out motion-reduce:!duration-0 ${
-                pendingCrossfadeStage !== null
-                  ? 'opacity-0 duration-[950ms]'
-                  : 'opacity-100 duration-[1450ms]'
-              }`}
-              onTransitionEnd={handleStageShellOpacityTransitionEnd}
-            >
-              <StageComponent />
-            </div>
-          </StoryFlowProvider>
-        </main>
-      </PillProvider>
+      <PillTransitionLayer
+        pendingNextStage={pendingNextStage}
+        origin={pendingPillOrigin}
+        onComplete={handleTransitionComplete}
+      />
+      <div
+        className="fixed inset-0 bg-black z-50 pointer-events-none transition-opacity duration-[2000ms]"
+        style={{ opacity: blackOverlay ? 1 : 0 }}
+        onTransitionEnd={handleBlackOverlayTransitionEnd}
+      />
+      <NavigationMenu />
+      <main className="min-h-screen bg-black text-white overflow-hidden relative">
+        <StoryFlowProvider value={flowContextValue}>
+          <div
+            className={`min-h-screen w-full transition-opacity ease-out motion-reduce:!duration-0 ${
+              pendingCrossfadeStage !== null
+                ? 'opacity-0 duration-[950ms]'
+                : 'opacity-100 duration-[1450ms]'
+            }`}
+            onTransitionEnd={handleStageShellOpacityTransitionEnd}
+          >
+            <StageComponent />
+          </div>
+        </StoryFlowProvider>
+      </main>
     </NavigationProvider>
   );
 }

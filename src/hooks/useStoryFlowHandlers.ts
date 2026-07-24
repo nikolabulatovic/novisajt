@@ -1,7 +1,9 @@
 import { type Dispatch, type SetStateAction, useMemo } from 'react';
 
 import { type Stage, StageId } from '@/src/contexts/NavigationContext';
+import type { StoryTransitionStyle } from '@/src/contexts/StoryFlowContext';
 import { AnswerId } from '@/src/lib/answerIds';
+import type { PillOrigin } from '@/src/lib/pillOrigin';
 import { characterEvaluationAnswersMeetBar } from '@/src/lib/story/characterEvaluationBar';
 import {
   answerStageTransitions,
@@ -9,7 +11,11 @@ import {
 } from '@/src/lib/story/transitions';
 
 export interface StoryFlowHandlerDeps {
-  transitionToStage: (stage: Stage) => void;
+  transitionToStage: (
+    stage: Stage,
+    style?: StoryTransitionStyle,
+    pillOrigin?: PillOrigin,
+  ) => void;
   setAnswers: Dispatch<SetStateAction<Record<string, string>>>;
   trackAnswerSelected: (stage: Stage, answer: string) => void;
   trackFlowCompleted: () => void;
@@ -28,6 +34,7 @@ export function useStoryFlowHandlers({
       completeStage: (
         completedStage: Stage,
         answer?: StageCompletionAnswer,
+        pillOrigin?: PillOrigin,
       ) => {
         if (completedStage === StageId.Evaluation) {
           if (answer && typeof answer !== 'string') {
@@ -56,20 +63,20 @@ export function useStoryFlowHandlers({
 
           const nextForAnswer = answerStageTransitions[completedStage];
           if (nextForAnswer) {
-            transitionToStage(nextForAnswer(answer));
+            transitionToStage(nextForAnswer(answer), 'auto', pillOrigin);
             return;
           }
         }
 
         if (completedStage === StageId.VeganismPrinciple) {
           trackFlowCompleted();
-          transitionToStage(StageId.AfterChoice);
+          transitionToStage(StageId.AfterChoice, 'auto', pillOrigin);
           return;
         }
 
         const nextStage = directStageTransitions[completedStage];
         if (nextStage) {
-          transitionToStage(nextStage);
+          transitionToStage(nextStage, 'auto', pillOrigin);
         }
       },
     }),

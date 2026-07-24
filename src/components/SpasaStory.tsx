@@ -1,9 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 import { StageId } from '@/src/contexts/NavigationContext';
 import { useStoryFlow } from '@/src/contexts/StoryFlowContext';
+import type { PillOrigin } from '@/src/lib/pillOrigin';
 import { stageConfig } from '@/src/lib/story/stageUiConfig';
 
 import AnimatedText from './ui/AnimatedText';
@@ -17,6 +18,7 @@ export default function SpasaStory() {
   const [showButton, setShowButton] = useState(false);
   const [showFinalMessage, setShowFinalMessage] = useState(false);
   const [finalMessageVisible, setFinalMessageVisible] = useState(false);
+  const pillOriginRef = useRef<PillOrigin | null>(null);
 
   const text = [
     'Upoznaćemo te sa Spasinom pričom.',
@@ -24,15 +26,22 @@ export default function SpasaStory() {
     'Svaki čin spašavanja nosi težinu. Izbor da poštuješ i saosećaš sa bićem koje oseća, razume i želi da živi, pokazuje koliko možemo biti odgovorni i dobri. Čak i kada niko nije dužan da reaguje.',
   ];
 
-  const handleContinue = () => {
+  const handleContinue = (origin?: PillOrigin) => {
     if (!showFinalMessage) {
+      if (origin) {
+        pillOriginRef.current = origin;
+      }
       setShowFinalMessage(true);
       setShowButton(false);
       setTimeout(() => {
         setFinalMessageVisible(true);
         setTimeout(() => {
-          completeStage(StageId.SpasaStory);
-        }, 3000); // Show final message for 3 seconds before moving on
+          completeStage(
+            StageId.SpasaStory,
+            undefined,
+            pillOriginRef.current ?? undefined,
+          );
+        }, 3000);
       }, 500);
     }
   };

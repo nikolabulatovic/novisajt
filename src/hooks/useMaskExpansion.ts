@@ -1,64 +1,60 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
+import type { PillOrigin } from '@/src/lib/pillOrigin';
 import { appleEaseOut } from '@/src/utils/easing';
 
 const EXPANSION_DURATION = 1500;
 
-export interface UseMaskExpansionOptions {
-  duration?: number; // Animation duration in milliseconds
-  startLeft?: number; // Starting left position in pixels
-  startTop?: number; // Starting top position in pixels
-  startWidth: number; // Starting width in pixels
-  startHeight: number; // Starting height in pixels
-  startBorderRadius: number; // Starting border radius in pixels
-  onComplete?: () => void; // Callback when animation completes
-}
-
 export type MaskStyle = {
-  width: string; // Current width (px or vw)
-  height: string; // Current height (px or vh)
-  borderRadius: string; // Current border radius (px)
-  left: string; // Left position
-  top: string; // Top position
+  width: string;
+  height: string;
+  borderRadius: string;
+  left: string;
+  top: string;
 };
 
 export interface UseMaskExpansionReturn {
-  expansionProgress: number; // 0 to 1
-  startExpansion: (left?: number, top?: number) => void; // Function to start the animation, optionally with position
+  expansionProgress: number;
+  startExpansion: (origin: PillOrigin) => void;
+  reset: () => void;
   maskStyle: MaskStyle;
 }
 
 /**
- * Generic hook for managing mask expansion animation
- * Morphs from a starting shape to full viewport rectangle
+ * Animates a rounded rect from `origin` to the full viewport.
  */
 export function useMaskExpansion({
   duration = EXPANSION_DURATION,
-  startLeft,
-  startTop,
-  startWidth,
-  startHeight,
-  startBorderRadius,
   onComplete,
-}: UseMaskExpansionOptions): UseMaskExpansionReturn {
+}: {
+  duration?: number;
+  onComplete?: () => void;
+} = {}): UseMaskExpansionReturn {
   const [expansionProgress, setExpansionProgress] = useState(0);
-  const [currentLeft, setCurrentLeft] = useState(startLeft ?? 0);
-  const [currentTop, setCurrentTop] = useState(startTop ?? 0);
+  const [origin, setOrigin] = useState<PillOrigin | null>(null);
+  const onCompleteRef = useRef(onComplete);
+  const rafRef = useRef<number | null>(null);
 
   useEffect(() => {
-    setTimeout(() => {
-      setCurrentLeft(startLeft ?? 0);
-      setCurrentTop(startTop ?? 0);
-    }, 0);
-  }, [startLeft, startTop]);
+    onCompleteRef.current = onComplete;
+  }, [onComplete]);
+
+  const reset = useCallback(() => {
+    if (rafRef.current != null) {
+      cancelAnimationFrame(rafRef.current);
+      rafRef.current = null;
+    }
+    setExpansionProgress(0);
+    setOrigin(null);
+  }, []);
 
   const startExpansion = useCallback(
-    (overrideLeft?: number, overrideTop?: number) => {
-      const nextLeft = overrideLeft ?? startLeft ?? 0;
-      const nextTop = overrideTop ?? startTop ?? 0;
+    (nextOrigin: PillOrigin) => {
+      if (rafRef.current != null) {
+        cancelAnimationFrame(rafRef.current);
+      }
 
-      setCurrentLeft(nextLeft);
-      setCurrentTop(nextTop);
+      setOrigin(nextOrigin);
       setExpansionProgress(0);
 
       const startTime = Date.now();
@@ -66,72 +62,52 @@ export function useMaskExpansion({
       const animate = () => {
         const elapsed = Date.now() - startTime;
         const linearProgress = Math.min(elapsed / duration, 1);
-        const easedProgress = appleEaseOut(linearProgress);
-        setExpansionProgress(easedProgress);
+        setExpansionProgress(appleEaseOut(linearProgress));
 
         if (linearProgress < 1) {
-          requestAnimationFrame(animate);
-        } else if (onComplete) {
-          onComplete();
+          rafRef.current = requestAnimationFrame(animate);
+        } else {
+          rafRef.current = null;
+          onCompleteRef.current?.();
         }
       };
 
-      requestAnimationFrame(animate);
+      rafRef.current = requestAnimationFrame(animate);
     },
-    [duration, onComplete, startLeft, startTop],
+    [duration],
   );
 
-  // Calculate mask style - use SSR-safe values when window is undefined
-  // Since expansionProgress starts at 0, initial values will be consistent
-  const maskStyle = useMemo(() => {
-    // SSR-safe: use starting dimensions when window is undefined
-    // This ensures server and client initial render match
-    if (typeof window === 'undefined') {
+  const maskStyle = useMemo<MaskStyle>(() => {
+    if (!origin || typeof window === 'undefined') {
       return {
-        width: `${startWidth}px`,
-        height: `${startHeight}px`,
-        borderRadius: `${startBorderRadius}px`,
-        left: `${currentLeft}px`,
-        top: `${currentTop}px`,
+        width: '0px',
+        height: '0px',
+        borderRadius: '0px',
+        left: '0px',
+        top: '0px',
       };
     }
 
-    const viewportWidth = window.innerWidth;
-    const viewportHeight = window.innerHeight;
-
-    // Start with provided dimensions, end with viewport dimensions
-    const endWidth = viewportWidth;
-    const endHeight = viewportHeight;
-
-    const currentWidth =
-      startWidth + (endWidth - startWidth) * expansionProgress;
-    const currentHeight =
-      startHeight + (endHeight - startHeight) * expansionProgress;
-    const currentBorderRadius = startBorderRadius * (1 - expansionProgress);
-
-    // Interpolate position from starting left/top to 0 (full viewport)
-    const left = currentLeft * (1 - expansionProgress);
-    const top = currentTop * (1 - expansionProgress);
+    const p = expansionProgress;
+    const width = origin.width + (window.innerWidth - origin.width) * p;
+    const height = origin.height + (window.innerHeight - origin.height) * p;
+    const borderRadius = (origin.height / 2) * (1 - p);
+    const left = origin.left * (1 - p);
+    const top = origin.top * (1 - p);
 
     return {
-      width: `${currentWidth}px`,
-      height: `${currentHeight}px`,
-      borderRadius: `${currentBorderRadius}px`,
+      width: `${width}px`,
+      height: `${height}px`,
+      borderRadius: `${borderRadius}px`,
       left: `${left}px`,
       top: `${top}px`,
     };
-  }, [
-    expansionProgress,
-    currentLeft,
-    currentTop,
-    startWidth,
-    startHeight,
-    startBorderRadius,
-  ]);
+  }, [expansionProgress, origin]);
 
   return {
     expansionProgress,
     startExpansion,
+    reset,
     maskStyle,
   };
 }

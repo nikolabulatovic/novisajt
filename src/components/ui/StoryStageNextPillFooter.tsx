@@ -24,7 +24,7 @@ export default function StoryStageNextPill({
 
   return (
     <NextButton
-      onClick={() => completeStage(stage)}
+      onClick={(origin) => completeStage(stage, undefined, origin)}
       label={t(NEXT_LABEL)}
       show={visible}
     />

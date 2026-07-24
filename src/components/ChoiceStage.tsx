@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 
 import { StageId } from '@/src/contexts/NavigationContext';
 import { useStoryFlow } from '@/src/contexts/StoryFlowContext';
+import type { PillOrigin } from '@/src/lib/pillOrigin';
 import { stageConfig } from '@/src/lib/story/stageUiConfig';
 
 import PageContainer from './ui/PageContainer';
@@ -20,12 +21,12 @@ export default function ChoiceStage() {
   const t = useTranslations(StageId.Choice);
   const [selectedPill, setSelectedPill] = useState<'red' | 'blue' | null>(null);
 
-  const handlePillClick = (pill: 'red' | 'blue') => {
+  const handlePillClick = (pill: 'red' | 'blue', origin?: PillOrigin) => {
     if (selectedPill !== null) return;
     setSelectedPill(pill);
     trackAnswerSelected(StageId.Choice, pill);
     if (pill === 'red') {
-      transitionToStage(StageId.Intro, 'pill');
+      transitionToStage(StageId.Intro, 'pill', origin);
     } else {
       transitionViaBlackOverlayTo(StageId.StayComfortable);
     }
@@ -75,7 +76,7 @@ export default function ChoiceStage() {
           <div className="flex flex-col items-center space-y-6">
             <Pill
               color="red"
-              onClick={() => handlePillClick('red')}
+              onClick={(origin) => handlePillClick('red', origin)}
               isSelected={selectedPill === 'red'}
             />
             <div className="text-center space-y-2">
