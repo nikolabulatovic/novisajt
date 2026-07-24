@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 
 import { usePillContext } from '@/src/contexts/PillContext';
 
@@ -26,23 +26,22 @@ export default function Pill({
   className = '',
 }: PillProps) {
   const pillContext = usePillContext();
+  const registerRedPill = pillContext?.registerRedPill;
+  const unregisterRedPill = pillContext?.unregisterRedPill;
+  const captureRedPillOrigin = pillContext?.captureRedPillOrigin;
   const pillShapeRef = useRef<HTMLButtonElement>(null);
   const isRed = color === 'red';
   const isButton = !!label;
 
-  // Register red pill ref in context (ref to the actual pill shape element)
-  useEffect(() => {
-    if (isRed && pillContext && pillShapeRef.current) {
-      setTimeout(() => {
-        pillContext.registerRedPill(
-          pillShapeRef as React.RefObject<HTMLElement | null>,
-        );
-      }, 500);
-      return () => {
-        pillContext.unregisterRedPill();
-      };
-    }
-  }, [isRed, pillContext]);
+  // Depend only on stable register/unregister callbacks — not the whole context
+  // object (which changes when originRect updates and would loop forever).
+  useLayoutEffect(() => {
+    if (!isRed || !registerRedPill || !unregisterRedPill) return;
+    registerRedPill(pillShapeRef as React.RefObject<HTMLElement | null>);
+    return () => {
+      unregisterRedPill();
+    };
+  }, [isRed, registerRedPill, unregisterRedPill]);
 
   const gradientStyle = isRed
     ? 'linear-gradient(to bottom, rgb(140, 35, 35) 0%, rgb(220, 60, 60) 15%, rgb(69, 10, 10) 90%, rgb(55, 11, 11) 95%, rgb(48, 9, 9) 98%, rgb(42, 8, 8) 100%)'
@@ -53,13 +52,15 @@ export default function Pill({
   const handleClick = () => {
     if (disabled) return;
 
-    // Call the original onClick after a short delay
+    if (isRed) {
+      captureRedPillOrigin?.();
+    }
+
     setTimeout(() => {
       onClick();
     }, 100);
   };
 
-  // Button variant: same pill shape with text
   if (isButton) {
     return (
       <div
@@ -76,22 +77,17 @@ export default function Pill({
           }`}
         >
           <div className="relative w-24 h-12 sm:w-32 sm:h-16 md:w-40 md:h-20 transform transition-all duration-[4000ms] ease-out group-hover:scale-110 group-hover:rotate-3">
-            {/* Shadow at bottom for 3D effect */}
             <div className="absolute inset-0 rounded-full bg-black/50 blur-md translate-y-2"></div>
-            {/* Pill with top-to-bottom gradient */}
             <div
               className="relative w-full h-full rounded-full flex items-center justify-center shadow-2xl"
               style={{
                 background: gradientStyle,
               }}
             >
-              {/* Subtle highlight at top */}
               <div
                 className={`absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-1/4 bg-gradient-to-b ${highlightColor} to-transparent rounded-t-full`}
               ></div>
-              {/* Vertical line down the middle (capsule seam) */}
               <div className="absolute left-1/2 top-0 bottom-0 w-[3px] bg-black/30"></div>
-              {/* Text label */}
               <span
                 className="relative z-10 text-white font-light text-xs sm:text-sm md:text-base"
                 style={{ fontFamily: 'var(--font-inter), sans-serif' }}
@@ -105,7 +101,6 @@ export default function Pill({
     );
   }
 
-  // Original pill variant: visual pill without text
   return (
     <button
       ref={isRed ? pillShapeRef : undefined}
@@ -120,20 +115,16 @@ export default function Pill({
           isRed ? 'group-hover:-rotate-3' : 'group-hover:rotate-3'
         }`}
       >
-        {/* Shadow at bottom for 3D effect */}
         <div className="absolute inset-0 rounded-full bg-black/50 blur-md translate-y-2"></div>
-        {/* Pill with top-to-bottom gradient */}
         <div
           className="relative w-full h-full rounded-full flex items-center justify-center shadow-2xl"
           style={{
             background: gradientStyle,
           }}
         >
-          {/* Subtle highlight at top */}
           <div
             className={`absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-1/4 bg-gradient-to-b ${highlightColor} to-transparent rounded-t-full`}
           ></div>
-          {/* Vertical line down the middle (capsule seam) */}
           <div className="absolute left-1/2 top-0 bottom-0 w-[3px] bg-black/30"></div>
         </div>
       </div>

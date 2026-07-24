@@ -54,35 +54,25 @@ export function useMaskExpansion({
 
   const startExpansion = useCallback(
     (overrideLeft?: number, overrideTop?: number) => {
-      // Reset expansion progress
-      setExpansionProgress(0);
+      const nextLeft = overrideLeft ?? startLeft ?? 0;
+      const nextTop = overrideTop ?? startTop ?? 0;
 
-      // Update position if provided
-      if (overrideLeft !== undefined && overrideTop !== undefined) {
-        setCurrentLeft(overrideLeft);
-        setCurrentTop(overrideTop);
-      } else if (startLeft !== undefined && startTop !== undefined) {
-        // Use initial startLeft/startTop if provided
-        setCurrentLeft(startLeft);
-        setCurrentTop(startTop);
-      }
+      setCurrentLeft(nextLeft);
+      setCurrentTop(nextTop);
+      setExpansionProgress(0);
 
       const startTime = Date.now();
 
       const animate = () => {
         const elapsed = Date.now() - startTime;
         const linearProgress = Math.min(elapsed / duration, 1);
-        // Apply easing function for smooth deceleration
         const easedProgress = appleEaseOut(linearProgress);
         setExpansionProgress(easedProgress);
 
         if (linearProgress < 1) {
           requestAnimationFrame(animate);
-        } else {
-          // Animation complete
-          if (onComplete) {
-            onComplete();
-          }
+        } else if (onComplete) {
+          onComplete();
         }
       };
 

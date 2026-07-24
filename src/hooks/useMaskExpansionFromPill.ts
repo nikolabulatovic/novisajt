@@ -1,4 +1,4 @@
-import { useCallback, useLayoutEffect, useState } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import { usePillContext } from '@/src/contexts/PillContext';
 
@@ -8,11 +8,9 @@ import {
   useMaskExpansion,
 } from './useMaskExpansion';
 
-// Fallback pill dimensions (matching Pill component: w-32 h-16 md:w-40 md:h-20)
-// Used only if pill ref is not available yet
 const FALLBACK_PILL_WIDTH_PX = 160;
 const FALLBACK_PILL_HEIGHT_PX = 80;
-const FALLBACK_PILL_BORDER_RADIUS_PX = FALLBACK_PILL_HEIGHT_PX / 2; // Full rounded = 50% of height
+const FALLBACK_PILL_BORDER_RADIUS_PX = FALLBACK_PILL_HEIGHT_PX / 2;
 
 type UseMaskExpansionFromPillOptions = Omit<
   UseMaskExpansionOptions,
@@ -20,69 +18,53 @@ type UseMaskExpansionFromPillOptions = Omit<
 >;
 
 /**
- * Hook that wraps useMaskExpansion specifically for pill-to-viewport expansion
- * Automatically gets the red pill dimensions from PillContext upfront and position on-demand
+ * Wraps useMaskExpansion for pill-to-viewport expansion.
+ * Prefers the origin captured on pill click, then a live element measure.
  */
 export function useMaskExpansionFromPill({
   duration,
   onComplete,
 }: UseMaskExpansionFromPillOptions = {}): UseMaskExpansionReturn {
   const pillContext = usePillContext();
-  const [pillDimensions, setPillDimensions] = useState({
-    left: 0,
-    top: 0,
-    width: FALLBACK_PILL_WIDTH_PX,
-    height: FALLBACK_PILL_HEIGHT_PX,
-    borderRadius: FALLBACK_PILL_BORDER_RADIUS_PX,
-  });
 
-  // Calculate pill dimensions upfront when ref becomes available
-  // Using useLayoutEffect for DOM measurements before paint
-  useLayoutEffect(() => {
-    if (pillContext?.redPillRef?.current) {
-      const rect = pillContext.redPillRef.current.getBoundingClientRect();
-      // Defer state update to avoid linter warning about synchronous setState
-      requestAnimationFrame(() => {
-        setPillDimensions({
-          left: rect.left,
-          top: rect.top,
-          width: rect.width,
-          height: rect.height,
-          borderRadius: rect.height / 2, // Full rounded = 50% of height
-        });
-      });
-    }
-  }, [pillContext]);
+  const origin = pillContext?.originRect;
+  const startWidth = origin?.width ?? FALLBACK_PILL_WIDTH_PX;
+  const startHeight = origin?.height ?? FALLBACK_PILL_HEIGHT_PX;
+  const startLeft = origin?.left ?? 0;
+  const startTop = origin?.top ?? 0;
 
-  // Use the generic useMaskExpansion hook with actual pill dimensions
   const { startExpansion: baseStartExpansion, ...rest } = useMaskExpansion({
     duration,
-    startLeft: pillDimensions.left,
-    startTop: pillDimensions.top,
-    startWidth: pillDimensions.width,
-    startHeight: pillDimensions.height,
-    startBorderRadius: pillDimensions.borderRadius,
+    startLeft,
+    startTop,
+    startWidth,
+    startHeight,
+    startBorderRadius: startHeight / 2 || FALLBACK_PILL_BORDER_RADIUS_PX,
     onComplete,
   });
 
   const startExpansion = useCallback(() => {
-    // Calculate position from red pill ref in context (on-demand)
-    if (pillContext?.redPillRef?.current && typeof window !== 'undefined') {
-      const rect = pillContext.redPillRef.current.getBoundingClientRect();
-      // Get left and top position directly from bounding rect
-      const left = rect.left;
-      const top = rect.top;
+    const live = pillContext?.getRedPillElement()?.getBoundingClientRect();
+    const captured = pillContext?.originRect;
 
-      // Start expansion with calculated position (dimensions already set via props)
-      baseStartExpansion(left, top);
-    } else {
-      // Fallback if pill not found
-      baseStartExpansion();
+    if (live && live.width > 0 && live.height > 0) {
+      baseStartExpansion(live.left, live.top);
+      return;
     }
-  }, [baseStartExpansion, pillContext]);
 
-  return {
-    ...rest,
-    startExpansion,
-  };
+    if (captured) {
+      baseStartExpansion(captured.left, captured.top);
+      return;
+    }
+
+    baseStartExpansion(startLeft, startTop);
+  }, [baseStartExpansion, pillContext, startLeft, startTop]);
+
+  return useMemo(
+    () => ({
+      ...rest,
+      startExpansion,
+    }),
+    [rest, startExpansion],
+  );
 }
