@@ -42,6 +42,7 @@ const MESSAGE_FILES = [
   'vicious-cycle',
   'cow-fate',
   'animal-cost-of-living',
+  'after-choice',
 ] as const;
 
 async function loadNamespace(locale: Locale, fileName: string) {

@@ -8,7 +8,6 @@ import {
   nextAfterKontradiktornostJe,
   nextAfterLetThemLive,
   nextAfterPersonalQuestion,
-  nextAfterPonovoNaOdgovore,
   nextAfterSolutionChoice,
   nextAfterSolutionKnow,
   nextAfterSolutionUse,
@@ -54,5 +53,4 @@ export const answerStageTransitions: Partial<
   [StageId.AddressingContradiction]: nextAfterKontradiktornostJe,
   [StageId.AlignBehaviour]: nextAfterAlignBehaviour,
   [StageId.BackToAnswers]: nextAfterVracanjeNaOdgovore,
-  [StageId.BackToAnswersAgain]: nextAfterPonovoNaOdgovore,
 };

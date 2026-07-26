@@ -1,10 +1,3 @@
 {
-  "text": [
-    "[placeholder] Again — you said that…",
-    "This screen shows your previous answers a second time and offers a last chance to reconsider."
-  ],
-  "options": {
-    "agree": "I understand",
-    "no": "No"
-  }
+  "text": ["You're dishonest because you're not the one who's being harmed."]
 }

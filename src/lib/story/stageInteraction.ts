@@ -45,7 +45,7 @@ export const stageInteractionType: Record<Stage, StageInteractionType> = {
   [StageId.NotHonest]: 'none',
   [StageId.AlignBehaviour]: 'answer-options',
   [StageId.BackToAnswers]: 'answer-options',
-  [StageId.BackToAnswersAgain]: 'answer-options',
+  [StageId.BackToAnswersAgain]: 'none',
   [StageId.NotFollowingThrough]: 'none',
   [StageId.VeganismPrinciple]: 'next-pill',
   [StageId.AfterChoice]: 'none',

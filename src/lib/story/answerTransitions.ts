@@ -37,7 +37,7 @@ export function nextAfterAcceptingSelfOwnership(answer: string): Stage {
 
 export function nextAfterSolutionUse(answer: string): Stage {
   return isAny(answer, [AnswerId.NO])
-    ? StageId.AlreadyVegan
+    ? StageId.AfterChoice
     : StageId.SolutionKnow;
 }
 
@@ -88,11 +88,5 @@ export function nextAfterAlignBehaviour(answer: string): Stage {
 export function nextAfterVracanjeNaOdgovore(answer: string): Stage {
   return isAny(answer, [AnswerId.NO])
     ? StageId.BackToAnswersAgain
-    : StageId.VeganismPrinciple;
-}
-
-export function nextAfterPonovoNaOdgovore(answer: string): Stage {
-  return isAny(answer, [AnswerId.NO])
-    ? StageId.NotFollowingThrough
     : StageId.VeganismPrinciple;
 }

@@ -546,9 +546,13 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.AfterChoice]: {
-    backgroundImage: '/images/animals-picturesque.jpg',
-    opacity: 0.8,
-    glassVariant: 'light',
+    nextInteraction: 'none',
+    body: {
+      speed: 120,
+      delayAfterComplete: 800,
+      textSize: 'md',
+      alignment: 'center',
+    },
   },
   [StageId.StayComfortable]: {
     backgroundImage: '/images/holding-out-hands.jpg',
@@ -619,8 +623,13 @@ export const stageConfig: Record<Stage, StageConfig> = {
     ],
   },
   [StageId.BackToAnswersAgain]: {
-    backgroundImage: '/images/ogledalo.jpg',
-    opacity: 0.4,
+    nextInteraction: 'none',
+    body: {
+      speed: 120,
+      delayAfterComplete: 800,
+      textSize: 'md',
+      alignment: 'center',
+    },
   },
   [StageId.NotFollowingThrough]: {
     backgroundImage: '/images/farm-animals2.jpg',
