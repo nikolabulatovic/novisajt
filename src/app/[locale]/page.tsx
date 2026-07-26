@@ -164,7 +164,9 @@ export default function Home() {
         style={{ opacity: blackOverlay ? 1 : 0 }}
         onTransitionEnd={handleBlackOverlayTransitionEnd}
       />
-      <NavigationMenu />
+      <div className="hidden" aria-hidden="true">
+        <NavigationMenu />
+      </div>
       <main className="min-h-screen bg-black text-white overflow-hidden relative">
         <StoryFlowProvider value={flowContextValue}>
           <div
