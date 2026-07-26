@@ -1,5 +1,10 @@
 {
-  "text": [
-    "You were not honest with yourself. Remember that your dishonesty will cost innocent beings."
-  ]
+  "text": {
+    "male": [
+      "You were not honest with yourself. Remember that your dishonesty will cost innocent beings."
+    ],
+    "female": [
+      "You were not honest with yourself. Remember that your dishonesty will cost innocent beings."
+    ]
+  }
 }
