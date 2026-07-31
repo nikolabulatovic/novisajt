@@ -105,42 +105,30 @@ export default function CharacterEvaluation() {
         </div>
       )}
 
-      {/* Enhanced atmospheric background effects */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-48 h-48 md:w-96 md:h-96 bg-gray-400/10 rounded-full blur-3xl animate-pulse animate-glow" />
-        <div className="absolute bottom-1/4 right-1/4 w-48 h-48 md:w-96 md:h-96 bg-gray-400/10 rounded-full blur-3xl animate-pulse animate-glow delay-1000" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 md:w-[600px] md:h-[600px] bg-gray-500/5 rounded-full blur-3xl animate-float" />
-      </div>
-
-      {/* Gradient overlays for depth */}
+      {/* Gradient overlays for depth (no filter:blur — Adreno 506 / Moto G7 Power) */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60 pointer-events-none" />
       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-black/20 to-transparent pointer-events-none" />
 
       <div className="relative z-10 max-w-4xl mx-auto w-full">
-        {/* Enhanced progress indicator with glow */}
         <div className="mb-8 md:mb-16">
           <ProgressDots current={currentQuestion} total={questions.length} />
         </div>
 
-        {/* Question (glass) and options outside */}
         <div
           className={`text-center space-y-12 ${answerChoiceShellClassName(
             isTransitioning,
             showContent,
           )}`}
         >
+          {/* `backdrop` avoids GlassPanel backdrop-filter (GPU crash risk on low-end Android). */}
           <StageTextSurface
             stage={StageId.Evaluation}
-            contentClassName="p-6 md:p-10"
+            surface="backdrop"
+            contentClassName="relative p-6 md:p-10"
           >
-            {/* Question with subtle glow effect */}
-            <div className="relative">
-              <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light text-gray-200 leading-relaxed max-w-3xl mx-auto relative z-10 drop-shadow-lg">
-                {questions[currentQuestion].question}
-              </h1>
-              {/* Subtle glow behind question */}
-              <div className="absolute inset-0 blur-2xl opacity-20 bg-gray-400/30 -z-0" />
-            </div>
+            <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light text-gray-200 leading-relaxed max-w-3xl mx-auto relative z-10 drop-shadow-lg">
+              {questions[currentQuestion].question}
+            </h1>
           </StageTextSurface>
 
           {/* Options with staggered animations */}

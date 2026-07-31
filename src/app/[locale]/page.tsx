@@ -117,6 +117,21 @@ export default function Home() {
     [stage],
   );
 
+  const commitCrossfadeStage = useCallback(() => {
+    setPendingCrossfadeStage((pending) => {
+      if (pending === null) return null;
+      setStage(pending);
+      return null;
+    });
+  }, []);
+
+  /** Fallback when `transitionend` never fires (common on low-end Android Chrome). */
+  useEffect(() => {
+    if (pendingCrossfadeStage === null) return;
+    const timeoutId = window.setTimeout(commitCrossfadeStage, 1100);
+    return () => window.clearTimeout(timeoutId);
+  }, [pendingCrossfadeStage, commitCrossfadeStage]);
+
   const handleStageShellOpacityTransitionEnd = (
     event: TransitionEvent<HTMLDivElement>,
   ) => {
@@ -126,10 +141,7 @@ export default function Home() {
     ) {
       return;
     }
-    if (pendingCrossfadeStage === null) return;
-    const next = pendingCrossfadeStage;
-    setStage(next);
-    setPendingCrossfadeStage(null);
+    commitCrossfadeStage();
   };
 
   const flowContextValue = useMemo<StoryFlowContextValue>(
