@@ -15,6 +15,7 @@ import {
   StoryFlowProvider,
   type StoryTransitionStyle,
 } from '@/src/contexts/StoryFlowContext';
+import { useDevNavAccess } from '@/src/hooks/useDevNavAccess';
 import { useStoryFlowHandlers } from '@/src/hooks/useStoryFlowHandlers';
 import { useTracking } from '@/src/hooks/useTracking';
 import type { PillOrigin } from '@/src/lib/pillOrigin';
@@ -36,6 +37,7 @@ function shouldUsePillTransitionForStage(
 
 /** Locale story route: owns stage state, transitions, overlays, and {@link StoryFlowContextValue}. */
 export default function Home() {
+  const showDevNav = useDevNavAccess();
   const [stage, setStage] = useState<Stage>(StageId.Choice);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [pendingNextStage, setPendingNextStage] = useState<Stage | null>(null);
@@ -176,9 +178,7 @@ export default function Home() {
         style={{ opacity: blackOverlay ? 1 : 0 }}
         onTransitionEnd={handleBlackOverlayTransitionEnd}
       />
-      <div className="hidden" aria-hidden="true">
-        <NavigationMenu />
-      </div>
+      {showDevNav ? <NavigationMenu /> : null}
       <main className="min-h-screen bg-black text-white overflow-hidden relative">
         <StoryFlowProvider value={flowContextValue}>
           <div
