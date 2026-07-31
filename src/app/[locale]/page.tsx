@@ -5,6 +5,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import NavigationMenu from '@/src/components/NavigationMenu';
 import PillTransitionLayer from '@/src/components/ui/PillTransitionLayer';
+import { useGpuEffects } from '@/src/contexts/GpuEffectsContext';
 import {
   NavigationProvider,
   Stage,
@@ -25,7 +26,12 @@ import { STAGE_REGISTRY } from '@/src/lib/story/stageRegistry';
 function shouldUsePillTransitionForStage(
   stage: Stage,
   style: StoryTransitionStyle,
+  allowsHeavyEffects: boolean,
 ): boolean {
+  // SVG mask expansion + full-bleed image composite stutters on weak GPUs (e.g. Adreno 506).
+  if (!allowsHeavyEffects) {
+    return false;
+  }
   if (style === 'pill') {
     return true;
   }
@@ -38,6 +44,7 @@ function shouldUsePillTransitionForStage(
 /** Locale story route: owns stage state, transitions, overlays, and {@link StoryFlowContextValue}. */
 export default function Home() {
   const showDevNav = useDevNavAccess();
+  const { allowsHeavyEffects } = useGpuEffects();
   const [stage, setStage] = useState<Stage>(StageId.Choice);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [pendingNextStage, setPendingNextStage] = useState<Stage | null>(null);
@@ -80,6 +87,7 @@ export default function Home() {
       const shouldUsePillTransition = shouldUsePillTransitionForStage(
         stage,
         style,
+        allowsHeavyEffects,
       );
       if (shouldUsePillTransition) {
         setPendingPillOrigin(pillOrigin ?? null);
@@ -88,7 +96,7 @@ export default function Home() {
         setPendingCrossfadeStage(newStage);
       }
     },
-    [stage],
+    [stage, allowsHeavyEffects],
   );
 
   const { completeStage } = useStoryFlowHandlers({
