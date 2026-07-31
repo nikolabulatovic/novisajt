@@ -2,10 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
-import { usePathname } from 'next/navigation';
-
 import {
-  isDevNavPath,
   isDevNavQueryDisabled,
   isDevNavQueryEnabled,
   readDevNavSessionFlag,
@@ -15,11 +12,10 @@ import {
 
 /**
  * Whether the stage {@link NavigationMenu} should render.
- * Unlocks via `?nav=1` (or `NEXT_PUBLIC_DEV_NAV_SECRET`), `/preview`, or a prior unlock in this tab.
+ * Unlocks via `?nav=1` (or `NEXT_PUBLIC_DEV_NAV_SECRET`), then stays for this tab.
  * Turn off with `?nav=0` (also clears the session flag).
  */
 export function useDevNavAccess(): boolean {
-  const pathname = usePathname();
   const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
@@ -32,18 +28,15 @@ export function useDevNavAccess(): boolean {
       return;
     }
 
-    const fromQuery = isDevNavQueryEnabled(params);
-    const fromPath = isDevNavPath(pathname);
-
-    if (fromQuery || fromPath) {
+    if (isDevNavQueryEnabled(params)) {
       writeDevNavSessionFlag(true);
-      if (fromQuery) stripDevNavQueryFromUrl();
+      stripDevNavQueryFromUrl();
       setEnabled(true);
       return;
     }
 
     setEnabled(readDevNavSessionFlag());
-  }, [pathname]);
+  }, []);
 
   return enabled;
 }

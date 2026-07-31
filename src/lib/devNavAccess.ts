@@ -6,8 +6,6 @@ export const DEV_NAV_QUERY_TRUTHY = new Set(['1', 'true', 'yes']);
 /** Explicitly turn off (and clear session): `?nav=0` / `false` / `no` / `off`. */
 export const DEV_NAV_QUERY_FALSY = new Set(['0', 'false', 'no', 'off']);
 export const DEV_NAV_STORAGE_KEY = 'saznaj.devNav';
-/** Locale path segment that unlocks the menu, e.g. `/preview` or `/en/preview`. */
-export const DEV_NAV_PATH_SEGMENT = 'preview';
 
 export function getDevNavQuerySecret(): string | null {
   const secret = process.env.NEXT_PUBLIC_DEV_NAV_SECRET;
@@ -42,15 +40,6 @@ export function isDevNavQueryEnabled(
   if (secret) return raw === secret;
 
   return DEV_NAV_QUERY_TRUTHY.has(raw.toLowerCase());
-}
-
-/** True when the pathname ends with `/preview` (optional locale prefix). */
-export function isDevNavPath(pathname: string): boolean {
-  const normalized = pathname.replace(/\/+$/, '') || '/';
-  return (
-    normalized === `/${DEV_NAV_PATH_SEGMENT}` ||
-    normalized.endsWith(`/${DEV_NAV_PATH_SEGMENT}`)
-  );
 }
 
 export function readDevNavSessionFlag(): boolean {
