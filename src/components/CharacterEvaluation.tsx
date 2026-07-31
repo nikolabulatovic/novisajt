@@ -4,6 +4,7 @@ import { MouseEvent, useState } from 'react';
 
 import { useTranslations } from 'next-intl';
 
+import { useGpuEffects } from '@/src/contexts/GpuEffectsContext';
 import { useStoryFlow } from '@/src/contexts/StoryFlowContext';
 import { useAnswerChoiceRipples } from '@/src/hooks/useAnswerChoiceRipples';
 import { useScheduledTimeouts } from '@/src/hooks/useScheduledTimeouts';
@@ -32,6 +33,7 @@ interface EvaluationQuestion {
 
 export default function CharacterEvaluation() {
   const { completeStage, answers: existingAnswers = {} } = useStoryFlow();
+  const { allowsHeavyEffects } = useGpuEffects();
   const schedule = useScheduledTimeouts();
   const { ripples, createRipple, clearRipples } =
     useAnswerChoiceRipples<number>(schedule);
@@ -92,7 +94,6 @@ export default function CharacterEvaluation() {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 md:p-8 relative bg-black overflow-hidden">
-      {/* Background image */}
       {backgroundImage && (
         <div className="fixed inset-0 z-0">
           <div
@@ -105,7 +106,14 @@ export default function CharacterEvaluation() {
         </div>
       )}
 
-      {/* Gradient overlays for depth (no filter:blur — Adreno 506 / Moto G7 Power) */}
+      {allowsHeavyEffects && (
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/4 left-1/4 w-48 h-48 md:w-96 md:h-96 bg-gray-400/10 rounded-full blur-3xl animate-pulse animate-glow" />
+          <div className="absolute bottom-1/4 right-1/4 w-48 h-48 md:w-96 md:h-96 bg-gray-400/10 rounded-full blur-3xl animate-pulse animate-glow delay-1000" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 md:w-[600px] md:h-[600px] bg-gray-500/5 rounded-full blur-3xl animate-float" />
+        </div>
+      )}
+
       <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60 pointer-events-none" />
       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-black/20 to-transparent pointer-events-none" />
 
@@ -120,18 +128,23 @@ export default function CharacterEvaluation() {
             showContent,
           )}`}
         >
-          {/* `backdrop` avoids GlassPanel backdrop-filter (GPU crash risk on low-end Android). */}
           <StageTextSurface
             stage={StageId.Evaluation}
-            surface="backdrop"
-            contentClassName="relative p-6 md:p-10"
+            surface={allowsHeavyEffects ? undefined : 'backdrop'}
+            contentClassName={
+              allowsHeavyEffects ? 'p-6 md:p-10' : 'relative p-6 md:p-10'
+            }
           >
-            <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light text-gray-200 leading-relaxed max-w-3xl mx-auto relative z-10 drop-shadow-lg">
-              {questions[currentQuestion].question}
-            </h1>
+            <div className="relative">
+              <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light text-gray-200 leading-relaxed max-w-3xl mx-auto relative z-10 drop-shadow-lg">
+                {questions[currentQuestion].question}
+              </h1>
+              {allowsHeavyEffects && (
+                <div className="absolute inset-0 blur-2xl opacity-20 bg-gray-400/30 -z-0" />
+              )}
+            </div>
           </StageTextSurface>
 
-          {/* Options with staggered animations */}
           <div className="space-y-6 max-w-3xl mx-auto">
             {questions[currentQuestion].options.map((option, index) => {
               const isSelected = selectedOptionIndex === index;

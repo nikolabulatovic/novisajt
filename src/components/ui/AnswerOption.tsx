@@ -2,6 +2,8 @@
 
 import { MouseEvent, ReactNode } from 'react';
 
+import { useGpuEffects } from '@/src/contexts/GpuEffectsContext';
+
 interface AnswerOptionProps {
   text: string;
   onClick: (e: MouseEvent<HTMLButtonElement>) => void;
@@ -34,25 +36,33 @@ export default function AnswerOption({
   labelClassName,
   children,
 }: AnswerOptionProps) {
+  const { allowsHeavyEffects } = useGpuEffects();
+  const surfaceBlur = allowsHeavyEffects ? 'backdrop-blur-md' : '';
+  const selectedBg = allowsHeavyEffects
+    ? 'scale-[1.02] bg-gray-800/60 border-gray-600/50'
+    : 'scale-[1.02] bg-gray-800/85 border-gray-600/50';
+  const idleBg = allowsHeavyEffects
+    ? 'scale-100 bg-gray-900/50 border-gray-800/30 hover:bg-gray-800/60 hover:border-gray-700/50'
+    : 'scale-100 bg-gray-900/80 border-gray-800/30 hover:bg-gray-800/85 hover:border-gray-700/50';
+
   return (
     <button
       onClick={onClick}
       disabled={isDisabled}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-      className={`${fullWidth ? 'w-full ' : ''}text-center p-4 sm:p-5 md:p-6 lg:p-8 rounded-xl transition-all duration-500 transform cursor-pointer group relative overflow-hidden animate-fade-in border ${
+      className={`${fullWidth ? 'w-full ' : ''}text-center p-4 sm:p-5 md:p-6 lg:p-8 rounded-xl transition-all duration-500 transform cursor-pointer ${surfaceBlur} group relative overflow-hidden animate-fade-in border ${
         shouldFade
           ? 'opacity-0 pointer-events-none border-transparent'
           : shouldFadeOut
             ? 'opacity-0 pointer-events-none border-transparent'
             : isSelected
-              ? 'scale-[1.02] bg-gray-800/85 border-gray-600/50'
+              ? selectedBg
               : isDisabled
                 ? 'opacity-50 cursor-not-allowed border-gray-800/30'
-                : 'scale-100 bg-gray-900/80 border-gray-800/30 hover:bg-gray-800/85 hover:border-gray-700/50'
+                : idleBg
       } ${className}`}
     >
-      {/* Ripple effects or other children */}
       {children}
 
       <span

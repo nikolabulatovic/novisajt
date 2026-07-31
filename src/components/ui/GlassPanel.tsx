@@ -2,6 +2,8 @@
 
 import { CSSProperties, ReactNode } from 'react';
 
+import { useGpuEffects } from '@/src/contexts/GpuEffectsContext';
+
 export type GlassPanelVariant = 'dark' | 'light';
 
 /**
@@ -41,6 +43,7 @@ export default function GlassPanel({
   variant = 'dark',
   edgeShadow,
 }: GlassPanelProps) {
+  const { allowsHeavyEffects } = useGpuEffects();
   const defaultShadow =
     variant === 'light' ? lightPanelShadow : darkPanelShadow;
 
@@ -55,8 +58,12 @@ export default function GlassPanel({
 
   const innerSurface =
     variant === 'light'
-      ? 'relative rounded-2xl bg-white/80 backdrop-blur-lg'
-      : 'relative rounded-2xl bg-gray-800/25 backdrop-blur-xs';
+      ? allowsHeavyEffects
+        ? 'relative rounded-2xl bg-white/80 backdrop-blur-lg'
+        : 'relative rounded-2xl bg-white/90'
+      : allowsHeavyEffects
+        ? 'relative rounded-2xl bg-gray-800/25 backdrop-blur-xs'
+        : 'relative rounded-2xl bg-gray-800/70';
 
   return (
     <div className={`relative rounded-2xl ${className}`} style={outerStyle}>

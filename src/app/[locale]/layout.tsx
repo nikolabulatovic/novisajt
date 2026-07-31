@@ -9,6 +9,7 @@ import { Inter, Literata, Source_Serif_4 } from 'next/font/google';
 import { notFound } from 'next/navigation';
 
 import PostHogProvider from '@/src/components/PostHogProvider';
+import { GpuEffectsProvider } from '@/src/contexts/GpuEffectsContext';
 import { routing } from '@/src/i18n/routing';
 
 const literata = Literata({
@@ -76,7 +77,7 @@ export default async function LocaleLayout({
       >
         <PostHogProvider>
           <NextIntlClientProvider messages={messages}>
-            {children}
+            <GpuEffectsProvider>{children}</GpuEffectsProvider>
           </NextIntlClientProvider>
         </PostHogProvider>
       </body>
