@@ -11,6 +11,8 @@ interface PageContainerProps {
   backgroundImageOpacity?: number;
   /** CSS background-position for the stage image. Defaults to `center`. */
   backgroundImagePosition?: string;
+  /** Preload the background (for the LCP / first-paint stage). */
+  backgroundImagePriority?: boolean;
   maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
   showBackgroundEffects?: boolean;
   className?: string;
@@ -31,6 +33,7 @@ export default function PageContainer({
   backgroundImage,
   backgroundImageOpacity = 0.8,
   backgroundImagePosition = 'center',
+  backgroundImagePriority = false,
   maxWidth = 'md',
   showBackgroundEffects = false,
   className = '',
@@ -43,6 +46,7 @@ export default function PageContainer({
             src={backgroundImage}
             opacity={backgroundImageOpacity}
             position={backgroundImagePosition}
+            priority={backgroundImagePriority}
           />
         </div>
       )}

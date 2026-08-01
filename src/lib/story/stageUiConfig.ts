@@ -103,7 +103,7 @@ export type StageConfig = BaseStageConfig & StageInteractionConfig;
 
 export const stageConfig: Record<Stage, StageConfig> = {
   [StageId.Choice]: {
-    backgroundImage: '/images/holding-out-hands.jpg',
+    backgroundImage: '/images/holding-out-hands.webp',
     opacity: 0.2,
   },
   [StageId.Intro]: {
@@ -586,7 +586,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.StayComfortable]: {
-    backgroundImage: '/images/holding-out-hands.jpg',
+    backgroundImage: '/images/holding-out-hands.webp',
     opacity: 0.3,
   },
   [StageId.WouldYouLikeToBe]: {

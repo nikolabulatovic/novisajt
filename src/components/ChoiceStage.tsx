@@ -38,6 +38,7 @@ export default function ChoiceStage() {
     <PageContainer
       backgroundImage={backgroundImage}
       backgroundImageOpacity={opacity}
+      backgroundImagePriority
       showBackgroundEffects={false}
     >
       {/* Animated background - minimal */}
