@@ -17,7 +17,7 @@ export function nextAfterPersonalQuestion(answer: string): Stage {
     : StageId.BreakingQuestion;
 }
 
-export function nextAfterDaLiBiVoleo(answer: string): Stage {
+export function nextAfterWouldYouLikeToBe(answer: string): Stage {
   return isAny(answer, [AnswerId.DISAGREE])
     ? StageId.RecognizingInjustice
     : StageId.BreakingQuestion;
@@ -48,7 +48,7 @@ export function nextAfterSolutionUse(answer: string): Stage {
 }
 
 /** `YES` ends the flow early; otherwise continue to solution-know. */
-export function nextAfterVecVeganski(answer: string): Stage {
+export function nextAfterAlreadyVegan(answer: string): Stage {
   return isAny(answer, [AnswerId.YES])
     ? StageId.AfterChoice
     : StageId.SolutionKnow;
@@ -79,7 +79,7 @@ export function nextAfterSolutionChoice(answer: string): Stage {
     : StageId.AlignBehaviour;
 }
 
-export function nextAfterKontradiktornostJe(answer: string): Stage {
+export function nextAfterAddressingContradiction(answer: string): Stage {
   return isAny(answer, [AnswerId.DISAGREE])
     ? StageId.NotHonest
     : StageId.AlignBehaviour;

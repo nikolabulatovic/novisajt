@@ -47,15 +47,6 @@ export default function PersonalQuestion() {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 md:p-8 relative bg-black">
-      {/* Background image placeholder */}
-      {/* IDEJA ZA SLIKU:
-          - Istorijska fotografija ljudi u masi/grupi (sugerira konformnost, pripadanje grupi)
-          - Silueta osobe koja gleda u daljinu (introspekcija, refleksija)
-          - Apstraktna slika koja sugerira unutrašnji konflikt ili moralno pitanje
-          - Istorijska scena koja je dvosmislena - može biti bilo koje vreme
-          - Osoba koja stoji sama protiv grupe (moralna hrabrost)
-          - Ogledalo ili refleksija (samo-refleksija)
-      */}
       {(() => {
         const { backgroundImage, opacity = 0.8 } =
           stageConfig[StageId.PersonalQuestion];
