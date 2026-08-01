@@ -435,8 +435,6 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.SolutionUse]: {
-    backgroundImage: '/images/farm-animals2.jpg',
-    opacity: 0.8,
     nextInteraction: 'answer',
     answerOptions: [
       { id: 'YES', labelKey: 'options.yes' },
@@ -551,8 +549,6 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.AlignBehaviour]: {
-    backgroundImage: '/images/farm-animals2.jpg',
-    opacity: 0.8,
     nextInteraction: 'answer',
     answerOptions: [
       { id: 'YES', labelKey: 'options.yes' },
@@ -566,8 +562,6 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.VeganismPrinciple]: {
-    backgroundImage: '/images/farm-animals2.jpg',
-    opacity: 0.8,
     nextInteraction: 'pill',
     body: {
       speed: 120,
@@ -678,8 +672,5 @@ export const stageConfig: Record<Stage, StageConfig> = {
       alignment: 'center',
     },
   },
-  [StageId.NotFollowingThrough]: {
-    backgroundImage: '/images/farm-animals2.jpg',
-    opacity: 0.4,
-  },
+  [StageId.NotFollowingThrough]: {},
 };
