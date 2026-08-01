@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 32 32" role="img" aria-label="Red pill">
+  <defs>
+    <linearGradient id="pill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="rgb(140, 35, 35)" />
+      <stop offset="15%" stop-color="rgb(220, 60, 60)" />
+      <stop offset="90%" stop-color="rgb(69, 10, 10)" />
+      <stop offset="95%" stop-color="rgb(55, 11, 11)" />
+      <stop offset="100%" stop-color="rgb(42, 8, 8)" />
+    </linearGradient>
+    <linearGradient id="highlight" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="rgb(153, 27, 27)" stop-opacity="0.35" />
+      <stop offset="100%" stop-color="rgb(153, 27, 27)" stop-opacity="0" />
+    </linearGradient>
+  </defs>
+  <!-- Fills most of the square so it reads large in tabs / Preview -->
+  <rect x="1" y="8" width="30" height="16" rx="8" fill="url(#pill)" />
+  <rect x="4" y="8" width="24" height="4" rx="2" fill="url(#highlight)" />
+  <rect x="15.25" y="8" width="1.5" height="16" fill="rgb(0, 0, 0)" fill-opacity="0.3" />
+</svg>
