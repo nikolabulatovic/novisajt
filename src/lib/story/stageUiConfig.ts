@@ -479,7 +479,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.VeganDietHealth]: {
-    backgroundImage: stageBackground(StageId.VeganDietHealth, 'png'),
+    backgroundImage: stageBackground(StageId.VeganDietHealth, 'webp'),
     opacity: 0.4,
     nextInteraction: 'answer',
     answerOptions: [
@@ -494,7 +494,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.AdditionalResources]: {
-    backgroundImage: stageBackground(StageId.AdditionalResources, 'png'),
+    backgroundImage: stageBackground(StageId.AdditionalResources, 'webp'),
     opacity: 0.55,
     nextInteraction: 'answer',
     answerOptions: [
