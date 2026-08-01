@@ -101,13 +101,23 @@ type StageInteractionConfig =
 
 export type StageConfig = BaseStageConfig & StageInteractionConfig;
 
+type StageBackgroundExt = 'jpg' | 'webp' | 'png';
+
+/** Path for a stage-owned background (`/images/{stageId}.{ext}`). */
+export function stageBackground(
+  stage: Stage,
+  ext: StageBackgroundExt = 'jpg',
+): string {
+  return `/images/${stage}.${ext}`;
+}
+
 export const stageConfig: Record<Stage, StageConfig> = {
   [StageId.Choice]: {
-    backgroundImage: '/images/choice-stage.webp',
+    backgroundImage: stageBackground(StageId.Choice, 'webp'),
     opacity: 0.2,
   },
   [StageId.Intro]: {
-    backgroundImage: '/images/red-pill-intro.jpg',
+    backgroundImage: stageBackground(StageId.Intro),
     opacity: 0.2,
     showBackgroundEffects: false,
     additionalUiConfig: {
@@ -117,7 +127,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.Evaluation]: {
-    backgroundImage: '/images/character-evaluation.jpg',
+    backgroundImage: stageBackground(StageId.Evaluation),
     opacity: 0.5,
     gradientOverlayClasses: [
       'absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60 pointer-events-none',
@@ -125,7 +135,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     ],
   },
   [StageId.CharacterIncompatible]: {
-    backgroundImage: '/images/character-incompatible.jpg',
+    backgroundImage: stageBackground(StageId.CharacterIncompatible),
     nextInteraction: 'none',
     opacity: 0.6,
     body: {
@@ -136,7 +146,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.Explanation]: {
-    backgroundImage: '/images/question-explanation.jpg',
+    backgroundImage: stageBackground(StageId.Explanation),
     opacity: 0.35,
     nextInteraction: 'pill',
     additionalUiConfig: {
@@ -152,7 +162,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.HistoricalIntro]: {
-    backgroundImage: '/images/historical-intro.jpg',
+    backgroundImage: stageBackground(StageId.HistoricalIntro),
     opacity: 0.75,
     body: {
       delayAfterComplete: 1000,
@@ -160,7 +170,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.HistoricalSlavery]: {
-    backgroundImage: '/images/historical-slavery.jpg',
+    backgroundImage: stageBackground(StageId.HistoricalSlavery),
     opacity: 0.6,
     textSurface: 'backdrop',
     additionalUiConfig: {
@@ -175,7 +185,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.HistoricalAuthoritarianism]: {
-    backgroundImage: '/images/historical-authoritarianism.jpg',
+    backgroundImage: stageBackground(StageId.HistoricalAuthoritarianism),
     opacity: 0.65,
     textSurface: 'backdrop',
     additionalUiConfig: {
@@ -190,7 +200,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.PersonalAccountability]: {
-    backgroundImage: '/images/personal-accountability.jpg',
+    backgroundImage: stageBackground(StageId.PersonalAccountability),
     opacity: 0.5,
     textSurface: 'backdrop',
     additionalUiConfig: {
@@ -210,7 +220,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.InjusticePersists]: {
-    backgroundImage: '/images/injustice-persists.jpg',
+    backgroundImage: stageBackground(StageId.InjusticePersists),
     opacity: 0.5,
     nextInteraction: 'none',
     body: {
@@ -221,11 +231,11 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.PersonalQuestion]: {
-    backgroundImage: '/images/personal-question.jpg',
+    backgroundImage: stageBackground(StageId.PersonalQuestion),
     opacity: 0.3,
   },
   [StageId.BreakingQuestion]: {
-    backgroundImage: '/images/breaking-question.jpg',
+    backgroundImage: stageBackground(StageId.BreakingQuestion),
     textSurface: 'backdrop',
     opacity: 0.5,
     nextInteraction: 'answer',
@@ -241,7 +251,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.SpasaStory]: {
-    backgroundImage: '/images/spasa-story.jpg',
+    backgroundImage: stageBackground(StageId.SpasaStory),
     opacity: 0.7,
     textSurface: 'backdrop',
     additionalUiConfig: {
@@ -250,7 +260,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.SpasaRevelation]: {
-    backgroundImage: '/images/spasa-revelation.jpg',
+    backgroundImage: stageBackground(StageId.SpasaRevelation),
     opacity: 0.7,
     textSurface: 'backdrop',
     additionalUiConfig: {
@@ -260,7 +270,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.OtherPigs]: {
-    backgroundImage: '/images/other-pigs.jpg',
+    backgroundImage: stageBackground(StageId.OtherPigs),
     opacity: 0.6,
     textSurface: 'backdrop',
     additionalUiConfig: {
@@ -275,7 +285,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.RootOfTheProblem]: {
-    backgroundImage: '/images/root-of-the-problem.jpg',
+    backgroundImage: stageBackground(StageId.RootOfTheProblem),
     opacity: 0.7,
     textSurface: 'backdrop',
     additionalUiConfig: {
@@ -290,7 +300,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.AnimalsTreatedAsProducts]: {
-    backgroundImage: '/images/animals-treated-as-products.jpg',
+    backgroundImage: stageBackground(StageId.AnimalsTreatedAsProducts),
     opacity: 0.7,
     textSurface: 'backdrop',
     additionalUiConfig: {
@@ -305,7 +315,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.LetThemLive]: {
-    backgroundImage: '/images/let-them-live.jpg',
+    backgroundImage: stageBackground(StageId.LetThemLive),
     opacity: 0.65,
     textSurface: 'backdrop',
     additionalUiConfig: {
@@ -326,7 +336,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.AcceptingSelfOwnership]: {
-    backgroundImage: '/images/accepting-self-ownership.jpg',
+    backgroundImage: stageBackground(StageId.AcceptingSelfOwnership),
     opacity: 0.55,
     textSurface: 'backdrop',
     additionalUiConfig: {
@@ -347,7 +357,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.DishonestSelfOwnership]: {
-    backgroundImage: '/images/dishonest-self-ownership.jpg',
+    backgroundImage: stageBackground(StageId.DishonestSelfOwnership),
     opacity: 0.5,
     nextInteraction: 'none',
     body: {
@@ -358,7 +368,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.FromTheWild]: {
-    backgroundImage: '/images/from-the-wild.jpg',
+    backgroundImage: stageBackground(StageId.FromTheWild),
     opacity: 0.65,
     textSurface: 'backdrop',
     additionalUiConfig: {
@@ -373,7 +383,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.ReproductionControl]: {
-    backgroundImage: '/images/reproduction-control.jpg',
+    backgroundImage: stageBackground(StageId.ReproductionControl),
     opacity: 0.7,
     textSurface: 'backdrop',
     additionalUiConfig: {
@@ -389,7 +399,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.ViciousCycle]: {
-    backgroundImage: '/images/vicious-cycle.jpg',
+    backgroundImage: stageBackground(StageId.ViciousCycle),
     opacity: 0.6,
     textSurface: 'backdrop',
     additionalUiConfig: {
@@ -405,7 +415,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.CowFate]: {
-    backgroundImage: '/images/cow-fate.jpg',
+    backgroundImage: stageBackground(StageId.CowFate),
     opacity: 0.65,
     textSurface: 'backdrop',
     additionalUiConfig: {
@@ -420,7 +430,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.AnimalCostOfLiving]: {
-    backgroundImage: '/images/animal-cost-of-living.jpg',
+    backgroundImage: stageBackground(StageId.AnimalCostOfLiving),
     opacity: 0.7,
     textSurface: 'backdrop',
     additionalUiConfig: {
@@ -448,7 +458,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.SolutionKnow]: {
-    backgroundImage: '/images/solution-know.jpg',
+    backgroundImage: stageBackground(StageId.SolutionKnow),
     opacity: 0.7,
     textSurface: 'backdrop',
     additionalUiConfig: {
@@ -469,7 +479,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.VeganDietHealth]: {
-    backgroundImage: '/images/vegan-diet-health.png',
+    backgroundImage: stageBackground(StageId.VeganDietHealth, 'png'),
     opacity: 0.4,
     nextInteraction: 'answer',
     answerOptions: [
@@ -484,7 +494,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.AdditionalResources]: {
-    backgroundImage: '/images/additional-resources.png',
+    backgroundImage: stageBackground(StageId.AdditionalResources, 'png'),
     opacity: 0.55,
     nextInteraction: 'answer',
     answerOptions: [
@@ -493,7 +503,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     ],
   },
   [StageId.SolutionChoice]: {
-    backgroundImage: '/images/solution-choice.jpg',
+    backgroundImage: stageBackground(StageId.SolutionChoice),
     opacity: 0.7,
     textSurface: 'backdrop',
     additionalUiConfig: {
@@ -513,7 +523,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.AddressingContradiction]: {
-    backgroundImage: '/images/addressing-contradiction.jpg',
+    backgroundImage: stageBackground(StageId.AddressingContradiction),
     opacity: 0.5,
     textSurface: 'backdrop',
     additionalUiConfig: {
@@ -533,7 +543,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.NotHonest]: {
-    backgroundImage: '/images/not-honest.jpg',
+    backgroundImage: stageBackground(StageId.NotHonest),
     opacity: 0.5,
     textSurface: 'backdrop',
     additionalUiConfig: {
@@ -580,11 +590,12 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.StayComfortable]: {
-    backgroundImage: '/images/choice-stage.webp',
+    // Shared with Choice — first stage owns the file
+    backgroundImage: stageBackground(StageId.Choice, 'webp'),
     opacity: 0.3,
   },
   [StageId.WouldYouLikeToBe]: {
-    backgroundImage: '/images/would-you-like-to-be.jpg',
+    backgroundImage: stageBackground(StageId.WouldYouLikeToBe),
     opacity: 0.5,
     textSurface: 'backdrop',
     nextInteraction: 'answer',
@@ -614,7 +625,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.ApatheticStance]: {
-    backgroundImage: '/images/apathetic-stance.jpg',
+    backgroundImage: stageBackground(StageId.ApatheticStance),
     opacity: 0.4,
     nextInteraction: 'none',
     body: {
@@ -625,7 +636,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.AlreadyVegan]: {
-    backgroundImage: '/images/already-vegan.jpg',
+    backgroundImage: stageBackground(StageId.AlreadyVegan),
     opacity: 0.5,
   },
   [StageId.NotAcceptingHealth]: {
@@ -639,7 +650,8 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.Excuse]: {
-    backgroundImage: '/images/question-explanation.jpg',
+    // Shared with Explanation — first stage owns the file
+    backgroundImage: stageBackground(StageId.Explanation),
     opacity: 0.4,
     nextInteraction: 'answer',
     answerOptions: [
@@ -648,7 +660,8 @@ export const stageConfig: Record<Stage, StageConfig> = {
     ],
   },
   [StageId.DoubleStandard]: {
-    backgroundImage: '/images/question-explanation.jpg',
+    // Shared with Explanation — first stage owns the file
+    backgroundImage: stageBackground(StageId.Explanation),
     opacity: 0.4,
     nextInteraction: 'answer',
     answerOptions: [
