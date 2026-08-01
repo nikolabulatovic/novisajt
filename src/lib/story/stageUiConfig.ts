@@ -162,8 +162,6 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.HistoricalIntro]: {
-    backgroundImage: stageBackground(StageId.HistoricalIntro),
-    opacity: 0.75,
     body: {
       delayAfterComplete: 1000,
       textSize: 'lg',
