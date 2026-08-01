@@ -11,23 +11,26 @@ import AlreadyVegan from '@/src/components/AlreadyVegan';
 import AnimalCostOfLiving from '@/src/components/AnimalCostOfLiving';
 import AnimalsTreatedAsProducts from '@/src/components/AnimalsTreatedAsProducts';
 import ApatheticStance from '@/src/components/ApatheticStance';
-import BackToAnswers from '@/src/components/BackToAnswers';
-import BackToAnswersAgain from '@/src/components/BackToAnswersAgain';
 import BreakingQuestion from '@/src/components/BreakingQuestion';
 import CharacterEvaluation from '@/src/components/CharacterEvaluation';
 import CharacterIncompatible from '@/src/components/CharacterIncompatible';
 import ChoiceStage from '@/src/components/ChoiceStage';
 import CowFate from '@/src/components/CowFate';
 import DishonestSelfOwnership from '@/src/components/DishonestSelfOwnership';
+import DoubleStandard from '@/src/components/DoubleStandard';
+import Excuse from '@/src/components/Excuse';
 import FromTheWild from '@/src/components/FromTheWild';
 import HistoricalAuthoritarianism from '@/src/components/HistoricalAuthoritarianism';
 import HistoricalIntro from '@/src/components/HistoricalIntro';
 import HistoricalSlavery from '@/src/components/HistoricalSlavery';
+import InjusticePersists from '@/src/components/InjusticePersists';
 import LetThemLive from '@/src/components/LetThemLive';
 import NotAcceptingHealth from '@/src/components/NotAcceptingHealth';
 import NotFollowingThrough from '@/src/components/NotFollowingThrough';
 import NotHonest from '@/src/components/NotHonest';
+import NotThreatened from '@/src/components/NotThreatened';
 import OtherPigs from '@/src/components/OtherPigs';
+import PersonalAccountability from '@/src/components/PersonalAccountability';
 import PersonalQuestion from '@/src/components/PersonalQuestion';
 import QuestionExplanation from '@/src/components/QuestionExplanation';
 import RecognizingInjustice from '@/src/components/RecognizingInjustice';
@@ -57,6 +60,8 @@ export const STAGE_REGISTRY: Record<Stage, ComponentType<any>> = {
   [StageId.HistoricalIntro]: HistoricalIntro,
   [StageId.HistoricalSlavery]: HistoricalSlavery,
   [StageId.HistoricalAuthoritarianism]: HistoricalAuthoritarianism,
+  [StageId.PersonalAccountability]: PersonalAccountability,
+  [StageId.InjusticePersists]: InjusticePersists,
   [StageId.PersonalQuestion]: PersonalQuestion,
   [StageId.WouldYouLikeToBe]: WouldYouLikeToBe,
   [StageId.RecognizingInjustice]: RecognizingInjustice,
@@ -86,8 +91,9 @@ export const STAGE_REGISTRY: Record<Stage, ComponentType<any>> = {
   [StageId.AddressingContradiction]: AddressingContradiction,
   [StageId.NotHonest]: NotHonest,
   [StageId.AlignBehaviour]: AlignBehaviour,
-  [StageId.BackToAnswers]: BackToAnswers,
-  [StageId.BackToAnswersAgain]: BackToAnswersAgain,
+  [StageId.Excuse]: Excuse,
+  [StageId.DoubleStandard]: DoubleStandard,
+  [StageId.NotThreatened]: NotThreatened,
   [StageId.NotFollowingThrough]: NotFollowingThrough,
   [StageId.VeganismPrinciple]: VeganismPrinciple,
   [StageId.AfterChoice]: AfterChoice,

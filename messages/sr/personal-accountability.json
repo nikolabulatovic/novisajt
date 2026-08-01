@@ -1,0 +1,9 @@
+{
+  "text": [
+    "Da li misliš da običan čovek koji je doprinosio ovim nepravdama snosi odgovornost za svoje ponašanje, bez obzira što su se drugi ljudi tako ponašali i smatrali to normalnim?"
+  ],
+  "options": {
+    "yes": "Snosi odgovornost",
+    "no": "Ne snosi odgovornost"
+  }
+}

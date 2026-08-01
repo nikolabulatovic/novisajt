@@ -4,6 +4,12 @@ import { AnswerId } from '@/src/lib/answerIds';
 const isAny = (answer: string, aliases: readonly string[]) =>
   aliases.includes(answer);
 
+export function nextAfterPersonalAccountability(answer: string): Stage {
+  return isAny(answer, [AnswerId.YES])
+    ? StageId.PersonalQuestion
+    : StageId.InjusticePersists;
+}
+
 /** Branching after the “personal question” screen. */
 export function nextAfterPersonalQuestion(answer: string): Stage {
   return isAny(answer, [AnswerId.DONT_KNOW])
@@ -81,12 +87,20 @@ export function nextAfterKontradiktornostJe(answer: string): Stage {
 
 export function nextAfterAlignBehaviour(answer: string): Stage {
   return isAny(answer, [AnswerId.NO])
-    ? StageId.BackToAnswers
+    ? StageId.Excuse
     : StageId.VeganismPrinciple;
 }
 
-export function nextAfterVracanjeNaOdgovore(answer: string): Stage {
+export function nextAfterExcuse(answer: string): Stage {
   return isAny(answer, [AnswerId.NO])
-    ? StageId.BackToAnswersAgain
-    : StageId.VeganismPrinciple;
+    ? StageId.DoubleStandard
+    : StageId.NotThreatened;
+}
+
+export function nextAfterDoubleStandard(answer: string): Stage {
+  if (isAny(answer, [AnswerId.WILL_STOP])) {
+    return StageId.VeganismPrinciple;
+  }
+  // NOT_AN_ANIMAL and NOT_IN_THEIR_PLACE — NotThreatened until dedicated stages exist
+  return StageId.NotThreatened;
 }

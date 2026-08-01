@@ -1,0 +1,10 @@
+{
+  "text": [
+    "Ako ne smatraš opravdanim da tako nešto rade tebi, zbog čega smatraš opravdanim da to radiš životinjama?"
+  ],
+  "options": {
+    "willStop": "Ipak ću prestati",
+    "notAnAnimal": "Ja nisam životinja",
+    "notInTheirPlace": "Nisam na njihovom mestu"
+  }
+}

@@ -189,6 +189,37 @@ export const stageConfig: Record<Stage, StageConfig> = {
       alignment: 'left',
     },
   },
+  [StageId.PersonalAccountability]: {
+    backgroundImage: '/images/kamenovanje-apostola.jpg',
+    opacity: 0.5,
+    textSurface: 'backdrop',
+    additionalUiConfig: {
+      backdropOpacity: 0.2,
+      backdropFade: 0.15,
+    },
+    nextInteraction: 'answer',
+    answerOptions: [
+      { id: 'YES', labelKey: 'options.yes' },
+      { id: 'NO', labelKey: 'options.no' },
+    ],
+    body: {
+      speed: 120,
+      delayAfterComplete: 1000,
+      textSize: 'md',
+      alignment: 'center',
+    },
+  },
+  [StageId.InjusticePersists]: {
+    backgroundImage: '/images/zena-na-lomaci.jpg',
+    opacity: 0.5,
+    nextInteraction: 'none',
+    body: {
+      speed: 120,
+      delayAfterComplete: 800,
+      textSize: 'md',
+      alignment: 'center',
+    },
+  },
   [StageId.PersonalQuestion]: {
     backgroundImage: '/images/covek-u-grupi.jpg',
     opacity: 0.3,
@@ -613,7 +644,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
       alignment: 'center',
     },
   },
-  [StageId.BackToAnswers]: {
+  [StageId.Excuse]: {
     backgroundImage: '/images/ogledalo.jpg',
     opacity: 0.4,
     nextInteraction: 'answer',
@@ -622,7 +653,23 @@ export const stageConfig: Record<Stage, StageConfig> = {
       { id: 'YES', labelKey: 'options.yes' },
     ],
   },
-  [StageId.BackToAnswersAgain]: {
+  [StageId.DoubleStandard]: {
+    backgroundImage: '/images/ogledalo.jpg',
+    opacity: 0.4,
+    nextInteraction: 'answer',
+    answerOptions: [
+      { id: 'WILL_STOP', labelKey: 'options.willStop' },
+      { id: 'NOT_AN_ANIMAL', labelKey: 'options.notAnAnimal' },
+      { id: 'NOT_IN_THEIR_PLACE', labelKey: 'options.notInTheirPlace' },
+    ],
+    body: {
+      speed: 120,
+      delayAfterComplete: 800,
+      textSize: 'md',
+      alignment: 'center',
+    },
+  },
+  [StageId.NotThreatened]: {
     nextInteraction: 'none',
     body: {
       speed: 120,

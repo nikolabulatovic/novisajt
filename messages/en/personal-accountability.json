@@ -1,0 +1,9 @@
+{
+  "text": [
+    "Do you think an ordinary person who contributed to these injustices bears responsibility for their behavior, regardless of it being normal at the time?"
+  ],
+  "options": {
+    "yes": "Bears responsibility",
+    "no": "Does not bear responsibility"
+  }
+}

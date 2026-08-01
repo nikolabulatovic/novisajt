@@ -5,15 +5,17 @@ import {
   nextAfterAlignBehaviour,
   nextAfterBreakingQuestion,
   nextAfterDaLiBiVoleo,
+  nextAfterDoubleStandard,
+  nextAfterExcuse,
   nextAfterKontradiktornostJe,
   nextAfterLetThemLive,
+  nextAfterPersonalAccountability,
   nextAfterPersonalQuestion,
   nextAfterSolutionChoice,
   nextAfterSolutionKnow,
   nextAfterSolutionUse,
   nextAfterVecVeganski,
   nextAfterVeganDietHealth,
-  nextAfterVracanjeNaOdgovore,
 } from '@/src/lib/story/answerTransitions';
 
 export const directStageTransitions: Partial<Record<Stage, Stage>> = {
@@ -23,7 +25,7 @@ export const directStageTransitions: Partial<Record<Stage, Stage>> = {
   [StageId.Explanation]: StageId.HistoricalIntro,
   [StageId.HistoricalIntro]: StageId.HistoricalSlavery,
   [StageId.HistoricalSlavery]: StageId.HistoricalAuthoritarianism,
-  [StageId.HistoricalAuthoritarianism]: StageId.PersonalQuestion,
+  [StageId.HistoricalAuthoritarianism]: StageId.PersonalAccountability,
   [StageId.SpasaStory]: StageId.SpasaRevelation,
   [StageId.SpasaRevelation]: StageId.OtherPigs,
   [StageId.OtherPigs]: StageId.RootOfTheProblem,
@@ -39,6 +41,7 @@ export const directStageTransitions: Partial<Record<Stage, Stage>> = {
 export const answerStageTransitions: Partial<
   Record<Stage, (answer: string) => Stage>
 > = {
+  [StageId.PersonalAccountability]: nextAfterPersonalAccountability,
   [StageId.PersonalQuestion]: nextAfterPersonalQuestion,
   [StageId.WouldYouLikeToBe]: nextAfterDaLiBiVoleo,
   [StageId.BreakingQuestion]: nextAfterBreakingQuestion,
@@ -52,5 +55,6 @@ export const answerStageTransitions: Partial<
   [StageId.SolutionChoice]: nextAfterSolutionChoice,
   [StageId.AddressingContradiction]: nextAfterKontradiktornostJe,
   [StageId.AlignBehaviour]: nextAfterAlignBehaviour,
-  [StageId.BackToAnswers]: nextAfterVracanjeNaOdgovore,
+  [StageId.Excuse]: nextAfterExcuse,
+  [StageId.DoubleStandard]: nextAfterDoubleStandard,
 };
