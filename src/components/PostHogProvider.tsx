@@ -16,6 +16,9 @@ export default function PostHogProvider({
       ui_host: 'https://eu.posthog.com',
       capture_pageview: false, // single-page app — we capture stage views manually
       capture_pageleave: true,
+      disable_surveys: true, // skip surveys.js (~88K); re-enable later via set_config if needed
+      // Recorder (~150–250K) stays off until engagement — see ensureSessionRecording
+      disable_session_recording: true,
       session_recording: {
         maskAllInputs: false, // inputs are just answer buttons, safe to record
       },
