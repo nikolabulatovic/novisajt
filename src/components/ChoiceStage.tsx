@@ -24,12 +24,12 @@ export default function ChoiceStage() {
   const handlePillClick = (pill: 'red' | 'blue', origin?: PillOrigin) => {
     if (selectedPill !== null) return;
     setSelectedPill(pill);
-    trackAnswerSelected(StageId.Choice, pill);
     if (pill === 'red') {
       transitionToStage(StageId.Intro, 'pill', origin);
     } else {
       transitionViaBlackOverlayTo(StageId.StayComfortable);
     }
+    trackAnswerSelected(StageId.Choice, pill);
   };
 
   const { backgroundImage, opacity } = stageConfig[StageId.Choice];
