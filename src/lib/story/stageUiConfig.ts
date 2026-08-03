@@ -187,7 +187,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     opacity: 0.65,
     textSurface: 'backdrop',
     additionalUiConfig: {
-      backdropOpacity: 0.55,
+      backdropOpacity: 0.35,
       backdropFade: 0.2,
     },
     body: {
