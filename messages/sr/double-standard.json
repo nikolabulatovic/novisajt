@@ -1,10 +1,11 @@
 {
   "text": [
-    "Ako ne smatraš opravdanim da tako nešto rade tebi, zbog čega smatraš opravdanim da to radiš životinjama?"
+    "Ranije si odgovorio da životinje zaslužuju da žive svoj život.",
+    "Ako ne smatraš opravdanim da tebe neko porobi i ubije, zbog čega smatraš opravdanim da to radiš životinjama?"
   ],
   "options": {
     "willStop": "Ipak ću prestati",
-    "notAnAnimal": "Ja nisam životinja",
+    "notResponsible": "Ne osećam se odgovornim",
     "notInTheirPlace": "Nisam na njihovom mestu"
   }
 }

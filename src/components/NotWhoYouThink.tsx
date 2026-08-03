@@ -4,6 +4,6 @@ import { StageId } from '@/src/contexts/NavigationContext';
 
 import StoryStage from './ui/StoryStage';
 
-export default function NotFollowingThrough() {
-  return <StoryStage stage={StageId.NotFollowingThrough} />;
+export default function NotWhoYouThink() {
+  return <StoryStage stage={StageId.NotWhoYouThink} />;
 }

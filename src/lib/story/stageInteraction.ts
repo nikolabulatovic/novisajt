@@ -49,7 +49,11 @@ export const stageInteractionType: Record<Stage, StageInteractionType> = {
   [StageId.Excuse]: 'answer-options',
   [StageId.DoubleStandard]: 'answer-options',
   [StageId.NotThreatened]: 'none',
-  [StageId.NotFollowingThrough]: 'none',
+  [StageId.YouAreResponsible]: 'answer-options',
+  [StageId.ActResponsibly]: 'answer-options',
+  [StageId.NotWhoYouThink]: 'none',
+  [StageId.ReturnWhenReady]: 'none',
+  [StageId.OkWithInjustice]: 'none',
   [StageId.VeganismPrinciple]: 'next-pill',
   [StageId.AfterChoice]: 'none',
 };

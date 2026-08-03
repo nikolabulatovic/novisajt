@@ -1,6 +1,7 @@
 import { type Stage, StageId } from '@/src/contexts/NavigationContext';
 import {
   nextAfterAcceptingSelfOwnership,
+  nextAfterActResponsibly,
   nextAfterAdditionalResources,
   nextAfterAddressingContradiction,
   nextAfterAlignBehaviour,
@@ -16,6 +17,7 @@ import {
   nextAfterSolutionUse,
   nextAfterVeganDietHealth,
   nextAfterWouldYouLikeToBe,
+  nextAfterYouAreResponsible,
 } from '@/src/lib/story/answerTransitions';
 
 export const directStageTransitions: Partial<Record<Stage, Stage>> = {
@@ -57,4 +59,6 @@ export const answerStageTransitions: Partial<
   [StageId.AlignBehaviour]: nextAfterAlignBehaviour,
   [StageId.Excuse]: nextAfterExcuse,
   [StageId.DoubleStandard]: nextAfterDoubleStandard,
+  [StageId.YouAreResponsible]: nextAfterYouAreResponsible,
+  [StageId.ActResponsibly]: nextAfterActResponsibly,
 };

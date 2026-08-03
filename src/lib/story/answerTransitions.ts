@@ -101,6 +101,23 @@ export function nextAfterDoubleStandard(answer: string): Stage {
   if (isAny(answer, [AnswerId.WILL_STOP])) {
     return StageId.VeganismPrinciple;
   }
-  // NOT_AN_ANIMAL and NOT_IN_THEIR_PLACE — NotThreatened until dedicated stages exist
+  if (isAny(answer, [AnswerId.NOT_RESPONSIBLE])) {
+    return StageId.YouAreResponsible;
+  }
+  if (isAny(answer, [AnswerId.NOT_IN_THEIR_PLACE])) {
+    return StageId.OkWithInjustice;
+  }
   return StageId.NotThreatened;
+}
+
+export function nextAfterYouAreResponsible(answer: string): Stage {
+  return isAny(answer, [AnswerId.ACCEPT])
+    ? StageId.ActResponsibly
+    : StageId.ReturnWhenReady;
+}
+
+export function nextAfterActResponsibly(answer: string): Stage {
+  return isAny(answer, [AnswerId.YES])
+    ? StageId.VeganismPrinciple
+    : StageId.NotWhoYouThink;
 }

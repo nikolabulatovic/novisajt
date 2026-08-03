@@ -664,7 +664,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     nextInteraction: 'answer',
     answerOptions: [
       { id: 'WILL_STOP', labelKey: 'options.willStop' },
-      { id: 'NOT_AN_ANIMAL', labelKey: 'options.notAnAnimal' },
+      { id: 'NOT_RESPONSIBLE', labelKey: 'options.notResponsible' },
       { id: 'NOT_IN_THEIR_PLACE', labelKey: 'options.notInTheirPlace' },
     ],
     body: {
@@ -683,5 +683,57 @@ export const stageConfig: Record<Stage, StageConfig> = {
       alignment: 'center',
     },
   },
-  [StageId.NotFollowingThrough]: {},
+  [StageId.YouAreResponsible]: {
+    nextInteraction: 'answer',
+    answerOptions: [
+      { id: 'ACCEPT', labelKey: 'options.accept' },
+      { id: 'REJECT', labelKey: 'options.reject' },
+    ],
+    body: {
+      speed: 120,
+      delayAfterComplete: 800,
+      textSize: 'md',
+      alignment: 'center',
+    },
+  },
+  [StageId.ActResponsibly]: {
+    nextInteraction: 'answer',
+    answerOptions: [
+      { id: 'YES', labelKey: 'options.yes' },
+      { id: 'NO', labelKey: 'options.no' },
+    ],
+    body: {
+      speed: 120,
+      delayAfterComplete: 800,
+      textSize: 'md',
+      alignment: 'center',
+    },
+  },
+  [StageId.NotWhoYouThink]: {
+    nextInteraction: 'none',
+    body: {
+      speed: 120,
+      delayAfterComplete: 800,
+      textSize: 'md',
+      alignment: 'center',
+    },
+  },
+  [StageId.ReturnWhenReady]: {
+    nextInteraction: 'none',
+    body: {
+      speed: 120,
+      delayAfterComplete: 800,
+      textSize: 'md',
+      alignment: 'center',
+    },
+  },
+  [StageId.OkWithInjustice]: {
+    nextInteraction: 'none',
+    body: {
+      speed: 120,
+      delayAfterComplete: 800,
+      textSize: 'md',
+      alignment: 'center',
+    },
+  },
 };

@@ -5,7 +5,7 @@
     "Would you consider the reason for that choice sufficient if you were in their place?"
   ],
   "options": {
-    "no": "No",
+    "no": "It wouldn't be sufficient",
     "yes": "I would accept it"
   }
 }

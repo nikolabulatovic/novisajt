@@ -1,10 +1,11 @@
 {
   "text": [
-    "If you don't consider it justified for something like that to be done to you, why do you consider it justified for you to do that to animals?"
+    "You previously answered that animals deserve to live their own lives.",
+    "If you don't consider it justified for someone to enslave and kill you, why do you consider it justified to do that to animals?"
   ],
   "options": {
     "willStop": "I'll stop anyway",
-    "notAnAnimal": "I'm not an animal",
+    "notResponsible": "I don't feel responsible",
     "notInTheirPlace": "I'm not in their place"
   }
 }

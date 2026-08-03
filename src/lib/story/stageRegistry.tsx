@@ -3,6 +3,7 @@
 import type { ComponentType } from 'react';
 
 import AcceptingSelfOwnership from '@/src/components/AcceptingSelfOwnership';
+import ActResponsibly from '@/src/components/ActResponsibly';
 import AdditionalResources from '@/src/components/AdditionalResources';
 import AddressingContradiction from '@/src/components/AddressingContradiction';
 import AfterChoice from '@/src/components/AfterChoice';
@@ -26,9 +27,10 @@ import HistoricalSlavery from '@/src/components/HistoricalSlavery';
 import InjusticePersists from '@/src/components/InjusticePersists';
 import LetThemLive from '@/src/components/LetThemLive';
 import NotAcceptingHealth from '@/src/components/NotAcceptingHealth';
-import NotFollowingThrough from '@/src/components/NotFollowingThrough';
 import NotHonest from '@/src/components/NotHonest';
 import NotThreatened from '@/src/components/NotThreatened';
+import NotWhoYouThink from '@/src/components/NotWhoYouThink';
+import OkWithInjustice from '@/src/components/OkWithInjustice';
 import OtherPigs from '@/src/components/OtherPigs';
 import PersonalAccountability from '@/src/components/PersonalAccountability';
 import PersonalQuestion from '@/src/components/PersonalQuestion';
@@ -36,6 +38,7 @@ import QuestionExplanation from '@/src/components/QuestionExplanation';
 import RecognizingInjustice from '@/src/components/RecognizingInjustice';
 import RedPillIntro from '@/src/components/RedPillIntro';
 import ReproductionControl from '@/src/components/ReproductionControl';
+import ReturnWhenReady from '@/src/components/ReturnWhenReady';
 import RootOfTheProblem from '@/src/components/RootOfTheProblem';
 import SolutionChoice from '@/src/components/SolutionChoice';
 import SolutionKnow from '@/src/components/SolutionKnow';
@@ -47,6 +50,7 @@ import VeganDietHealth from '@/src/components/VeganDietHealth';
 import VeganismPrinciple from '@/src/components/VeganismPrinciple';
 import ViciousCycle from '@/src/components/ViciousCycle';
 import WouldYouLikeToBe from '@/src/components/WouldYouLikeToBe';
+import YouAreResponsible from '@/src/components/YouAreResponsible';
 import type { Stage } from '@/src/contexts/NavigationContext';
 import { StageId } from '@/src/contexts/NavigationContext';
 
@@ -94,7 +98,11 @@ export const STAGE_REGISTRY: Record<Stage, ComponentType<any>> = {
   [StageId.Excuse]: Excuse,
   [StageId.DoubleStandard]: DoubleStandard,
   [StageId.NotThreatened]: NotThreatened,
-  [StageId.NotFollowingThrough]: NotFollowingThrough,
+  [StageId.YouAreResponsible]: YouAreResponsible,
+  [StageId.ActResponsibly]: ActResponsibly,
+  [StageId.NotWhoYouThink]: NotWhoYouThink,
+  [StageId.ReturnWhenReady]: ReturnWhenReady,
+  [StageId.OkWithInjustice]: OkWithInjustice,
   [StageId.VeganismPrinciple]: VeganismPrinciple,
   [StageId.AfterChoice]: AfterChoice,
 };
