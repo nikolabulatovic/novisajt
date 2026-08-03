@@ -1,5 +1,9 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+
+import { TEXT_BACKDROP_APPEAR_MS } from '@/src/constants/storyStageTokens';
+
 export type TextBackdropGradientType = 'linear' | 'radial';
 
 interface RgbColor {
@@ -118,16 +122,24 @@ export default function TextBackdrop({
   color = '#000000',
   className = '',
 }: TextBackdropProps) {
+  const [visible, setVisible] = useState(false);
   const clampedFade = Math.min(Math.max(fade, 0.01), 0.5);
   const rgb = parseColor(color);
   const linearGradient = buildLinearGradient(opacity, clampedFade, rgb);
   const radialGradient = buildRadialGradient(opacity, rgb);
+
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setVisible(true));
+    return () => cancelAnimationFrame(id);
+  }, []);
 
   return (
     <div
       className={`absolute top-0 bottom-0 left-1/2 w-screen -translate-x-1/2 -my-6 md:-my-12 pointer-events-none ${className}`}
       style={{
         background: type === 'linear' ? linearGradient : radialGradient,
+        opacity: visible ? 1 : 0,
+        transition: `opacity ${TEXT_BACKDROP_APPEAR_MS}ms ease-out`,
       }}
     />
   );

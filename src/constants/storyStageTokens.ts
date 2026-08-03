@@ -3,6 +3,9 @@ import type {
   StoryStageTextPadding,
 } from '@/src/lib/story/stageUiConfig';
 
+/** Global fade-in for `TextBackdrop` on mount (ms). */
+export const TEXT_BACKDROP_APPEAR_MS = 2000;
+
 export const STORY_STAGE_TEXT_PADDING_CLASS: Record<
   StoryStageTextPadding,
   string
