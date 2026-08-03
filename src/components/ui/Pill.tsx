@@ -4,16 +4,29 @@ import { useRef } from 'react';
 
 import { type PillOrigin, pillOriginFromRect } from '@/src/lib/pillOrigin';
 
-interface PillProps {
+type PillBaseProps = {
   color: 'red' | 'blue';
   onClick: (origin?: PillOrigin) => void;
   disabled?: boolean;
   isSelected?: boolean;
   isFadingOut?: boolean;
-  label?: string;
   show?: boolean;
   className?: string;
-}
+};
+
+/** Labeled pill: visible text is the accessible name; `ariaLabel` optional override. */
+type LabeledPillProps = PillBaseProps & {
+  label: string;
+  ariaLabel?: string;
+};
+
+/** Icon-only pill: accessible name is required. */
+type IconPillProps = PillBaseProps & {
+  label?: undefined;
+  ariaLabel: string;
+};
+
+export type PillProps = LabeledPillProps | IconPillProps;
 
 export default function Pill({
   color,
@@ -22,6 +35,7 @@ export default function Pill({
   isSelected = false,
   isFadingOut = false,
   label,
+  ariaLabel,
   show = true,
   className = '',
 }: PillProps) {
@@ -59,6 +73,7 @@ export default function Pill({
           ref={pillShapeRef}
           onClick={handleClick}
           disabled={disabled}
+          aria-label={ariaLabel}
           className={`group relative flex flex-col items-center cursor-pointer ${
             disabled ? 'pointer-events-none' : ''
           }`}
@@ -93,6 +108,7 @@ export default function Pill({
       ref={pillShapeRef}
       onClick={handleClick}
       disabled={disabled}
+      aria-label={ariaLabel}
       className={`group relative flex flex-col items-center space-y-6 cursor-pointer ${
         isFadingOut && !isSelected ? 'opacity-30' : ''
       } ${disabled ? 'pointer-events-none' : ''} ${className}`}

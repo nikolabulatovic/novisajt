@@ -16,7 +16,7 @@ export default function GlobalError({
   }, [error]);
 
   return (
-    <html>
+    <html lang="sr">
       <body>
         {/* App Router does not expose HTTP status codes here; 0 renders a generic message. */}
         <NextError statusCode={0} />

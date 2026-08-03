@@ -60,6 +60,7 @@ export default function ChoiceStage() {
           <div className="flex flex-col items-center space-y-6">
             <Pill
               color="blue"
+              ariaLabel={t('blue.label')}
               onClick={() => handlePillClick('blue')}
               isSelected={selectedPill === 'blue'}
             />
@@ -77,6 +78,7 @@ export default function ChoiceStage() {
           <div className="flex flex-col items-center space-y-6">
             <Pill
               color="red"
+              ariaLabel={t('red.label')}
               onClick={(origin) => handlePillClick('red', origin)}
               isSelected={selectedPill === 'red'}
             />
