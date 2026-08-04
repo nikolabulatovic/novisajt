@@ -113,7 +113,7 @@ export function nextAfterDoubleStandard(answer: string): Stage {
 export function nextAfterYouAreResponsible(answer: string): Stage {
   return isAny(answer, [AnswerId.ACCEPT])
     ? StageId.ActResponsibly
-    : StageId.ReturnWhenReady;
+    : StageId.AvoidingResponsibility;
 }
 
 export function nextAfterActResponsibly(answer: string): Stage {

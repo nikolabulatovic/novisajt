@@ -12,6 +12,7 @@ import AlreadyVegan from '@/src/components/AlreadyVegan';
 import AnimalCostOfLiving from '@/src/components/AnimalCostOfLiving';
 import AnimalsTreatedAsProducts from '@/src/components/AnimalsTreatedAsProducts';
 import ApatheticStance from '@/src/components/ApatheticStance';
+import AvoidingResponsibility from '@/src/components/AvoidingResponsibility';
 import BreakingQuestion from '@/src/components/BreakingQuestion';
 import CharacterEvaluation from '@/src/components/CharacterEvaluation';
 import CharacterIncompatible from '@/src/components/CharacterIncompatible';
@@ -38,7 +39,6 @@ import QuestionExplanation from '@/src/components/QuestionExplanation';
 import RecognizingInjustice from '@/src/components/RecognizingInjustice';
 import RedPillIntro from '@/src/components/RedPillIntro';
 import ReproductionControl from '@/src/components/ReproductionControl';
-import ReturnWhenReady from '@/src/components/ReturnWhenReady';
 import RootOfTheProblem from '@/src/components/RootOfTheProblem';
 import SolutionChoice from '@/src/components/SolutionChoice';
 import SolutionKnow from '@/src/components/SolutionKnow';
@@ -101,7 +101,7 @@ export const STAGE_REGISTRY: Record<Stage, ComponentType<any>> = {
   [StageId.YouAreResponsible]: YouAreResponsible,
   [StageId.ActResponsibly]: ActResponsibly,
   [StageId.NotWhoYouThink]: NotWhoYouThink,
-  [StageId.ReturnWhenReady]: ReturnWhenReady,
+  [StageId.AvoidingResponsibility]: AvoidingResponsibility,
   [StageId.OkWithInjustice]: OkWithInjustice,
   [StageId.VeganismPrinciple]: VeganismPrinciple,
   [StageId.AfterChoice]: AfterChoice,

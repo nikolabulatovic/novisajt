@@ -541,7 +541,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
   },
   [StageId.Excuse]: {
     // Shared with Explanation — first stage owns the file
-    backgroundImage: stageBackground(StageId.Explanation),
+    backgroundImage: stageBackground(StageId.Excuse),
     opacity: 0.4,
     nextInteraction: 'answer',
     answerOptions: [
@@ -564,12 +564,16 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.NotThreatened]: {
+    backgroundImage: stageBackground(StageId.NotThreatened),
+    opacity: 0.5,
     nextInteraction: 'none',
     body: {
       delayAfterComplete: 800,
     },
   },
   [StageId.YouAreResponsible]: {
+    backgroundImage: stageBackground(StageId.YouAreResponsible),
+    opacity: 0.5,
     nextInteraction: 'answer',
     answerOptions: [
       { id: 'ACCEPT', labelKey: 'options.accept' },
@@ -595,7 +599,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
       delayAfterComplete: 800,
     },
   },
-  [StageId.ReturnWhenReady]: {
+  [StageId.AvoidingResponsibility]: {
     nextInteraction: 'none',
     body: {
       delayAfterComplete: 800,

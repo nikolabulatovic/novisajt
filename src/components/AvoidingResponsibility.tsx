@@ -4,6 +4,6 @@ import { StageId } from '@/src/contexts/NavigationContext';
 
 import StoryStage from './ui/StoryStage';
 
-export default function ReturnWhenReady() {
-  return <StoryStage stage={StageId.ReturnWhenReady} />;
+export default function AvoidingResponsibility() {
+  return <StoryStage stage={StageId.AvoidingResponsibility} />;
 }

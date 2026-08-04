@@ -48,7 +48,7 @@ export const StageId = {
   YouAreResponsible: 'you-are-responsible',
   ActResponsibly: 'act-responsibly',
   NotWhoYouThink: 'not-who-you-think',
-  ReturnWhenReady: 'return-when-ready',
+  AvoidingResponsibility: 'avoiding-responsibility',
   OkWithInjustice: 'ok-with-injustice',
   VeganismPrinciple: 'veganism-principle',
   AfterChoice: 'after-choice',

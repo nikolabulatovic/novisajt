@@ -40,7 +40,7 @@ const MESSAGE_FILES = [
   'you-are-responsible',
   'act-responsibly',
   'not-who-you-think',
-  'return-when-ready',
+  'avoiding-responsibility',
   'ok-with-injustice',
   'recognizing-injustice',
   'accepting-self-ownership',
