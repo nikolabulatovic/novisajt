@@ -6,7 +6,12 @@ import { useTranslations } from 'next-intl';
 
 import type { Stage } from '@/src/contexts/NavigationContext';
 import { AnimatedTextBlock } from '@/src/lib/i18n/animatedText';
-import { stageConfig } from '@/src/lib/story/stageUiConfig';
+import {
+  DEFAULT_STAGE_BODY,
+  DEFAULT_STAGE_SHELL,
+  DEFAULT_STORY_UI,
+  stageConfig,
+} from '@/src/lib/story/stageUiConfig';
 import {
   ANSWER_IDLE_SHELL_STATE,
   answerChoiceShellFadeOnlyClassName,
@@ -40,8 +45,9 @@ export default function StoryStageChrome({
   step = 2,
 }: StoryStageChromeProps) {
   const cfg = stageConfig[stage];
-  const bodyCfg = cfg.body;
-  const bodyTextKey = bodyCfg?.textKey ?? 'text';
+  const body = cfg.body;
+  const ui = cfg.additionalUiConfig;
+  const bodyTextKey = body?.textKey ?? DEFAULT_STAGE_BODY.textKey;
   const tBody = useTranslations(cfg.translationNamespace ?? stage);
 
   const [nextInteraction, setNextInteractionVisible] = useState(false);
@@ -49,9 +55,8 @@ export default function StoryStageChrome({
     ...ANSWER_IDLE_SHELL_STATE,
   }));
 
-  const storyDefaults = cfg.additionalUiConfig ?? {};
   const wrapsAnswerShell = cfg.nextInteraction === 'answer';
-  const contentSpacing = storyDefaults.contentSpacing ?? 'lg';
+  const contentSpacing = ui?.contentSpacing ?? DEFAULT_STORY_UI.contentSpacing;
 
   useEffect(() => {
     setNextInteractionVisible(false);
@@ -67,8 +72,9 @@ export default function StoryStageChrome({
   );
 
   const backgroundImage = cfg.backgroundImage;
-  const backgroundImageOpacity = cfg.opacity ?? 0.8;
-  const backgroundImagePosition = cfg.backgroundPosition ?? 'center';
+  const backgroundImageOpacity = cfg.opacity ?? DEFAULT_STAGE_SHELL.opacity;
+  const backgroundImagePosition =
+    cfg.backgroundPosition ?? DEFAULT_STAGE_SHELL.backgroundPosition;
 
   const stackGapClass = ANSWER_SHELL_STACK_GAP[contentSpacing];
 
@@ -80,24 +86,31 @@ export default function StoryStageChrome({
         glassVariant={cfg.glassVariant}
         className={
           STORY_STAGE_SURFACE_FRAME_CLASS[
-            storyDefaults.textSurfaceFrame ?? 'default'
+            ui?.textSurfaceFrame ?? DEFAULT_STORY_UI.textSurfaceFrame
           ]
         }
         contentClassName={
-          STORY_STAGE_TEXT_PADDING_CLASS[storyDefaults.textPadding ?? 'default']
+          STORY_STAGE_TEXT_PADDING_CLASS[
+            ui?.textPadding ?? DEFAULT_STORY_UI.textPadding
+          ]
         }
-        backdropType={storyDefaults.backdropType}
-        backdropOpacity={storyDefaults.backdropOpacity}
-        backdropFade={storyDefaults.backdropFade}
-        backdropColor={storyDefaults.backdropColor}
+        backdropType={ui?.backdropType}
+        backdropOpacity={ui?.backdropOpacity}
+        backdropFade={ui?.backdropFade}
+        backdropColor={ui?.backdropColor}
       >
         <AnimatedText
           text={tBody.raw(bodyTextKey) as AnimatedTextBlock}
-          speed={bodyCfg?.speed}
-          delayAfterComplete={bodyCfg?.delayAfterComplete}
-          textSize={bodyCfg?.textSize}
-          alignment={bodyCfg?.alignment}
-          wordTransitionDuration={bodyCfg?.wordTransitionDuration}
+          speed={body?.speed ?? DEFAULT_STAGE_BODY.speed}
+          delayAfterComplete={
+            body?.delayAfterComplete ?? DEFAULT_STAGE_BODY.delayAfterComplete
+          }
+          textSize={body?.textSize ?? DEFAULT_STAGE_BODY.textSize}
+          alignment={body?.alignment ?? DEFAULT_STAGE_BODY.alignment}
+          wordTransitionDuration={
+            body?.wordTransitionDuration ??
+            DEFAULT_STAGE_BODY.wordTransitionDuration
+          }
           onComplete={revealNextInteraction}
         />
       </StageTextSurface>
@@ -117,12 +130,14 @@ export default function StoryStageChrome({
       backgroundImage={backgroundImage}
       backgroundImageOpacity={backgroundImageOpacity}
       backgroundImagePosition={backgroundImagePosition}
-      maxWidth={storyDefaults.maxWidth ?? 'md'}
-      showBackgroundEffects={cfg.showBackgroundEffects ?? false}
+      maxWidth={ui?.maxWidth ?? DEFAULT_STORY_UI.maxWidth}
+      showBackgroundEffects={
+        cfg.showBackgroundEffects ?? DEFAULT_STAGE_SHELL.showBackgroundEffects
+      }
     >
       <ContentContainer
-        spacing={storyDefaults.contentSpacing ?? 'lg'}
-        align={storyDefaults.contentAlign ?? 'center'}
+        spacing={contentSpacing}
+        align={ui?.contentAlign ?? DEFAULT_STORY_UI.contentAlign}
       >
         {wrapsAnswerShell ? (
           <div

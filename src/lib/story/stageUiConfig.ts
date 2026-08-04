@@ -24,10 +24,15 @@ export interface NarrativeTwoBeatConfig {
 }
 
 export interface StoryStageUiConfig {
+  /** Defaults to {@link DEFAULT_STORY_UI.maxWidth}. */
   maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
+  /** Defaults to {@link DEFAULT_STORY_UI.contentSpacing}. */
   contentSpacing?: 'sm' | 'md' | 'lg';
+  /** Defaults to {@link DEFAULT_STORY_UI.contentAlign}. */
   contentAlign?: 'left' | 'center' | 'right';
+  /** Defaults to {@link DEFAULT_STORY_UI.textPadding}. */
   textPadding?: StoryStageTextPadding;
+  /** Defaults to {@link DEFAULT_STORY_UI.textSurfaceFrame}. */
   textSurfaceFrame?: StoryStageSurfaceFrame;
   backdropType?: 'linear' | 'radial';
   backdropOpacity?: number;
@@ -37,18 +42,51 @@ export interface StoryStageUiConfig {
 }
 
 export interface StageBodyAnimatedText {
-  /** Defaults to `120` (most common project value). */
+  /** Defaults to {@link DEFAULT_STAGE_BODY.speed}. */
   speed?: number;
-  /** Defaults to `1000` (most common project value). */
+  /** Defaults to {@link DEFAULT_STAGE_BODY.delayAfterComplete}. */
   delayAfterComplete?: number;
-  /** Translation key for body text (defaults to `text`). */
+  /** Translation key for body text. Defaults to {@link DEFAULT_STAGE_BODY.textKey}. */
   textKey?: string;
-  /** Defaults to `md` (most common project value). */
+  /** Defaults to {@link DEFAULT_STAGE_BODY.textSize}. */
   textSize?: 'sm' | 'md' | 'lg';
-  /** Defaults to `center` (most common project value). */
+  /** Defaults to {@link DEFAULT_STAGE_BODY.alignment}. */
   alignment?: 'left' | 'center' | 'right';
+  /** Defaults to {@link DEFAULT_STAGE_BODY.wordTransitionDuration}. */
   wordTransitionDuration?: number;
 }
+
+/**
+ * Calibrated body animation defaults — omit matching fields in `stageConfig.body`.
+ * Applied by {@link StoryStageChrome} via `??`.
+ */
+export const DEFAULT_STAGE_BODY = {
+  speed: 120,
+  delayAfterComplete: 1000,
+  textKey: 'text',
+  textSize: 'md' as const,
+  alignment: 'center' as const,
+  wordTransitionDuration: 3000,
+};
+
+/**
+ * Calibrated StoryStage layout defaults — omit matching fields in `additionalUiConfig`.
+ * Applied by {@link StoryStageChrome} via `??`.
+ */
+export const DEFAULT_STORY_UI = {
+  maxWidth: 'md' as const,
+  contentSpacing: 'lg' as const,
+  contentAlign: 'center' as const,
+  textPadding: 'default' as const,
+  textSurfaceFrame: 'default' as const,
+};
+
+/** Top-level stage shell defaults applied by {@link StoryStageChrome}. */
+export const DEFAULT_STAGE_SHELL = {
+  opacity: 0.8,
+  backgroundPosition: 'center',
+  showBackgroundEffects: false,
+};
 
 export interface StageAnswerOptionConfig {
   id: string;
@@ -57,8 +95,9 @@ export interface StageAnswerOptionConfig {
 
 interface BaseStageConfig {
   backgroundImage?: string;
+  /** Defaults to {@link DEFAULT_STAGE_SHELL.opacity}. */
   opacity?: number;
-  /** CSS background-position for the stage image. Defaults to `center`. */
+  /** Defaults to {@link DEFAULT_STAGE_SHELL.backgroundPosition}. */
   backgroundPosition?: string;
   gradientOverlayClasses?: string[]; // Extra gradient overlay divs to replicate in PillTransitionLayer so transition end matches page start
   /**
@@ -68,13 +107,13 @@ interface BaseStageConfig {
   textSurface?: StageTextSurfaceMode;
   /** Used when `textSurface` is `panel`. Defaults to `dark`. */
   glassVariant?: 'dark' | 'light';
-  /** Whether to show background effects on the stage. Defaults to `false` when omitted. */
+  /** Defaults to {@link DEFAULT_STAGE_SHELL.showBackgroundEffects}. */
   showBackgroundEffects?: boolean;
-  /** Optional StoryStage layout defaults for this stage. */
+  /** Layout overrides only — defaults live in {@link DEFAULT_STORY_UI}. */
   additionalUiConfig?: StoryStageUiConfig;
   /** When set, StoryStage renders two beats + advance + deferred footer; `children` are ignored. */
   narrativeTwoBeat?: NarrativeTwoBeatConfig;
-  /** Optional body rendered by `StoryStage` when no children are passed. */
+  /** Body animation overrides only — defaults live in {@link DEFAULT_STAGE_BODY}. */
   body?: StageBodyAnimatedText;
   /** Next interaction translation namespace. */
   translationNamespace?: string;
@@ -138,12 +177,6 @@ export const stageConfig: Record<Stage, StageConfig> = {
     backgroundImage: stageBackground(StageId.CharacterIncompatible),
     nextInteraction: 'none',
     opacity: 0.6,
-    body: {
-      speed: 120,
-      delayAfterComplete: 1000,
-      textSize: 'md',
-      alignment: 'center',
-    },
   },
   [StageId.Explanation]: {
     backgroundImage: stageBackground(StageId.Explanation),
@@ -163,7 +196,6 @@ export const stageConfig: Record<Stage, StageConfig> = {
   },
   [StageId.HistoricalIntro]: {
     body: {
-      delayAfterComplete: 1000,
       textSize: 'lg',
     },
   },
@@ -177,7 +209,6 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
     body: {
       speed: 150,
-      delayAfterComplete: 1000,
       textSize: 'lg',
       alignment: 'right',
     },
@@ -192,7 +223,6 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
     body: {
       speed: 150,
-      delayAfterComplete: 1000,
       textSize: 'lg',
       alignment: 'left',
     },
@@ -210,22 +240,13 @@ export const stageConfig: Record<Stage, StageConfig> = {
       { id: 'YES', labelKey: 'options.yes' },
       { id: 'NO', labelKey: 'options.no' },
     ],
-    body: {
-      speed: 120,
-      delayAfterComplete: 1000,
-      textSize: 'md',
-      alignment: 'center',
-    },
   },
   [StageId.InjusticePersists]: {
     backgroundImage: stageBackground(StageId.InjusticePersists),
     opacity: 0.5,
     nextInteraction: 'none',
     body: {
-      speed: 120,
       delayAfterComplete: 800,
-      textSize: 'md',
-      alignment: 'center',
     },
   },
   [StageId.PersonalQuestion]: {
@@ -241,12 +262,6 @@ export const stageConfig: Record<Stage, StageConfig> = {
       { id: 'ACCEPT', labelKey: 'options.accept.label' },
       { id: 'REJECT', labelKey: 'options.reject.label' },
     ],
-    body: {
-      speed: 120,
-      delayAfterComplete: 1000,
-      textSize: 'md',
-      alignment: 'center',
-    },
   },
   [StageId.SpasaStory]: {
     backgroundImage: stageBackground(StageId.SpasaStory),
@@ -275,12 +290,6 @@ export const stageConfig: Record<Stage, StageConfig> = {
       backdropOpacity: 0.45,
       backdropFade: 0.25,
     },
-    body: {
-      speed: 120,
-      delayAfterComplete: 1000,
-      textSize: 'md',
-      alignment: 'center',
-    },
   },
   [StageId.RootOfTheProblem]: {
     backgroundImage: stageBackground(StageId.RootOfTheProblem),
@@ -290,12 +299,6 @@ export const stageConfig: Record<Stage, StageConfig> = {
       backdropOpacity: 0.4,
       backdropFade: 0.1,
     },
-    body: {
-      speed: 120,
-      delayAfterComplete: 1000,
-      textSize: 'md',
-      alignment: 'center',
-    },
   },
   [StageId.AnimalsTreatedAsProducts]: {
     backgroundImage: stageBackground(StageId.AnimalsTreatedAsProducts),
@@ -304,12 +307,6 @@ export const stageConfig: Record<Stage, StageConfig> = {
     additionalUiConfig: {
       backdropOpacity: 0.4,
       backdropFade: 0.1,
-    },
-    body: {
-      speed: 120,
-      delayAfterComplete: 1000,
-      textSize: 'md',
-      alignment: 'center',
     },
   },
   [StageId.LetThemLive]: {
@@ -326,12 +323,6 @@ export const stageConfig: Record<Stage, StageConfig> = {
       { id: 'ACCEPT', labelKey: 'options.accept' },
       { id: 'REJECT', labelKey: 'options.reject' },
     ],
-    body: {
-      speed: 120,
-      delayAfterComplete: 1000,
-      textSize: 'md',
-      alignment: 'center',
-    },
   },
   [StageId.AcceptingSelfOwnership]: {
     backgroundImage: stageBackground(StageId.AcceptingSelfOwnership),
@@ -348,10 +339,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
       { id: 'REJECT', labelKey: 'options.reject' },
     ],
     body: {
-      speed: 120,
       delayAfterComplete: 800,
-      textSize: 'md',
-      alignment: 'center',
     },
   },
   [StageId.DishonestSelfOwnership]: {
@@ -359,10 +347,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     opacity: 0.5,
     nextInteraction: 'none',
     body: {
-      speed: 120,
       delayAfterComplete: 800,
-      textSize: 'md',
-      alignment: 'center',
     },
   },
   [StageId.FromTheWild]: {
@@ -372,12 +357,6 @@ export const stageConfig: Record<Stage, StageConfig> = {
     additionalUiConfig: {
       backdropOpacity: 0.35,
       backdropFade: 0.1,
-    },
-    body: {
-      speed: 120,
-      delayAfterComplete: 1000,
-      textSize: 'md',
-      alignment: 'center',
     },
   },
   [StageId.ReproductionControl]: {
@@ -389,12 +368,6 @@ export const stageConfig: Record<Stage, StageConfig> = {
       backdropFade: 0.1,
       backdropColor: '#263841',
     },
-    body: {
-      speed: 120,
-      delayAfterComplete: 1000,
-      textSize: 'md',
-      alignment: 'center',
-    },
   },
   [StageId.ViciousCycle]: {
     backgroundImage: stageBackground(StageId.ViciousCycle),
@@ -405,12 +378,6 @@ export const stageConfig: Record<Stage, StageConfig> = {
       backdropFade: 0.1,
       backdropColor: '#655942',
     },
-    body: {
-      speed: 120,
-      delayAfterComplete: 1000,
-      textSize: 'md',
-      alignment: 'center',
-    },
   },
   [StageId.CowFate]: {
     backgroundImage: stageBackground(StageId.CowFate),
@@ -419,12 +386,6 @@ export const stageConfig: Record<Stage, StageConfig> = {
     additionalUiConfig: {
       backdropOpacity: 0.4,
       backdropFade: 0.25,
-    },
-    body: {
-      speed: 120,
-      delayAfterComplete: 1000,
-      textSize: 'md',
-      alignment: 'center',
     },
   },
   [StageId.AnimalCostOfLiving]: {
@@ -435,12 +396,6 @@ export const stageConfig: Record<Stage, StageConfig> = {
       backdropOpacity: 0.25,
       backdropFade: 0.1,
     },
-    body: {
-      speed: 120,
-      delayAfterComplete: 1000,
-      textSize: 'md',
-      alignment: 'center',
-    },
   },
   [StageId.SolutionUse]: {
     nextInteraction: 'answer',
@@ -448,12 +403,6 @@ export const stageConfig: Record<Stage, StageConfig> = {
       { id: 'YES', labelKey: 'options.yes' },
       { id: 'NO', labelKey: 'options.no' },
     ],
-    body: {
-      speed: 120,
-      delayAfterComplete: 1000,
-      textSize: 'md',
-      alignment: 'center',
-    },
   },
   [StageId.SolutionKnow]: {
     backgroundImage: stageBackground(StageId.SolutionKnow),
@@ -469,12 +418,6 @@ export const stageConfig: Record<Stage, StageConfig> = {
       { id: 'DONT_KNOW', labelKey: 'options.dontKnow' },
       { id: 'NO', labelKey: 'options.no' },
     ],
-    body: {
-      speed: 120,
-      delayAfterComplete: 1000,
-      textSize: 'md',
-      alignment: 'center',
-    },
   },
   [StageId.VeganDietHealth]: {
     backgroundImage: stageBackground(StageId.VeganDietHealth, 'webp'),
@@ -484,12 +427,6 @@ export const stageConfig: Record<Stage, StageConfig> = {
       { id: 'ACCEPT', labelKey: 'options.accept' },
       { id: 'REJECT', labelKey: 'options.reject' },
     ],
-    body: {
-      speed: 120,
-      delayAfterComplete: 1000,
-      textSize: 'md',
-      alignment: 'center',
-    },
   },
   [StageId.AdditionalResources]: {
     backgroundImage: stageBackground(StageId.AdditionalResources, 'webp'),
@@ -513,12 +450,6 @@ export const stageConfig: Record<Stage, StageConfig> = {
       { id: 'AGREE', labelKey: 'options.agree' },
       { id: 'DISAGREE', labelKey: 'options.disagree' },
     ],
-    body: {
-      speed: 120,
-      delayAfterComplete: 1000,
-      textSize: 'md',
-      alignment: 'center',
-    },
   },
   [StageId.AddressingContradiction]: {
     backgroundImage: stageBackground(StageId.AddressingContradiction),
@@ -533,12 +464,6 @@ export const stageConfig: Record<Stage, StageConfig> = {
       { id: 'AGREE', labelKey: 'options.agree' },
       { id: 'DISAGREE', labelKey: 'options.disagree' },
     ],
-    body: {
-      speed: 120,
-      delayAfterComplete: 1000,
-      textSize: 'md',
-      alignment: 'center',
-    },
   },
   [StageId.NotHonest]: {
     backgroundImage: stageBackground(StageId.NotHonest),
@@ -550,10 +475,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
     nextInteraction: 'none',
     body: {
-      speed: 120,
       delayAfterComplete: 800,
-      textSize: 'md',
-      alignment: 'center',
     },
   },
   [StageId.AlignBehaviour]: {
@@ -562,29 +484,14 @@ export const stageConfig: Record<Stage, StageConfig> = {
       { id: 'YES', labelKey: 'options.yes' },
       { id: 'NO', labelKey: 'options.no' },
     ],
-    body: {
-      speed: 120,
-      delayAfterComplete: 1000,
-      textSize: 'md',
-      alignment: 'center',
-    },
   },
   [StageId.VeganismPrinciple]: {
     nextInteraction: 'pill',
-    body: {
-      speed: 120,
-      delayAfterComplete: 1000,
-      textSize: 'md',
-      alignment: 'center',
-    },
   },
   [StageId.AfterChoice]: {
     nextInteraction: 'none',
     body: {
-      speed: 120,
       delayAfterComplete: 800,
-      textSize: 'md',
-      alignment: 'center',
     },
   },
   [StageId.StayComfortable]: {
@@ -601,12 +508,6 @@ export const stageConfig: Record<Stage, StageConfig> = {
       { id: 'AGREE', labelKey: 'options.agree.label' },
       { id: 'DISAGREE', labelKey: 'options.disagree.label' },
     ],
-    body: {
-      speed: 120,
-      delayAfterComplete: 1000,
-      textSize: 'md',
-      alignment: 'center',
-    },
     additionalUiConfig: {
       backdropOpacity: 0.2,
       backdropFade: 0.2,
@@ -616,10 +517,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     opacity: 0.5,
     nextInteraction: 'none',
     body: {
-      speed: 120,
       delayAfterComplete: 800,
-      textSize: 'md',
-      alignment: 'center',
     },
   },
   [StageId.ApatheticStance]: {
@@ -627,10 +525,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     opacity: 0.4,
     nextInteraction: 'none',
     body: {
-      speed: 120,
       delayAfterComplete: 800,
-      textSize: 'md',
-      alignment: 'center',
     },
   },
   [StageId.AlreadyVegan]: {
@@ -641,10 +536,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     opacity: 0.8,
     nextInteraction: 'none',
     body: {
-      speed: 120,
       delayAfterComplete: 800,
-      textSize: 'md',
-      alignment: 'center',
     },
   },
   [StageId.Excuse]: {
@@ -668,19 +560,13 @@ export const stageConfig: Record<Stage, StageConfig> = {
       { id: 'NOT_IN_THEIR_PLACE', labelKey: 'options.notInTheirPlace' },
     ],
     body: {
-      speed: 120,
       delayAfterComplete: 800,
-      textSize: 'md',
-      alignment: 'center',
     },
   },
   [StageId.NotThreatened]: {
     nextInteraction: 'none',
     body: {
-      speed: 120,
       delayAfterComplete: 800,
-      textSize: 'md',
-      alignment: 'center',
     },
   },
   [StageId.YouAreResponsible]: {
@@ -690,10 +576,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
       { id: 'REJECT', labelKey: 'options.reject' },
     ],
     body: {
-      speed: 120,
       delayAfterComplete: 800,
-      textSize: 'md',
-      alignment: 'center',
     },
   },
   [StageId.ActResponsibly]: {
@@ -703,37 +586,25 @@ export const stageConfig: Record<Stage, StageConfig> = {
       { id: 'NO', labelKey: 'options.no' },
     ],
     body: {
-      speed: 120,
       delayAfterComplete: 800,
-      textSize: 'md',
-      alignment: 'center',
     },
   },
   [StageId.NotWhoYouThink]: {
     nextInteraction: 'none',
     body: {
-      speed: 120,
       delayAfterComplete: 800,
-      textSize: 'md',
-      alignment: 'center',
     },
   },
   [StageId.ReturnWhenReady]: {
     nextInteraction: 'none',
     body: {
-      speed: 120,
       delayAfterComplete: 800,
-      textSize: 'md',
-      alignment: 'center',
     },
   },
   [StageId.OkWithInjustice]: {
     nextInteraction: 'none',
     body: {
-      speed: 120,
       delayAfterComplete: 800,
-      textSize: 'md',
-      alignment: 'center',
     },
   },
 };

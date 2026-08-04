@@ -12,7 +12,10 @@ import { Stage } from '@/src/contexts/NavigationContext';
 import { useMaskExpansion } from '@/src/hooks/useMaskExpansion';
 import type { PillOrigin } from '@/src/lib/pillOrigin';
 import { fallbackPillOrigin } from '@/src/lib/pillOrigin';
-import { stageConfig } from '@/src/lib/story/stageUiConfig';
+import {
+  DEFAULT_STAGE_SHELL,
+  stageConfig,
+} from '@/src/lib/story/stageUiConfig';
 
 const FADE_OUT_DURATION = 400;
 
@@ -98,7 +101,8 @@ export default function PillTransitionLayer({
 
   const nextConfig = stageConfig[activeStage];
   const nextBackgroundImage = nextConfig?.backgroundImage;
-  const nextBackgroundPosition = nextConfig?.backgroundPosition ?? 'center';
+  const nextBackgroundPosition =
+    nextConfig?.backgroundPosition ?? DEFAULT_STAGE_SHELL.backgroundPosition;
   const transitionOverlayColor =
     nextConfig?.pillTransitionOverlayColor ?? 'black';
   const targetBgOpacity = nextConfig?.opacity ?? 0.8;
