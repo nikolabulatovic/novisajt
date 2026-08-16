@@ -20,6 +20,7 @@ import {
 import {
   STORY_STAGE_SURFACE_FRAME_CLASS,
   STORY_STAGE_TEXT_PADDING_CLASS,
+  STORY_STAGE_TEXT_TONE_CLASS,
 } from '../../constants/storyStageTokens';
 import AnimatedText from './AnimatedText';
 import ContentContainer from './ContentContainer';
@@ -111,6 +112,11 @@ export default function StoryStageChrome({
             body?.wordTransitionDuration ??
             DEFAULT_STAGE_BODY.wordTransitionDuration
           }
+          className={
+            STORY_STAGE_TEXT_TONE_CLASS[
+              body?.textTone ?? DEFAULT_STAGE_BODY.textTone
+            ]
+          }
           onComplete={revealNextInteraction}
         />
       </StageTextSurface>
@@ -130,6 +136,7 @@ export default function StoryStageChrome({
       backgroundImage={backgroundImage}
       backgroundImageOpacity={backgroundImageOpacity}
       backgroundImagePosition={backgroundImagePosition}
+      backgroundWash={cfg.backgroundWash ?? DEFAULT_STAGE_SHELL.backgroundWash}
       maxWidth={ui?.maxWidth ?? DEFAULT_STORY_UI.maxWidth}
       showBackgroundEffects={
         cfg.showBackgroundEffects ?? DEFAULT_STAGE_SHELL.showBackgroundEffects

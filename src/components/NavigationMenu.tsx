@@ -59,7 +59,9 @@ const stageLabelKeys: Record<Stage, string> = {
   [StageId.AvoidingResponsibility]: 'stages.avoidingResponsibility',
   [StageId.OkWithInjustice]: 'stages.okWithInjustice',
   [StageId.VeganismPrinciple]: 'stages.veganismPrinciple',
-  [StageId.AfterChoice]: 'stages.afterChoice',
+  [StageId.RighteousChoice]: 'stages.righteousChoice',
+  [StageId.CourageousChoice]: 'stages.courageousChoice',
+  [StageId.JoinUs]: 'stages.joinUs',
 };
 
 interface StageNavItem {
@@ -116,7 +118,9 @@ const stageNavItems: StageNavItem[] = [
   { stage: StageId.NotWhoYouThink, depth: 3 },
   { stage: StageId.OkWithInjustice, depth: 2 },
   { stage: StageId.VeganismPrinciple, depth: 0 },
-  { stage: StageId.AfterChoice, depth: 0 },
+  { stage: StageId.RighteousChoice, depth: 0 },
+  { stage: StageId.CourageousChoice, depth: 0 },
+  { stage: StageId.JoinUs, depth: 0 },
 ];
 
 export default function NavigationMenu() {

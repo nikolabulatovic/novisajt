@@ -70,8 +70,6 @@ export function useStoryFlowHandlers({
 
         if (completedStage === StageId.VeganismPrinciple) {
           trackFlowCompleted();
-          transitionToStage(StageId.AfterChoice, 'auto', pillOrigin);
-          return;
         }
 
         const nextStage = directStageTransitions[completedStage];

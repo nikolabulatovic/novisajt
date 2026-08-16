@@ -11,6 +11,8 @@ export const NEXT_LABEL = 'next';
 export type StageTextSurfaceMode = 'backdrop' | 'panel' | 'none';
 export type StoryStageTextPadding = 'default' | 'intro' | 'explanation';
 export type StoryStageSurfaceFrame = 'default' | 'inset-compact';
+/** Body copy tone over the stage. Defaults to {@link DEFAULT_STAGE_BODY.textTone}. */
+export type StoryStageTextTone = 'light' | 'dark';
 
 /** Two narrative beats on one stage: same background; mid-stage advance; final footer after beat 2 animation. */
 export interface NarrativeTwoBeatConfig {
@@ -54,6 +56,8 @@ export interface StageBodyAnimatedText {
   alignment?: 'left' | 'center' | 'right';
   /** Defaults to {@link DEFAULT_STAGE_BODY.wordTransitionDuration}. */
   wordTransitionDuration?: number;
+  /** Defaults to {@link DEFAULT_STAGE_BODY.textTone}. */
+  textTone?: StoryStageTextTone;
 }
 
 /**
@@ -67,6 +71,7 @@ export const DEFAULT_STAGE_BODY = {
   textSize: 'md' as const,
   alignment: 'center' as const,
   wordTransitionDuration: 3000,
+  textTone: 'light' as const,
 };
 
 /**
@@ -86,6 +91,8 @@ export const DEFAULT_STAGE_SHELL = {
   opacity: 0.8,
   backgroundPosition: 'center',
   showBackgroundEffects: false,
+  /** Under the dimmed stage image: `black` darkens, `white` lightens. */
+  backgroundWash: 'black' as const,
 };
 
 export interface StageAnswerOptionConfig {
@@ -97,6 +104,12 @@ interface BaseStageConfig {
   backgroundImage?: string;
   /** Defaults to {@link DEFAULT_STAGE_SHELL.opacity}. */
   opacity?: number;
+  /**
+   * Color revealed when the background image is dimmed via `opacity`.
+   * Defaults to {@link DEFAULT_STAGE_SHELL.backgroundWash} (`black`).
+   * Use `white` for a light wash (e.g. RighteousChoice).
+   */
+  backgroundWash?: 'black' | 'white';
   /** Defaults to {@link DEFAULT_STAGE_SHELL.backgroundPosition}. */
   backgroundPosition?: string;
   gradientOverlayClasses?: string[]; // Extra gradient overlay divs to replicate in PillTransitionLayer so transition end matches page start
@@ -109,6 +122,11 @@ interface BaseStageConfig {
   glassVariant?: 'dark' | 'light';
   /** Defaults to {@link DEFAULT_STAGE_SHELL.showBackgroundEffects}. */
   showBackgroundEffects?: boolean;
+  /**
+   * Overlay color during pill mask expansion *into* this stage.
+   * Defaults to `black` in {@link PillTransitionLayer}.
+   */
+  pillTransitionOverlayColor?: 'black' | 'white';
   /** Layout overrides only — defaults live in {@link DEFAULT_STORY_UI}. */
   additionalUiConfig?: StoryStageUiConfig;
   /** When set, StoryStage renders two beats + advance + deferred footer; `children` are ignored. */
@@ -123,19 +141,15 @@ type StageInteractionConfig =
   | {
       nextInteraction?: 'none';
       answerOptions?: never;
-      pillTransitionOverlayColor?: never;
     }
   | {
       nextInteraction: 'pill';
       answerOptions?: never;
-      /** Overlay color used during pill mask expansion into this stage. */
-      pillTransitionOverlayColor?: 'black' | 'white';
     }
   | {
       nextInteraction: 'answer';
       /** Required when `nextInteraction` is `answer`. */
       answerOptions: StageAnswerOptionConfig[];
-      pillTransitionOverlayColor?: never;
     };
 
 export type StageConfig = BaseStageConfig & StageInteractionConfig;
@@ -488,12 +502,6 @@ export const stageConfig: Record<Stage, StageConfig> = {
   [StageId.VeganismPrinciple]: {
     nextInteraction: 'pill',
   },
-  [StageId.AfterChoice]: {
-    nextInteraction: 'none',
-    body: {
-      delayAfterComplete: 800,
-    },
-  },
   [StageId.StayComfortable]: {
     // Shared with Choice — first stage owns the file
     backgroundImage: stageBackground(StageId.Choice, 'webp'),
@@ -609,6 +617,51 @@ export const stageConfig: Record<Stage, StageConfig> = {
     nextInteraction: 'none',
     body: {
       delayAfterComplete: 800,
+    },
+  },
+  [StageId.RighteousChoice]: {
+    // Shared with AlreadyVegan — former animals-picturesque.jpg
+    backgroundImage: stageBackground(StageId.RighteousChoice),
+    opacity: 0.5,
+    backgroundWash: 'white',
+    textSurface: 'backdrop',
+    nextInteraction: 'pill',
+    pillTransitionOverlayColor: 'white',
+    body: {
+      delayAfterComplete: 800,
+      textTone: 'dark',
+    },
+    additionalUiConfig: {
+      maxWidth: '3xl',
+      backdropColor: '#ffffff',
+      backdropOpacity: 0.15,
+      backdropFade: 0.1,
+    },
+  },
+  [StageId.CourageousChoice]: {
+    // TODO: add public/images/courageous-choice.jpg
+    backgroundImage: stageBackground(StageId.CourageousChoice),
+    opacity: 0.85,
+    textSurface: 'backdrop',
+    nextInteraction: 'pill',
+    pillTransitionOverlayColor: 'white',
+    body: {
+      delayAfterComplete: 800,
+    },
+    additionalUiConfig: {
+      maxWidth: '3xl',
+      backdropColor: '#ffffff',
+      backdropOpacity: 0.1,
+      backdropFade: 0.2,
+    },
+  },
+  [StageId.JoinUs]: {
+    backgroundImage: stageBackground(StageId.JoinUs),
+    opacity: 0.55,
+    nextInteraction: 'none',
+    pillTransitionOverlayColor: 'white',
+    additionalUiConfig: {
+      maxWidth: '3xl',
     },
   },
 };

@@ -38,6 +38,9 @@ export const directStageTransitions: Partial<Record<Stage, Stage>> = {
   [StageId.ViciousCycle]: StageId.CowFate,
   [StageId.CowFate]: StageId.AnimalCostOfLiving,
   [StageId.AnimalCostOfLiving]: StageId.SolutionUse,
+  [StageId.VeganismPrinciple]: StageId.RighteousChoice,
+  [StageId.RighteousChoice]: StageId.CourageousChoice,
+  [StageId.CourageousChoice]: StageId.JoinUs,
 };
 
 export const answerStageTransitions: Partial<

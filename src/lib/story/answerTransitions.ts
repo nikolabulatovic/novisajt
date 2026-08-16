@@ -43,14 +43,14 @@ export function nextAfterAcceptingSelfOwnership(answer: string): Stage {
 
 export function nextAfterSolutionUse(answer: string): Stage {
   return isAny(answer, [AnswerId.NO])
-    ? StageId.AfterChoice
+    ? StageId.RighteousChoice
     : StageId.SolutionKnow;
 }
 
 /** `YES` ends the flow early; otherwise continue to solution-know. */
 export function nextAfterAlreadyVegan(answer: string): Stage {
   return isAny(answer, [AnswerId.YES])
-    ? StageId.AfterChoice
+    ? StageId.RighteousChoice
     : StageId.SolutionKnow;
 }
 

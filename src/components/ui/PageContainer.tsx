@@ -13,6 +13,11 @@ interface PageContainerProps {
   backgroundImagePosition?: string;
   /** Preload the background (for the LCP / first-paint stage). */
   backgroundImagePriority?: boolean;
+  /**
+   * Color under a translucent stage image. `black` darkens (default);
+   * `white` lightens toward a soft wash.
+   */
+  backgroundWash?: 'black' | 'white';
   maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
   showBackgroundEffects?: boolean;
   className?: string;
@@ -34,12 +39,15 @@ export default function PageContainer({
   backgroundImageOpacity = 0.8,
   backgroundImagePosition = 'center',
   backgroundImagePriority = false,
+  backgroundWash = 'black',
   maxWidth = 'md',
   showBackgroundEffects = false,
   className = '',
 }: PageContainerProps) {
+  const washClass = backgroundWash === 'white' ? 'bg-white' : 'bg-black';
+
   return (
-    <div className={`relative min-h-screen w-full bg-black ${className}`}>
+    <div className={`relative min-h-screen w-full ${washClass} ${className}`}>
       {backgroundImage && (
         <div className="pointer-events-none absolute inset-0 z-0">
           <BackgroundImage

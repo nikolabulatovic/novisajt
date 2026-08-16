@@ -6,7 +6,6 @@ import AcceptingSelfOwnership from '@/src/components/AcceptingSelfOwnership';
 import ActResponsibly from '@/src/components/ActResponsibly';
 import AdditionalResources from '@/src/components/AdditionalResources';
 import AddressingContradiction from '@/src/components/AddressingContradiction';
-import AfterChoice from '@/src/components/AfterChoice';
 import AlignBehaviour from '@/src/components/AlignBehaviour';
 import AlreadyVegan from '@/src/components/AlreadyVegan';
 import AnimalCostOfLiving from '@/src/components/AnimalCostOfLiving';
@@ -17,6 +16,7 @@ import BreakingQuestion from '@/src/components/BreakingQuestion';
 import CharacterEvaluation from '@/src/components/CharacterEvaluation';
 import CharacterIncompatible from '@/src/components/CharacterIncompatible';
 import ChoiceStage from '@/src/components/ChoiceStage';
+import CourageousChoice from '@/src/components/CourageousChoice';
 import CowFate from '@/src/components/CowFate';
 import DishonestSelfOwnership from '@/src/components/DishonestSelfOwnership';
 import DoubleStandard from '@/src/components/DoubleStandard';
@@ -26,6 +26,7 @@ import HistoricalAuthoritarianism from '@/src/components/HistoricalAuthoritarian
 import HistoricalIntro from '@/src/components/HistoricalIntro';
 import HistoricalSlavery from '@/src/components/HistoricalSlavery';
 import InjusticePersists from '@/src/components/InjusticePersists';
+import JoinUs from '@/src/components/JoinUs';
 import LetThemLive from '@/src/components/LetThemLive';
 import NotAcceptingHealth from '@/src/components/NotAcceptingHealth';
 import NotHonest from '@/src/components/NotHonest';
@@ -39,6 +40,7 @@ import QuestionExplanation from '@/src/components/QuestionExplanation';
 import RecognizingInjustice from '@/src/components/RecognizingInjustice';
 import RedPillIntro from '@/src/components/RedPillIntro';
 import ReproductionControl from '@/src/components/ReproductionControl';
+import RighteousChoice from '@/src/components/RighteousChoice';
 import RootOfTheProblem from '@/src/components/RootOfTheProblem';
 import SolutionChoice from '@/src/components/SolutionChoice';
 import SolutionKnow from '@/src/components/SolutionKnow';
@@ -104,5 +106,7 @@ export const STAGE_REGISTRY: Record<Stage, ComponentType<any>> = {
   [StageId.AvoidingResponsibility]: AvoidingResponsibility,
   [StageId.OkWithInjustice]: OkWithInjustice,
   [StageId.VeganismPrinciple]: VeganismPrinciple,
-  [StageId.AfterChoice]: AfterChoice,
+  [StageId.RighteousChoice]: RighteousChoice,
+  [StageId.CourageousChoice]: CourageousChoice,
+  [StageId.JoinUs]: JoinUs,
 };

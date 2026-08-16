@@ -107,6 +107,8 @@ export default function PillTransitionLayer({
     nextConfig?.pillTransitionOverlayColor ?? 'black';
   const targetBgOpacity = nextConfig?.opacity ?? 0.8;
   const gradientOverlayClasses = nextConfig?.gradientOverlayClasses ?? [];
+  const backgroundWash =
+    nextConfig?.backgroundWash ?? DEFAULT_STAGE_SHELL.backgroundWash;
 
   const widthValue = parseFloat(maskStyle.width);
   const heightValue = parseFloat(maskStyle.height);
@@ -148,7 +150,10 @@ export default function PillTransitionLayer({
           WebkitMaskImage: `url(#${maskId})`,
         }}
       >
-        <div className="absolute inset-0 bg-black" />
+        <div
+          className="absolute inset-0"
+          style={{ backgroundColor: backgroundWash }}
+        />
         {nextBackgroundImage && (
           <div
             className="absolute inset-0 bg-cover bg-no-repeat"

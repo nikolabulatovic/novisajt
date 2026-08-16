@@ -55,5 +55,7 @@ export const stageInteractionType: Record<Stage, StageInteractionType> = {
   [StageId.AvoidingResponsibility]: 'none',
   [StageId.OkWithInjustice]: 'none',
   [StageId.VeganismPrinciple]: 'next-pill',
-  [StageId.AfterChoice]: 'none',
+  [StageId.RighteousChoice]: 'next-pill',
+  [StageId.CourageousChoice]: 'next-pill',
+  [StageId.JoinUs]: 'none',
 };

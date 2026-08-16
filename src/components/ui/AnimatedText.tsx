@@ -2,6 +2,10 @@
 
 import { useMemo } from 'react';
 
+import {
+  STORY_STAGE_TEXT_SIZE_CLASS,
+  type StoryStageTextSize,
+} from '@/src/constants/storyStageTokens';
 import { useWordAnimation } from '@/src/hooks/useWordAnimation';
 import { AnimatedTextBlock } from '@/src/lib/i18n/animatedText';
 
@@ -10,20 +14,13 @@ interface AnimatedTextProps {
   speed?: number;
   delayAfterComplete?: number;
   onComplete?: () => void;
-  textSize?: 'sm' | 'md' | 'lg' | 'xl';
+  textSize?: StoryStageTextSize;
   alignment?: 'left' | 'center' | 'right';
   className?: string;
   wordTransitionDelay?: number;
   wordTransitionDuration?: number;
   mode?: 'word' | 'char';
 }
-
-const textSizeClasses = {
-  sm: 'text-base sm:text-lg md:text-xl lg:text-2xl',
-  md: 'text-lg sm:text-xl md:text-2xl lg:text-3xl',
-  lg: 'text-xl sm:text-2xl md:text-3xl lg:text-4xl',
-  xl: 'text-2xl sm:text-3xl md:text-4xl lg:text-5xl',
-};
 
 const alignmentClasses = {
   left: 'text-left',
@@ -96,7 +93,7 @@ export default function AnimatedText({
           return (
             <p
               key={itemIndex}
-              className={`${textSizeClasses[textSize]} leading-relaxed`}
+              className={`${STORY_STAGE_TEXT_SIZE_CLASS[textSize]} leading-relaxed`}
             >
               {item.line.map((segment, segmentIndex) => {
                 const segmentWords = segment.text.split(' ');
@@ -166,7 +163,7 @@ export default function AnimatedText({
         return (
           <p
             key={sentenceIndex}
-            className={`${textSizeClasses[textSize]} leading-relaxed`}
+            className={`${STORY_STAGE_TEXT_SIZE_CLASS[textSize]} leading-relaxed`}
           >
             {units.map((unit, unitIndex) => {
               const currentUnitIndex = currentUnitStartIndex + unitIndex;

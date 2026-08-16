@@ -51,7 +51,9 @@ export const StageId = {
   AvoidingResponsibility: 'avoiding-responsibility',
   OkWithInjustice: 'ok-with-injustice',
   VeganismPrinciple: 'veganism-principle',
-  AfterChoice: 'after-choice',
+  RighteousChoice: 'righteous-choice',
+  CourageousChoice: 'courageous-choice',
+  JoinUs: 'join-us',
 } as const;
 
 export type Stage = (typeof StageId)[keyof typeof StageId];

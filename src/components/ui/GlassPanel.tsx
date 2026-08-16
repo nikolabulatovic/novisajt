@@ -23,7 +23,7 @@ export interface GlassPanelProps {
   className?: string;
   /** Classes on the inner frosted surface (e.g. padding). */
   contentClassName?: string;
-  /** `dark`: gray glass on image stages. `light`: white glass (e.g. AfterChoice). */
+  /** `dark`: gray glass on image stages. `light`: white glass (e.g. RighteousChoice). */
   variant?: GlassPanelVariant;
   /**
    * Override `box-shadow` on the outer shell. Use `"none"` for no shadow.
@@ -59,8 +59,8 @@ export default function GlassPanel({
   const innerSurface =
     variant === 'light'
       ? allowsHeavyEffects
-        ? 'relative rounded-2xl bg-white/80 backdrop-blur-lg'
-        : 'relative rounded-2xl bg-white/90'
+        ? 'relative rounded-2xl bg-white/40 backdrop-blur-lg'
+        : 'relative rounded-2xl bg-white/50'
       : allowsHeavyEffects
         ? 'relative rounded-2xl bg-gray-800/25 backdrop-blur-xs'
         : 'relative rounded-2xl bg-gray-800/70';
