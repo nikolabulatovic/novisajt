@@ -112,6 +112,10 @@ interface BaseStageConfig {
   backgroundWash?: 'black' | 'white';
   /** Defaults to {@link DEFAULT_STAGE_SHELL.backgroundPosition}. */
   backgroundPosition?: string;
+  /** Tablet (md–lg): nudge image horizontally, e.g. `44% center`. */
+  backgroundPositionMd?: string;
+  /** Mobile (< md): nudge image horizontally, e.g. `38% center`. */
+  backgroundPositionSm?: string;
   gradientOverlayClasses?: string[]; // Extra gradient overlay divs to replicate in PillTransitionLayer so transition end matches page start
   /**
    * Text chrome for this stage. Defaults to `panel` (frosted glass) when omitted.
@@ -243,6 +247,8 @@ export const stageConfig: Record<Stage, StageConfig> = {
   },
   [StageId.PersonalAccountability]: {
     backgroundImage: stageBackground(StageId.PersonalAccountability),
+    backgroundPositionMd: '54% center',
+    backgroundPositionSm: '58% center',
     opacity: 0.5,
     textSurface: 'backdrop',
     additionalUiConfig: {

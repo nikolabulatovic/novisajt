@@ -76,6 +76,8 @@ export default function StoryStageChrome({
   const backgroundImageOpacity = cfg.opacity ?? DEFAULT_STAGE_SHELL.opacity;
   const backgroundImagePosition =
     cfg.backgroundPosition ?? DEFAULT_STAGE_SHELL.backgroundPosition;
+  const backgroundImagePositionMd = cfg.backgroundPositionMd;
+  const backgroundImagePositionSm = cfg.backgroundPositionSm;
 
   const stackGapClass = ANSWER_SHELL_STACK_GAP[contentSpacing];
 
@@ -136,6 +138,8 @@ export default function StoryStageChrome({
       backgroundImage={backgroundImage}
       backgroundImageOpacity={backgroundImageOpacity}
       backgroundImagePosition={backgroundImagePosition}
+      backgroundImagePositionMd={backgroundImagePositionMd}
+      backgroundImagePositionSm={backgroundImagePositionSm}
       backgroundWash={cfg.backgroundWash ?? DEFAULT_STAGE_SHELL.backgroundWash}
       maxWidth={ui?.maxWidth ?? DEFAULT_STORY_UI.maxWidth}
       showBackgroundEffects={

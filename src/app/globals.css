@@ -245,3 +245,20 @@ p {
 .button-next:hover::before {
   opacity: 1;
 }
+
+/* Responsive stage background object-position (see BackgroundImage). */
+.stage-bg-responsive img {
+  object-position: var(--stage-bg-pos-sm, center);
+}
+
+@media (min-width: 768px) {
+  .stage-bg-responsive img {
+    object-position: var(--stage-bg-pos-md, var(--stage-bg-pos-sm, center));
+  }
+}
+
+@media (min-width: 1024px) {
+  .stage-bg-responsive img {
+    object-position: var(--stage-bg-pos-lg, center);
+  }
+}
