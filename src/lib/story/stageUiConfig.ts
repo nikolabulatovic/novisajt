@@ -263,6 +263,8 @@ export const stageConfig: Record<Stage, StageConfig> = {
   },
   [StageId.InjusticePersists]: {
     backgroundImage: stageBackground(StageId.InjusticePersists),
+    backgroundPositionMd: '53% center',
+    backgroundPositionSm: '56% center',
     opacity: 0.5,
     nextInteraction: 'none',
     body: {
@@ -294,6 +296,8 @@ export const stageConfig: Record<Stage, StageConfig> = {
   },
   [StageId.SpasaRevelation]: {
     backgroundImage: stageBackground(StageId.SpasaRevelation),
+    backgroundPositionMd: '42% center',
+    backgroundPositionSm: '34% center',
     opacity: 0.7,
     textSurface: 'backdrop',
     additionalUiConfig: {
@@ -412,6 +416,8 @@ export const stageConfig: Record<Stage, StageConfig> = {
   },
   [StageId.AnimalCostOfLiving]: {
     backgroundImage: stageBackground(StageId.AnimalCostOfLiving),
+    backgroundPositionMd: '42% center',
+    backgroundPositionSm: '10% center',
     opacity: 0.7,
     textSurface: 'backdrop',
     additionalUiConfig: {
