@@ -331,10 +331,12 @@ export const stageConfig: Record<Stage, StageConfig> = {
   },
   [StageId.LetThemLive]: {
     backgroundImage: stageBackground(StageId.LetThemLive),
+    backgroundPositionMd: '60% center',
+    backgroundPositionSm: '82% center',
     opacity: 0.65,
     textSurface: 'backdrop',
     additionalUiConfig: {
-      backdropOpacity: 0.5,
+      backdropOpacity: 0.3,
       backdropFade: 0.25,
       backdropColor: '#61635D',
     },
