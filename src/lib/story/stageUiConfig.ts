@@ -173,9 +173,6 @@ export const stageConfig: Record<Stage, StageConfig> = {
     backgroundImage: stageBackground(StageId.Choice, 'webp'),
     opacity: 0.2,
   },
-  [StageId.Gender]: {
-    nextInteraction: 'none',
-  },
   [StageId.Intro]: {
     backgroundImage: stageBackground(StageId.Intro),
     opacity: 0.2,

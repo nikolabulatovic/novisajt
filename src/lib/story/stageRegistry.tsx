@@ -22,7 +22,6 @@ import DishonestSelfOwnership from '@/src/components/DishonestSelfOwnership';
 import DoubleStandard from '@/src/components/DoubleStandard';
 import Excuse from '@/src/components/Excuse';
 import FromTheWild from '@/src/components/FromTheWild';
-import Gender from '@/src/components/Gender';
 import HistoricalAuthoritarianism from '@/src/components/HistoricalAuthoritarianism';
 import HistoricalIntro from '@/src/components/HistoricalIntro';
 import HistoricalSlavery from '@/src/components/HistoricalSlavery';
@@ -60,7 +59,6 @@ import { StageId } from '@/src/contexts/NavigationContext';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const STAGE_REGISTRY: Record<Stage, ComponentType<any>> = {
   [StageId.Choice]: ChoiceStage,
-  [StageId.Gender]: Gender,
   [StageId.Intro]: RedPillIntro,
   [StageId.Evaluation]: CharacterEvaluation,
   [StageId.CharacterIncompatible]: CharacterIncompatible,

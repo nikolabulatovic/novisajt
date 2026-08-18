@@ -21,7 +21,6 @@ import {
 } from '@/src/lib/story/answerTransitions';
 
 export const directStageTransitions: Partial<Record<Stage, Stage>> = {
-  [StageId.Gender]: StageId.Intro,
   [StageId.RecognizingInjustice]: StageId.BreakingQuestion,
   [StageId.Intro]: StageId.Evaluation,
   [StageId.CharacterIncompatible]: StageId.Choice,

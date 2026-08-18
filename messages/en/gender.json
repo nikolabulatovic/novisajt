@@ -1,5 +1,5 @@
 {
-  "text": ["Are you male or female?"],
+  "text": ["Choose your gender"],
   "options": {
     "male": "Male",
     "female": "Female",

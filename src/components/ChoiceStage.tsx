@@ -6,9 +6,11 @@ import { useTranslations } from 'next-intl';
 
 import { StageId } from '@/src/contexts/NavigationContext';
 import { useStoryFlow } from '@/src/contexts/StoryFlowContext';
+import { AnswerId } from '@/src/lib/answerIds';
 import type { PillOrigin } from '@/src/lib/pillOrigin';
 import { stageConfig } from '@/src/lib/story/stageUiConfig';
 
+import GenderModal from './GenderModal';
 import PageContainer from './ui/PageContainer';
 import Pill from './ui/Pill';
 
@@ -17,19 +19,34 @@ export default function ChoiceStage() {
     transitionToStage,
     transitionViaBlackOverlayTo,
     trackAnswerSelected,
+    completeStage,
   } = useStoryFlow();
   const t = useTranslations(StageId.Choice);
   const [selectedPill, setSelectedPill] = useState<'red' | 'blue' | null>(null);
+  const [pendingRedOrigin, setPendingRedOrigin] = useState<
+    PillOrigin | undefined
+  >(undefined);
+  const [genderModalOpen, setGenderModalOpen] = useState(false);
 
   const handlePillClick = (pill: 'red' | 'blue', origin?: PillOrigin) => {
     if (selectedPill !== null) return;
-    setSelectedPill(pill);
     if (pill === 'red') {
-      transitionToStage(StageId.Gender, 'pill', origin);
+      setSelectedPill('red');
+      setPendingRedOrigin(origin);
+      setGenderModalOpen(true);
+      trackAnswerSelected(StageId.Choice, pill);
     } else {
+      setSelectedPill('blue');
+      trackAnswerSelected(StageId.Choice, pill);
       transitionViaBlackOverlayTo(StageId.StayComfortable);
     }
-    trackAnswerSelected(StageId.Choice, pill);
+  };
+
+  const handleGenderSelect = (
+    gender: typeof AnswerId.MALE | typeof AnswerId.FEMALE,
+  ) => {
+    completeStage(StageId.Choice, gender);
+    transitionToStage(StageId.Intro, 'pill', pendingRedOrigin);
   };
 
   const { backgroundImage, opacity } = stageConfig[StageId.Choice];
@@ -93,6 +110,8 @@ export default function ChoiceStage() {
           </div>
         </div>
       </div>
+
+      <GenderModal open={genderModalOpen} onSelect={handleGenderSelect} />
     </PageContainer>
   );
 }

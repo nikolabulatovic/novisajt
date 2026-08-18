@@ -3,7 +3,6 @@
   "toggleAriaLabel": "Toggle navigation menu",
   "stages": {
     "choice": "Choice",
-    "gender": "Gender",
     "intro": "Intro",
     "evaluation": "Character evaluation",
     "characterIncompatible": "Not ready yet",

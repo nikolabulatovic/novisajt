@@ -3,7 +3,6 @@
   "toggleAriaLabel": "Prikaži ili sakrij meni za navigaciju",
   "stages": {
     "choice": "Izbor",
-    "gender": "Pol",
     "intro": "Uvod",
     "evaluation": "Procena karaktera",
     "characterIncompatible": "Još nisi spreman",
