@@ -7,8 +7,7 @@
   ],
   "next": "Continue",
   "options": {
-    "male": "Male",
-    "female": "Female",
-    "notImportant": "Not important"
+    "chooseGender": "I'll choose my gender",
+    "ratherNot": "I'd rather not"
   }
 }

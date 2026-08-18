@@ -12,6 +12,8 @@ export const AnswerId = {
   WILL_STOP: 'WILL_STOP',
   NOT_RESPONSIBLE: 'NOT_RESPONSIBLE',
   NOT_IN_THEIR_PLACE: 'NOT_IN_THEIR_PLACE',
+  CHOOSE_GENDER: 'CHOOSE_GENDER',
+  SKIP_GENDER: 'SKIP_GENDER',
 } as const;
 
 export type AnswerId = (typeof AnswerId)[keyof typeof AnswerId];

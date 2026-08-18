@@ -7,6 +7,7 @@ const MESSAGE_FILES = [
   'personal-question',
   'would-you-like-to-be',
   'choice-stage',
+  'gender',
   'red-pill-intro',
   'character-evaluation',
   'character-incompatible',

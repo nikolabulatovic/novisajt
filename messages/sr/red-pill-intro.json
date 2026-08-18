@@ -7,8 +7,7 @@
   ],
   "next": "Nastavi",
   "options": {
-    "male": "Muško",
-    "female": "Žensko",
-    "notImportant": "Nije bitno"
+    "chooseGender": "Izabraću pol",
+    "ratherNot": "Radije ne bih"
   }
 }
