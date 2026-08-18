@@ -4,5 +4,10 @@
     "It will be challenging. This experience is not for everyone.",
     "First, we will ask you three questions. Answer honestly."
   ],
-  "next": "Continue"
+  "next": "Continue",
+  "options": {
+    "male": "Male",
+    "female": "Female",
+    "notImportant": "Not important"
+  }
 }

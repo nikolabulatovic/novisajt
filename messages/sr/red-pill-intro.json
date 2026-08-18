@@ -4,5 +4,10 @@
     "Biće izazovno. Ovo iskustvo nije za svakoga.",
     "Prvo ćemo ti postaviti tri pitanja. Odgovori iskreno."
   ],
-  "next": "Nastavi"
+  "next": "Nastavi",
+  "options": {
+    "male": "Muško",
+    "female": "Žensko",
+    "notImportant": "Nije bitno"
+  }
 }

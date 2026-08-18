@@ -1,4 +1,5 @@
 import { Stage, StageId } from '@/src/contexts/NavigationContext';
+import { AnswerId } from '@/src/lib/answerIds';
 
 export const NEXT_LABEL = 'next';
 
@@ -177,6 +178,12 @@ export const stageConfig: Record<Stage, StageConfig> = {
     backgroundImage: stageBackground(StageId.Intro),
     opacity: 0.2,
     showBackgroundEffects: false,
+    nextInteraction: 'answer',
+    answerOptions: [
+      { id: AnswerId.MALE, labelKey: 'options.male' },
+      { id: AnswerId.FEMALE, labelKey: 'options.female' },
+      { id: AnswerId.MALE, labelKey: 'options.notImportant' },
+    ],
     additionalUiConfig: {
       contentSpacing: 'sm',
       textSurfaceFrame: 'inset-compact',
