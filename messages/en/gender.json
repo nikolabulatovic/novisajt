@@ -1,0 +1,8 @@
+{
+  "text": ["Are you male or female?"],
+  "options": {
+    "male": "Male",
+    "female": "Female",
+    "notImportant": "Not important"
+  }
+}

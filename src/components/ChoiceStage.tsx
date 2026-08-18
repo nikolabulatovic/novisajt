@@ -25,7 +25,7 @@ export default function ChoiceStage() {
     if (selectedPill !== null) return;
     setSelectedPill(pill);
     if (pill === 'red') {
-      transitionToStage(StageId.Intro, 'pill', origin);
+      transitionToStage(StageId.Gender, 'pill', origin);
     } else {
       transitionViaBlackOverlayTo(StageId.StayComfortable);
     }

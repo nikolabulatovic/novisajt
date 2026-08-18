@@ -1,4 +1,6 @@
 export const AnswerId = {
+  MALE: 'MALE',
+  FEMALE: 'FEMALE',
   YES: 'YES',
   NO: 'NO',
   AGREE: 'AGREE',

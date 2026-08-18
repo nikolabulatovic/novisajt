@@ -38,7 +38,7 @@ export function useStoryFlowHandlers({
       ) => {
         if (completedStage === StageId.Evaluation) {
           if (answer && typeof answer !== 'string') {
-            setAnswers(answer);
+            setAnswers((prev) => ({ ...prev, ...answer }));
             Object.entries(answer).forEach(([question, value]) => {
               trackAnswerSelected(StageId.Evaluation, `${question}:${value}`);
             });
@@ -52,6 +52,7 @@ export function useStoryFlowHandlers({
         }
 
         if (typeof answer === 'string') {
+          setAnswers((prev) => ({ ...prev, [completedStage]: answer }));
           trackAnswerSelected(completedStage, answer);
 
           if (

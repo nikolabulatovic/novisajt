@@ -4,6 +4,7 @@ import { ReactNode, createContext, useContext } from 'react';
 
 export const StageId = {
   Choice: 'choice-stage',
+  Gender: 'gender',
   Intro: 'red-pill-intro',
   Evaluation: 'character-evaluation',
   CharacterIncompatible: 'character-incompatible',

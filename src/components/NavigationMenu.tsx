@@ -12,6 +12,7 @@ import {
 
 const stageLabelKeys: Record<Stage, string> = {
   [StageId.Choice]: 'stages.choice',
+  [StageId.Gender]: 'stages.gender',
   [StageId.Intro]: 'stages.intro',
   [StageId.Evaluation]: 'stages.evaluation',
   [StageId.CharacterIncompatible]: 'stages.characterIncompatible',
@@ -72,6 +73,7 @@ interface StageNavItem {
 const stageNavItems: StageNavItem[] = [
   { stage: StageId.Choice, depth: 0 },
   { stage: StageId.StayComfortable, depth: 1 },
+  { stage: StageId.Gender, depth: 0 },
   { stage: StageId.Intro, depth: 0 },
   { stage: StageId.Evaluation, depth: 0 },
   { stage: StageId.CharacterIncompatible, depth: 1 },

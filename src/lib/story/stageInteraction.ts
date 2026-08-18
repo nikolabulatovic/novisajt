@@ -8,6 +8,7 @@ export type StageInteractionType =
 
 export const stageInteractionType: Record<Stage, StageInteractionType> = {
   [StageId.Choice]: 'choice-pills',
+  [StageId.Gender]: 'none',
   [StageId.Intro]: 'next-pill',
   [StageId.Evaluation]: 'none',
   [StageId.Explanation]: 'next-pill',

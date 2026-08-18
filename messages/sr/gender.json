@@ -1,0 +1,8 @@
+{
+  "text": ["Izaberi svoj pol"],
+  "options": {
+    "male": "Muško",
+    "female": "Žensko",
+    "notImportant": "Nije bitno"
+  }
+}
