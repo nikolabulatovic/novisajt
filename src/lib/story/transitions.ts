@@ -22,6 +22,7 @@ import {
 
 export const directStageTransitions: Partial<Record<Stage, Stage>> = {
   [StageId.RecognizingInjustice]: StageId.BreakingQuestion,
+  [StageId.Intro]: StageId.Evaluation,
   [StageId.CharacterIncompatible]: StageId.Choice,
   [StageId.Explanation]: StageId.HistoricalIntro,
   [StageId.HistoricalIntro]: StageId.HistoricalSlavery,
@@ -45,7 +46,6 @@ export const directStageTransitions: Partial<Record<Stage, Stage>> = {
 export const answerStageTransitions: Partial<
   Record<Stage, (answer: string) => Stage>
 > = {
-  [StageId.Intro]: () => StageId.Evaluation,
   [StageId.PersonalAccountability]: nextAfterPersonalAccountability,
   [StageId.PersonalQuestion]: nextAfterPersonalQuestion,
   [StageId.WouldYouLikeToBe]: nextAfterWouldYouLikeToBe,

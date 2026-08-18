@@ -2,7 +2,8 @@
   "text": [
     "Your choice is to see the truth, and that requires courage.",
     "It will be challenging. This experience is not for everyone.",
-    "First, we will ask you three questions. Answer honestly."
+    "We will ask you three questions. Answer honestly.",
+    "But first, choose your gender."
   ],
   "next": "Continue",
   "options": {
