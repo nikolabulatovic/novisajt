@@ -285,6 +285,10 @@ export const stageConfig: Record<Stage, StageConfig> = {
     backgroundImage: stageBackground(StageId.BreakingQuestion),
     textSurface: 'backdrop',
     opacity: 0.5,
+    additionalUiConfig: {
+      backdropOpacity: 0.2,
+      backdropFade: 0.2,
+    },
     nextInteraction: 'answer',
     answerOptions: [
       { id: 'ACCEPT', labelKey: 'options.accept.label' },
