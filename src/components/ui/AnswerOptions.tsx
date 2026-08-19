@@ -5,6 +5,7 @@ import { MouseEvent, useEffect, useState } from 'react';
 import { useAnswerChoiceRipples } from '@/src/hooks/useAnswerChoiceRipples';
 import { useScheduledTimeouts } from '@/src/hooks/useScheduledTimeouts';
 import {
+  ANSWER_CHOICE_NON_SELECTED_FADE_MS,
   type AnswerChoiceShellState,
   answerChoiceShellFadeOnlyClassName,
   scheduleAnswerChoiceExit,
@@ -36,6 +37,11 @@ interface AnswerOptionsProps {
    * this component only mirrors {@link AnswerChoiceShellState} upward.
    */
   onAnswerChoiceShellChange?: (state: AnswerChoiceShellState) => void;
+  /**
+   * `standard` — ripple, non-selected fade, shell fade, then onSelect.
+   * `defer` — ripple + non-selected fade only, then onSelect (parent handles what happens next).
+   */
+  resolveSelectBehavior?: (id: string) => 'standard' | 'defer';
 }
 
 const defaultButtonClassName = (isSelected: boolean, isDisabled: boolean) =>
@@ -57,6 +63,7 @@ export default function AnswerOptions({
   getButtonClassName = defaultButtonClassName,
   animateBeforeSelect = true,
   onAnswerChoiceShellChange,
+  resolveSelectBehavior,
 }: AnswerOptionsProps) {
   const schedule = useScheduledTimeouts();
   const { ripples, createRipple } = useAnswerChoiceRipples<string>(schedule);
@@ -86,6 +93,15 @@ export default function AnswerOptions({
     createRipple(event, id);
     setSelectedOptionId(id);
     setNonSelectedFading(true);
+
+    const behavior = resolveSelectBehavior?.(id) ?? 'standard';
+
+    if (behavior === 'defer') {
+      schedule(() => {
+        onSelect(id);
+      }, ANSWER_CHOICE_NON_SELECTED_FADE_MS);
+      return;
+    }
 
     scheduleAnswerChoiceExit(
       schedule,

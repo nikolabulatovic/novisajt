@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 
 import { StageId } from '@/src/contexts/NavigationContext';
 import { useStoryFlow } from '@/src/contexts/StoryFlowContext';
+import { useScheduledTimeouts } from '@/src/hooks/useScheduledTimeouts';
 import { AnswerId } from '@/src/lib/answerIds';
 import { AnimatedTextBlock } from '@/src/lib/i18n/animatedText';
 import { mapLocalizedAnswerOptions } from '@/src/lib/mapLocalizedAnswerOptions';
@@ -15,7 +16,11 @@ import {
   DEFAULT_STORY_UI,
   stageConfig,
 } from '@/src/lib/story/stageUiConfig';
-import { answerChoiceShellFadeOnlyClassName } from '@/src/lib/ui/answerChoiceInteraction';
+import {
+  ANSWER_CHOICE_COMMIT_AFTER_BULK_MS,
+  ANSWER_IDLE_SHELL_STATE,
+  answerChoiceShellFadeOnlyClassName,
+} from '@/src/lib/ui/answerChoiceInteraction';
 
 import {
   STORY_STAGE_SURFACE_FRAME_CLASS,
@@ -34,29 +39,37 @@ export default function RedPillIntro() {
   const body = cfg.body;
   const t = useTranslations(StageId.Intro);
   const { completeStage } = useStoryFlow();
+  const schedule = useScheduledTimeouts();
 
   const [answersVisible, setAnswersVisible] = useState(false);
   const [genderModalOpen, setGenderModalOpen] = useState(false);
-  const [isExiting, setIsExiting] = useState(false);
+  const [answerShellState, setAnswerShellState] = useState(() => ({
+    ...ANSWER_IDLE_SHELL_STATE,
+  }));
 
   const revealAnswers = useCallback(() => setAnswersVisible(true), []);
 
   const handleAnswerSelect = (answerId: string) => {
     if (answerId === AnswerId.CHOOSE_GENDER) {
       setGenderModalOpen(true);
-    } else {
-      setIsExiting(true);
-      completeStage(StageId.Intro, AnswerId.MALE);
+      return;
     }
+
+    completeStage(StageId.Intro, AnswerId.MALE);
   };
 
   const handleGenderSelect = (
     gender: typeof AnswerId.MALE | typeof AnswerId.FEMALE,
   ) => {
     setGenderModalOpen(false);
-    setIsExiting(true);
-    completeStage(StageId.Intro, gender);
+    setAnswerShellState({ isTransitioning: true, showContent: false });
+    schedule(() => {
+      completeStage(StageId.Intro, gender);
+    }, ANSWER_CHOICE_COMMIT_AFTER_BULK_MS);
   };
+
+  const resolveSelectBehavior = (answerId: string) =>
+    answerId === AnswerId.CHOOSE_GENDER ? 'defer' : 'standard';
 
   const options = cfg.answerOptions
     ? mapLocalizedAnswerOptions(cfg.answerOptions, t)
@@ -80,8 +93,8 @@ export default function RedPillIntro() {
         >
           <div
             className={`space-y-8 ${answerChoiceShellFadeOnlyClassName(
-              isExiting,
-              !isExiting,
+              answerShellState.isTransitioning,
+              answerShellState.showContent,
             )}`}
           >
             <StageTextSurface
@@ -120,7 +133,8 @@ export default function RedPillIntro() {
               <AnswerOptions
                 options={options}
                 onSelect={handleAnswerSelect}
-                animateBeforeSelect={false}
+                onAnswerChoiceShellChange={setAnswerShellState}
+                resolveSelectBehavior={resolveSelectBehavior}
               />
             </div>
           </div>
