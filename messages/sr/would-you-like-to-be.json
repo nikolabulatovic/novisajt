@@ -1,8 +1,14 @@
 {
-  "text": [
-    "Tvoj odgovor je da ne znaš da li bi bio/la protiv velikih nepravdi.",
-    "Da li ti je inače bitno da budeš pravedan/na, odnosno da ne ugrožavaš nevine?"
-  ],
+  "text": {
+    "male": [
+      "Tvoj odgovor je da ne znaš da li bi bio protiv velikih nepravdi.",
+      "Da li ti je inače bitno da budeš pravedan, odnosno da ne ugrožavaš nevine?"
+    ],
+    "female": [
+      "Tvoj odgovor je da ne znaš da li bi bila protiv velikih nepravdi.",
+      "Da li ti je inače bitno da budeš pravedna, odnosno da ne ugrožavaš nevine?"
+    ]
+  },
   "options": {
     "agree": { "label": "Da, bitno mi je" },
     "disagree": { "label": "Nije mi bitno" }

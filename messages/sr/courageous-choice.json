@@ -1,7 +1,13 @@
 {
-  "text": [
-    "Tvoja odluka je hrabra. Suočio si se posledicama svojih izbora i odlučio si se na promenu.",
-    "Izabrao si da uskladiš svoja dela sa svojim vrednostima bez obzira na to šta drugi rade. To zahteva integritet."
-  ],
+  "text": {
+    "male": [
+      "Tvoja odluka je hrabra. Suočio si se posledicama svojih izbora i odlučio si se na promenu.",
+      "Izabrao si da uskladiš svoja dela sa svojim vrednostima bez obzira na to šta drugi rade. To zahteva integritet."
+    ],
+    "female": [
+      "Tvoja odluka je hrabra. Suočila si se posledicama svojih izbora i odlučila si se na promenu.",
+      "Izabrala si da uskladiš svoja dela sa svojim vrednostima bez obzira na to šta drugi rade. To zahteva integritet."
+    ]
+  },
   "next": "Nastavi"
 }

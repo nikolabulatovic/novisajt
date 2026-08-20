@@ -1,6 +1,12 @@
 {
-  "text": [
-    "Među tvojim odgovorima postoji kontradiktornost. Deluje kao da odbijaš odgovornost zato što ti je trenutno lakše nego da se suočiš sa sobom.",
-    "Vrati se na ovo iskustvo kada budeš stekao hrabrost da iskreno sagledaš svoje postupke."
-  ]
+  "text": {
+    "male": [
+      "Među tvojim odgovorima postoji kontradiktornost. Deluje kao da odbijaš odgovornost zato što ti je trenutno lakše nego da se suočiš sa sobom.",
+      "Vrati se na ovo iskustvo kada budeš stekao hrabrost da iskreno sagledaš svoje postupke."
+    ],
+    "female": [
+      "Među tvojim odgovorima postoji kontradiktornost. Deluje kao da odbijaš odgovornost zato što ti je trenutno lakše nego da se suočiš sa sobom.",
+      "Vrati se na ovo iskustvo kada budeš stekla hrabrost da iskreno sagledaš svoje postupke."
+    ]
+  }
 }

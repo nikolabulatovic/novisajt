@@ -4,7 +4,10 @@
   ],
   "options": {
     "yes": "Znam",
-    "dontKnow": "Nisam siguran",
+    "dontKnow": {
+      "male": "Nisam siguran",
+      "female": "Nisam sigurna"
+    },
     "no": "Ne možemo"
   }
 }

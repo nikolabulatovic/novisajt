@@ -2,12 +2,13 @@
 
 import { MouseEvent, useState } from 'react';
 
-import { useTranslations } from 'next-intl';
-
 import { useGpuEffects } from '@/src/contexts/GpuEffectsContext';
 import { useStoryFlow } from '@/src/contexts/StoryFlowContext';
 import { useAnswerChoiceRipples } from '@/src/hooks/useAnswerChoiceRipples';
+import { useGenderedTranslations } from '@/src/hooks/useGenderedTranslations';
 import { useScheduledTimeouts } from '@/src/hooks/useScheduledTimeouts';
+import type { GenderedContent } from '@/src/lib/gender';
+import { resolveGenderedContent } from '@/src/lib/gender';
 import { stageConfig } from '@/src/lib/story/stageUiConfig';
 import {
   answerChoiceShellClassName,
@@ -21,7 +22,7 @@ import ProgressDots from './ui/ProgressDots';
 import StageTextSurface from './ui/StageTextSurface';
 
 interface EvaluationOption {
-  text: string;
+  text: GenderedContent<string>;
   value: number;
 }
 
@@ -38,8 +39,8 @@ export default function CharacterEvaluation() {
   const { ripples, createRipple, clearRipples } =
     useAnswerChoiceRipples<number>(schedule);
 
-  const t = useTranslations('character-evaluation');
-  const questions = t.raw('questions') as EvaluationQuestion[];
+  const { raw, gender } = useGenderedTranslations('character-evaluation');
+  const questions = raw('questions') as EvaluationQuestion[];
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] =
     useState<Record<string, string>>(existingAnswers);
@@ -156,7 +157,7 @@ export default function CharacterEvaluation() {
               return (
                 <AnswerOption
                   key={index}
-                  text={option.text}
+                  text={resolveGenderedContent(option.text, gender)}
                   onClick={(e) => handleAnswer(option.value, e, index)}
                   onMouseEnter={() =>
                     !nonSelectedFading && setHoveredOption(index)

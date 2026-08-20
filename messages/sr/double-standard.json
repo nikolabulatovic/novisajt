@@ -1,11 +1,20 @@
 {
-  "text": [
-    "Ranije si odgovorio da životinje zaslužuju da žive svoj život.",
-    "Ako ne smatraš opravdanim da tebe neko porobi i ubije, zbog čega smatraš opravdanim da to radiš životinjama?"
-  ],
+  "text": {
+    "male": [
+      "Ranije si odgovorio da životinje zaslužuju da žive svoj život.",
+      "Ako ne smatraš opravdanim da tebe neko porobi i ubije, zbog čega smatraš opravdanim da to radiš životinjama?"
+    ],
+    "female": [
+      "Ranije si odgovorila da životinje zaslužuju da žive svoj život.",
+      "Ako ne smatraš opravdanim da tebe neko porobi i ubije, zbog čega smatraš opravdanim da to radiš životinjama?"
+    ]
+  },
   "options": {
     "willStop": "Ipak ću prestati",
-    "notResponsible": "Ne osećam se odgovornim",
+    "notResponsible": {
+      "male": "Ne osećam se odgovornim",
+      "female": "Ne osećam se odgovornom"
+    },
     "notInTheirPlace": "Nisam na njihovom mestu"
   }
 }

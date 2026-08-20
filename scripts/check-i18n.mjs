@@ -40,7 +40,28 @@ function readJson(locale, fileName) {
   return JSON.parse(raw);
 }
 
+function isGenderNest(value) {
+  return (
+    isPlainObject(value) &&
+    Object.keys(value).length === 2 &&
+    'male' in value &&
+    'female' in value
+  );
+}
+
 function compareShape(source, target, trace, errors) {
+  // SR gendered nest `{ male, female }` may pair with a plain EN leaf (array/string).
+  if (isGenderNest(source) && !isGenderNest(target)) {
+    compareShape(source.male, target, trace, errors);
+    compareShape(source.female, target, `${trace}[female≈male-leaf]`, errors);
+    return;
+  }
+  if (!isGenderNest(source) && isGenderNest(target)) {
+    compareShape(source, target.male, trace, errors);
+    compareShape(source, target.female, `${trace}[female≈male-leaf]`, errors);
+    return;
+  }
+
   const sourceType = Array.isArray(source)
     ? 'array'
     : isPlainObject(source)

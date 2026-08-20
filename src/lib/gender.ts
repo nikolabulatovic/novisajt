@@ -1,10 +1,20 @@
 /**
  * Grammatical address gender for locales that inflect (e.g. Serbian).
- * Ask UI + neutral option come later; until then default is `male`.
+ * Skip / "not important" still use masculine grammar (`male`).
  */
 export type UserGender = 'male' | 'female';
 
 export const DEFAULT_USER_GENDER: UserGender = 'male';
+
+/**
+ * Raw gender-selection outcome for analytics (not collapsed to grammar).
+ * Attached as PostHog super + person property `gender_choice` from selection onward.
+ */
+export type GenderChoiceAnalytics =
+  | 'male'
+  | 'female'
+  | 'rather_not'
+  | 'not_important';
 
 /**
  * Message value that is either shared for all genders, or split by gender.

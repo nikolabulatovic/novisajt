@@ -2,13 +2,12 @@
 
 import { useEffect, useRef, useState } from 'react';
 
-import { useTranslations } from 'next-intl';
-
 import {
   Stage,
   StageId,
   useNavigation,
 } from '@/src/contexts/NavigationContext';
+import { useGenderedTranslations } from '@/src/hooks/useGenderedTranslations';
 
 const stageLabelKeys: Record<Stage, string> = {
   [StageId.Choice]: 'stages.choice',
@@ -124,7 +123,7 @@ const stageNavItems: StageNavItem[] = [
 ];
 
 export default function NavigationMenu() {
-  const t = useTranslations('navigation-menu');
+  const { t, label } = useGenderedTranslations('navigation-menu');
   const { currentStage, navigateToStage } = useNavigation();
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -217,7 +216,7 @@ export default function NavigationMenu() {
                       className="text-sm font-light"
                       style={{ fontFamily: 'var(--font-inter), sans-serif' }}
                     >
-                      {t(stageLabelKeys[stage])}
+                      {label(stageLabelKeys[stage])}
                     </span>
                   </div>
                   {isActive && (

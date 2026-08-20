@@ -1,6 +1,12 @@
 {
-  "text": [
-    "Tvoj odgovor znači da ti je u redu da budeš nepravedan. Ispada da nisi osoba za koju se smatraš da jesi.",
-    "Vrati se na ovo iskustvo kada budeš spreman da iskreno sagledaš sebe i svoje postupke."
-  ]
+  "text": {
+    "male": [
+      "Tvoj odgovor znači da ti je u redu da budeš nepravedan. Ispada da nisi osoba za koju se smatraš da jesi.",
+      "Vrati se na ovo iskustvo kada budeš spreman da iskreno sagledaš sebe i svoje postupke."
+    ],
+    "female": [
+      "Tvoj odgovor znači da ti je u redu da budeš nepravedna. Ispada da nisi osoba za koju se smatraš da jesi.",
+      "Vrati se na ovo iskustvo kada budeš spremna da iskreno sagledaš sebe i svoje postupke."
+    ]
+  }
 }

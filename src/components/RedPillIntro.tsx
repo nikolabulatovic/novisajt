@@ -4,10 +4,13 @@ import { useCallback, useState } from 'react';
 
 import { useTranslations } from 'next-intl';
 
+import type { Stage } from '@/src/contexts/NavigationContext';
 import { StageId } from '@/src/contexts/NavigationContext';
 import { useStoryFlow } from '@/src/contexts/StoryFlowContext';
 import { useScheduledTimeouts } from '@/src/hooks/useScheduledTimeouts';
+import { useTracking } from '@/src/hooks/useTracking';
 import { AnswerId } from '@/src/lib/answerIds';
+import type { GenderChoiceAnalytics, UserGender } from '@/src/lib/gender';
 import { AnimatedTextBlock } from '@/src/lib/i18n/animatedText';
 import { mapLocalizedAnswerOptions } from '@/src/lib/mapLocalizedAnswerOptions';
 import {
@@ -26,7 +29,7 @@ import {
   STORY_STAGE_SURFACE_FRAME_CLASS,
   STORY_STAGE_TEXT_PADDING_CLASS,
 } from '../constants/storyStageTokens';
-import GenderModal from './GenderModal';
+import GenderModal, { type GenderModalChoice } from './GenderModal';
 import AnimatedText from './ui/AnimatedText';
 import AnswerOptions from './ui/AnswerOptions';
 import ContentContainer from './ui/ContentContainer';
@@ -38,7 +41,8 @@ export default function RedPillIntro() {
   const ui = cfg.additionalUiConfig;
   const body = cfg.body;
   const t = useTranslations(StageId.Intro);
-  const { completeStage } = useStoryFlow();
+  const { completeStage, setGender } = useStoryFlow();
+  const { trackGenderChoice } = useTracking();
   const schedule = useScheduledTimeouts();
 
   const [answersVisible, setAnswersVisible] = useState(false);
@@ -49,22 +53,48 @@ export default function RedPillIntro() {
 
   const revealAnswers = useCallback(() => setAnswersVisible(true), []);
 
+  const commitGender = useCallback(
+    (
+      analytics: GenderChoiceAnalytics,
+      grammatical: UserGender,
+      answerId: string,
+    ) => {
+      setGender(grammatical);
+      trackGenderChoice(analytics);
+      completeStage(StageId.Intro as Stage, answerId);
+    },
+    [completeStage, setGender, trackGenderChoice],
+  );
+
   const handleAnswerSelect = (answerId: string) => {
     if (answerId === AnswerId.CHOOSE_GENDER) {
       setGenderModalOpen(true);
       return;
     }
 
-    completeStage(StageId.Intro, AnswerId.MALE);
+    commitGender('rather_not', 'male', AnswerId.SKIP_GENDER);
   };
 
-  const handleGenderSelect = (
-    gender: typeof AnswerId.MALE | typeof AnswerId.FEMALE,
-  ) => {
+  const handleGenderSelect = (choice: GenderModalChoice) => {
     setGenderModalOpen(false);
     setAnswerShellState({ isTransitioning: true, showContent: false });
+
+    const analytics: GenderChoiceAnalytics =
+      choice === 'female'
+        ? 'female'
+        : choice === 'not-important'
+          ? 'not_important'
+          : 'male';
+    const grammatical: UserGender = choice === 'female' ? 'female' : 'male';
+    const answer =
+      choice === 'female'
+        ? AnswerId.FEMALE
+        : choice === 'not-important'
+          ? AnswerId.NOT_IMPORTANT
+          : AnswerId.MALE;
+
     schedule(() => {
-      completeStage(StageId.Intro, gender);
+      commitGender(analytics, grammatical, answer);
     }, ANSWER_CHOICE_COMMIT_AFTER_BULK_MS);
   };
 

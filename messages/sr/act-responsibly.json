@@ -1,7 +1,12 @@
 {
-  "text": [
-    "Da li si spreman da postupiš odgovorno i prestaneš da koristiš životinje?"
-  ],
+  "text": {
+    "male": [
+      "Da li si spreman da postupiš odgovorno i prestaneš da koristiš životinje?"
+    ],
+    "female": [
+      "Da li si spremna da postupiš odgovorno i prestaneš da koristiš životinje?"
+    ]
+  },
   "options": {
     "yes": "Da",
     "no": "Ne"

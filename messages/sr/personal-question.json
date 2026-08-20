@@ -1,5 +1,8 @@
 {
-  "question": "Da li bi bio (ili bila) protiv ovih nepravdi tada kada su se zaista dešavale?",
+  "question": {
+    "male": "Da li bi bio protiv ovih nepravdi tada kada su se zaista dešavale?",
+    "female": "Da li bi bila protiv ovih nepravdi tada kada su se zaista dešavale?"
+  },
   "options": [
     { "id": "YES", "label": "Da" },
     { "id": "HOPEFULLY", "label": "Nadam se" },

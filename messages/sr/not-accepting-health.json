@@ -1,6 +1,12 @@
 {
-  "text": [
-    "Zapitaj se, da li stvarno veruješ da ne možeš zdravo živeti bez korišćenja životinja ili samo želiš da veruješ jer je lakše izbeći promenu?",
-    "Ovo je ozbiljno pitanje, koje sa sobom nosi žrtve. Ako si pošten i razuman, istraži informacije sa namerom da saznaš istinu umesto da potvrdiš tvoja trenutna uverenja."
-  ]
+  "text": {
+    "male": [
+      "Zapitaj se, da li stvarno veruješ da ne možeš zdravo živeti bez korišćenja životinja ili samo želiš da veruješ jer je lakše izbeći promenu?",
+      "Ovo je ozbiljno pitanje, koje sa sobom nosi žrtve. Ako si pošten i razuman, istraži informacije sa namerom da saznaš istinu umesto da potvrdiš tvoja trenutna uverenja."
+    ],
+    "female": [
+      "Zapitaj se, da li stvarno veruješ da ne možeš zdravo živeti bez korišćenja životinja ili samo želiš da veruješ jer je lakše izbeći promenu?",
+      "Ovo je ozbiljno pitanje, koje sa sobom nosi žrtve. Ako si poštena i razumna, istraži informacije sa namerom da saznaš istinu umesto da potvrdiš tvoja trenutna uverenja."
+    ]
+  }
 }

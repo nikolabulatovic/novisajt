@@ -181,19 +181,19 @@ export default function Home() {
 
   return (
     <NavigationProvider currentStage={stage} navigateToStage={navigateToStage}>
-      <PillTransitionLayer
-        pendingNextStage={pendingNextStage}
-        origin={pendingPillOrigin}
-        onComplete={handleTransitionComplete}
-      />
-      <div
-        className="fixed inset-0 bg-black z-50 pointer-events-none transition-opacity duration-[2000ms]"
-        style={{ opacity: blackOverlay ? 1 : 0 }}
-        onTransitionEnd={handleBlackOverlayTransitionEnd}
-      />
-      {showDevNav ? <NavigationMenu /> : null}
-      <main className="min-h-screen bg-black text-white overflow-hidden relative">
-        <StoryFlowProvider value={flowContextValue}>
+      <StoryFlowProvider value={flowContextValue}>
+        <PillTransitionLayer
+          pendingNextStage={pendingNextStage}
+          origin={pendingPillOrigin}
+          onComplete={handleTransitionComplete}
+        />
+        <div
+          className="fixed inset-0 bg-black z-50 pointer-events-none transition-opacity duration-[2000ms]"
+          style={{ opacity: blackOverlay ? 1 : 0 }}
+          onTransitionEnd={handleBlackOverlayTransitionEnd}
+        />
+        {showDevNav ? <NavigationMenu /> : null}
+        <main className="min-h-screen bg-black text-white overflow-hidden relative">
           <div
             className={`min-h-screen w-full transition-opacity ease-out motion-reduce:!duration-0 ${
               pendingCrossfadeStage !== null
@@ -204,8 +204,8 @@ export default function Home() {
           >
             <StageComponent />
           </div>
-        </StoryFlowProvider>
-      </main>
+        </main>
+      </StoryFlowProvider>
     </NavigationProvider>
   );
 }

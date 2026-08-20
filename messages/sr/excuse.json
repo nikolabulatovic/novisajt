@@ -1,11 +1,21 @@
 {
-  "text": [
-    "Tvoji izbori imaju posledice, hteo to ili ne.",
-    "Posledica tvog izbora je da će nevina bića i dalje biti porobljavana i ubijana zbog tebe.",
-    "Da li bi razlog zbog kojeg praviš taj izbor smatrao dovoljnim kada bi ti bio na njihovom mestu?"
-  ],
+  "text": {
+    "male": [
+      "Tvoji izbori imaju posledice, hteo to ili ne.",
+      "Posledica tvog izbora je da će nevina bića i dalje biti porobljavana i ubijana zbog tebe.",
+      "Da li bi razlog zbog kojeg praviš taj izbor smatrao dovoljnim kada bi ti bio na njihovom mestu?"
+    ],
+    "female": [
+      "Tvoji izbori imaju posledice, htela to ili ne.",
+      "Posledica tvog izbora je da će nevina bića i dalje biti porobljavana i ubijana zbog tebe.",
+      "Da li bi razlog zbog kojeg praviš taj izbor smatrala dovoljnim kada bi ti bila na njihovom mestu?"
+    ]
+  },
   "options": {
     "no": "Ne bi bio dovoljan",
-    "yes": "Prihvatio bih"
+    "yes": {
+      "male": "Prihvatio bih",
+      "female": "Prihvatila bih"
+    }
   }
 }

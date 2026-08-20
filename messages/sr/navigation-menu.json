@@ -5,7 +5,10 @@
     "choice": "Izbor",
     "intro": "Uvod",
     "evaluation": "Procena karaktera",
-    "characterIncompatible": "Još nisi spreman",
+    "characterIncompatible": {
+      "male": "Još nisi spreman",
+      "female": "Još nisi spremna"
+    },
     "explanation": "Objašnjenje",
     "historicalIntro": "Istorijski uvod",
     "historicalSlavery": "Istorijsko ropstvo",
@@ -13,10 +16,16 @@
     "personalAccountability": "Lična odgovornost",
     "injusticePersists": "Nepravda opstaje",
     "personalQuestion": "Lično pitanje",
-    "wouldYouLikeToBe": "Da li bi voleo?",
+    "wouldYouLikeToBe": {
+      "male": "Da li bi voleo?",
+      "female": "Da li bi volela?"
+    },
     "recognizingInjustice": "Prepoznavanje nepravde",
     "breakingQuestion": "Prelomno pitanje",
-    "stayComfortable": "Ostani komforan",
+    "stayComfortable": {
+      "male": "Ostani komforan",
+      "female": "Ostani komforna"
+    },
     "apatheticStance": "Apatičan stav",
     "spasaStory": "Spasina priča",
     "spasaRevelation": "Spasino otkriće",
@@ -39,16 +48,28 @@
     "notAcceptingHealth": "Ne prihvata zdravlje",
     "solutionChoice": "Biranje suprotno uverenju",
     "addressingContradiction": "Kontradiktornost",
-    "notHonest": "Nisi iskren",
+    "notHonest": {
+      "male": "Nisi iskren",
+      "female": "Nisi iskrena"
+    },
     "alignBehaviour": "Usaglašavanje ponašanja",
     "excuse": "Izgovor",
     "doubleStandard": "Dvostruki standard",
-    "notThreatened": "Nisi ti ugrožen",
-    "youAreResponsible": "Ti si odgovoran",
+    "notThreatened": {
+      "male": "Nisi ti ugrožen",
+      "female": "Nisi ti ugrožena"
+    },
+    "youAreResponsible": {
+      "male": "Ti si odgovoran",
+      "female": "Ti si odgovorna"
+    },
     "actResponsibly": "Postupi odgovorno",
     "notWhoYouThink": "Nisi osoba za koju se smatraš",
     "avoidingResponsibility": "Izbegavanje odgovornosti",
-    "okWithInjustice": "U redu ti je da budeš nepravedan",
+    "okWithInjustice": {
+      "male": "U redu ti je da budeš nepravedan",
+      "female": "U redu ti je da budeš nepravedna"
+    },
     "veganismPrinciple": "Princip veganstva",
     "righteousChoice": "Pravedan izbor",
     "courageousChoice": "Hrabar izbor",
