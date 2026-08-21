@@ -1,17 +1,11 @@
 'use client';
 
-import {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { Stage } from '@/src/contexts/NavigationContext';
 import { useMaskExpansion } from '@/src/hooks/useMaskExpansion';
+import { usePillTransitionExpansion } from '@/src/hooks/usePillTransitionExpansion';
 import type { PillOrigin } from '@/src/lib/pillOrigin';
-import { fallbackPillOrigin } from '@/src/lib/pillOrigin';
 import {
   DEFAULT_STAGE_SHELL,
   stageConfig,
@@ -77,22 +71,19 @@ export default function PillTransitionLayer({
     return () => cancelAnimationFrame(raf);
   }, [isFadingOut]);
 
-  const { startExpansion, maskStyle, expansionProgress } = useMaskExpansion({
-    onComplete: handleExpansionComplete,
+  const { startExpansion, reset, maskStyle, expansionProgress } =
+    useMaskExpansion({
+      onComplete: handleExpansionComplete,
+    });
+
+  usePillTransitionExpansion({
+    pendingNextStage,
+    origin,
+    persistedOrigin,
+    isFadingOut,
+    startExpansion,
+    reset,
   });
-
-  const startedForStageRef = useRef<Stage | null>(null);
-
-  useLayoutEffect(() => {
-    if (!pendingNextStage) {
-      startedForStageRef.current = null;
-      return;
-    }
-    if (startedForStageRef.current === pendingNextStage) return;
-
-    startedForStageRef.current = pendingNextStage;
-    startExpansion(origin ?? persistedOrigin ?? fallbackPillOrigin());
-  }, [pendingNextStage, origin, persistedOrigin, startExpansion]);
 
   const activeStage = pendingNextStage ?? persistedStage;
 
