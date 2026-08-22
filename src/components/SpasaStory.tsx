@@ -4,6 +4,7 @@ import { useRef, useState } from 'react';
 
 import { StageId } from '@/src/contexts/NavigationContext';
 import { useStoryFlow } from '@/src/contexts/StoryFlowContext';
+import { useResolvedBackgroundImage } from '@/src/hooks/useGenderedTranslations';
 import type { PillOrigin } from '@/src/lib/pillOrigin';
 import { stageConfig } from '@/src/lib/story/stageUiConfig';
 
@@ -47,10 +48,11 @@ export default function SpasaStory() {
   };
 
   const {
-    backgroundImage,
+    backgroundImage: backgroundImageConfig,
     opacity = 0.8,
     additionalUiConfig,
   } = stageConfig[StageId.SpasaStory];
+  const backgroundImage = useResolvedBackgroundImage(backgroundImageConfig);
 
   return (
     <PageContainer

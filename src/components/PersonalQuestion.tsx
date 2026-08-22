@@ -4,7 +4,10 @@ import { useState } from 'react';
 
 import { StageId } from '@/src/contexts/NavigationContext';
 import { useStoryFlow } from '@/src/contexts/StoryFlowContext';
-import { useGenderedTranslations } from '@/src/hooks/useGenderedTranslations';
+import {
+  useGenderedTranslations,
+  useResolvedBackgroundImage,
+} from '@/src/hooks/useGenderedTranslations';
 import type { LocalizedAnswerOption } from '@/src/lib/answerIds';
 import { stageConfig } from '@/src/lib/story/stageUiConfig';
 
@@ -18,6 +21,9 @@ export default function PersonalQuestion() {
   const [hideQuestion, setHideQuestion] = useState(false);
   const [showFlashMessage, setShowFlashMessage] = useState(false);
   const [fadeOut, setFadeOut] = useState(false);
+  const { backgroundImage: backgroundImageConfig, opacity = 0.8 } =
+    stageConfig[StageId.PersonalQuestion];
+  const backgroundImage = useResolvedBackgroundImage(backgroundImageConfig);
   const options = (raw('options') as LocalizedAnswerOption[]).map((option) => ({
     id: option.id,
     label: option.label,
@@ -44,21 +50,17 @@ export default function PersonalQuestion() {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 md:p-8 relative bg-black">
-      {(() => {
-        const { backgroundImage, opacity = 0.8 } =
-          stageConfig[StageId.PersonalQuestion];
-        return backgroundImage ? (
-          <div className="absolute inset-0 w-full h-full overflow-hidden">
-            <div
-              className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-              style={{
-                backgroundImage: `url('${backgroundImage}')`,
-                opacity: opacity,
-              }}
-            />
-          </div>
-        ) : null;
-      })()}
+      {backgroundImage ? (
+        <div className="absolute inset-0 w-full h-full overflow-hidden">
+          <div
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{
+              backgroundImage: `url('${backgroundImage}')`,
+              opacity: opacity,
+            }}
+          />
+        </div>
+      ) : null}
 
       <div className="relative z-10 max-w-4xl mx-auto w-full">
         {!showFlashMessage ? (

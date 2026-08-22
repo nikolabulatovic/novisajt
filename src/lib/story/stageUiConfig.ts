@@ -1,5 +1,10 @@
 import { Stage, StageId } from '@/src/contexts/NavigationContext';
 import { AnswerId } from '@/src/lib/answerIds';
+import {
+  type GenderedContent,
+  type UserGender,
+  resolveGenderedContent,
+} from '@/src/lib/gender';
 
 export const NEXT_LABEL = 'next';
 
@@ -102,7 +107,11 @@ export interface StageAnswerOptionConfig {
 }
 
 interface BaseStageConfig {
-  backgroundImage?: string;
+  /**
+   * Stage background path(s). Plain string for shared art; `{ male, female }`
+   * when counterparts exist (see {@link stageBackground}).
+   */
+  backgroundImage?: GenderedContent<string>;
   /** Defaults to {@link DEFAULT_STAGE_SHELL.opacity}. */
   opacity?: number;
   /**
@@ -160,13 +169,38 @@ type StageInteractionConfig =
 export type StageConfig = BaseStageConfig & StageInteractionConfig;
 
 type StageBackgroundExt = 'jpg' | 'webp' | 'png';
+type StageBackgroundOptions = { gendered?: boolean };
 
-/** Path for a stage-owned background (`/images/{stageId}.{ext}`). */
+/**
+ * Path for a stage-owned background.
+ *
+ * - Default: `/images/{stageId}.{ext}`
+ * - `{ gendered: true }`: `/images/{stageId}_{male|female}.{ext}`
+ */
 export function stageBackground(
   stage: Stage,
-  ext: StageBackgroundExt = 'jpg',
-): string {
-  return `/images/${stage}.${ext}`;
+  extOrOptions?: StageBackgroundExt | StageBackgroundOptions,
+  options?: StageBackgroundOptions,
+): GenderedContent<string> {
+  const isOptions = typeof extOrOptions === 'object' && extOrOptions !== null;
+  const fileExt = (isOptions ? undefined : extOrOptions) ?? 'jpg';
+  const gendered = isOptions ? extOrOptions.gendered : options?.gendered;
+  if (gendered) {
+    return {
+      male: `/images/${stage}_male.${fileExt}`,
+      female: `/images/${stage}_female.${fileExt}`,
+    };
+  }
+  return `/images/${stage}.${fileExt}`;
+}
+
+/** Resolve config `backgroundImage` for the current story gender. */
+export function resolveBackgroundImage(
+  backgroundImage: GenderedContent<string> | undefined,
+  gender: UserGender,
+): string | undefined {
+  if (backgroundImage == null) return undefined;
+  return resolveGenderedContent(backgroundImage, gender);
 }
 
 export const stageConfig: Record<Stage, StageConfig> = {
@@ -278,11 +312,15 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.PersonalQuestion]: {
-    backgroundImage: stageBackground(StageId.PersonalQuestion),
+    backgroundImage: stageBackground(StageId.PersonalQuestion, {
+      gendered: true,
+    }),
     opacity: 0.3,
   },
   [StageId.BreakingQuestion]: {
-    backgroundImage: stageBackground(StageId.BreakingQuestion),
+    backgroundImage: stageBackground(StageId.BreakingQuestion, {
+      gendered: true,
+    }),
     textSurface: 'backdrop',
     opacity: 0.5,
     additionalUiConfig: {
@@ -553,7 +591,9 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.ApatheticStance]: {
-    backgroundImage: stageBackground(StageId.ApatheticStance),
+    backgroundImage: stageBackground(StageId.ApatheticStance, {
+      gendered: true,
+    }),
     opacity: 0.4,
     nextInteraction: 'none',
     body: {
@@ -663,8 +703,9 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.CourageousChoice]: {
-    // TODO: add public/images/courageous-choice.jpg
-    backgroundImage: stageBackground(StageId.CourageousChoice),
+    backgroundImage: stageBackground(StageId.CourageousChoice, {
+      gendered: true,
+    }),
     opacity: 0.85,
     textSurface: 'backdrop',
     nextInteraction: 'pill',
@@ -680,7 +721,7 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.JoinUs]: {
-    backgroundImage: stageBackground(StageId.JoinUs),
+    backgroundImage: stageBackground(StageId.JoinUs, { gendered: true }),
     opacity: 0.55,
     nextInteraction: 'none',
     pillTransitionOverlayColor: 'white',

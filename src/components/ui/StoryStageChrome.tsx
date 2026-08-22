@@ -9,6 +9,7 @@ import {
   DEFAULT_STAGE_BODY,
   DEFAULT_STAGE_SHELL,
   DEFAULT_STORY_UI,
+  resolveBackgroundImage,
   stageConfig,
 } from '@/src/lib/story/stageUiConfig';
 import {
@@ -48,7 +49,7 @@ export default function StoryStageChrome({
   const body = cfg.body;
   const ui = cfg.additionalUiConfig;
   const bodyTextKey = body?.textKey ?? DEFAULT_STAGE_BODY.textKey;
-  const { raw: rawBody } = useGenderedTranslations(
+  const { raw: rawBody, gender } = useGenderedTranslations(
     cfg.translationNamespace ?? stage,
   );
 
@@ -73,7 +74,7 @@ export default function StoryStageChrome({
     [],
   );
 
-  const backgroundImage = cfg.backgroundImage;
+  const backgroundImage = resolveBackgroundImage(cfg.backgroundImage, gender);
   const backgroundImageOpacity = cfg.opacity ?? DEFAULT_STAGE_SHELL.opacity;
   const backgroundImagePosition =
     cfg.backgroundPosition ?? DEFAULT_STAGE_SHELL.backgroundPosition;

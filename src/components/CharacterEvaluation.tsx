@@ -9,7 +9,10 @@ import { useGenderedTranslations } from '@/src/hooks/useGenderedTranslations';
 import { useScheduledTimeouts } from '@/src/hooks/useScheduledTimeouts';
 import type { GenderedContent } from '@/src/lib/gender';
 import { resolveGenderedContent } from '@/src/lib/gender';
-import { stageConfig } from '@/src/lib/story/stageUiConfig';
+import {
+  resolveBackgroundImage,
+  stageConfig,
+} from '@/src/lib/story/stageUiConfig';
 import {
   answerChoiceShellClassName,
   scheduleAnswerChoiceExit,
@@ -91,7 +94,9 @@ export default function CharacterEvaluation() {
     );
   };
 
-  const { backgroundImage, opacity = 0.8 } = stageConfig[StageId.Evaluation];
+  const { backgroundImage: backgroundImageConfig, opacity = 0.8 } =
+    stageConfig[StageId.Evaluation];
+  const backgroundImage = resolveBackgroundImage(backgroundImageConfig, gender);
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 md:p-8 relative bg-black overflow-hidden">

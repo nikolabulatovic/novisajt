@@ -7,6 +7,7 @@ import { useTranslations } from 'next-intl';
 import type { Stage } from '@/src/contexts/NavigationContext';
 import { StageId } from '@/src/contexts/NavigationContext';
 import { useStoryFlow } from '@/src/contexts/StoryFlowContext';
+import { useResolvedBackgroundImage } from '@/src/hooks/useGenderedTranslations';
 import { useScheduledTimeouts } from '@/src/hooks/useScheduledTimeouts';
 import { useTracking } from '@/src/hooks/useTracking';
 import { AnswerId } from '@/src/lib/answerIds';
@@ -104,11 +105,12 @@ export default function RedPillIntro() {
   const options = cfg.answerOptions
     ? mapLocalizedAnswerOptions(cfg.answerOptions, t)
     : [];
+  const backgroundImage = useResolvedBackgroundImage(cfg.backgroundImage);
 
   return (
     <div key={StageId.Intro} className="min-h-screen w-full">
       <PageContainer
-        backgroundImage={cfg.backgroundImage}
+        backgroundImage={backgroundImage}
         backgroundImageOpacity={cfg.opacity ?? DEFAULT_STAGE_SHELL.opacity}
         backgroundWash={
           cfg.backgroundWash ?? DEFAULT_STAGE_SHELL.backgroundWash

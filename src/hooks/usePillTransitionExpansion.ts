@@ -3,9 +3,13 @@
 import { useEffect, useLayoutEffect, useRef } from 'react';
 
 import type { Stage } from '@/src/contexts/NavigationContext';
+import { useStoryGender } from '@/src/hooks/useGenderedTranslations';
 import type { PillOrigin } from '@/src/lib/pillOrigin';
 import { fallbackPillOrigin } from '@/src/lib/pillOrigin';
-import { stageConfig } from '@/src/lib/story/stageUiConfig';
+import {
+  resolveBackgroundImage,
+  stageConfig,
+} from '@/src/lib/story/stageUiConfig';
 
 /** Default Next.js `images.deviceSizes` — `/_next/image` only accepts these `w` values. */
 const NEXT_IMAGE_DEVICE_SIZES = [
@@ -53,6 +57,7 @@ export function usePillTransitionExpansion({
   startExpansion: (origin: PillOrigin) => void;
   reset: () => void;
 }) {
+  const gender = useStoryGender();
   const startedForStageRef = useRef<Stage | null>(null);
 
   useLayoutEffect(() => {
@@ -65,11 +70,14 @@ export function usePillTransitionExpansion({
     startedForStageRef.current = pendingNextStage;
     startExpansion(origin ?? persistedOrigin ?? fallbackPillOrigin());
 
-    const imageSrc = stageConfig[pendingNextStage]?.backgroundImage;
+    const imageSrc = resolveBackgroundImage(
+      stageConfig[pendingNextStage]?.backgroundImage,
+      gender,
+    );
     if (imageSrc) {
       warmNextImageOptimizer(imageSrc);
     }
-  }, [pendingNextStage, origin, persistedOrigin, startExpansion]);
+  }, [pendingNextStage, origin, persistedOrigin, startExpansion, gender]);
 
   useEffect(() => {
     if (pendingNextStage || isFadingOut) return;

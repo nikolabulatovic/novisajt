@@ -5,7 +5,10 @@ import {
   STORY_STAGE_TEXT_TONE_CLASS,
 } from '@/src/constants/storyStageTokens';
 import { StageId } from '@/src/contexts/NavigationContext';
-import { useGenderedTranslations } from '@/src/hooks/useGenderedTranslations';
+import {
+  useGenderedTranslations,
+  useResolvedBackgroundImage,
+} from '@/src/hooks/useGenderedTranslations';
 import { DEFAULT_STAGE_BODY, stageConfig } from '@/src/lib/story/stageUiConfig';
 
 import ContentContainer from './ui/ContentContainer';
@@ -24,7 +27,12 @@ export default function JoinUs() {
   const { t, raw } = useGenderedTranslations(StageId.JoinUs);
   const intro = raw('intro') as string[];
   const cfg = stageConfig[StageId.JoinUs];
-  const { backgroundImage, opacity = 0.8, backgroundWash } = cfg;
+  const {
+    backgroundImage: backgroundImageConfig,
+    opacity = 0.8,
+    backgroundWash,
+  } = cfg;
+  const backgroundImage = useResolvedBackgroundImage(backgroundImageConfig);
   const ui = cfg.additionalUiConfig;
   const textToneClass =
     STORY_STAGE_TEXT_TONE_CLASS[
