@@ -1,9 +1,8 @@
 'use client';
 
-import {
-  STORY_STAGE_TEXT_SIZE_CLASS,
-  STORY_STAGE_TEXT_TONE_CLASS,
-} from '@/src/constants/storyStageTokens';
+import { useState } from 'react';
+
+import { STORY_STAGE_TEXT_TONE_CLASS } from '@/src/constants/storyStageTokens';
 import { StageId } from '@/src/contexts/NavigationContext';
 import {
   useGenderedTranslations,
@@ -11,6 +10,7 @@ import {
 } from '@/src/hooks/useGenderedTranslations';
 import { DEFAULT_STAGE_BODY, stageConfig } from '@/src/lib/story/stageUiConfig';
 
+import AnimatedText from './ui/AnimatedText';
 import ContentContainer from './ui/ContentContainer';
 import PageContainer from './ui/PageContainer';
 import {
@@ -25,7 +25,9 @@ const groupButtonClassName =
 
 export default function JoinUs() {
   const { t, raw } = useGenderedTranslations(StageId.JoinUs);
+  const [showGroups, setShowGroups] = useState(false);
   const intro = raw('intro') as string[];
+  const text = [...intro, t('groupsHeading')];
   const cfg = stageConfig[StageId.JoinUs];
   const {
     backgroundImage: backgroundImageConfig,
@@ -38,11 +40,6 @@ export default function JoinUs() {
     STORY_STAGE_TEXT_TONE_CLASS[
       cfg.body?.textTone ?? DEFAULT_STAGE_BODY.textTone
     ] || 'text-gray-200';
-  const textSizeClass =
-    STORY_STAGE_TEXT_SIZE_CLASS[
-      cfg.body?.textSize ?? DEFAULT_STAGE_BODY.textSize
-    ];
-  const bodyTextClass = `${textSizeClass} leading-relaxed ${textToneClass}`;
 
   return (
     <PageContainer
@@ -60,20 +57,29 @@ export default function JoinUs() {
           backdropFade={ui?.backdropFade}
           backdropColor={ui?.backdropColor}
         >
-          <div className="space-y-6 text-center">
-            {intro.map((paragraph) => (
-              <p key={paragraph} className={bodyTextClass}>
-                {paragraph}
-              </p>
-            ))}
-          </div>
-
-          <h2 className={`mt-10 text-center ${bodyTextClass}`}>
-            {t('groupsHeading')}
-          </h2>
+          <AnimatedText
+            text={text}
+            speed={cfg.body?.speed ?? DEFAULT_STAGE_BODY.speed}
+            delayAfterComplete={
+              cfg.body?.delayAfterComplete ??
+              DEFAULT_STAGE_BODY.delayAfterComplete
+            }
+            textSize={cfg.body?.textSize ?? DEFAULT_STAGE_BODY.textSize}
+            alignment={cfg.body?.alignment ?? DEFAULT_STAGE_BODY.alignment}
+            wordTransitionDuration={
+              cfg.body?.wordTransitionDuration ??
+              DEFAULT_STAGE_BODY.wordTransitionDuration
+            }
+            className={textToneClass}
+            onComplete={() => setShowGroups(true)}
+          />
         </StageTextSurface>
 
-        <div className="grid grid-cols-3 gap-3 sm:gap-6">
+        <div
+          className={`grid grid-cols-3 gap-3 sm:gap-6 transition-opacity duration-1500 ease-out ${
+            showGroups ? 'opacity-100' : 'opacity-0 pointer-events-none'
+          }`}
+        >
           <button type="button" className={groupButtonClassName}>
             <WhatsAppBadge />
             <p
