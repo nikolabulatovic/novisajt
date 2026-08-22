@@ -67,9 +67,18 @@
           "text": "Ja sam ono što jesam i ne treba mi da se menjam",
           "value": 0
         },
-        { "text": "Uglavnom sam dobar, sa nekim manama", "value": 1 },
         {
-          "text": "Pokušavam da budem saosećajan i da radim pravu stvar",
+          "text": {
+            "male": "Uglavnom sam dobar, sa nekim manama",
+            "female": "Uglavnom sam dobra, sa nekim manama"
+          },
+          "value": 1
+        },
+        {
+          "text": {
+            "male": "Pokušavam da budem saosećajan i da radim pravu stvar",
+            "female": "Pokušavam da budem saosećajna i da radim pravu stvar"
+          },
           "value": 2
         },
         {
@@ -85,7 +94,10 @@
         { "text": "Ignorišeš to i nastavljaš kao ranije", "value": 0 },
         { "text": "Priznaš to, ali praviš izgovore", "value": 1 },
         {
-          "text": "Osećaš se konfliktno i nisi siguran šta da radiš",
+          "text": {
+            "male": "Osećaš se konfliktno i nisi siguran šta da radiš",
+            "female": "Osećaš se konfliktno i nisi sigurna šta da radiš"
+          },
           "value": 2
         },
         { "text": "Duboko razmišljaš i razmatraš promenu", "value": 3 }
@@ -117,9 +129,18 @@
           "text": "Ja sam ono što jesam i ne treba mi da se menjam",
           "value": 0
         },
-        { "text": "Uglavnom sam dobar, sa nekim manama", "value": 1 },
         {
-          "text": "Pokušavam da budem saosećajan i da radim pravu stvar",
+          "text": {
+            "male": "Uglavnom sam dobar, sa nekim manama",
+            "female": "Uglavnom sam dobra, sa nekim manama"
+          },
+          "value": 1
+        },
+        {
+          "text": {
+            "male": "Pokušavam da budem saosećajan i da radim pravu stvar",
+            "female": "Pokušavam da budem saosećajna i da radim pravu stvar"
+          },
           "value": 2
         },
         {
@@ -135,7 +156,10 @@
         { "text": "Ignorišeš to i nastavljaš kao ranije", "value": 0 },
         { "text": "Priznaš to, ali praviš izgovore", "value": 1 },
         {
-          "text": "Osećaš se konfliktno i nisi siguran šta da radiš",
+          "text": {
+            "male": "Osećaš se konfliktno i nisi siguran šta da radiš",
+            "female": "Osećaš se konfliktno i nisi sigurna šta da radiš"
+          },
           "value": 2
         },
         { "text": "Duboko razmišljaš i razmatraš promenu", "value": 3 }

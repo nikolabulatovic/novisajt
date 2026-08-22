@@ -1,9 +1,16 @@
 {
-  "text": [
-    "Promisli o svojim ranijim odgovorima.",
-    "Slažeš se da životinje treba pustiti da žive svoj život i istovremeno smatraš da je u redu eksploatisati ih protiv njihove volje.",
-    "Ako si iskren, uvidećeš kontradiktornost u ovome."
-  ],
+  "text": {
+    "male": [
+      "Promisli o svojim ranijim odgovorima.",
+      "Slažeš se da životinje treba pustiti da žive svoj život i istovremeno smatraš da je u redu eksploatisati ih protiv njihove volje.",
+      "Ako si iskren, uvidećeš kontradiktornost u ovome."
+    ],
+    "female": [
+      "Promisli o svojim ranijim odgovorima.",
+      "Slažeš se da životinje treba pustiti da žive svoj život i istovremeno smatraš da je u redu eksploatisati ih protiv njihove volje.",
+      "Ako si iskrena, uvidećeš kontradiktornost u ovome."
+    ]
+  },
   "options": {
     "agree": "Uviđam",
     "disagree": "Ne uviđam"

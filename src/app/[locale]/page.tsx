@@ -19,6 +19,7 @@ import {
 import { useDevNavAccess } from '@/src/hooks/useDevNavAccess';
 import { useStoryFlowHandlers } from '@/src/hooks/useStoryFlowHandlers';
 import { useTracking } from '@/src/hooks/useTracking';
+import type { UserGender } from '@/src/lib/gender';
 import type { PillOrigin } from '@/src/lib/pillOrigin';
 import { stageInteractionType } from '@/src/lib/story/stageInteraction';
 import { STAGE_REGISTRY } from '@/src/lib/story/stageRegistry';
@@ -47,6 +48,7 @@ export default function Home() {
   const { allowsHeavyEffects } = useGpuEffects();
   const [stage, setStage] = useState<Stage>(StageId.Choice);
   const [answers, setAnswers] = useState<Record<string, string>>({});
+  const [gender, setGender] = useState<UserGender | null>(null);
   const [pendingNextStage, setPendingNextStage] = useState<Stage | null>(null);
   const [pendingPillOrigin, setPendingPillOrigin] = useState<PillOrigin | null>(
     null,
@@ -157,6 +159,8 @@ export default function Home() {
   const flowContextValue = useMemo<StoryFlowContextValue>(
     () => ({
       answers,
+      gender,
+      setGender,
       completeStage,
       goToNextStep: () => {},
       transitionToStage,
@@ -165,6 +169,7 @@ export default function Home() {
     }),
     [
       answers,
+      gender,
       completeStage,
       transitionToStage,
       transitionViaBlackOverlayTo,
@@ -176,19 +181,19 @@ export default function Home() {
 
   return (
     <NavigationProvider currentStage={stage} navigateToStage={navigateToStage}>
-      <PillTransitionLayer
-        pendingNextStage={pendingNextStage}
-        origin={pendingPillOrigin}
-        onComplete={handleTransitionComplete}
-      />
-      <div
-        className="fixed inset-0 bg-black z-50 pointer-events-none transition-opacity duration-[2000ms]"
-        style={{ opacity: blackOverlay ? 1 : 0 }}
-        onTransitionEnd={handleBlackOverlayTransitionEnd}
-      />
-      {showDevNav ? <NavigationMenu /> : null}
-      <main className="min-h-screen bg-black text-white overflow-hidden relative">
-        <StoryFlowProvider value={flowContextValue}>
+      <StoryFlowProvider value={flowContextValue}>
+        <PillTransitionLayer
+          pendingNextStage={pendingNextStage}
+          origin={pendingPillOrigin}
+          onComplete={handleTransitionComplete}
+        />
+        <div
+          className="fixed inset-0 bg-black z-50 pointer-events-none transition-opacity duration-[2000ms]"
+          style={{ opacity: blackOverlay ? 1 : 0 }}
+          onTransitionEnd={handleBlackOverlayTransitionEnd}
+        />
+        {showDevNav ? <NavigationMenu /> : null}
+        <main className="min-h-screen bg-black text-white overflow-hidden relative">
           <div
             className={`min-h-screen w-full transition-opacity ease-out motion-reduce:!duration-0 ${
               pendingCrossfadeStage !== null
@@ -199,8 +204,8 @@ export default function Home() {
           >
             <StageComponent />
           </div>
-        </StoryFlowProvider>
-      </main>
+        </main>
+      </StoryFlowProvider>
     </NavigationProvider>
   );
 }

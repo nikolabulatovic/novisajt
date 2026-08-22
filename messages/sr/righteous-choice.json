@@ -1,7 +1,13 @@
 {
-  "text": [
-    "Drago nam je što si izabrao da budeš pošten i uvažio žrtve svojih izbora. Hvala ti.",
-    "Pokazao si se kao principijelan. Sagledao si svoja ustaljena uverenja i priznao grešku u njima."
-  ],
+  "text": {
+    "male": [
+      "Drago nam je što si izabrao da budeš pošten i uvažio žrtve svojih izbora. Hvala ti.",
+      "Pokazao si se kao principijelan. Sagledao si svoja ustaljena uverenja i priznao grešku u njima."
+    ],
+    "female": [
+      "Drago nam je što si izabrala da budeš poštena i uvažila žrtve svojih izbora. Hvala ti.",
+      "Pokazala si se kao principijelna. Sagledala si svoja ustaljena uverenja i priznala grešku u njima."
+    ]
+  },
   "next": "Nastavi"
 }

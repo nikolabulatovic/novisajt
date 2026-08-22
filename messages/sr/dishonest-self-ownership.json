@@ -1,6 +1,12 @@
 {
-  "text": [
-    "Nisi iskren.",
-    "Priznaćeš to sebi kada te život stavi u situaciju da neko drugi ima kontrolu nad tobom."
-  ]
+  "text": {
+    "male": [
+      "Nisi iskren.",
+      "Priznaćeš to sebi kada te život stavi u situaciju da neko drugi ima kontrolu nad tobom."
+    ],
+    "female": [
+      "Nisi iskrena.",
+      "Priznaćeš to sebi kada te život stavi u situaciju da neko drugi ima kontrolu nad tobom."
+    ]
+  }
 }

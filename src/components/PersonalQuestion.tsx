@@ -2,10 +2,12 @@
 
 import { useState } from 'react';
 
-import { useTranslations } from 'next-intl';
-
 import { StageId } from '@/src/contexts/NavigationContext';
 import { useStoryFlow } from '@/src/contexts/StoryFlowContext';
+import {
+  useGenderedTranslations,
+  useResolvedBackgroundImage,
+} from '@/src/hooks/useGenderedTranslations';
 import type { LocalizedAnswerOption } from '@/src/lib/answerIds';
 import { stageConfig } from '@/src/lib/story/stageUiConfig';
 
@@ -13,18 +15,19 @@ import AnswerOptions from './ui/AnswerOptions';
 import StageTextSurface from './ui/StageTextSurface';
 
 export default function PersonalQuestion() {
-  const t = useTranslations(StageId.PersonalQuestion);
+  const { t, raw, label } = useGenderedTranslations(StageId.PersonalQuestion);
   const { completeStage } = useStoryFlow();
   const [selected, setSelected] = useState<string | null>(null);
   const [hideQuestion, setHideQuestion] = useState(false);
   const [showFlashMessage, setShowFlashMessage] = useState(false);
   const [fadeOut, setFadeOut] = useState(false);
-  const options = (t.raw('options') as LocalizedAnswerOption[]).map(
-    (option) => ({
-      id: option.id,
-      label: option.label,
-    }),
-  );
+  const { backgroundImage: backgroundImageConfig, opacity = 0.8 } =
+    stageConfig[StageId.PersonalQuestion];
+  const backgroundImage = useResolvedBackgroundImage(backgroundImageConfig);
+  const options = (raw('options') as LocalizedAnswerOption[]).map((option) => ({
+    id: option.id,
+    label: option.label,
+  }));
 
   const handleAnswer = (value: string) => {
     setSelected(value);
@@ -47,21 +50,17 @@ export default function PersonalQuestion() {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 md:p-8 relative bg-black">
-      {(() => {
-        const { backgroundImage, opacity = 0.8 } =
-          stageConfig[StageId.PersonalQuestion];
-        return backgroundImage ? (
-          <div className="absolute inset-0 w-full h-full overflow-hidden">
-            <div
-              className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-              style={{
-                backgroundImage: `url('${backgroundImage}')`,
-                opacity: opacity,
-              }}
-            />
-          </div>
-        ) : null;
-      })()}
+      {backgroundImage ? (
+        <div className="absolute inset-0 w-full h-full overflow-hidden">
+          <div
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{
+              backgroundImage: `url('${backgroundImage}')`,
+              opacity: opacity,
+            }}
+          />
+        </div>
+      ) : null}
 
       <div className="relative z-10 max-w-4xl mx-auto w-full">
         {!showFlashMessage ? (
@@ -75,7 +74,7 @@ export default function PersonalQuestion() {
               contentClassName="p-6 md:p-10"
             >
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-gray-200 leading-relaxed max-w-3xl mx-auto">
-                {t('question')}
+                {label('question')}
               </h1>
             </StageTextSurface>
 

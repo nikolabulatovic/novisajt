@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl';
 
 import { StageId } from '@/src/contexts/NavigationContext';
 import { useStoryFlow } from '@/src/contexts/StoryFlowContext';
+import { useResolvedBackgroundImage } from '@/src/hooks/useGenderedTranslations';
 import { mapLocalizedAnswerOptions } from '@/src/lib/mapLocalizedAnswerOptions';
 import { stageConfig } from '@/src/lib/story/stageUiConfig';
 
@@ -19,7 +20,8 @@ export default function AdditionalResources() {
   const t = useTranslations(StageId.AdditionalResources);
   const { completeStage } = useStoryFlow();
   const stageCfg = stageConfig[StageId.AdditionalResources];
-  const { backgroundImage, opacity = 0.8 } = stageCfg;
+  const { backgroundImage: backgroundImageConfig, opacity = 0.8 } = stageCfg;
+  const backgroundImage = useResolvedBackgroundImage(backgroundImageConfig);
   const items = t.raw('items') as ResourceAccordionItem[];
 
   return (

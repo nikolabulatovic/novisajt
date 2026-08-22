@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 
 import { StageId } from '@/src/contexts/NavigationContext';
 import { useStoryFlow } from '@/src/contexts/StoryFlowContext';
+import { useResolvedBackgroundImage } from '@/src/hooks/useGenderedTranslations';
 import type { PillOrigin } from '@/src/lib/pillOrigin';
 import { stageConfig } from '@/src/lib/story/stageUiConfig';
 
@@ -32,7 +33,9 @@ export default function ChoiceStage() {
     trackAnswerSelected(StageId.Choice, pill);
   };
 
-  const { backgroundImage, opacity } = stageConfig[StageId.Choice];
+  const { backgroundImage: backgroundImageConfig, opacity } =
+    stageConfig[StageId.Choice];
+  const backgroundImage = useResolvedBackgroundImage(backgroundImageConfig);
 
   return (
     <PageContainer

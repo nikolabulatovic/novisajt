@@ -3,6 +3,7 @@
 import { ReactNode, createContext, useContext } from 'react';
 
 import type { Stage } from '@/src/contexts/NavigationContext';
+import type { UserGender } from '@/src/lib/gender';
 import type { PillOrigin } from '@/src/lib/pillOrigin';
 
 export type StageCompletionAnswer = string | Record<string, string>;
@@ -12,6 +13,12 @@ export type StoryTransitionStyle = 'auto' | 'pill' | 'none';
 
 export interface StoryFlowContextValue {
   answers: Record<string, string>;
+  /**
+   * Grammatical address gender for inflected locales (e.g. Serbian).
+   * `null` means not chosen yet — UI treats it as male by default.
+   */
+  gender: UserGender | null;
+  setGender: (gender: UserGender) => void;
   /**
    * Advances / completes the flow for `stage`.
    * Pass `pillOrigin` when leaving via a red next-pill so the mask expands from that rect.

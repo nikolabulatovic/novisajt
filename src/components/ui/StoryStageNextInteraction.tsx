@@ -1,9 +1,8 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
-
 import type { Stage } from '@/src/contexts/NavigationContext';
 import { useStoryFlow } from '@/src/contexts/StoryFlowContext';
+import { useGenderedTranslations } from '@/src/hooks/useGenderedTranslations';
 import { mapLocalizedAnswerOptions } from '@/src/lib/mapLocalizedAnswerOptions';
 import { NEXT_LABEL, stageConfig } from '@/src/lib/story/stageUiConfig';
 import type { AnswerChoiceShellState } from '@/src/lib/ui/answerChoiceInteraction';
@@ -31,7 +30,7 @@ export default function StoryStageNextInteraction({
   const stageCfg = stageConfig[stage];
   const nextInteraction = stageCfg.nextInteraction ?? 'pill';
   const translationNamespace = stageCfg.translationNamespace ?? stage;
-  const t = useTranslations(translationNamespace);
+  const { t, label } = useGenderedTranslations(translationNamespace);
 
   if (!nextInteraction || nextInteraction === 'none' || !translationNamespace) {
     return null;
@@ -60,7 +59,7 @@ export default function StoryStageNextInteraction({
     return (
       <div className={`transition-opacity duration-300 ${visibilityClass}`}>
         <AnswerOptions
-          options={mapLocalizedAnswerOptions(stageCfg.answerOptions, t)}
+          options={mapLocalizedAnswerOptions(stageCfg.answerOptions, label)}
           onSelect={(answerId) => completeStage(stage, answerId)}
           onAnswerChoiceShellChange={onAnswerChoiceShellChange}
         />

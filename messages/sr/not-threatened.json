@@ -1,3 +1,6 @@
 {
-  "text": ["Neiskren si jer nisi taj koji je ugrožen."]
+  "text": {
+    "male": ["Neiskren si jer nisi taj koji je ugrožen."],
+    "female": ["Neiskrena si jer nisi ta koja je ugrožena."]
+  }
 }

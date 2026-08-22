@@ -2,14 +2,14 @@
 
 import { useCallback, useEffect, useState } from 'react';
 
-import { useTranslations } from 'next-intl';
-
 import type { Stage } from '@/src/contexts/NavigationContext';
+import { useGenderedTranslations } from '@/src/hooks/useGenderedTranslations';
 import { AnimatedTextBlock } from '@/src/lib/i18n/animatedText';
 import {
   DEFAULT_STAGE_BODY,
   DEFAULT_STAGE_SHELL,
   DEFAULT_STORY_UI,
+  resolveBackgroundImage,
   stageConfig,
 } from '@/src/lib/story/stageUiConfig';
 import {
@@ -49,7 +49,9 @@ export default function StoryStageChrome({
   const body = cfg.body;
   const ui = cfg.additionalUiConfig;
   const bodyTextKey = body?.textKey ?? DEFAULT_STAGE_BODY.textKey;
-  const tBody = useTranslations(cfg.translationNamespace ?? stage);
+  const { raw: rawBody, gender } = useGenderedTranslations(
+    cfg.translationNamespace ?? stage,
+  );
 
   const [nextInteraction, setNextInteractionVisible] = useState(false);
   const [answerShellState, setAnswerShellState] = useState(() => ({
@@ -72,7 +74,7 @@ export default function StoryStageChrome({
     [],
   );
 
-  const backgroundImage = cfg.backgroundImage;
+  const backgroundImage = resolveBackgroundImage(cfg.backgroundImage, gender);
   const backgroundImageOpacity = cfg.opacity ?? DEFAULT_STAGE_SHELL.opacity;
   const backgroundImagePosition =
     cfg.backgroundPosition ?? DEFAULT_STAGE_SHELL.backgroundPosition;
@@ -103,7 +105,7 @@ export default function StoryStageChrome({
         backdropColor={ui?.backdropColor}
       >
         <AnimatedText
-          text={tBody.raw(bodyTextKey) as AnimatedTextBlock}
+          text={rawBody(bodyTextKey) as AnimatedTextBlock}
           speed={body?.speed ?? DEFAULT_STAGE_BODY.speed}
           delayAfterComplete={
             body?.delayAfterComplete ?? DEFAULT_STAGE_BODY.delayAfterComplete

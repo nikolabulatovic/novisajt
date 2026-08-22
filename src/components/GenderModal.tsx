@@ -6,12 +6,11 @@ import { useTranslations } from 'next-intl';
 
 import { useAnswerChoiceRipples } from '@/src/hooks/useAnswerChoiceRipples';
 import { useScheduledTimeouts } from '@/src/hooks/useScheduledTimeouts';
-import { AnswerId } from '@/src/lib/answerIds';
 import { ANSWER_CHOICE_NON_SELECTED_FADE_MS } from '@/src/lib/ui/answerChoiceInteraction';
 
 import AnswerChoiceRippleSpans from './ui/AnswerChoiceRippleSpans';
 
-type GenderChoice = 'male' | 'female' | 'not-important';
+export type GenderModalChoice = 'male' | 'female' | 'not-important';
 
 const FADE_IN_MS = 250;
 const FADE_OUT_MS = 750;
@@ -70,18 +69,18 @@ function GenderSymbol({
 
 interface GenderModalProps {
   open: boolean;
-  onSelect: (gender: typeof AnswerId.MALE | typeof AnswerId.FEMALE) => void;
+  onSelect: (choice: GenderModalChoice) => void;
 }
 
 export default function GenderModal({ open, onSelect }: GenderModalProps) {
   const t = useTranslations('gender');
   const schedule = useScheduledTimeouts();
   const { ripples, createRipple } =
-    useAnswerChoiceRipples<GenderChoice>(schedule);
+    useAnswerChoiceRipples<GenderModalChoice>(schedule);
 
   const [visible, setVisible] = useState(false);
   const [fadingOut, setFadingOut] = useState(false);
-  const [selected, setSelected] = useState<GenderChoice | null>(null);
+  const [selected, setSelected] = useState<GenderModalChoice | null>(null);
 
   useEffect(() => {
     if (!open) {
@@ -99,7 +98,7 @@ export default function GenderModal({ open, onSelect }: GenderModalProps) {
 
   const handleChoice = (
     event: MouseEvent<HTMLButtonElement>,
-    choice: GenderChoice,
+    choice: GenderModalChoice,
   ) => {
     if (selected) return;
 
@@ -109,7 +108,7 @@ export default function GenderModal({ open, onSelect }: GenderModalProps) {
     schedule(() => {
       setFadingOut(true);
       schedule(() => {
-        onSelect(choice === 'female' ? AnswerId.FEMALE : AnswerId.MALE);
+        onSelect(choice);
       }, FADE_OUT_MS);
     }, ANSWER_CHOICE_NON_SELECTED_FADE_MS);
   };
@@ -117,11 +116,11 @@ export default function GenderModal({ open, onSelect }: GenderModalProps) {
   if (!open) return null;
 
   const isLocked = selected !== null;
-  const fadeClass = (choice: GenderChoice) =>
+  const fadeClass = (choice: GenderModalChoice) =>
     isLocked && selected !== choice ? 'opacity-0 pointer-events-none' : '';
 
   const symbolChoices: {
-    choice: GenderChoice;
+    choice: GenderModalChoice;
     label: string;
     symbol: 'male' | 'female';
     symbolClass: string;

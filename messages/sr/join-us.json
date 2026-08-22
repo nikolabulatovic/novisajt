@@ -1,8 +1,15 @@
 {
-  "intro": [
-    "Nisi sam. Sve je više ljudi koji poštuju životinje.",
-    "Mi nastojimo da ti pomognemo: da odgovaramo na pitanja, delimo praktične savete i budemo podrška.",
-    "Lepše je i lakše kada si povezan sa ljudima istih principa."
-  ],
+  "intro": {
+    "male": [
+      "Nisi sam. Sve je više ljudi koji poštuju životinje.",
+      "Mi nastojimo da ti pomognemo: da odgovaramo na pitanja, delimo praktične savete i budemo podrška.",
+      "Lepše je i lakše kada si povezan sa ljudima istih principa."
+    ],
+    "female": [
+      "Nisi sama. Sve je više ljudi koji poštuju životinje.",
+      "Mi nastojimo da ti pomognemo: da odgovaramo na pitanja, delimo praktične savete i budemo podrška.",
+      "Lepše je i lakše kada si povezana sa ljudima istih principa."
+    ]
+  },
   "groupsHeading": "Pridruži nam se i pronađi nas u grupama!"
 }

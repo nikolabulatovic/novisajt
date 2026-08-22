@@ -1,12 +1,14 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
-
 import {
   STORY_STAGE_TEXT_SIZE_CLASS,
   STORY_STAGE_TEXT_TONE_CLASS,
 } from '@/src/constants/storyStageTokens';
 import { StageId } from '@/src/contexts/NavigationContext';
+import {
+  useGenderedTranslations,
+  useResolvedBackgroundImage,
+} from '@/src/hooks/useGenderedTranslations';
 import { DEFAULT_STAGE_BODY, stageConfig } from '@/src/lib/story/stageUiConfig';
 
 import ContentContainer from './ui/ContentContainer';
@@ -22,10 +24,15 @@ const groupButtonClassName =
   'cursor-pointer group text-center transition-transform duration-300';
 
 export default function JoinUs() {
-  const t = useTranslations(StageId.JoinUs);
-  const intro = t.raw('intro') as string[];
+  const { t, raw } = useGenderedTranslations(StageId.JoinUs);
+  const intro = raw('intro') as string[];
   const cfg = stageConfig[StageId.JoinUs];
-  const { backgroundImage, opacity = 0.8, backgroundWash } = cfg;
+  const {
+    backgroundImage: backgroundImageConfig,
+    opacity = 0.8,
+    backgroundWash,
+  } = cfg;
+  const backgroundImage = useResolvedBackgroundImage(backgroundImageConfig);
   const ui = cfg.additionalUiConfig;
   const textToneClass =
     STORY_STAGE_TEXT_TONE_CLASS[

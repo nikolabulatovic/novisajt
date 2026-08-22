@@ -4,7 +4,10 @@
     "Ovaj ekran treba da bude popunjen sadržajem."
   ],
   "options": {
-    "ready": "Spreman sam",
+    "ready": {
+      "male": "Spreman sam",
+      "female": "Spremna sam"
+    },
     "moreInfo": "Još info"
   }
 }

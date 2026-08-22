@@ -1,6 +1,12 @@
 {
-  "text": [
-    "Na osnovu tvojih odgovora, ispada da nisi osoba za koju se smatraš da jesi.",
-    "Vrati se na ovo iskustvo kada budeš bio spreman da se suočiš sa svojim postupcima."
-  ]
+  "text": {
+    "male": [
+      "Na osnovu tvojih odgovora, ispada da nisi osoba za koju se smatraš da jesi.",
+      "Vrati se na ovo iskustvo kada budeš bio spreman da se suočiš sa svojim postupcima."
+    ],
+    "female": [
+      "Na osnovu tvojih odgovora, ispada da nisi osoba za koju se smatraš da jesi.",
+      "Vrati se na ovo iskustvo kada budeš bila spremna da se suočiš sa svojim postupcima."
+    ]
+  }
 }
