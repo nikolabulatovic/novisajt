@@ -1,6 +1,6 @@
 'use client';
 
-import { MouseEvent, useState } from 'react';
+import { MouseEvent, useRef, useState } from 'react';
 
 import { useGpuEffects } from '@/src/contexts/GpuEffectsContext';
 import { useStoryFlow } from '@/src/contexts/StoryFlowContext';
@@ -54,12 +54,16 @@ export default function CharacterEvaluation() {
     null,
   );
   const [nonSelectedFading, setNonSelectedFading] = useState(false);
+  const answeringRef = useRef(false);
 
   const handleAnswer = (
     value: number,
     event: MouseEvent<HTMLButtonElement>,
     optionIndex: number,
   ) => {
+    if (answeringRef.current) return;
+    answeringRef.current = true;
+
     createRipple(event, optionIndex);
     setSelectedOptionIndex(optionIndex);
 
@@ -82,11 +86,12 @@ export default function CharacterEvaluation() {
           setNonSelectedFading(false);
           setSelectedOptionIndex(null);
           clearRipples();
-          setTimeout(() => {
+          answeringRef.current = false;
+          schedule(() => {
             setShowContent(true);
           }, 50);
         } else {
-          setTimeout(() => {
+          schedule(() => {
             completeStage(StageId.Evaluation, newAnswers);
           }, 1500);
         }
