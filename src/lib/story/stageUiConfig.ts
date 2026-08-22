@@ -57,7 +57,7 @@ export interface StageBodyAnimatedText {
   /** Translation key for body text. Defaults to {@link DEFAULT_STAGE_BODY.textKey}. */
   textKey?: string;
   /** Defaults to {@link DEFAULT_STAGE_BODY.textSize}. */
-  textSize?: 'sm' | 'md' | 'lg';
+  textSize?: 'sm' | 'md' | 'lg' | 'xl';
   /** Defaults to {@link DEFAULT_STAGE_BODY.alignment}. */
   alignment?: 'left' | 'center' | 'right';
   /** Defaults to {@link DEFAULT_STAGE_BODY.wordTransitionDuration}. */
@@ -316,6 +316,15 @@ export const stageConfig: Record<Stage, StageConfig> = {
       gendered: true,
     }),
     opacity: 0.3,
+    nextInteraction: 'answer',
+    answerOptions: [
+      { id: 'YES', labelKey: 'options.yes' },
+      { id: 'HOPEFULLY', labelKey: 'options.hopefully' },
+      { id: 'DONT_KNOW', labelKey: 'options.dontKnow' },
+    ],
+    body: {
+      textSize: 'xl',
+    },
   },
   [StageId.BreakingQuestion]: {
     backgroundImage: stageBackground(StageId.BreakingQuestion, {
