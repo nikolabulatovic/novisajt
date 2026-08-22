@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 import { useTranslations } from 'next-intl';
 
@@ -20,10 +20,12 @@ export default function ChoiceStage() {
     trackAnswerSelected,
   } = useStoryFlow();
   const t = useTranslations(StageId.Choice);
+  const selectedPillRef = useRef<'red' | 'blue' | null>(null);
   const [selectedPill, setSelectedPill] = useState<'red' | 'blue' | null>(null);
 
   const handlePillClick = (pill: 'red' | 'blue', origin?: PillOrigin) => {
-    if (selectedPill !== null) return;
+    if (selectedPillRef.current !== null) return;
+    selectedPillRef.current = pill;
     setSelectedPill(pill);
     if (pill === 'red') {
       transitionToStage(StageId.Intro, 'pill', origin);
@@ -65,7 +67,7 @@ export default function ChoiceStage() {
               color="blue"
               ariaLabel={t('blue.label')}
               onClick={() => handlePillClick('blue')}
-              isSelected={selectedPill === 'blue'}
+              interactive={selectedPill !== 'red'}
             />
             <div className="text-center space-y-2">
               <p className="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-300">
@@ -83,7 +85,7 @@ export default function ChoiceStage() {
               color="red"
               ariaLabel={t('red.label')}
               onClick={(origin) => handlePillClick('red', origin)}
-              isSelected={selectedPill === 'red'}
+              interactive={selectedPill !== 'blue'}
             />
             <div className="text-center space-y-2">
               <p className="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-300">

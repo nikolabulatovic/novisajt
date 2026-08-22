@@ -12,6 +12,7 @@ type PillBaseProps = {
   isFadingOut?: boolean;
   show?: boolean;
   className?: string;
+  interactive?: boolean;
 };
 
 /** Labeled pill: visible text is the accessible name; `ariaLabel` optional override. */
@@ -38,8 +39,10 @@ export default function Pill({
   ariaLabel,
   show = true,
   className = '',
+  interactive = true,
 }: PillProps) {
   const pillShapeRef = useRef<HTMLButtonElement>(null);
+  const pendingClickTimeoutRef = useRef<number | null>(null);
   const isRed = color === 'red';
   const isButton = !!label;
 
@@ -50,14 +53,15 @@ export default function Pill({
   const highlightColor = isRed ? 'from-red-800/20' : 'from-blue-800/20';
 
   const handleClick = () => {
-    if (disabled) return;
+    if (disabled || pendingClickTimeoutRef.current !== null) return;
 
     const el = pillShapeRef.current;
     const origin = el
       ? pillOriginFromRect(el.getBoundingClientRect())
       : undefined;
 
-    setTimeout(() => {
+    pendingClickTimeoutRef.current = window.setTimeout(() => {
+      pendingClickTimeoutRef.current = null;
       onClick(origin);
     }, 100);
   };
@@ -74,8 +78,10 @@ export default function Pill({
           onClick={handleClick}
           disabled={disabled}
           aria-label={ariaLabel}
-          className={`group relative flex flex-col items-center cursor-pointer ${
-            disabled ? 'pointer-events-none' : ''
+          className={`group relative flex flex-col items-center ${
+            disabled || !interactive
+              ? 'pointer-events-none cursor-default'
+              : 'cursor-pointer'
           }`}
         >
           <div className="relative w-24 h-12 sm:w-32 sm:h-16 md:w-40 md:h-20 transform transition-all duration-[4000ms] ease-out group-hover:scale-110 group-hover:rotate-3">
@@ -109,9 +115,11 @@ export default function Pill({
       onClick={handleClick}
       disabled={disabled}
       aria-label={ariaLabel}
-      className={`group relative flex flex-col items-center space-y-6 cursor-pointer ${
-        isFadingOut && !isSelected ? 'opacity-30' : ''
-      } ${disabled ? 'pointer-events-none' : ''} ${className}`}
+      className={`group relative flex flex-col items-center space-y-6 ${
+        disabled || !interactive
+          ? 'pointer-events-none cursor-default'
+          : 'cursor-pointer'
+      } ${isFadingOut && !isSelected ? 'opacity-30' : ''} ${className}`}
     >
       <div
         className={`relative w-24 h-12 sm:w-32 sm:h-16 md:w-40 md:h-20 transform transition-all duration-[4000ms] ease-out group-hover:scale-110 ${
