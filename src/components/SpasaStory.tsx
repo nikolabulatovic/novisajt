@@ -2,6 +2,8 @@
 
 import { useRef, useState } from 'react';
 
+import { useTranslations } from 'next-intl';
+
 import { StageId } from '@/src/contexts/NavigationContext';
 import { useStoryFlow } from '@/src/contexts/StoryFlowContext';
 import { useResolvedBackgroundImage } from '@/src/hooks/useGenderedTranslations';
@@ -15,17 +17,13 @@ import PageContainer from './ui/PageContainer';
 import StageTextSurface from './ui/StageTextSurface';
 
 export default function SpasaStory() {
+  const t = useTranslations(StageId.SpasaStory);
   const { completeStage } = useStoryFlow();
   const [showButton, setShowButton] = useState(false);
   const [showFinalMessage, setShowFinalMessage] = useState(false);
   const [finalMessageVisible, setFinalMessageVisible] = useState(false);
   const pillOriginRef = useRef<PillOrigin | null>(null);
-
-  const text = [
-    'Upoznaćemo te sa Spasinom pričom.',
-    'Spasa je dobila ime po tome što je spašena. Njena sudbina pre nego što su je ljudi udomili bila je gotovo sigurna smrt. Ljudi su odlučili da joj pruže šansu za život — život koji bi inače izgubila.',
-    'Svaki čin spašavanja nosi težinu. Izbor da poštuješ i saosećaš sa bićem koje oseća, razume i želi da živi, pokazuje koliko možemo biti odgovorni i dobri. Čak i kada niko nije dužan da reaguje.',
-  ];
+  const intro = t.raw('intro') as string[];
 
   const handleContinue = (origin?: PillOrigin) => {
     if (!showFinalMessage) {
@@ -70,7 +68,7 @@ export default function SpasaStory() {
             backdropColor={additionalUiConfig?.backdropColor}
           >
             <AnimatedText
-              text={text}
+              text={intro}
               speed={120}
               delayAfterComplete={1000}
               textSize="md"
@@ -81,7 +79,7 @@ export default function SpasaStory() {
 
           <NextButton
             onClick={handleContinue}
-            label="Nastavi"
+            label={t('next')}
             show={showButton}
           />
         </ContentContainer>
@@ -100,8 +98,7 @@ export default function SpasaStory() {
             backdropColor={additionalUiConfig?.backdropColor}
           >
             <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light text-gray-200 leading-relaxed relative z-10">
-              Ali postoji nešto što jesmo dužni: da sve životinje ostavimo na
-              miru.
+              {t('finalMessage')}
             </p>
           </StageTextSurface>
         </div>
