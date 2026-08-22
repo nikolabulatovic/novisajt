@@ -32,7 +32,7 @@ export interface StoryFlowContextValue {
   goToNextStep: () => void;
   /**
    * Navigate to another stage; uses pill mask when configured, otherwise fades the main shell
-   * out, swaps the stage, then fades back in (see Home `pendingCrossfadeStage`).
+   * out, swaps the stage, then fades back in (see `useStoryTransitions`).
    */
   transitionToStage: (
     newStage: Stage,
