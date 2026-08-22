@@ -37,7 +37,6 @@ export const stageInteractionType: Record<Stage, StageInteractionType> = {
   [StageId.AnimalCostOfLiving]: 'next-pill',
   [StageId.ReproductionControl]: 'next-pill',
   [StageId.SolutionUse]: 'answer-options',
-  [StageId.AlreadyVegan]: 'answer-options',
   [StageId.SolutionKnow]: 'answer-options',
   [StageId.VeganDietHealth]: 'answer-options',
   [StageId.AdditionalResources]: 'answer-options',

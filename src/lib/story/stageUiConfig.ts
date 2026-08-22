@@ -609,10 +609,6 @@ export const stageConfig: Record<Stage, StageConfig> = {
       delayAfterComplete: 800,
     },
   },
-  [StageId.AlreadyVegan]: {
-    backgroundImage: stageBackground(StageId.AlreadyVegan),
-    opacity: 0.5,
-  },
   [StageId.NotAcceptingHealth]: {
     opacity: 0.8,
     nextInteraction: 'none',
@@ -693,7 +689,6 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.RighteousChoice]: {
-    // Shared with AlreadyVegan — former animals-picturesque.jpg
     backgroundImage: stageBackground(StageId.RighteousChoice),
     opacity: 0.5,
     backgroundWash: 'white',

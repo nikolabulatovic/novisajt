@@ -33,7 +33,6 @@ export const StageId = {
   AnimalCostOfLiving: 'animal-cost-of-living',
   ReproductionControl: 'reproduction-control',
   SolutionUse: 'solution-use',
-  AlreadyVegan: 'already-vegan',
   SolutionKnow: 'solution-know',
   VeganDietHealth: 'vegan-diet-health',
   AdditionalResources: 'additional-resources',

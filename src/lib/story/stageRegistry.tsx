@@ -7,7 +7,6 @@ import ActResponsibly from '@/src/components/ActResponsibly';
 import AdditionalResources from '@/src/components/AdditionalResources';
 import AddressingContradiction from '@/src/components/AddressingContradiction';
 import AlignBehaviour from '@/src/components/AlignBehaviour';
-import AlreadyVegan from '@/src/components/AlreadyVegan';
 import AnimalCostOfLiving from '@/src/components/AnimalCostOfLiving';
 import AnimalsTreatedAsProducts from '@/src/components/AnimalsTreatedAsProducts';
 import ApatheticStance from '@/src/components/ApatheticStance';
@@ -88,7 +87,6 @@ export const STAGE_REGISTRY: Record<Stage, ComponentType<any>> = {
   [StageId.AnimalCostOfLiving]: AnimalCostOfLiving,
   [StageId.ReproductionControl]: ReproductionControl,
   [StageId.SolutionUse]: SolutionUse,
-  [StageId.AlreadyVegan]: AlreadyVegan,
   [StageId.SolutionKnow]: SolutionKnow,
   [StageId.VeganDietHealth]: VeganDietHealth,
   [StageId.AdditionalResources]: AdditionalResources,

@@ -47,13 +47,6 @@ export function nextAfterSolutionUse(answer: string): Stage {
     : StageId.SolutionKnow;
 }
 
-/** `YES` ends the flow early; otherwise continue to solution-know. */
-export function nextAfterAlreadyVegan(answer: string): Stage {
-  return isAny(answer, [AnswerId.YES])
-    ? StageId.RighteousChoice
-    : StageId.SolutionKnow;
-}
-
 export function nextAfterSolutionKnow(answer: string): Stage {
   if (isAny(answer, [AnswerId.DONT_KNOW, AnswerId.NO])) {
     return StageId.VeganDietHealth;

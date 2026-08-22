@@ -24,7 +24,6 @@ const MESSAGE_FILES = [
   'breaking-question',
   'stay-comfortable',
   'apathetic-stance',
-  'already-vegan',
   'let-them-live',
   'align-behaviour',
   'veganism-principle',

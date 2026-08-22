@@ -2,7 +2,6 @@ import { type Dispatch, type SetStateAction, useMemo } from 'react';
 
 import { type Stage, StageId } from '@/src/contexts/NavigationContext';
 import type { StoryTransitionStyle } from '@/src/contexts/StoryFlowContext';
-import { AnswerId } from '@/src/lib/answerIds';
 import type { PillOrigin } from '@/src/lib/pillOrigin';
 import { characterEvaluationAnswersMeetBar } from '@/src/lib/story/characterEvaluationBar';
 import {
@@ -54,13 +53,6 @@ export function useStoryFlowHandlers({
         if (typeof answer === 'string') {
           setAnswers((prev) => ({ ...prev, [completedStage]: answer }));
           trackAnswerSelected(completedStage, answer);
-
-          if (
-            completedStage === StageId.AlreadyVegan &&
-            answer === AnswerId.YES
-          ) {
-            trackFlowCompleted();
-          }
 
           const nextForAnswer = answerStageTransitions[completedStage];
           if (nextForAnswer) {
