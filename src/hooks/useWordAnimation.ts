@@ -48,6 +48,7 @@ export function useWordAnimation({
     hasAnimatedRef.current = false;
 
     let currentIndex = 0;
+    let completeTimeoutId: ReturnType<typeof setTimeout> | undefined;
     const interval = setInterval(() => {
       if (currentIndex < totalWords) {
         setVisibleWordCount(currentIndex + 1);
@@ -55,7 +56,7 @@ export function useWordAnimation({
       } else {
         clearInterval(interval);
         hasAnimatedRef.current = true;
-        setTimeout(() => {
+        completeTimeoutId = setTimeout(() => {
           setShowButton(true);
           if (onCompleteRef.current) {
             onCompleteRef.current();
@@ -64,7 +65,12 @@ export function useWordAnimation({
       }
     }, speed);
 
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+      if (completeTimeoutId !== undefined) {
+        clearTimeout(completeTimeoutId);
+      }
+    };
   }, [totalWords, speed, delayAfterComplete, textKey]);
 
   return {
