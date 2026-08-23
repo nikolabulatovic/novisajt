@@ -5,6 +5,8 @@ import { PostHogProvider as PHProvider } from 'posthog-js/react';
 
 import { useEffect } from 'react';
 
+import { startQueuedSessionRecording } from '@/src/lib/posthogSessionRecording';
+
 function isPostHogDisabled() {
   return process.env.NEXT_PUBLIC_POSTHOG_DISABLED === 'true';
 }
@@ -36,6 +38,9 @@ export default function PostHogProvider({
         maskAllInputs: false, // inputs are just answer buttons, safe to record
       },
       persistence: 'localStorage',
+      loaded: () => {
+        startQueuedSessionRecording(posthog);
+      },
     });
   }, []);
 
