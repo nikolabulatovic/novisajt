@@ -28,8 +28,6 @@ export interface StoryFlowContextValue {
     answer?: StageCompletionAnswer,
     pillOrigin?: PillOrigin,
   ) => void;
-  /** Advances to the next internal step inside a stage (e.g. beat 1 -> beat 2). */
-  goToNextStep: () => void;
   /**
    * Navigate to another stage; uses pill mask when configured, otherwise fades the main shell
    * out, swaps the stage, then fades back in (see `useStoryTransitions`).

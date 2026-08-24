@@ -36,15 +36,10 @@ const ANSWER_SHELL_STACK_GAP: Record<'sm' | 'md' | 'lg', string> = {
 
 export interface StoryStageChromeProps {
   stage: Stage;
-  /** Step inside one stage (default final step = 2). */
-  step?: 1 | 2;
 }
 
 /** Config-driven default stage renderer (body + next interaction). */
-export default function StoryStageChrome({
-  stage,
-  step = 2,
-}: StoryStageChromeProps) {
+export default function StoryStageChrome({ stage }: StoryStageChromeProps) {
   const cfg = stageConfig[stage];
   const body = cfg.body;
   const ui = cfg.additionalUiConfig;
@@ -127,7 +122,6 @@ export default function StoryStageChrome({
       <StoryStageNextInteraction
         stage={stage}
         visible={nextInteraction}
-        step={step}
         onAnswerChoiceShellChange={
           wrapsAnswerShell ? setAnswerShellState : undefined
         }

@@ -50,7 +50,6 @@ export default function Home() {
       gender,
       setGender,
       completeStage,
-      goToNextStep: () => {},
       transitionToStage,
       transitionViaBlackOverlayTo,
       trackAnswerSelected,

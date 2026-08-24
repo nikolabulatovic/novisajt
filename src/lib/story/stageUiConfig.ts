@@ -20,17 +20,6 @@ export type StoryStageSurfaceFrame = 'default' | 'inset-compact';
 /** Body copy tone over the stage. Defaults to {@link DEFAULT_STAGE_BODY.textTone}. */
 export type StoryStageTextTone = 'light' | 'dark';
 
-/** Two narrative beats on one stage: same background; mid-stage advance; final footer after beat 2 animation. */
-export interface NarrativeTwoBeatConfig {
-  /** next-intl namespace (e.g. AcceptingSelfOwnership). */
-  translationNamespace: string;
-  /** Raw JSON keys whose values are `string[]` for AnimatedText. */
-  beat1TextKey: string;
-  beat2TextKey: string;
-  /** Label key for the single advance control (same namespace). */
-  advanceLabelKey: string;
-}
-
 export interface StoryStageUiConfig {
   /** Defaults to {@link DEFAULT_STORY_UI.maxWidth}. */
   maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
@@ -143,8 +132,6 @@ interface BaseStageConfig {
   pillTransitionOverlayColor?: 'black' | 'white';
   /** Layout overrides only — defaults live in {@link DEFAULT_STORY_UI}. */
   additionalUiConfig?: StoryStageUiConfig;
-  /** When set, StoryStage renders two beats + advance + deferred footer; `children` are ignored. */
-  narrativeTwoBeat?: NarrativeTwoBeatConfig;
   /** Body animation overrides only — defaults live in {@link DEFAULT_STAGE_BODY}. */
   body?: StageBodyAnimatedText;
   /** Next interaction translation namespace. */
