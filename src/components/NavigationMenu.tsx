@@ -126,20 +126,26 @@ export default function NavigationMenu() {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
-  // Close menu when clicking outside
+  // Close on outside click or Escape
   useEffect(() => {
+    if (!isOpen) return;
+
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setIsOpen(false);
       }
     };
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsOpen(false);
+      }
+    };
 
-    if (isOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-    }
-
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('keydown', handleKeyDown);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleKeyDown);
     };
   }, [isOpen]);
 
@@ -152,9 +158,12 @@ export default function NavigationMenu() {
     <div ref={menuRef} className="fixed top-4 right-4 z-[100]">
       {/* Menu Button */}
       <button
+        type="button"
         onClick={() => setIsOpen(!isOpen)}
         className="w-12 h-12 rounded-full bg-gray-900/80 backdrop-blur-md border border-gray-800/50 hover:bg-gray-800/80 transition-all duration-300 flex items-center justify-center group hover:scale-110 shadow-lg"
         aria-label={t('toggleAriaLabel')}
+        aria-expanded={isOpen}
+        aria-controls="story-nav-panel"
       >
         <svg
           className={`w-6 h-6 text-gray-300 transition-transform duration-300 ${
@@ -175,6 +184,9 @@ export default function NavigationMenu() {
 
       {/* Menu Panel */}
       <div
+        id="story-nav-panel"
+        inert={!isOpen}
+        aria-hidden={!isOpen}
         className={`absolute top-16 right-0 w-56 sm:w-64 max-w-[calc(100vw-2rem)] bg-gray-900/95 backdrop-blur-lg border border-gray-800/50 rounded-xl shadow-2xl overflow-hidden transition-all duration-300 ${
           isOpen
             ? 'opacity-100 translate-y-0 pointer-events-auto'

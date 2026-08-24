@@ -1,6 +1,6 @@
 'use client';
 
-import { MouseEvent, useEffect, useState } from 'react';
+import { MouseEvent, useEffect, useRef, useState } from 'react';
 
 import { useTranslations } from 'next-intl';
 
@@ -72,6 +72,9 @@ interface GenderModalProps {
   onSelect: (choice: GenderModalChoice) => void;
 }
 
+const FOCUSABLE_SELECTOR =
+  'button:not([disabled]), [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+
 export default function GenderModal({ open, onSelect }: GenderModalProps) {
   const t = useTranslations('gender');
   const schedule = useScheduledTimeouts();
@@ -81,6 +84,8 @@ export default function GenderModal({ open, onSelect }: GenderModalProps) {
   const [visible, setVisible] = useState(false);
   const [fadingOut, setFadingOut] = useState(false);
   const [selected, setSelected] = useState<GenderModalChoice | null>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const previouslyFocusedRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     if (!open) {
@@ -92,8 +97,47 @@ export default function GenderModal({ open, onSelect }: GenderModalProps) {
 
     setSelected(null);
     setFadingOut(false);
-    const id = requestAnimationFrame(() => setVisible(true));
-    return () => cancelAnimationFrame(id);
+    previouslyFocusedRef.current = document.activeElement as HTMLElement | null;
+    const id = requestAnimationFrame(() => {
+      setVisible(true);
+      const first =
+        dialogRef.current?.querySelector<HTMLElement>(FOCUSABLE_SELECTOR);
+      first?.focus();
+    });
+    return () => {
+      cancelAnimationFrame(id);
+      previouslyFocusedRef.current?.focus();
+    };
+  }, [open]);
+
+  useEffect(() => {
+    if (!open) return;
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        return;
+      }
+      if (event.key !== 'Tab' || !dialogRef.current) return;
+      const focusable = [
+        ...dialogRef.current.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR),
+      ];
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+    };
   }, [open]);
 
   const handleChoice = (
@@ -153,6 +197,7 @@ export default function GenderModal({ open, onSelect }: GenderModalProps) {
       }}
     >
       <div
+        ref={dialogRef}
         role="dialog"
         aria-modal="true"
         aria-labelledby="gender-modal-title"
