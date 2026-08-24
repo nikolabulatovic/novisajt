@@ -40,7 +40,8 @@ function isOwnOpacityTransition(event: TransitionEvent<HTMLDivElement>) {
 
 /**
  * Owns current stage and the three leave animations: pill mask, shell crossfade,
- * and fade-to-black. `Home` still owns session state (answers, gender, tracking).
+ * and fade-to-black. Only one leave can run at a time; later starts are ignored.
+ * `Home` still owns session state (answers, gender, tracking).
  */
 export function useStoryTransitions() {
   const { allowsHeavyEffects } = useGpuEffects();
@@ -60,13 +61,25 @@ export function useStoryTransitions() {
     pendingNextStageRef.current = pendingNextStage;
   }, [pendingNextStage]);
 
+  const leaveInFlightRef = useRef(false);
+  const beginLeave = () => {
+    if (leaveInFlightRef.current) return false;
+    leaveInFlightRef.current = true;
+    return true;
+  };
+  const endLeave = () => {
+    leaveInFlightRef.current = false;
+  };
+
   const handlePillTransitionComplete = useCallback(() => {
     const next = pendingNextStageRef.current;
     if (next) {
       setStage(next);
     }
+    pendingNextStageRef.current = null;
     setPendingNextStage(null);
     setPendingPillOrigin(null);
+    endLeave();
   }, []);
 
   const transitionToStage = useCallback(
@@ -76,6 +89,7 @@ export function useStoryTransitions() {
       pillOrigin?: PillOrigin,
     ) => {
       if (newStage === stage) return;
+      if (!beginLeave()) return;
       const shouldUsePillTransition = shouldUsePillTransitionForStage(
         stage,
         style,
@@ -83,6 +97,7 @@ export function useStoryTransitions() {
       );
       if (shouldUsePillTransition) {
         setPendingPillOrigin(pillOrigin ?? null);
+        pendingNextStageRef.current = newStage;
         setPendingNextStage(newStage);
       } else {
         setPendingCrossfadeStage(newStage);
@@ -92,6 +107,7 @@ export function useStoryTransitions() {
   );
 
   const transitionViaBlackOverlayTo = useCallback((targetStage: Stage) => {
+    if (!beginLeave()) return;
     setStageAfterFade(targetStage);
     setBlackOverlay(true);
   }, []);
@@ -101,6 +117,7 @@ export function useStoryTransitions() {
       if (pending === null) return null;
       setStage(pending);
       setBlackOverlay(false);
+      endLeave();
       return null;
     });
   }, []);
@@ -125,6 +142,7 @@ export function useStoryTransitions() {
   const navigateToStage = useCallback(
     (newStage: Stage) => {
       if (newStage === stage) return;
+      if (!beginLeave()) return;
       setPendingCrossfadeStage(newStage);
     },
     [stage],
@@ -134,6 +152,7 @@ export function useStoryTransitions() {
     setPendingCrossfadeStage((pending) => {
       if (pending === null) return null;
       setStage(pending);
+      endLeave();
       return null;
     });
   }, []);
