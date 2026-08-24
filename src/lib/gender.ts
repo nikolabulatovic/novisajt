@@ -33,16 +33,31 @@ export type GenderChoiceAnalytics =
  */
 export type GenderedContent<T> = T | { male: T; female: T };
 
+function jsonKind(value: unknown): string {
+  if (value === null) return 'null';
+  if (Array.isArray(value)) return 'array';
+  return typeof value;
+}
+
+/**
+ * True only for the `{ male, female }` wrapper (exactly those two keys, same
+ * value kinds). Objects that merely *contain* male/female (e.g. gender.json
+ * `options`) are not treated as gendered copy.
+ */
 export function isGenderedContent<T>(
   value: unknown,
 ): value is { male: T; female: T } {
-  return (
-    typeof value === 'object' &&
-    value !== null &&
-    !Array.isArray(value) &&
-    'male' in value &&
-    'female' in value
-  );
+  if (typeof value !== 'object' || value === null || Array.isArray(value)) {
+    return false;
+  }
+  if (!('male' in value) || !('female' in value)) {
+    return false;
+  }
+  const keys = Object.keys(value);
+  if (keys.length !== 2) {
+    return false;
+  }
+  return jsonKind(value.male) === jsonKind(value.female);
 }
 
 /** Picks male/female branch when present; otherwise returns the value as-is. */
@@ -51,7 +66,7 @@ export function resolveGenderedContent<T>(
   gender: UserGender,
 ): T {
   if (isGenderedContent<T>(value)) {
-    return value[gender];
+    return resolveGenderedContent(value[gender] as GenderedContent<T>, gender);
   }
   return value as T;
 }
