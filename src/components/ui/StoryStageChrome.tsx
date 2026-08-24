@@ -4,12 +4,12 @@ import { useCallback, useEffect, useState } from 'react';
 
 import type { Stage } from '@/src/contexts/NavigationContext';
 import { useGenderedTranslations } from '@/src/hooks/useGenderedTranslations';
+import { useResolvedBackgroundImage } from '@/src/hooks/useResolvedBackgroundImage';
 import { AnimatedTextBlock } from '@/src/lib/i18n/animatedText';
 import {
   DEFAULT_STAGE_BODY,
   DEFAULT_STAGE_SHELL,
   DEFAULT_STORY_UI,
-  resolveBackgroundImage,
   stageConfig,
 } from '@/src/lib/story/stageUiConfig';
 import {
@@ -44,7 +44,7 @@ export default function StoryStageChrome({ stage }: StoryStageChromeProps) {
   const body = cfg.body;
   const ui = cfg.additionalUiConfig;
   const bodyTextKey = body?.textKey ?? DEFAULT_STAGE_BODY.textKey;
-  const { raw: rawBody, gender } = useGenderedTranslations(
+  const { raw: rawBody } = useGenderedTranslations(
     cfg.translationNamespace ?? stage,
   );
 
@@ -69,7 +69,7 @@ export default function StoryStageChrome({ stage }: StoryStageChromeProps) {
     [],
   );
 
-  const backgroundImage = resolveBackgroundImage(cfg.backgroundImage, gender);
+  const backgroundImage = useResolvedBackgroundImage(cfg.backgroundImage);
   const backgroundImageOpacity = cfg.opacity ?? DEFAULT_STAGE_SHELL.opacity;
   const backgroundImagePosition =
     cfg.backgroundPosition ?? DEFAULT_STAGE_SHELL.backgroundPosition;

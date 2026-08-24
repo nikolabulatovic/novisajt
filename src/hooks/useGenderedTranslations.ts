@@ -7,26 +7,13 @@ import { useTranslations } from 'next-intl';
 import { useStoryFlow } from '@/src/contexts/StoryFlowContext';
 import {
   DEFAULT_USER_GENDER,
-  type GenderedContent,
   type UserGender,
   resolveGenderedContent,
 } from '@/src/lib/gender';
-import { resolveBackgroundImage } from '@/src/lib/story/stageUiConfig';
 
 /** Current story address gender (defaults to male until chosen). */
 export function useStoryGender(): UserGender {
   return useStoryFlow().gender ?? DEFAULT_USER_GENDER;
-}
-
-/** Stage background path for the current story gender. */
-export function useResolvedBackgroundImage(
-  backgroundImage: GenderedContent<string> | undefined,
-): string | undefined {
-  const gender = useStoryGender();
-  return useMemo(
-    () => resolveBackgroundImage(backgroundImage, gender),
-    [backgroundImage, gender],
-  );
 }
 
 /**

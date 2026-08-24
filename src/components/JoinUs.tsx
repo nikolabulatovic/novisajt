@@ -4,10 +4,8 @@ import { useState } from 'react';
 
 import { STORY_STAGE_TEXT_TONE_CLASS } from '@/src/constants/storyStageTokens';
 import { StageId } from '@/src/contexts/NavigationContext';
-import {
-  useGenderedTranslations,
-  useResolvedBackgroundImage,
-} from '@/src/hooks/useGenderedTranslations';
+import { useGenderedTranslations } from '@/src/hooks/useGenderedTranslations';
+import { useResolvedBackgroundImage } from '@/src/hooks/useResolvedBackgroundImage';
 import { DEFAULT_STAGE_BODY, stageConfig } from '@/src/lib/story/stageUiConfig';
 
 import AnimatedText from './ui/AnimatedText';

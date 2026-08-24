@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 
 import { StageId } from '@/src/contexts/NavigationContext';
 import { useStoryFlow } from '@/src/contexts/StoryFlowContext';
-import { useResolvedBackgroundImage } from '@/src/hooks/useGenderedTranslations';
+import { useResolvedBackgroundImage } from '@/src/hooks/useResolvedBackgroundImage';
 import { mapLocalizedAnswerOptions } from '@/src/lib/mapLocalizedAnswerOptions';
 import { stageConfig } from '@/src/lib/story/stageUiConfig';
 

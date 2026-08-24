@@ -6,13 +6,11 @@ import { useGpuEffects } from '@/src/contexts/GpuEffectsContext';
 import { useStoryFlow } from '@/src/contexts/StoryFlowContext';
 import { useAnswerChoiceRipples } from '@/src/hooks/useAnswerChoiceRipples';
 import { useGenderedTranslations } from '@/src/hooks/useGenderedTranslations';
+import { useResolvedBackgroundImage } from '@/src/hooks/useResolvedBackgroundImage';
 import { useScheduledTimeouts } from '@/src/hooks/useScheduledTimeouts';
 import type { GenderedContent } from '@/src/lib/gender';
 import { resolveGenderedContent } from '@/src/lib/gender';
-import {
-  resolveBackgroundImage,
-  stageConfig,
-} from '@/src/lib/story/stageUiConfig';
+import { stageConfig } from '@/src/lib/story/stageUiConfig';
 import {
   answerChoiceShellClassName,
   scheduleAnswerChoiceExit,
@@ -101,7 +99,7 @@ export default function CharacterEvaluation() {
 
   const { backgroundImage: backgroundImageConfig, opacity = 0.8 } =
     stageConfig[StageId.Evaluation];
-  const backgroundImage = resolveBackgroundImage(backgroundImageConfig, gender);
+  const backgroundImage = useResolvedBackgroundImage(backgroundImageConfig);
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 md:p-8 relative bg-black overflow-hidden">

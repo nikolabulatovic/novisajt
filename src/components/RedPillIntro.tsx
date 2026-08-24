@@ -7,7 +7,7 @@ import { useTranslations } from 'next-intl';
 import type { Stage } from '@/src/contexts/NavigationContext';
 import { StageId } from '@/src/contexts/NavigationContext';
 import { useStoryFlow } from '@/src/contexts/StoryFlowContext';
-import { useResolvedBackgroundImage } from '@/src/hooks/useGenderedTranslations';
+import { useResolvedBackgroundImage } from '@/src/hooks/useResolvedBackgroundImage';
 import { useScheduledTimeouts } from '@/src/hooks/useScheduledTimeouts';
 import { useTracking } from '@/src/hooks/useTracking';
 import { AnswerId } from '@/src/lib/answerIds';

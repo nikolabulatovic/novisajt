@@ -5,6 +5,11 @@ import {
   type UserGender,
   resolveGenderedContent,
 } from '@/src/lib/gender';
+import {
+  type DeviceSizedPath,
+  type ViewportDevice,
+  resolveDeviceSizedPath,
+} from '@/src/lib/viewportDevice';
 
 export const NEXT_LABEL = 'next';
 
@@ -97,10 +102,11 @@ export interface StageAnswerOptionConfig {
 
 interface BaseStageConfig {
   /**
-   * Stage background path(s). Plain string for shared art; `{ male, female }`
-   * when counterparts exist (see {@link stageBackground}).
+   * Stage background path(s). A string, `{ male, female }`, and/or
+   * `{ default, mobile?, tablet? }` (see {@link stageBackground},
+   * {@link resolveBackgroundImage}).
    */
-  backgroundImage?: GenderedContent<string>;
+  backgroundImage?: GenderedContent<DeviceSizedPath>;
   /** Defaults to {@link DEFAULT_STAGE_SHELL.opacity}. */
   opacity?: number;
   /**
@@ -181,13 +187,20 @@ export function stageBackground(
   return `/images/${stage}.${fileExt}`;
 }
 
-/** Resolve config `backgroundImage` for the current story gender. */
+/**
+ * Resolve config `backgroundImage` for story gender, then viewport.
+ * Unset `mobile` / `tablet` keys keep `default` — no sibling fallback.
+ */
 export function resolveBackgroundImage(
-  backgroundImage: GenderedContent<string> | undefined,
+  backgroundImage: GenderedContent<DeviceSizedPath> | undefined,
   gender: UserGender,
+  device: ViewportDevice,
 ): string | undefined {
   if (backgroundImage == null) return undefined;
-  return resolveGenderedContent(backgroundImage, gender);
+  return resolveDeviceSizedPath(
+    resolveGenderedContent(backgroundImage, gender),
+    device,
+  );
 }
 
 export const stageConfig: Record<Stage, StageConfig> = {
@@ -604,8 +617,11 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
   [StageId.Excuse]: {
-    // Shared with Explanation — first stage owns the file
-    backgroundImage: stageBackground(StageId.Excuse),
+    backgroundImage: {
+      default: `/images/${StageId.Excuse}.jpg`,
+      mobile: `/images/${StageId.Excuse}_mobile.jpg`,
+      tablet: `/images/${StageId.Excuse}_mobile.jpg`,
+    },
     opacity: 0.4,
     nextInteraction: 'answer',
     answerOptions: [

@@ -3,13 +3,12 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { Stage } from '@/src/contexts/NavigationContext';
-import { useStoryGender } from '@/src/hooks/useGenderedTranslations';
 import { useMaskExpansion } from '@/src/hooks/useMaskExpansion';
 import { usePillTransitionExpansion } from '@/src/hooks/usePillTransitionExpansion';
+import { useResolvedBackgroundImage } from '@/src/hooks/useResolvedBackgroundImage';
 import type { PillOrigin } from '@/src/lib/pillOrigin';
 import {
   DEFAULT_STAGE_SHELL,
-  resolveBackgroundImage,
   stageConfig,
 } from '@/src/lib/story/stageUiConfig';
 
@@ -30,7 +29,6 @@ export default function PillTransitionLayer({
   origin,
   onComplete,
 }: PillTransitionLayerProps) {
-  const gender = useStoryGender();
   const onCompleteRef = useRef(onComplete);
   const [persistedStage, setPersistedStage] = useState<Stage | null>(null);
   const [persistedOrigin, setPersistedOrigin] = useState<PillOrigin | null>(
@@ -89,15 +87,14 @@ export default function PillTransitionLayer({
   });
 
   const activeStage = pendingNextStage ?? persistedStage;
+  const nextBackgroundImage = useResolvedBackgroundImage(
+    activeStage ? stageConfig[activeStage]?.backgroundImage : undefined,
+  );
 
   if (!pendingNextStage && !isFadingOut) return null;
   if (!activeStage) return null;
 
   const nextConfig = stageConfig[activeStage];
-  const nextBackgroundImage = resolveBackgroundImage(
-    nextConfig?.backgroundImage,
-    gender,
-  );
   const nextBackgroundPosition =
     nextConfig?.backgroundPosition ?? DEFAULT_STAGE_SHELL.backgroundPosition;
   const transitionOverlayColor =
