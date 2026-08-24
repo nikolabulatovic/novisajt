@@ -6,7 +6,7 @@ import Pill from './Pill';
 
 interface NextButtonProps {
   onClick: (origin?: PillOrigin) => void;
-  label?: string;
+  label: string;
   show?: boolean;
   align?: 'left' | 'center' | 'right';
   className?: string;
@@ -28,7 +28,7 @@ const marginTopClasses = {
 
 export default function NextButton({
   onClick,
-  label = 'Nastavi',
+  label,
   show = true,
   align = 'center',
   className = '',
