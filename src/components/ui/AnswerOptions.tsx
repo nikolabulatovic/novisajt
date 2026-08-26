@@ -72,7 +72,6 @@ export default function AnswerOptions({
   const [nonSelectedFading, setNonSelectedFading] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [showContent, setShowContent] = useState(true);
-  const [hoveredOptionId, setHoveredOptionId] = useState<string | null>(null);
 
   useEffect(() => {
     if (!animateBeforeSelect || !onAnswerChoiceShellChange) return;
@@ -163,8 +162,6 @@ export default function AnswerOptions({
         const isSelected = selectedOptionId === option.id;
         const shouldFade = nonSelectedFading && !isSelected;
         const shouldFadeOut = isTransitioning && isSelected;
-        const isHighlighted =
-          isSelected || (hoveredOptionId === option.id && !nonSelectedFading);
 
         return (
           <AnswerOption
@@ -174,11 +171,7 @@ export default function AnswerOptions({
             labelClassName={textClassName}
             className={compactStoryAnswerOptionClassName}
             onClick={(e) => handleAnimatedClick(e, option.id)}
-            onMouseEnter={() =>
-              !nonSelectedFading && setHoveredOptionId(option.id)
-            }
-            onMouseLeave={() => setHoveredOptionId(null)}
-            isSelected={isHighlighted}
+            isSelected={isSelected}
             isDisabled={nonSelectedFading || isTransitioning}
             shouldFade={shouldFade}
             shouldFadeOut={shouldFadeOut}

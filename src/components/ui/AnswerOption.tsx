@@ -13,8 +13,6 @@ interface AnswerOptionProps {
   fullWidth?: boolean;
   index?: number;
   className?: string;
-  onMouseEnter?: () => void;
-  onMouseLeave?: () => void;
   shouldFade?: boolean;
   shouldFadeOut?: boolean;
   /** Override label typography (e.g. compact story pills); defaults to evaluation-sized responsive text. */
@@ -29,8 +27,6 @@ export default function AnswerOption({
   isDisabled = false,
   fullWidth = true,
   className = '',
-  onMouseEnter,
-  onMouseLeave,
   shouldFade = false,
   shouldFadeOut = false,
   labelClassName,
@@ -49,8 +45,6 @@ export default function AnswerOption({
     <button
       onClick={onClick}
       disabled={isDisabled}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
       className={`${fullWidth ? 'w-full ' : ''}text-center p-4 sm:p-5 md:p-6 lg:p-8 rounded-xl transition-all duration-500 transform cursor-pointer ${surfaceBlur} group relative overflow-hidden animate-fade-in border ${
         shouldFade
           ? 'opacity-0 pointer-events-none border-transparent'

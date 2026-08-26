@@ -47,7 +47,6 @@ export default function CharacterEvaluation() {
     useState<Record<string, string>>(existingAnswers);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [showContent, setShowContent] = useState(true);
-  const [hoveredOption, setHoveredOption] = useState<number | null>(null);
   const [selectedOptionIndex, setSelectedOptionIndex] = useState<number | null>(
     null,
   );
@@ -159,19 +158,13 @@ export default function CharacterEvaluation() {
               const isSelected = selectedOptionIndex === index;
               const shouldFade = nonSelectedFading && !isSelected;
               const shouldFadeOut = isTransitioning && isSelected;
-              const isHighlighted =
-                isSelected || (hoveredOption === index && !nonSelectedFading);
 
               return (
                 <AnswerOption
                   key={index}
                   text={resolveGenderedContent(option.text, gender)}
                   onClick={(e) => handleAnswer(option.value, e, index)}
-                  onMouseEnter={() =>
-                    !nonSelectedFading && setHoveredOption(index)
-                  }
-                  onMouseLeave={() => setHoveredOption(null)}
-                  isSelected={isHighlighted}
+                  isSelected={isSelected}
                   isDisabled={nonSelectedFading || isTransitioning}
                   index={index}
                   shouldFade={shouldFade}
