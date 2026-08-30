@@ -2,11 +2,18 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 
+import ClipWindowTechnique from '@/src/components/ui/pillTransition/ClipWindowTechnique';
+import SvgMaskTechnique from '@/src/components/ui/pillTransition/SvgMaskTechnique';
 import { Stage } from '@/src/contexts/NavigationContext';
 import { useMaskExpansion } from '@/src/hooks/useMaskExpansion';
 import { usePillTransitionExpansion } from '@/src/hooks/usePillTransitionExpansion';
 import { useResolvedBackgroundImage } from '@/src/hooks/useResolvedBackgroundImage';
 import type { PillOrigin } from '@/src/lib/pillOrigin';
+import { selectPillTransitionTechnique } from '@/src/lib/pillTransition/selectTechnique';
+import type {
+  PillTransitionSceneProps,
+  PillTransitionTechniqueId,
+} from '@/src/lib/pillTransition/types';
 import {
   DEFAULT_STAGE_SHELL,
   stageConfig,
@@ -21,8 +28,12 @@ interface PillTransitionLayerProps {
 }
 
 /**
- * Full-screen overlay: expands a pill-shaped mask from `origin` to the viewport,
- * revealing the next stage background, then fades out after the real stage swaps in.
+ * Full-screen overlay: expands a pill-shaped reveal from `origin` to the viewport,
+ * showing the next stage background, then fades out after the real stage swaps in.
+ *
+ * Techniques (plugins): `clip-window` (current default) and `svg-mask`.
+ * Force either with `?pillTechnique=svg-mask` or `?pillTechnique=clip-window`.
+ * Active id is on `document.documentElement.dataset.pillTechnique`.
  */
 export default function PillTransitionLayer({
   pendingNextStage,
@@ -36,10 +47,18 @@ export default function PillTransitionLayer({
   );
   const [isFadingOut, setIsFadingOut] = useState(false);
   const [fadeOutOpacity, setFadeOutOpacity] = useState(1);
+  const [technique, setTechnique] =
+    useState<PillTransitionTechniqueId>('clip-window');
 
   useEffect(() => {
     onCompleteRef.current = onComplete;
   }, [onComplete]);
+
+  useEffect(() => {
+    const next = selectPillTransitionTechnique();
+    setTechnique(next);
+    document.documentElement.dataset.pillTechnique = next;
+  }, []);
 
   if (pendingNextStage && pendingNextStage !== persistedStage) {
     setPersistedStage(pendingNextStage);
@@ -95,80 +114,28 @@ export default function PillTransitionLayer({
   if (!activeStage) return null;
 
   const nextConfig = stageConfig[activeStage];
-  const nextBackgroundPosition =
-    nextConfig?.backgroundPosition ?? DEFAULT_STAGE_SHELL.backgroundPosition;
-  const transitionOverlayColor =
-    nextConfig?.pillTransitionOverlayColor ?? 'black';
-  const targetBgOpacity = nextConfig?.opacity ?? 0.8;
-  const gradientOverlayClasses = nextConfig?.gradientOverlayClasses ?? [];
-  const backgroundWash =
-    nextConfig?.backgroundWash ?? DEFAULT_STAGE_SHELL.backgroundWash;
+  const scene: PillTransitionSceneProps = {
+    backgroundWash:
+      nextConfig?.backgroundWash ?? DEFAULT_STAGE_SHELL.backgroundWash,
+    backgroundImage: nextBackgroundImage,
+    backgroundPosition:
+      nextConfig?.backgroundPosition ?? DEFAULT_STAGE_SHELL.backgroundPosition,
+    backgroundOpacity: nextConfig?.opacity ?? 0.8,
+    gradientOverlayClasses: nextConfig?.gradientOverlayClasses ?? [],
+    overlayColor: nextConfig?.pillTransitionOverlayColor ?? 'black',
+    expansionProgress,
+  };
 
-  const widthValue = parseFloat(maskStyle.width);
-  const heightValue = parseFloat(maskStyle.height);
-  const borderRadiusValue = parseFloat(maskStyle.borderRadius);
-  const leftValue = parseFloat(maskStyle.left);
-  const topValue = parseFloat(maskStyle.top);
-  const maskId = 'pill-transition-mask';
+  const Technique =
+    technique === 'clip-window' ? ClipWindowTechnique : SvgMaskTechnique;
 
   return (
     <div
       className="fixed inset-0 z-[10001] pointer-events-none"
       style={{ opacity: isFadingOut ? fadeOutOpacity : 1 }}
+      data-pill-technique={technique}
     >
-      <svg
-        className="absolute"
-        width="100%"
-        height="100%"
-        style={{ pointerEvents: 'none' }}
-      >
-        <defs>
-          <mask id={maskId}>
-            <rect
-              width={widthValue}
-              height={heightValue}
-              rx={borderRadiusValue}
-              ry={borderRadiusValue}
-              fill="white"
-              x={leftValue}
-              y={topValue}
-            />
-          </mask>
-        </defs>
-      </svg>
-
-      <div
-        className="absolute inset-0"
-        style={{
-          maskImage: `url(#${maskId})`,
-          WebkitMaskImage: `url(#${maskId})`,
-        }}
-      >
-        <div
-          className="absolute inset-0"
-          style={{ backgroundColor: backgroundWash }}
-        />
-        {nextBackgroundImage && (
-          <div
-            className="absolute inset-0 bg-cover bg-no-repeat"
-            style={{
-              backgroundImage: `url('${nextBackgroundImage}')`,
-              backgroundPosition: nextBackgroundPosition,
-              opacity: targetBgOpacity,
-            }}
-          />
-        )}
-        {gradientOverlayClasses.map((cls, i) => (
-          <div key={i} className={cls} />
-        ))}
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundColor: transitionOverlayColor,
-            opacity: 1 - expansionProgress,
-          }}
-        />
-      </div>
+      <Technique maskStyle={maskStyle} scene={scene} />
     </div>
   );
 }
