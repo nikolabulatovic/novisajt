@@ -14,7 +14,7 @@ export interface StoryStageProps {
  */
 export default function StoryStage({ stage }: StoryStageProps) {
   return (
-    <div key={stage} className="min-h-screen w-full">
+    <div key={stage} className="h-full w-full min-h-0">
       <StoryStageChrome stage={stage} />
     </div>
   );

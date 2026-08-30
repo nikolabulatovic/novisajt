@@ -37,6 +37,11 @@ const maxWidthClasses = {
   '4xl': 'max-w-4xl',
 };
 
+/**
+ * Stage shell: fills the dvh app frame. Short content is centered; tall content
+ * scrolls inside. The background is sticky to the visible frame so it is not
+ * clipped when the column scrolls.
+ */
 export default function PageContainer({
   children,
   backgroundImage,
@@ -53,21 +58,30 @@ export default function PageContainer({
   const washClass = backgroundWash === 'white' ? 'bg-white' : 'bg-black';
 
   return (
-    <div className={`relative min-h-screen w-full ${washClass} ${className}`}>
-      {backgroundImage && (
-        <div className="pointer-events-none absolute inset-0 z-0">
-          <BackgroundImage
-            src={backgroundImage}
-            opacity={backgroundImageOpacity}
-            position={backgroundImagePosition}
-            positionMd={backgroundImagePositionMd}
-            positionSm={backgroundImagePositionSm}
-            priority={backgroundImagePriority}
-          />
+    <div
+      className={`h-full min-h-0 w-full overflow-y-auto overscroll-y-contain ${washClass} ${className}`}
+    >
+      {/*
+        Sticky viewport-tall layer + negative margin so it does not push content
+        down. Image stays pinned to the visible stage while children scroll.
+      */}
+      <div className="pointer-events-none sticky top-0 z-0 h-0">
+        <div className={`relative h-dvh w-full ${washClass}`}>
+          {backgroundImage ? (
+            <BackgroundImage
+              src={backgroundImage}
+              opacity={backgroundImageOpacity}
+              position={backgroundImagePosition}
+              positionMd={backgroundImagePositionMd}
+              positionSm={backgroundImagePositionSm}
+              priority={backgroundImagePriority}
+            />
+          ) : null}
+          {showBackgroundEffects ? <BackgroundEffects /> : null}
         </div>
-      )}
-      {showBackgroundEffects && <BackgroundEffects />}
-      <div className="relative z-10 flex min-h-screen w-full items-center justify-center p-4 md:p-8">
+      </div>
+
+      <div className="relative z-10 flex min-h-full w-full items-center justify-center p-4 md:p-8">
         <div className={`${maxWidthClasses[maxWidth]} mx-auto w-full`}>
           {children}
         </div>

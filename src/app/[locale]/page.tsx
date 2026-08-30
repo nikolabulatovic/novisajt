@@ -80,9 +80,9 @@ export default function Home() {
           onTransitionEnd={blackOverlay.onTransitionEnd}
         />
         {showDevNav ? <NavigationMenu /> : null}
-        <main className="min-h-screen bg-black text-white overflow-hidden relative">
+        <main className="h-dvh bg-black text-white overflow-hidden relative">
           <div
-            className={`min-h-screen w-full transition-opacity ease-out motion-reduce:!duration-0 ${
+            className={`h-full w-full transition-opacity ease-out motion-reduce:!duration-0 ${
               shell.isFadingOut
                 ? 'opacity-0 duration-[950ms]'
                 : 'opacity-100 duration-[1450ms]'

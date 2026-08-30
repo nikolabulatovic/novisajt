@@ -8,7 +8,7 @@ export default function StayComfortable() {
   const t = useTranslations(StageId.StayComfortable);
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center p-8">
+    <div className="h-full min-h-0 bg-black flex items-center justify-center p-8 overflow-y-auto overscroll-y-contain">
       <p className="text-white text-2xl md:text-3xl text-center font-light tracking-wide">
         {t('message')}
       </p>

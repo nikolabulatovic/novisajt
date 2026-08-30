@@ -20,7 +20,22 @@
   }
 }
 
+/*
+ * Full-viewport stages: size to the *dynamic* viewport (dvh), not 100vh.
+ * On Android Chrome, 100vh is the large viewport (URL bar hidden), so
+ * min-h-screen layouts become taller than the visible area and rubber-band
+ * scroll even when content has empty space. Lock document scroll; stages
+ * that need overflow scroll inside PageContainer instead.
+ */
+html {
+  height: 100dvh;
+  overflow: hidden;
+}
+
 body {
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-source-serif), serif;

@@ -108,7 +108,7 @@ export default function RedPillIntro() {
   const backgroundImage = useResolvedBackgroundImage(cfg.backgroundImage);
 
   return (
-    <div key={StageId.Intro} className="min-h-screen w-full">
+    <div key={StageId.Intro} className="h-full w-full min-h-0">
       <PageContainer
         backgroundImage={backgroundImage}
         backgroundImageOpacity={cfg.opacity ?? DEFAULT_STAGE_SHELL.opacity}
