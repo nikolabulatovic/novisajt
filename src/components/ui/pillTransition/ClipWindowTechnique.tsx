@@ -1,12 +1,14 @@
-import PillTransitionScene from '@/src/components/ui/pillTransition/PillTransitionScene';
 import type { PillTransitionTechniqueProps } from '@/src/lib/pillTransition/types';
 
 /**
- * Reveal via CSS `clip-path: inset(... round ...)` on a full-viewport scene.
+ * Expanding rounded rect that paints the next-stage scene as its own
+ * background (viewport-sized `background-size`, offset with
+ * `background-position`).
  *
- * Prefer this over `overflow: hidden` + an offset inner layer: mobile WebKit
- * often fails to clip a larger absolutely-positioned child, so the next-stage
- * black wash paints the entire screen (looks like the stage “goes black”).
+ * Important for iOS WebKit: do **not** mount a full-viewport child under
+ * `overflow: hidden` / `clip-path`. Those often fail to clip there, so the
+ * next-stage black wash covers the whole screen. Everything here stays
+ * within the expanding box’s border box.
  */
 export default function ClipWindowTechnique({
   maskStyle,
@@ -19,23 +21,55 @@ export default function ClipWindowTechnique({
   const radius = parseFloat(maskStyle.borderRadius) || 0;
 
   const viewportWidth =
-    typeof window !== 'undefined' ? window.innerWidth : width;
+    typeof window !== 'undefined' ? window.innerWidth : Math.max(width, 1);
   const viewportHeight =
-    typeof window !== 'undefined' ? window.innerHeight : height;
+    typeof window !== 'undefined' ? window.innerHeight : Math.max(height, 1);
 
-  const right = Math.max(0, viewportWidth - left - width);
-  const bottom = Math.max(0, viewportHeight - top - height);
-  const clipPath = `inset(${top}px ${right}px ${bottom}px ${left}px round ${radius}px)`;
+  const sceneBackgroundSize = `${viewportWidth}px ${viewportHeight}px`;
+  const sceneBackgroundPosition = `${-left}px ${-top}px`;
 
   return (
     <div
-      className="absolute inset-0"
+      className="absolute"
       style={{
-        clipPath,
-        WebkitClipPath: clipPath,
+        left,
+        top,
+        width,
+        height,
+        borderRadius: radius,
+        overflow: 'hidden',
+        // Force a compositing layer so overflow + radius clip reliably on iOS.
+        transform: 'translateZ(0)',
+        WebkitTransform: 'translateZ(0)',
+        backgroundColor: scene.backgroundWash,
       }}
     >
-      <PillTransitionScene {...scene} />
+      {scene.backgroundImage ? (
+        <div
+          className="absolute inset-0"
+          style={{
+            borderRadius: radius,
+            backgroundImage: `url('${scene.backgroundImage}')`,
+            backgroundSize: sceneBackgroundSize,
+            backgroundPosition: sceneBackgroundPosition,
+            backgroundRepeat: 'no-repeat',
+            opacity: scene.backgroundOpacity,
+          }}
+        />
+      ) : null}
+
+      {scene.gradientOverlayClasses.map((cls, i) => (
+        <div key={i} className={cls} />
+      ))}
+
+      <div
+        className="absolute inset-0"
+        style={{
+          borderRadius: radius,
+          backgroundColor: scene.overlayColor,
+          opacity: 1 - scene.expansionProgress,
+        }}
+      />
     </div>
   );
 }
