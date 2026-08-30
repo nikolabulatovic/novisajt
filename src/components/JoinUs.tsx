@@ -6,7 +6,11 @@ import { STORY_STAGE_TEXT_TONE_CLASS } from '@/src/constants/storyStageTokens';
 import { StageId } from '@/src/contexts/NavigationContext';
 import { useGenderedTranslations } from '@/src/hooks/useGenderedTranslations';
 import { useResolvedBackgroundImage } from '@/src/hooks/useResolvedBackgroundImage';
-import { DEFAULT_STAGE_BODY, stageConfig } from '@/src/lib/story/stageUiConfig';
+import {
+  DEFAULT_STAGE_BODY,
+  DEFAULT_STAGE_SHELL,
+  stageConfig,
+} from '@/src/lib/story/stageUiConfig';
 
 import AnimatedText from './ui/AnimatedText';
 import ContentContainer from './ui/ContentContainer';
@@ -45,6 +49,7 @@ export default function JoinUs() {
       backgroundImageOpacity={opacity}
       backgroundWash={backgroundWash}
       maxWidth={ui?.maxWidth ?? '3xl'}
+      scrollMode={cfg.scrollMode ?? DEFAULT_STAGE_SHELL.scrollMode}
     >
       <ContentContainer spacing="lg">
         <StageTextSurface

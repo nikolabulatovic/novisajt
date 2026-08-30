@@ -8,7 +8,10 @@ import { StageId } from '@/src/contexts/NavigationContext';
 import { useStoryFlow } from '@/src/contexts/StoryFlowContext';
 import { useResolvedBackgroundImage } from '@/src/hooks/useResolvedBackgroundImage';
 import type { PillOrigin } from '@/src/lib/pillOrigin';
-import { stageConfig } from '@/src/lib/story/stageUiConfig';
+import {
+  DEFAULT_STAGE_SHELL,
+  stageConfig,
+} from '@/src/lib/story/stageUiConfig';
 
 import AnimatedText from './ui/AnimatedText';
 import ContentContainer from './ui/ContentContainer';
@@ -49,6 +52,7 @@ export default function SpasaStory() {
     backgroundImage: backgroundImageConfig,
     opacity = 0.8,
     additionalUiConfig,
+    scrollMode,
   } = stageConfig[StageId.SpasaStory];
   const backgroundImage = useResolvedBackgroundImage(backgroundImageConfig);
 
@@ -56,6 +60,7 @@ export default function SpasaStory() {
     <PageContainer
       backgroundImage={backgroundImage}
       backgroundImageOpacity={opacity}
+      scrollMode={scrollMode ?? DEFAULT_STAGE_SHELL.scrollMode}
     >
       {!showFinalMessage ? (
         <ContentContainer spacing="lg">

@@ -86,6 +86,13 @@ export const DEFAULT_STORY_UI = {
   textSurfaceFrame: 'default' as const,
 };
 
+/**
+ * How tall stages scroll relative to the background.
+ * - `content` — image pinned to the viewport; text scrolls over it (default).
+ * - `stage` — image and text scroll together.
+ */
+export type StageScrollMode = 'content' | 'stage';
+
 /** Top-level stage shell defaults applied by {@link StoryStageChrome}. */
 export const DEFAULT_STAGE_SHELL = {
   opacity: 0.8,
@@ -93,6 +100,8 @@ export const DEFAULT_STAGE_SHELL = {
   showBackgroundEffects: false,
   /** Under the dimmed stage image: `black` darkens, `white` lightens. */
   backgroundWash: 'black' as const,
+  /** Cinematic fixed backdrop; opt into `stage` per stage when needed. */
+  scrollMode: 'content' as StageScrollMode,
 };
 
 export interface StageAnswerOptionConfig {
@@ -131,6 +140,11 @@ interface BaseStageConfig {
   glassVariant?: 'dark' | 'light';
   /** Defaults to {@link DEFAULT_STAGE_SHELL.showBackgroundEffects}. */
   showBackgroundEffects?: boolean;
+  /**
+   * Defaults to {@link DEFAULT_STAGE_SHELL.scrollMode} (`content`).
+   * Use `stage` only when the background should scroll with the copy.
+   */
+  scrollMode?: StageScrollMode;
   /**
    * Overlay color during pill mask expansion *into* this stage.
    * Defaults to `black` in {@link PillTransitionLayer}.

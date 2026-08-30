@@ -119,6 +119,7 @@ export default function RedPillIntro() {
         showBackgroundEffects={
           cfg.showBackgroundEffects ?? DEFAULT_STAGE_SHELL.showBackgroundEffects
         }
+        scrollMode={cfg.scrollMode ?? DEFAULT_STAGE_SHELL.scrollMode}
       >
         <ContentContainer
           spacing={ui?.contentSpacing ?? DEFAULT_STORY_UI.contentSpacing}

@@ -141,6 +141,7 @@ export default function StoryStageChrome({ stage }: StoryStageChromeProps) {
       showBackgroundEffects={
         cfg.showBackgroundEffects ?? DEFAULT_STAGE_SHELL.showBackgroundEffects
       }
+      scrollMode={cfg.scrollMode ?? DEFAULT_STAGE_SHELL.scrollMode}
     >
       <ContentContainer
         spacing={contentSpacing}

@@ -8,7 +8,10 @@ import { StageId } from '@/src/contexts/NavigationContext';
 import { useStoryFlow } from '@/src/contexts/StoryFlowContext';
 import { useResolvedBackgroundImage } from '@/src/hooks/useResolvedBackgroundImage';
 import type { PillOrigin } from '@/src/lib/pillOrigin';
-import { stageConfig } from '@/src/lib/story/stageUiConfig';
+import {
+  DEFAULT_STAGE_SHELL,
+  stageConfig,
+} from '@/src/lib/story/stageUiConfig';
 
 import PageContainer from './ui/PageContainer';
 import Pill from './ui/Pill';
@@ -35,8 +38,11 @@ export default function ChoiceStage() {
     trackAnswerSelected(StageId.Choice, pill);
   };
 
-  const { backgroundImage: backgroundImageConfig, opacity } =
-    stageConfig[StageId.Choice];
+  const {
+    backgroundImage: backgroundImageConfig,
+    opacity,
+    scrollMode,
+  } = stageConfig[StageId.Choice];
   const backgroundImage = useResolvedBackgroundImage(backgroundImageConfig);
 
   return (
@@ -45,6 +51,7 @@ export default function ChoiceStage() {
       backgroundImageOpacity={opacity}
       backgroundImagePriority
       showBackgroundEffects={false}
+      scrollMode={scrollMode ?? DEFAULT_STAGE_SHELL.scrollMode}
     >
       {/* Animated background - minimal */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">

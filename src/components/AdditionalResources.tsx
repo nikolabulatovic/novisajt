@@ -6,7 +6,10 @@ import { StageId } from '@/src/contexts/NavigationContext';
 import { useStoryFlow } from '@/src/contexts/StoryFlowContext';
 import { useResolvedBackgroundImage } from '@/src/hooks/useResolvedBackgroundImage';
 import { mapLocalizedAnswerOptions } from '@/src/lib/mapLocalizedAnswerOptions';
-import { stageConfig } from '@/src/lib/story/stageUiConfig';
+import {
+  DEFAULT_STAGE_SHELL,
+  stageConfig,
+} from '@/src/lib/story/stageUiConfig';
 
 import AnswerOptions from './ui/AnswerOptions';
 import ContentContainer from './ui/ContentContainer';
@@ -29,6 +32,7 @@ export default function AdditionalResources() {
       backgroundImage={backgroundImage}
       backgroundImageOpacity={opacity}
       maxWidth="4xl"
+      scrollMode={stageCfg.scrollMode ?? DEFAULT_STAGE_SHELL.scrollMode}
     >
       <ContentContainer spacing="md">
         <StageTextSurface
