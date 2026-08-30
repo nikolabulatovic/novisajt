@@ -3,7 +3,6 @@
 import type { TransitionEvent } from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { useGpuEffects } from '@/src/contexts/GpuEffectsContext';
 import { type Stage, StageId } from '@/src/contexts/NavigationContext';
 import type { StoryTransitionStyle } from '@/src/contexts/StoryFlowContext';
 import type { PillOrigin } from '@/src/lib/pillOrigin';
@@ -14,15 +13,16 @@ const BLACK_OVERLAY_FALLBACK_MS = 2200;
 /** Shell fade-out is `duration-[950ms]`; slack for browsers that skip `transitionend`. */
 const CROSSFADE_FALLBACK_MS = 1100;
 
+/**
+ * Pill expand is intentionally not gated by {@link useGpuEffects} /
+ * `allowsHeavyEffects`. That tier is for crashy blur stacks; the clip-window
+ * (and svg-mask) reveals are a different cost profile and were being skipped
+ * on capable phones misclassified as `reduced`.
+ */
 function shouldUsePillTransitionForStage(
   stage: Stage,
   style: StoryTransitionStyle,
-  allowsHeavyEffects: boolean,
 ): boolean {
-  // SVG mask expansion + full-bleed image composite stutters on weak GPUs (e.g. Adreno 506).
-  if (!allowsHeavyEffects) {
-    return false;
-  }
   if (style === 'pill') {
     return true;
   }
@@ -44,7 +44,6 @@ function isOwnOpacityTransition(event: TransitionEvent<HTMLDivElement>) {
  * `Home` still owns session state (answers, gender, tracking).
  */
 export function useStoryTransitions() {
-  const { allowsHeavyEffects } = useGpuEffects();
   const [stage, setStage] = useState<Stage>(StageId.Choice);
 
   const [pendingNextStage, setPendingNextStage] = useState<Stage | null>(null);
@@ -93,7 +92,6 @@ export function useStoryTransitions() {
       const shouldUsePillTransition = shouldUsePillTransitionForStage(
         stage,
         style,
-        allowsHeavyEffects,
       );
       if (shouldUsePillTransition) {
         setPendingPillOrigin(pillOrigin ?? null);
@@ -103,7 +101,7 @@ export function useStoryTransitions() {
         setPendingCrossfadeStage(newStage);
       }
     },
-    [stage, allowsHeavyEffects],
+    [stage],
   );
 
   const transitionViaBlackOverlayTo = useCallback((targetStage: Stage) => {

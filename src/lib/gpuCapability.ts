@@ -6,7 +6,7 @@
 
 export type GpuEffectsTier = 'full' | 'reduced';
 
-const CACHE_KEY = 'saznaj.gpuEffectsTier';
+const CACHE_KEY = 'saznaj.gpuEffectsTier.v2';
 
 function readCachedTier(): GpuEffectsTier | null {
   try {
@@ -71,6 +71,12 @@ function classifyPowerVr(renderer: string): GpuEffectsTier | null {
   return 'reduced';
 }
 
+/** Samsung Xclipse (Exynos, e.g. Galaxy S22 EU) — fine for our blur budget. */
+function classifyXclipse(renderer: string): GpuEffectsTier | null {
+  if (!/xclipse/i.test(renderer)) return null;
+  return 'full';
+}
+
 function classifyRenderer(renderer: string): GpuEffectsTier | null {
   const lower = renderer.toLowerCase();
 
@@ -99,6 +105,7 @@ function classifyRenderer(renderer: string): GpuEffectsTier | null {
   return (
     classifyAdreno(renderer) ??
     classifyMali(renderer) ??
+    classifyXclipse(renderer) ??
     classifyPowerVr(renderer)
   );
 }
@@ -109,15 +116,15 @@ function classifyFromDeviceHints(): GpuEffectsTier {
   const cores = navigator.hardwareConcurrency ?? 8;
   const ua = navigator.userAgent;
   const isAndroid = /Android/i.test(ua);
-  const isMobile = /Mobi|Android|iPhone|iPad/i.test(ua);
 
   // Chromium exposes approximate RAM in GB; G7 Power is typically 3–4.
+  // Only treat clearly low-end hints as reduced — a blanket "unknown mobile →
+  // reduced" false-positived capable phones when WEBGL_debug_renderer_info
+  // was blocked (common on Android Chrome / Brave).
   if (typeof memory === 'number' && memory <= 2) return 'reduced';
   if (isAndroid && typeof memory === 'number' && memory <= 4) return 'reduced';
   if (isAndroid && cores <= 4) return 'reduced';
 
-  // Unknown mobile without a renderer string: prefer safety.
-  if (isMobile) return 'reduced';
   return 'full';
 }
 
