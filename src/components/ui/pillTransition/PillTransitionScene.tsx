@@ -11,7 +11,7 @@ export default function PillTransitionScene({
   expansionProgress,
 }: PillTransitionSceneProps) {
   return (
-    <>
+    <div className="absolute inset-0">
       <div
         className="absolute inset-0"
         style={{ backgroundColor: backgroundWash }}
@@ -36,6 +36,6 @@ export default function PillTransitionScene({
           opacity: 1 - expansionProgress,
         }}
       />
-    </>
+    </div>
   );
 }
