@@ -1,3 +1,4 @@
+import BackgroundImage from '@/src/components/ui/BackgroundImage';
 import type { PillTransitionSceneProps } from '@/src/lib/pillTransition/types';
 
 /** Next-stage wash + image + gradients + color overlay (technique-agnostic). */
@@ -17,13 +18,10 @@ export default function PillTransitionScene({
         style={{ backgroundColor: backgroundWash }}
       />
       {backgroundImage ? (
-        <div
-          className="absolute inset-0 bg-cover bg-no-repeat"
-          style={{
-            backgroundImage: `url('${backgroundImage}')`,
-            backgroundPosition,
-            opacity: backgroundOpacity,
-          }}
+        <BackgroundImage
+          src={backgroundImage}
+          opacity={backgroundOpacity}
+          position={backgroundPosition}
         />
       ) : null}
       {gradientOverlayClasses.map((cls, i) => (

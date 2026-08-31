@@ -8,6 +8,7 @@ import { Stage } from '@/src/contexts/NavigationContext';
 import { useMaskExpansion } from '@/src/hooks/useMaskExpansion';
 import { usePillTransitionExpansion } from '@/src/hooks/usePillTransitionExpansion';
 import { useResolvedBackgroundImage } from '@/src/hooks/useResolvedBackgroundImage';
+import { useViewportDevice } from '@/src/hooks/useViewportDevice';
 import type { PillOrigin } from '@/src/lib/pillOrigin';
 import { selectPillTransitionTechnique } from '@/src/lib/pillTransition/selectTechnique';
 import type {
@@ -16,6 +17,7 @@ import type {
 } from '@/src/lib/pillTransition/types';
 import {
   DEFAULT_STAGE_SHELL,
+  resolveBackgroundPosition,
   stageConfig,
 } from '@/src/lib/story/stageUiConfig';
 
@@ -106,6 +108,7 @@ export default function PillTransitionLayer({
   });
 
   const activeStage = pendingNextStage ?? persistedStage;
+  const device = useViewportDevice();
   const nextBackgroundImage = useResolvedBackgroundImage(
     activeStage ? stageConfig[activeStage]?.backgroundImage : undefined,
   );
@@ -118,8 +121,7 @@ export default function PillTransitionLayer({
     backgroundWash:
       nextConfig?.backgroundWash ?? DEFAULT_STAGE_SHELL.backgroundWash,
     backgroundImage: nextBackgroundImage,
-    backgroundPosition:
-      nextConfig?.backgroundPosition ?? DEFAULT_STAGE_SHELL.backgroundPosition,
+    backgroundPosition: resolveBackgroundPosition(nextConfig, device),
     backgroundOpacity: nextConfig?.opacity ?? 0.8,
     gradientOverlayClasses: nextConfig?.gradientOverlayClasses ?? [],
     overlayColor: nextConfig?.pillTransitionOverlayColor ?? 'black',

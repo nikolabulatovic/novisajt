@@ -217,6 +217,33 @@ export function resolveBackgroundImage(
   );
 }
 
+/**
+ * Object-position for the current viewport bucket (sm / md / default).
+ * Used by stages and the pill transition so the expand handoff matches.
+ */
+export function resolveBackgroundPosition(
+  config:
+    | {
+        backgroundPosition?: string;
+        backgroundPositionMd?: string;
+        backgroundPositionSm?: string;
+      }
+    | undefined,
+  device: ViewportDevice,
+): string {
+  const fallback =
+    config?.backgroundPosition ?? DEFAULT_STAGE_SHELL.backgroundPosition;
+  if (device === 'mobile') {
+    return config?.backgroundPositionSm ?? fallback;
+  }
+  if (device === 'tablet') {
+    return (
+      config?.backgroundPositionMd ?? config?.backgroundPositionSm ?? fallback
+    );
+  }
+  return fallback;
+}
+
 export const stageConfig: Record<Stage, StageConfig> = {
   [StageId.Choice]: {
     backgroundImage: stageBackground(StageId.Choice, 'webp'),

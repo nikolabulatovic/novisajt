@@ -7,6 +7,7 @@ export type PillTransitionTechniqueId = 'svg-mask' | 'clip-window';
 export interface PillTransitionSceneProps {
   backgroundWash: string;
   backgroundImage?: string;
+  /** Resolved object-position for the current viewport (sm/md/default). */
   backgroundPosition: string;
   backgroundOpacity: number;
   gradientOverlayClasses: string[];

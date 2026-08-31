@@ -1,14 +1,12 @@
+import BackgroundImage from '@/src/components/ui/BackgroundImage';
 import type { PillTransitionTechniqueProps } from '@/src/lib/pillTransition/types';
 
 /**
- * Expanding rounded rect that paints the next-stage scene as its own
- * background (viewport-sized `background-size`, offset with
- * `background-position`).
+ * Expanding rounded window that reveals a full-viewport stage backdrop.
  *
- * Important for iOS WebKit: do **not** mount a full-viewport child under
- * `overflow: hidden` / `clip-path`. Those often fail to clip there, so the
- * next-stage black wash covers the whole screen. Everything here stays
- * within the expanding box’s border box.
+ * Outer box grows from the pill; inner layer is viewport-sized and offset so
+ * the crop tracks the reveal. Uses the same {@link BackgroundImage} as the
+ * real stage (`object-cover` + resolved position) so the handoff does not snap.
  */
 export default function ClipWindowTechnique({
   maskStyle,
@@ -25,9 +23,6 @@ export default function ClipWindowTechnique({
   const viewportHeight =
     typeof window !== 'undefined' ? window.innerHeight : Math.max(height, 1);
 
-  const sceneBackgroundSize = `${viewportWidth}px ${viewportHeight}px`;
-  const sceneBackgroundPosition = `${-left}px ${-top}px`;
-
   return (
     <div
       className="absolute"
@@ -38,38 +33,42 @@ export default function ClipWindowTechnique({
         height,
         borderRadius: radius,
         overflow: 'hidden',
-        // Force a compositing layer so overflow + radius clip reliably on iOS.
         transform: 'translateZ(0)',
         WebkitTransform: 'translateZ(0)',
         backgroundColor: scene.backgroundWash,
       }}
     >
-      {scene.backgroundImage ? (
+      <div
+        className="absolute"
+        style={{
+          left: -left,
+          top: -top,
+          width: viewportWidth,
+          height: viewportHeight,
+        }}
+      >
+        <div
+          className="absolute inset-0"
+          style={{ backgroundColor: scene.backgroundWash }}
+        />
+        {scene.backgroundImage ? (
+          <BackgroundImage
+            src={scene.backgroundImage}
+            opacity={scene.backgroundOpacity}
+            position={scene.backgroundPosition}
+          />
+        ) : null}
+        {scene.gradientOverlayClasses.map((cls, i) => (
+          <div key={i} className={cls} />
+        ))}
         <div
           className="absolute inset-0"
           style={{
-            borderRadius: radius,
-            backgroundImage: `url('${scene.backgroundImage}')`,
-            backgroundSize: sceneBackgroundSize,
-            backgroundPosition: sceneBackgroundPosition,
-            backgroundRepeat: 'no-repeat',
-            opacity: scene.backgroundOpacity,
+            backgroundColor: scene.overlayColor,
+            opacity: 1 - scene.expansionProgress,
           }}
         />
-      ) : null}
-
-      {scene.gradientOverlayClasses.map((cls, i) => (
-        <div key={i} className={cls} />
-      ))}
-
-      <div
-        className="absolute inset-0"
-        style={{
-          borderRadius: radius,
-          backgroundColor: scene.overlayColor,
-          opacity: 1 - scene.expansionProgress,
-        }}
-      />
+      </div>
     </div>
   );
 }
