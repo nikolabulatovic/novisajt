@@ -10,6 +10,7 @@ import {
   StoryFlowProvider,
 } from '@/src/contexts/StoryFlowContext';
 import { useDevNavAccess } from '@/src/hooks/useDevNavAccess';
+import { usePreloadNextStageImages } from '@/src/hooks/usePreloadNextStageImages';
 import { useStoryFlowHandlers } from '@/src/hooks/useStoryFlowHandlers';
 import { useStoryTransitions } from '@/src/hooks/useStoryTransitions';
 import { useTracking } from '@/src/hooks/useTracking';
@@ -32,6 +33,8 @@ export default function Home() {
   } = useStoryTransitions();
   const { trackStageViewed, trackAnswerSelected, trackFlowCompleted } =
     useTracking();
+
+  usePreloadNextStageImages(stage, gender);
 
   useEffect(() => {
     trackStageViewed(stage);

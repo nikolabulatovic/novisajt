@@ -2,8 +2,6 @@
 
 import type { CSSProperties } from 'react';
 
-import Image from 'next/image';
-
 interface BackgroundImageProps {
   src: string;
   opacity?: number;
@@ -14,10 +12,14 @@ interface BackgroundImageProps {
   /** Mobile (< md) object-position override. */
   positionSm?: string;
   className?: string;
-  /** Preload + high fetch priority — use for the first-paint / LCP stage only. */
+  /** High fetch priority — use for the LCP / first-paint stage only. */
   priority?: boolean;
 }
 
+/**
+ * Full-bleed stage photo from a static public path (no `/_next/image`).
+ * Same URL is used by the pill transition so expand handoff and stage match.
+ */
 export default function BackgroundImage({
   src,
   opacity = 0.8,
@@ -43,14 +45,13 @@ export default function BackgroundImage({
       } ${className}`}
       style={{ opacity, ...responsiveStyle }}
     >
-      <Image
+      {/* eslint-disable-next-line @next/next/no-img-element -- static public assets; shared URL with pill transition */}
+      <img
         src={src}
         alt=""
-        fill
-        priority={priority}
-        sizes="100vw"
-        quality={75}
-        className="object-cover"
+        decoding="async"
+        fetchPriority={priority ? 'high' : 'auto'}
+        className="absolute inset-0 h-full w-full object-cover"
         style={hasResponsivePosition ? undefined : { objectPosition: position }}
       />
     </div>
