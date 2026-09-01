@@ -175,6 +175,7 @@ export default function AnswerOptions({
             isDisabled={nonSelectedFading || isTransitioning}
             shouldFade={shouldFade}
             shouldFadeOut={shouldFadeOut}
+            useSurfaceBlur={false}
           >
             <AnswerChoiceRippleSpans ripples={ripples[option.id] ?? []} />
           </AnswerOption>

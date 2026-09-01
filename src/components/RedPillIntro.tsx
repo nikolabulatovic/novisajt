@@ -33,6 +33,7 @@ import {
 import GenderModal, { type GenderModalChoice } from './GenderModal';
 import AnimatedText from './ui/AnimatedText';
 import AnswerOptions from './ui/AnswerOptions';
+import AnswerReveal from './ui/AnswerReveal';
 import ContentContainer from './ui/ContentContainer';
 import PageContainer from './ui/PageContainer';
 import StageTextSurface from './ui/StageTextSurface';
@@ -156,20 +157,14 @@ export default function RedPillIntro() {
                 onComplete={revealAnswers}
               />
             </StageTextSurface>
-            <div
-              className={`transition-opacity duration-300 ${
-                answersVisible
-                  ? 'visible opacity-100'
-                  : 'invisible opacity-0 pointer-events-none'
-              }`}
-            >
+            <AnswerReveal show={answersVisible}>
               <AnswerOptions
                 options={options}
                 onSelect={handleAnswerSelect}
                 onAnswerChoiceShellChange={setAnswerShellState}
                 resolveSelectBehavior={resolveSelectBehavior}
               />
-            </div>
+            </AnswerReveal>
           </div>
         </ContentContainer>
       </PageContainer>

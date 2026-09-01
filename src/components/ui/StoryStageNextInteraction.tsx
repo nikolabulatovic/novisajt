@@ -8,6 +8,7 @@ import { stageConfig } from '@/src/lib/story/stageUiConfig';
 import type { AnswerChoiceShellState } from '@/src/lib/ui/answerChoiceInteraction';
 
 import AnswerOptions from './AnswerOptions';
+import AnswerReveal from './AnswerReveal';
 import StoryStageNextPill from './StoryStageNextPillFooter';
 
 interface StoryStageNextInteractionProps {
@@ -32,28 +33,24 @@ export default function StoryStageNextInteraction({
     return null;
   }
 
-  const visibilityClass = visible
-    ? 'visible opacity-100'
-    : 'invisible opacity-0 pointer-events-none';
-
   if (nextInteraction === 'answer') {
     if (!stageCfg.answerOptions?.length) {
       return null;
     }
     return (
-      <div className={`transition-opacity duration-300 ${visibilityClass}`}>
+      <AnswerReveal show={visible}>
         <AnswerOptions
           options={mapLocalizedAnswerOptions(stageCfg.answerOptions, label)}
           onSelect={(answerId) => completeStage(stage, answerId)}
           onAnswerChoiceShellChange={onAnswerChoiceShellChange}
         />
-      </div>
+      </AnswerReveal>
     );
   }
 
   return (
-    <div className={`transition-opacity duration-300 ${visibilityClass}`}>
+    <AnswerReveal show={visible}>
       <StoryStageNextPill stage={stage} visible={visible} />
-    </div>
+    </AnswerReveal>
   );
 }

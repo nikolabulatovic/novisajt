@@ -168,6 +168,7 @@ export default function CharacterEvaluation() {
                     isSelected={isSelected}
                     isDisabled={nonSelectedFading || isTransitioning}
                     index={index}
+                    entranceAnimation
                     shouldFade={shouldFade}
                     shouldFadeOut={shouldFadeOut}
                   >
