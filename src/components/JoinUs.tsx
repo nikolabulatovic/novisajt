@@ -25,6 +25,12 @@ import StageTextSurface from './ui/StageTextSurface';
 const groupButtonClassName =
   'cursor-pointer group text-center transition-transform duration-300';
 
+const JOIN_GROUP_LINKS = {
+  whatsapp: 'https://chat.whatsapp.com/BaCslglrbcQDYTXViNHK7U',
+  discord: 'https://discord.gg/PZHy3bBKd3',
+  telegram: 'https://t.me/+5iq0YpIQuA03YTM8',
+} as const;
+
 export default function JoinUs() {
   const { t, raw } = useGenderedTranslations(StageId.JoinUs);
   const [showGroups, setShowGroups] = useState(false);
@@ -83,32 +89,47 @@ export default function JoinUs() {
             showGroups ? 'opacity-100' : 'opacity-0 pointer-events-none'
           }`}
         >
-          <button type="button" className={groupButtonClassName}>
+          <a
+            href={JOIN_GROUP_LINKS.whatsapp}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={groupButtonClassName}
+          >
             <WhatsAppBadge />
             <p
               className={`mt-1 text-base md:text-lg lg:text-xl font-medium tracking-wide ${textToneClass}`}
             >
               WhatsApp
             </p>
-          </button>
+          </a>
 
-          <button type="button" className={groupButtonClassName}>
+          <a
+            href={JOIN_GROUP_LINKS.discord}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={groupButtonClassName}
+          >
             <DiscordBadge />
             <p
               className={`mt-1 text-base md:text-lg lg:text-xl font-medium tracking-wide ${textToneClass}`}
             >
               Discord
             </p>
-          </button>
+          </a>
 
-          <button type="button" className={groupButtonClassName}>
+          <a
+            href={JOIN_GROUP_LINKS.telegram}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={groupButtonClassName}
+          >
             <TelegramBadge />
             <p
               className={`mt-1 text-base md:text-lg lg:text-xl font-medium tracking-wide ${textToneClass}`}
             >
               Telegram
             </p>
-          </button>
+          </a>
         </div>
       </ContentContainer>
     </PageContainer>
