@@ -2,7 +2,10 @@
 
 import { ReactNode, useEffect, useState } from 'react';
 
-import { ANSWER_ENTRANCE_MS } from '@/src/lib/ui/answerChoiceInteraction';
+import {
+  ANSWER_ENTRANCE_EASING,
+  ANSWER_ENTRANCE_MS,
+} from '@/src/lib/ui/answerChoiceInteraction';
 
 interface AnswerRevealProps {
   show: boolean;
@@ -37,10 +40,11 @@ export default function AnswerReveal({ show, children }: AnswerRevealProps) {
 
   return (
     <div
-      className="transition-opacity ease-out motion-reduce:transition-none"
+      className="transition-opacity motion-reduce:transition-none"
       style={{
         opacity: interactive ? 1 : 0,
         transitionDuration: `${ANSWER_ENTRANCE_MS}ms`,
+        transitionTimingFunction: ANSWER_ENTRANCE_EASING,
         pointerEvents: interactive ? undefined : 'none',
       }}
       aria-hidden={!interactive}

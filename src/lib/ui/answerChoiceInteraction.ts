@@ -3,7 +3,10 @@
 export const ANSWER_CHOICE_NON_SELECTED_FADE_MS = 500;
 
 /** Story answer reveal — opacity-only; keep in sync with {@link AnswerReveal}. */
-export const ANSWER_ENTRANCE_MS = 900;
+export const ANSWER_ENTRANCE_MS = 600;
+
+/** Slow start, accelerates toward full opacity. */
+export const ANSWER_ENTRANCE_EASING = 'cubic-bezier(0.4, 0, 1, 1)';
 
 /** Story chrome shell fade-out duration (Tailwind `duration-*` must stay in sync). */
 export const ANSWER_CHOICE_SHELL_FADE_MS = 1000;
