@@ -5,20 +5,20 @@
       "question": "What matters most to you?",
       "options": [
         {
-          "text": "Not making my life harder than it needs to be",
-          "value": "comfort"
+          "text": "Not harming others through my actions",
+          "value": "act"
         },
         {
           "text": "Fitting in and functioning normally in the world around me",
           "value": "conform"
         },
         {
-          "text": "Not harming others through my actions",
-          "value": "act"
-        },
-        {
           "text": "Not lying to myself, even when it is uncomfortable",
           "value": "admit"
+        },
+        {
+          "text": "Not making my life harder than it needs to be",
+          "value": "comfort"
         }
       ]
     },
@@ -44,11 +44,11 @@
       "options": [
         {
           "text": "Do not risk changes in relationships, no matter what the truth is",
-          "value": "comfort"
+          "value": "conform"
         },
         {
           "text": "Prefer to avoid going into it at all",
-          "value": "conform"
+          "value": "comfort"
         },
         {
           "text": "Admit it to yourself, even if you do not talk about it with others",

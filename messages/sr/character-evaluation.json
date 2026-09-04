@@ -5,20 +5,20 @@
       "question": "Šta ti je najvažnije?",
       "options": [
         {
-          "text": "Da sebi ne otežavam život bez potrebe",
-          "value": "comfort"
+          "text": "Da ne povređujem druge svojim postupcima",
+          "value": "act"
         },
         {
           "text": "Da se uklopim i normalno funkcionišem u svetu oko sebe",
           "value": "conform"
         },
         {
-          "text": "Da ne povređujem druge svojim postupcima",
-          "value": "act"
-        },
-        {
           "text": "Da ne lažem sebe, čak i kada je neprijatno",
           "value": "admit"
+        },
+        {
+          "text": "Da sebi ne otežavam život bez potrebe",
+          "value": "comfort"
         }
       ]
     },
@@ -47,11 +47,11 @@
       "options": [
         {
           "text": "Ne rizikuješ promene u odnosima, bez obzira šta je istina",
-          "value": "comfort"
+          "value": "conform"
         },
         {
           "text": "Radije izbegavaš da uopšte ulaziš u to",
-          "value": "conform"
+          "value": "comfort"
         },
         {
           "text": "Priznaješ to sebi, iako ne pričaš sa drugima o tome",
