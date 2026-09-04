@@ -6,6 +6,7 @@ import { PostHogProvider as PHProvider } from 'posthog-js/react';
 import { useEffect } from 'react';
 
 import { startQueuedSessionRecording } from '@/src/lib/posthogSessionRecording';
+import { registerCampaignFromUrl } from '@/src/lib/tracking';
 
 function isPostHogDisabled() {
   return process.env.NEXT_PUBLIC_POSTHOG_DISABLED === 'true';
@@ -39,6 +40,7 @@ export default function PostHogProvider({
       },
       persistence: 'localStorage',
       loaded: () => {
+        registerCampaignFromUrl(posthog);
         startQueuedSessionRecording(posthog);
       },
     });

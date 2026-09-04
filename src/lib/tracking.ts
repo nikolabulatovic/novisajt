@@ -1,3 +1,5 @@
+import type { PostHog } from 'posthog-js';
+
 import { Stage, StageId } from '@/src/contexts/NavigationContext';
 import { AnswerId } from '@/src/lib/answerIds';
 import type { GenderChoiceAnalytics } from '@/src/lib/gender';
@@ -7,6 +9,23 @@ export type CommunityType = 'whatsapp' | 'discord' | 'telegram';
 /** Blue pill / comfort exit — short dead-end, not worth the recorder. */
 export function isRecordingWorthyStage(stage: Stage) {
   return stage !== StageId.Choice && stage !== StageId.StayComfortable;
+}
+
+/**
+ * Persist `utm_campaign` from the landing URL onto subsequent events.
+ * PostHog also auto-captures UTMs; this makes the value an explicit super property
+ * for our custom funnel events.
+ */
+export function registerCampaignFromUrl(posthog: PostHog | undefined) {
+  if (!posthog || typeof window === 'undefined') return;
+
+  const campaign = new URLSearchParams(window.location.search).get(
+    'utm_campaign',
+  );
+  if (!campaign) return;
+
+  posthog.register({ utm_campaign: campaign });
+  posthog.people.set_once({ initial_utm_campaign: campaign });
 }
 
 function genderChoiceFromIntroAnswer(
