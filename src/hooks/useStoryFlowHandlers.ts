@@ -17,7 +17,6 @@ export interface StoryFlowHandlerDeps {
   ) => void;
   setAnswers: Dispatch<SetStateAction<Record<string, string>>>;
   trackAnswerSelected: (stage: Stage, answer: string) => void;
-  trackFlowCompleted: () => void;
 }
 
 type StageCompletionAnswer = string | Record<string, string>;
@@ -26,7 +25,6 @@ export function useStoryFlowHandlers({
   transitionToStage,
   setAnswers,
   trackAnswerSelected,
-  trackFlowCompleted,
 }: StoryFlowHandlerDeps) {
   return useMemo(
     () => ({
@@ -61,16 +59,12 @@ export function useStoryFlowHandlers({
           }
         }
 
-        if (completedStage === StageId.VeganismPrinciple) {
-          trackFlowCompleted();
-        }
-
         const nextStage = directStageTransitions[completedStage];
         if (nextStage) {
           transitionToStage(nextStage, 'auto', pillOrigin);
         }
       },
     }),
-    [setAnswers, trackAnswerSelected, trackFlowCompleted, transitionToStage],
+    [setAnswers, trackAnswerSelected, transitionToStage],
   );
 }

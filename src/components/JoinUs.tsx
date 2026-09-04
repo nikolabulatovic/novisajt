@@ -6,12 +6,13 @@ import { STORY_STAGE_TEXT_TONE_CLASS } from '@/src/constants/storyStageTokens';
 import { StageId } from '@/src/contexts/NavigationContext';
 import { useGenderedTranslations } from '@/src/hooks/useGenderedTranslations';
 import { useResolvedBackgroundImage } from '@/src/hooks/useResolvedBackgroundImage';
-import { type CommunityType, useTracking } from '@/src/hooks/useTracking';
+import { useTracking } from '@/src/hooks/useTracking';
 import {
   DEFAULT_STAGE_BODY,
   DEFAULT_STAGE_SHELL,
   stageConfig,
 } from '@/src/lib/story/stageUiConfig';
+import type { CommunityType } from '@/src/lib/tracking';
 
 import AnimatedText from './ui/AnimatedText';
 import ContentContainer from './ui/ContentContainer';

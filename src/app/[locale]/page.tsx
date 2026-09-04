@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 
 import NavigationMenu from '@/src/components/NavigationMenu';
 import PillTransitionLayer from '@/src/components/ui/PillTransitionLayer';
-import { NavigationProvider } from '@/src/contexts/NavigationContext';
+import { NavigationProvider, StageId } from '@/src/contexts/NavigationContext';
 import {
   type StoryFlowContextValue,
   StoryFlowProvider,
@@ -38,13 +38,15 @@ export default function Home() {
 
   useEffect(() => {
     trackStageViewed(stage);
+    if (stage === StageId.JoinUs) {
+      trackFlowCompleted(answers);
+    }
   }, [stage]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const { completeStage } = useStoryFlowHandlers({
     transitionToStage,
     setAnswers,
     trackAnswerSelected,
-    trackFlowCompleted,
   });
 
   const flowContextValue = useMemo<StoryFlowContextValue>(

@@ -1,20 +1,25 @@
 import { usePostHog } from 'posthog-js/react';
 
+import { useRef } from 'react';
+
 import { Stage, StageId } from '@/src/contexts/NavigationContext';
 import type { GenderChoiceAnalytics } from '@/src/lib/gender';
 import { ensureSessionRecording } from '@/src/lib/posthogSessionRecording';
-
-export type CommunityType = 'whatsapp' | 'discord' | 'telegram';
-
-/** Blue pill / comfort exit — short dead-end, not worth the recorder. */
-function isRecordingWorthyStage(stage: Stage) {
-  return stage !== StageId.Choice && stage !== StageId.StayComfortable;
-}
+import {
+  type CommunityType,
+  buildFlowCompletedProperties,
+  isRecordingWorthyStage,
+} from '@/src/lib/tracking';
 
 export function useTracking() {
   const posthog = usePostHog();
+  const flowStartedAtRef = useRef<number | null>(null);
+  const flowCompletedRef = useRef(false);
 
   const trackStageViewed = (stage: Stage) => {
+    if (flowStartedAtRef.current === null) {
+      flowStartedAtRef.current = Date.now();
+    }
     if (isRecordingWorthyStage(stage)) {
       ensureSessionRecording(posthog);
     }
@@ -28,8 +33,19 @@ export function useTracking() {
     posthog?.capture('answer_selected', { stage, answer });
   };
 
-  const trackFlowCompleted = () => {
-    posthog?.capture('flow_completed');
+  /** Intended story end: user reached JoinUs. Fires at most once per session. */
+  const trackFlowCompleted = (answers: Record<string, string>) => {
+    if (flowCompletedRef.current) return;
+    flowCompletedRef.current = true;
+
+    const startedAt = flowStartedAtRef.current;
+    const time_to_complete_ms =
+      startedAt === null ? 0 : Math.max(0, Date.now() - startedAt);
+
+    posthog?.capture(
+      'flow_completed',
+      buildFlowCompletedProperties(answers, { time_to_complete_ms }),
+    );
   };
 
   const trackCommunityCtaClicked = (community_type: CommunityType) => {
