@@ -6,6 +6,7 @@ import { STORY_STAGE_TEXT_TONE_CLASS } from '@/src/constants/storyStageTokens';
 import { StageId } from '@/src/contexts/NavigationContext';
 import { useGenderedTranslations } from '@/src/hooks/useGenderedTranslations';
 import { useResolvedBackgroundImage } from '@/src/hooks/useResolvedBackgroundImage';
+import { type CommunityType, useTracking } from '@/src/hooks/useTracking';
 import {
   DEFAULT_STAGE_BODY,
   DEFAULT_STAGE_SHELL,
@@ -29,10 +30,11 @@ const JOIN_GROUP_LINKS = {
   whatsapp: 'https://chat.whatsapp.com/BaCslglrbcQDYTXViNHK7U',
   discord: 'https://discord.gg/PZHy3bBKd3',
   telegram: 'https://t.me/+5iq0YpIQuA03YTM8',
-} as const;
+} as const satisfies Record<CommunityType, string>;
 
 export default function JoinUs() {
   const { t, raw } = useGenderedTranslations(StageId.JoinUs);
+  const { trackCommunityCtaClicked } = useTracking();
   const [showGroups, setShowGroups] = useState(false);
   const intro = raw('intro') as string[];
   const text = [...intro, t('groupsHeading')];
@@ -94,6 +96,7 @@ export default function JoinUs() {
             target="_blank"
             rel="noopener noreferrer"
             className={groupButtonClassName}
+            onClick={() => trackCommunityCtaClicked('whatsapp')}
           >
             <WhatsAppBadge />
             <p
@@ -108,6 +111,7 @@ export default function JoinUs() {
             target="_blank"
             rel="noopener noreferrer"
             className={groupButtonClassName}
+            onClick={() => trackCommunityCtaClicked('discord')}
           >
             <DiscordBadge />
             <p
@@ -122,6 +126,7 @@ export default function JoinUs() {
             target="_blank"
             rel="noopener noreferrer"
             className={groupButtonClassName}
+            onClick={() => trackCommunityCtaClicked('telegram')}
           >
             <TelegramBadge />
             <p

@@ -4,6 +4,8 @@ import { Stage, StageId } from '@/src/contexts/NavigationContext';
 import type { GenderChoiceAnalytics } from '@/src/lib/gender';
 import { ensureSessionRecording } from '@/src/lib/posthogSessionRecording';
 
+export type CommunityType = 'whatsapp' | 'discord' | 'telegram';
+
 /** Blue pill / comfort exit — short dead-end, not worth the recorder. */
 function isRecordingWorthyStage(stage: Stage) {
   return stage !== StageId.Choice && stage !== StageId.StayComfortable;
@@ -30,6 +32,10 @@ export function useTracking() {
     posthog?.capture('flow_completed');
   };
 
+  const trackCommunityCtaClicked = (community_type: CommunityType) => {
+    posthog?.capture('community_cta_clicked', { community_type });
+  };
+
   const trackNarrativeAdvanceClicked = (stage: Stage) => {
     ensureSessionRecording(posthog);
     posthog?.capture('narrative_advance_clicked', { stage });
@@ -46,6 +52,7 @@ export function useTracking() {
     trackStageViewed,
     trackAnswerSelected,
     trackFlowCompleted,
+    trackCommunityCtaClicked,
     trackNarrativeAdvanceClicked,
     trackGenderChoice,
   };
