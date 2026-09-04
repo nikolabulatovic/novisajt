@@ -6,19 +6,19 @@
       "options": [
         {
           "text": "Not making my life harder than it needs to be",
-          "value": 0
+          "value": "comfort"
         },
         {
           "text": "Fitting in and functioning normally in the world around me",
-          "value": 1
+          "value": "conform"
         },
         {
           "text": "Not harming others through my actions",
-          "value": 2
+          "value": "act"
         },
         {
           "text": "Not lying to myself, even when it is uncomfortable",
-          "value": 3
+          "value": "admit"
         }
       ]
     },
@@ -26,13 +26,16 @@
       "id": 2,
       "question": "When you realize you are doing something harmful to others, you:",
       "options": [
-        { "text": "Try not to think about it too much", "value": 0 },
-        { "text": "Remind yourself that no one is perfect", "value": 1 },
+        { "text": "Try not to think about it too much", "value": "comfort" },
+        {
+          "text": "Remind yourself that no one is perfect",
+          "value": "conform"
+        },
         {
           "text": "Feel an inner conflict and keep coming back to it",
-          "value": 2
+          "value": "admit"
         },
-        { "text": "Look for how to change it", "value": 3 }
+        { "text": "Look for how to change it", "value": "act" }
       ]
     },
     {
@@ -41,19 +44,19 @@
       "options": [
         {
           "text": "Do not risk changes in relationships, no matter what the truth is",
-          "value": 0
+          "value": "comfort"
         },
         {
           "text": "Prefer to avoid going into it at all",
-          "value": 1
+          "value": "conform"
         },
         {
           "text": "Admit it to yourself, even if you do not talk about it with others",
-          "value": 2
+          "value": "admit"
         },
         {
           "text": "Believe it is important to face it, even if it is uncomfortable",
-          "value": 3
+          "value": "act"
         }
       ]
     }
@@ -65,16 +68,16 @@
       "options": [
         {
           "text": "I am who I am and I don't need to change",
-          "value": 0
+          "value": "comfort"
         },
-        { "text": "I am mostly good, with some flaws", "value": 1 },
+        { "text": "I am mostly good, with some flaws", "value": "conform" },
         {
           "text": "I try to be compassionate and do the right thing",
-          "value": 2
+          "value": "act"
         },
         {
           "text": "I want to align my actions with my values",
-          "value": 3
+          "value": "admit"
         }
       ]
     },
@@ -82,28 +85,28 @@
       "id": 2,
       "question": "When you learn something uncomfortable about yourself, you:",
       "options": [
-        { "text": "Ignore it and continue as before", "value": 0 },
-        { "text": "Admit it, but make excuses", "value": 1 },
+        { "text": "Ignore it and continue as before", "value": "comfort" },
+        { "text": "Admit it, but make excuses", "value": "conform" },
         {
           "text": "Feel conflicted and unsure what to do",
-          "value": 2
+          "value": "admit"
         },
-        { "text": "Reflect deeply and consider change", "value": 3 }
+        { "text": "Reflect deeply and consider change", "value": "act" }
       ]
     },
     {
       "id": 3,
       "question": "What matters most to you?",
       "options": [
-        { "text": "My comfort and convenience", "value": 0 },
+        { "text": "My comfort and convenience", "value": "comfort" },
         {
           "text": "Following social norms and fitting in",
-          "value": 1
+          "value": "conform"
         },
-        { "text": "Being a good person in my own way", "value": 2 },
+        { "text": "Being a good person in my own way", "value": "admit" },
         {
           "text": "Living in alignment with my deepest values",
-          "value": 3
+          "value": "act"
         }
       ]
     }
@@ -115,16 +118,16 @@
       "options": [
         {
           "text": "I am who I am and I don't need to change",
-          "value": 0
+          "value": "comfort"
         },
-        { "text": "I am mostly good, with some flaws", "value": 1 },
+        { "text": "I am mostly good, with some flaws", "value": "conform" },
         {
           "text": "I try to be compassionate and do the right thing",
-          "value": 2
+          "value": "act"
         },
         {
           "text": "I want to align my actions with my values",
-          "value": 3
+          "value": "admit"
         }
       ]
     },
@@ -132,28 +135,28 @@
       "id": 2,
       "question": "When you learn something uncomfortable about yourself, you:",
       "options": [
-        { "text": "Ignore it and continue as before", "value": 0 },
-        { "text": "Admit it, but make excuses", "value": 1 },
+        { "text": "Ignore it and continue as before", "value": "comfort" },
+        { "text": "Admit it, but make excuses", "value": "conform" },
         {
           "text": "Feel conflicted and unsure what to do",
-          "value": 2
+          "value": "admit"
         },
-        { "text": "Reflect deeply and consider change", "value": 3 }
+        { "text": "Reflect deeply and consider change", "value": "act" }
       ]
     },
     {
       "id": 3,
       "question": "What matters most to you?",
       "options": [
-        { "text": "My comfort and convenience", "value": 0 },
+        { "text": "My comfort and convenience", "value": "comfort" },
         {
           "text": "Following social norms and fitting in",
-          "value": 1
+          "value": "conform"
         },
-        { "text": "Being a good person in my own way", "value": 2 },
+        { "text": "Being a good person in my own way", "value": "admit" },
         {
           "text": "Living in alignment with my deepest values",
-          "value": 3
+          "value": "act"
         }
       ]
     }

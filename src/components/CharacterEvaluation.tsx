@@ -24,7 +24,7 @@ import StageTextSurface from './ui/StageTextSurface';
 
 interface EvaluationOption {
   text: GenderedContent<string>;
-  value: number;
+  value: string;
 }
 
 interface EvaluationQuestion {
@@ -54,7 +54,7 @@ export default function CharacterEvaluation() {
   const answeringRef = useRef(false);
 
   const handleAnswer = (
-    value: number,
+    value: string,
     event: MouseEvent<HTMLButtonElement>,
     optionIndex: number,
   ) => {
@@ -65,7 +65,7 @@ export default function CharacterEvaluation() {
     setSelectedOptionIndex(optionIndex);
 
     const questionId = `q${questions[currentQuestion].id}`;
-    const newAnswers = { ...answers, [questionId]: value.toString() };
+    const newAnswers = { ...answers, [questionId]: value };
     setAnswers(newAnswers);
 
     setNonSelectedFading(true);

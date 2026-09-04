@@ -6,19 +6,19 @@
       "options": [
         {
           "text": "Da sebi ne otežavam život bez potrebe",
-          "value": 0
+          "value": "comfort"
         },
         {
           "text": "Da se uklopim i normalno funkcionišem u svetu oko sebe",
-          "value": 1
+          "value": "conform"
         },
         {
           "text": "Da ne povređujem druge svojim postupcima",
-          "value": 2
+          "value": "act"
         },
         {
           "text": "Da ne lažem sebe, čak i kada je neprijatno",
-          "value": 3
+          "value": "admit"
         }
       ]
     },
@@ -26,13 +26,19 @@
       "id": 2,
       "question": "Kada shvatiš da radiš nešto loše drugima, ti:",
       "options": [
-        { "text": "Trudiš se da ne razmišljaš previše o tome", "value": 0 },
-        { "text": "Podsetiš sebe da niko nije savršen", "value": 1 },
+        {
+          "text": "Trudiš se da ne razmišljaš previše o tome",
+          "value": "comfort"
+        },
+        {
+          "text": "Podsetiš sebe da niko nije savršen",
+          "value": "conform"
+        },
         {
           "text": "Osećaš unutrašnji konflikt i vraćaš se tome u mislima",
-          "value": 2
+          "value": "admit"
         },
-        { "text": "Gledaš kako to da promeniš", "value": 3 }
+        { "text": "Gledaš kako to da promeniš", "value": "act" }
       ]
     },
     {
@@ -41,19 +47,19 @@
       "options": [
         {
           "text": "Ne rizikuješ promene u odnosima, bez obzira šta je istina",
-          "value": 0
+          "value": "comfort"
         },
         {
           "text": "Radije izbegavaš da uopšte ulaziš u to",
-          "value": 1
+          "value": "conform"
         },
         {
           "text": "Priznaješ to sebi, iako ne pričaš sa drugima o tome",
-          "value": 2
+          "value": "admit"
         },
         {
           "text": "Smatraš da je važno suočiti se sa tim, čak i ako je neprijatno",
-          "value": 3
+          "value": "act"
         }
       ]
     }
@@ -65,25 +71,25 @@
       "options": [
         {
           "text": "Ja sam ono što jesam i ne treba mi da se menjam",
-          "value": 0
+          "value": "comfort"
         },
         {
           "text": {
             "male": "Uglavnom sam dobar, sa nekim manama",
             "female": "Uglavnom sam dobra, sa nekim manama"
           },
-          "value": 1
+          "value": "conform"
         },
         {
           "text": {
             "male": "Pokušavam da budem saosećajan i da radim pravu stvar",
             "female": "Pokušavam da budem saosećajna i da radim pravu stvar"
           },
-          "value": 2
+          "value": "act"
         },
         {
           "text": "Hoću da uskladim svoje postupke sa svojim vrednostima",
-          "value": 3
+          "value": "admit"
         }
       ]
     },
@@ -91,31 +97,34 @@
       "id": 2,
       "question": "Kada saznaš nešto neprijatno o sebi, ti:",
       "options": [
-        { "text": "Ignorišeš to i nastavljaš kao ranije", "value": 0 },
-        { "text": "Priznaš to, ali praviš izgovore", "value": 1 },
+        { "text": "Ignorišeš to i nastavljaš kao ranije", "value": "comfort" },
+        { "text": "Priznaš to, ali praviš izgovore", "value": "conform" },
         {
           "text": {
             "male": "Osećaš se konfliktno i nisi siguran šta da radiš",
             "female": "Osećaš se konfliktno i nisi sigurna šta da radiš"
           },
-          "value": 2
+          "value": "admit"
         },
-        { "text": "Duboko razmišljaš i razmatraš promenu", "value": 3 }
+        {
+          "text": "Duboko razmišljaš i razmatraš promenu",
+          "value": "act"
+        }
       ]
     },
     {
       "id": 3,
       "question": "Šta ti je najvažnije?",
       "options": [
-        { "text": "Moj komfor i udobnost", "value": 0 },
+        { "text": "Moj komfor i udobnost", "value": "comfort" },
         {
           "text": "Pridržavanje društvenih normi i uklapanje",
-          "value": 1
+          "value": "conform"
         },
-        { "text": "Biti dobra osoba na svoj način", "value": 2 },
+        { "text": "Biti dobra osoba na svoj način", "value": "admit" },
         {
           "text": "Živeti u skladu sa svojim najdubljim vrednostima",
-          "value": 3
+          "value": "act"
         }
       ]
     }
@@ -127,25 +136,25 @@
       "options": [
         {
           "text": "Ja sam ono što jesam i ne treba mi da se menjam",
-          "value": 0
+          "value": "comfort"
         },
         {
           "text": {
             "male": "Uglavnom sam dobar, sa nekim manama",
             "female": "Uglavnom sam dobra, sa nekim manama"
           },
-          "value": 1
+          "value": "conform"
         },
         {
           "text": {
             "male": "Pokušavam da budem saosećajan i da radim pravu stvar",
             "female": "Pokušavam da budem saosećajna i da radim pravu stvar"
           },
-          "value": 2
+          "value": "act"
         },
         {
           "text": "Hoću da uskladim svoje postupke sa svojim vrednostima",
-          "value": 3
+          "value": "admit"
         }
       ]
     },
@@ -153,31 +162,34 @@
       "id": 2,
       "question": "Kada saznaš nešto neprijatno o sebi, ti:",
       "options": [
-        { "text": "Ignorišeš to i nastavljaš kao ranije", "value": 0 },
-        { "text": "Priznaš to, ali praviš izgovore", "value": 1 },
+        { "text": "Ignorišeš to i nastavljaš kao ranije", "value": "comfort" },
+        { "text": "Priznaš to, ali praviš izgovore", "value": "conform" },
         {
           "text": {
             "male": "Osećaš se konfliktno i nisi siguran šta da radiš",
             "female": "Osećaš se konfliktno i nisi sigurna šta da radiš"
           },
-          "value": 2
+          "value": "admit"
         },
-        { "text": "Duboko razmišljaš i razmatraš promenu", "value": 3 }
+        {
+          "text": "Duboko razmišljaš i razmatraš promenu",
+          "value": "act"
+        }
       ]
     },
     {
       "id": 3,
       "question": "Šta ti je najvažnije?",
       "options": [
-        { "text": "Moj komfor i udobnost", "value": 0 },
+        { "text": "Moj komfor i udobnost", "value": "comfort" },
         {
           "text": "Pridržavanje društvenih normi i uklapanje",
-          "value": 1
+          "value": "conform"
         },
-        { "text": "Biti dobra osoba na svoj način", "value": 2 },
+        { "text": "Biti dobra osoba na svoj način", "value": "admit" },
         {
           "text": "Živeti u skladu sa svojim najdubljim vrednostima",
-          "value": 3
+          "value": "act"
         }
       ]
     }
