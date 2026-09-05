@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 
+import { useLocale } from 'next-intl';
+
 import { STORY_STAGE_TEXT_TONE_CLASS } from '@/src/constants/storyStageTokens';
 import { StageId } from '@/src/contexts/NavigationContext';
 import { useGenderedTranslations } from '@/src/hooks/useGenderedTranslations';
@@ -28,12 +30,20 @@ const groupButtonClassName =
   'cursor-pointer group text-center transition-transform duration-300';
 
 const JOIN_GROUP_LINKS = {
-  whatsapp: 'https://chat.whatsapp.com/BaCslglrbcQDYTXViNHK7U',
-  discord: 'https://discord.gg/PZHy3bBKd3',
-  telegram: 'https://t.me/+5iq0YpIQuA03YTM8',
-} as const satisfies Record<CommunityType, string>;
+  sr: {
+    whatsapp: 'https://chat.whatsapp.com/BaCslglrbcQDYTXViNHK7U',
+    discord: 'https://discord.gg/PZHy3bBKd3',
+    telegram: 'https://t.me/+5iq0YpIQuA03YTM8',
+  },
+  en: {
+    whatsapp: 'https://chat.whatsapp.com/Lfm8M8VOI0k7luS4ngadtr',
+    discord: 'https://discord.gg/378mPqEV7',
+    telegram: 'https://t.me/+-Kv3m896zp42ZDBk',
+  },
+} as const satisfies Record<'sr' | 'en', Record<CommunityType, string>>;
 
 export default function JoinUs() {
+  const locale = useLocale();
   const { t, raw } = useGenderedTranslations(StageId.JoinUs);
   const { trackCommunityCtaClicked } = useTracking();
   const [showGroups, setShowGroups] = useState(false);
@@ -51,6 +61,10 @@ export default function JoinUs() {
     STORY_STAGE_TEXT_TONE_CLASS[
       cfg.body?.textTone ?? DEFAULT_STAGE_BODY.textTone
     ] || 'text-gray-200';
+  const joinLinks =
+    locale in JOIN_GROUP_LINKS
+      ? JOIN_GROUP_LINKS[locale as keyof typeof JOIN_GROUP_LINKS]
+      : JOIN_GROUP_LINKS.sr;
 
   return (
     <PageContainer
@@ -93,7 +107,7 @@ export default function JoinUs() {
           }`}
         >
           <a
-            href={JOIN_GROUP_LINKS.whatsapp}
+            href={joinLinks.whatsapp}
             target="_blank"
             rel="noopener noreferrer"
             className={groupButtonClassName}
@@ -108,7 +122,7 @@ export default function JoinUs() {
           </a>
 
           <a
-            href={JOIN_GROUP_LINKS.discord}
+            href={joinLinks.discord}
             target="_blank"
             rel="noopener noreferrer"
             className={groupButtonClassName}
@@ -123,7 +137,7 @@ export default function JoinUs() {
           </a>
 
           <a
-            href={JOIN_GROUP_LINKS.telegram}
+            href={joinLinks.telegram}
             target="_blank"
             rel="noopener noreferrer"
             className={groupButtonClassName}
