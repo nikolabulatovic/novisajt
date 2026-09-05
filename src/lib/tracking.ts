@@ -28,6 +28,14 @@ export function registerCampaignFromUrl(posthog: PostHog | undefined) {
   posthog.people.set_once({ initial_utm_campaign: campaign });
 }
 
+/** Sticky locale (`sr` / `en`) on all subsequent events for this session. */
+export function registerLocale(posthog: PostHog | undefined, locale: string) {
+  if (!posthog || !locale) return;
+
+  posthog.register({ locale });
+  posthog.people.set({ locale });
+}
+
 function genderChoiceFromIntroAnswer(
   introAnswer: string | undefined,
 ): GenderChoiceAnalytics | undefined {

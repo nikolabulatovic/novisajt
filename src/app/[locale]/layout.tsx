@@ -75,7 +75,7 @@ export default async function LocaleLayout({
       <body
         className={`${literata.variable} ${sourceSerif4.variable} ${inter.variable} antialiased`}
       >
-        <PostHogProvider>
+        <PostHogProvider locale={locale}>
           <NextIntlClientProvider messages={messages}>
             <GpuEffectsProvider>{children}</GpuEffectsProvider>
           </NextIntlClientProvider>

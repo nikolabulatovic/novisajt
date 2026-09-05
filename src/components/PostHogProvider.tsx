@@ -6,7 +6,7 @@ import { PostHogProvider as PHProvider } from 'posthog-js/react';
 import { useEffect } from 'react';
 
 import { startQueuedSessionRecording } from '@/src/lib/posthogSessionRecording';
-import { registerCampaignFromUrl } from '@/src/lib/tracking';
+import { registerCampaignFromUrl, registerLocale } from '@/src/lib/tracking';
 
 function isPostHogDisabled() {
   return process.env.NEXT_PUBLIC_POSTHOG_DISABLED === 'true';
@@ -14,8 +14,10 @@ function isPostHogDisabled() {
 
 export default function PostHogProvider({
   children,
+  locale,
 }: {
   children: React.ReactNode;
+  locale: string;
 }) {
   useEffect(() => {
     if (isPostHogDisabled()) {
@@ -45,6 +47,11 @@ export default function PostHogProvider({
       },
     });
   }, []);
+
+  useEffect(() => {
+    if (isPostHogDisabled()) return;
+    registerLocale(posthog, locale);
+  }, [locale]);
 
   return <PHProvider client={posthog}>{children}</PHProvider>;
 }
