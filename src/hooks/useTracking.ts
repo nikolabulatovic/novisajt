@@ -1,6 +1,6 @@
 import { usePostHog } from 'posthog-js/react';
 
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { Stage, StageId } from '@/src/contexts/NavigationContext';
 import type { GenderChoiceAnalytics } from '@/src/lib/gender';
@@ -8,18 +8,95 @@ import { ensureSessionRecording } from '@/src/lib/posthogSessionRecording';
 import {
   type CommunityType,
   buildFlowCompletedProperties,
+  buildStageExitedProperties,
   isRecordingWorthyStage,
 } from '@/src/lib/tracking';
+
+/**
+ * Tracks visible (attention) time on the current stage.
+ * Pauses while the tab is hidden so backgrounded QR sessions don't inflate duration.
+ */
+function useStageAttentionClock() {
+  const accumulatedVisibleMsRef = useRef(0);
+  const visibleSegmentStartedAtRef = useRef<number | null>(null);
+
+  const startVisibleSegment = () => {
+    if (
+      typeof document !== 'undefined' &&
+      !document.hidden &&
+      visibleSegmentStartedAtRef.current === null
+    ) {
+      visibleSegmentStartedAtRef.current = Date.now();
+    }
+  };
+
+  const pauseVisibleSegment = () => {
+    if (visibleSegmentStartedAtRef.current === null) return;
+    accumulatedVisibleMsRef.current += Math.max(
+      0,
+      Date.now() - visibleSegmentStartedAtRef.current,
+    );
+    visibleSegmentStartedAtRef.current = null;
+  };
+
+  const resetForStage = () => {
+    accumulatedVisibleMsRef.current = 0;
+    visibleSegmentStartedAtRef.current = null;
+    startVisibleSegment();
+  };
+
+  const takeElapsedMs = () => {
+    pauseVisibleSegment();
+    const elapsed = accumulatedVisibleMsRef.current;
+    accumulatedVisibleMsRef.current = 0;
+    return elapsed;
+  };
+
+  useEffect(() => {
+    const onVisibilityChange = () => {
+      if (document.hidden) {
+        pauseVisibleSegment();
+      } else {
+        startVisibleSegment();
+      }
+    };
+    document.addEventListener('visibilitychange', onVisibilityChange);
+    return () => {
+      document.removeEventListener('visibilitychange', onVisibilityChange);
+    };
+  }, []);
+
+  return { resetForStage, takeElapsedMs };
+}
 
 export function useTracking() {
   const posthog = usePostHog();
   const flowStartedAtRef = useRef<number | null>(null);
   const flowCompletedRef = useRef(false);
+  const previousStageRef = useRef<Stage | null>(null);
+  const attention = useStageAttentionClock();
 
   const trackStageViewed = (stage: Stage) => {
     if (flowStartedAtRef.current === null) {
       flowStartedAtRef.current = Date.now();
     }
+
+    const previousStage = previousStageRef.current;
+    if (previousStage !== stage) {
+      if (previousStage !== null) {
+        posthog?.capture(
+          'stage_exited',
+          buildStageExitedProperties(previousStage, {
+            next_stage: stage,
+            exit_type: 'next',
+            time_spent_ms: attention.takeElapsedMs(),
+          }),
+        );
+      }
+      previousStageRef.current = stage;
+      attention.resetForStage();
+    }
+
     if (isRecordingWorthyStage(stage)) {
       ensureSessionRecording(posthog);
     }

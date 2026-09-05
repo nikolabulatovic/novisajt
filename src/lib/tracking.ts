@@ -6,6 +6,8 @@ import type { GenderChoiceAnalytics } from '@/src/lib/gender';
 
 export type CommunityType = 'whatsapp' | 'discord' | 'telegram';
 
+export type StageExitType = 'next';
+
 /** Blue pill / comfort exit — short dead-end, not worth the recorder. */
 export function isRecordingWorthyStage(stage: Stage) {
   return stage !== StageId.Choice && stage !== StageId.StayComfortable;
@@ -66,5 +68,21 @@ export function buildFlowCompletedProperties(
     q2_answer: answers.q2,
     q3_answer: answers.q3,
     ...(gender_choice ? { gender_choice } : {}),
+  };
+}
+
+export function buildStageExitedProperties(
+  stage: Stage,
+  extras: {
+    next_stage: Stage;
+    exit_type: StageExitType;
+    time_spent_ms: number;
+  },
+) {
+  return {
+    stage,
+    next_stage: extras.next_stage,
+    exit_type: extras.exit_type,
+    time_spent_ms: extras.time_spent_ms,
   };
 }
