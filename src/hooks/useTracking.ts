@@ -129,6 +129,10 @@ export function useTracking() {
     posthog?.capture('community_cta_clicked', { community_type });
   };
 
+  const trackFeedbackFormClicked = (stage: Stage) => {
+    posthog?.capture('feedback_form_clicked', { stage });
+  };
+
   const trackNarrativeAdvanceClicked = (stage: Stage) => {
     ensureSessionRecording(posthog);
     posthog?.capture('narrative_advance_clicked', { stage });
@@ -146,6 +150,7 @@ export function useTracking() {
     trackAnswerSelected,
     trackFlowCompleted,
     trackCommunityCtaClicked,
+    trackFeedbackFormClicked,
     trackNarrativeAdvanceClicked,
     trackGenderChoice,
   };

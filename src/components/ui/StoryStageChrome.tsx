@@ -24,6 +24,7 @@ import {
 } from '../../constants/storyStageTokens';
 import AnimatedText from './AnimatedText';
 import ContentContainer from './ContentContainer';
+import FeedbackFormLink from './FeedbackFormLink';
 import PageContainer from './PageContainer';
 import StageTextSurface from './StageTextSurface';
 import StoryStageNextInteraction from './StoryStageNextInteraction';
@@ -160,6 +161,11 @@ export default function StoryStageChrome({ stage }: StoryStageChromeProps) {
           storyBody
         )}
       </ContentContainer>
+      <FeedbackFormLink
+        stage={stage}
+        visible={nextInteraction}
+        className="mt-6"
+      />
     </PageContainer>
   );
 }

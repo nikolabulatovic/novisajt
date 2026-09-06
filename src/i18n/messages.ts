@@ -54,6 +54,7 @@ const MESSAGE_FILES = [
   'righteous-choice',
   'courageous-choice',
   'join-us',
+  'feedback',
 ] as const;
 
 async function loadNamespace(locale: Locale, fileName: string) {

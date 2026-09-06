@@ -8,6 +8,19 @@ export type CommunityType = 'whatsapp' | 'discord' | 'telegram';
 
 export type StageExitType = 'next';
 
+/** Locale-specific Google Forms for end-of-flow feedback. */
+export const FEEDBACK_FORM_URLS = {
+  en: 'https://forms.gle/yV3uM7bB9woaFEEx9',
+  sr: 'https://forms.gle/sRFYBQ8cBdSu9tMeA',
+} as const satisfies Record<'en' | 'sr', string>;
+
+export function feedbackFormUrlForLocale(locale: string): string {
+  if (locale in FEEDBACK_FORM_URLS) {
+    return FEEDBACK_FORM_URLS[locale as keyof typeof FEEDBACK_FORM_URLS];
+  }
+  return FEEDBACK_FORM_URLS.sr;
+}
+
 /** Blue pill / comfort exit — short dead-end, not worth the recorder. */
 export function isRecordingWorthyStage(stage: Stage) {
   return stage !== StageId.Choice && stage !== StageId.StayComfortable;

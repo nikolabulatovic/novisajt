@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useLocale } from 'next-intl';
 
@@ -18,6 +18,7 @@ import type { CommunityType } from '@/src/lib/tracking';
 
 import AnimatedText from './ui/AnimatedText';
 import ContentContainer from './ui/ContentContainer';
+import FeedbackFormLink from './ui/FeedbackFormLink';
 import PageContainer from './ui/PageContainer';
 import {
   DiscordBadge,
@@ -28,6 +29,9 @@ import StageTextSurface from './ui/StageTextSurface';
 
 const groupButtonClassName =
   'cursor-pointer group text-center transition-transform duration-300';
+
+/** Delay after groups appear before the feedback link fades in. */
+const FEEDBACK_REVEAL_AFTER_GROUPS_MS = 900;
 
 const JOIN_GROUP_LINKS = {
   sr: {
@@ -47,6 +51,7 @@ export default function JoinUs() {
   const { t, raw } = useGenderedTranslations(StageId.JoinUs);
   const { trackCommunityCtaClicked } = useTracking();
   const [showGroups, setShowGroups] = useState(false);
+  const [showFeedback, setShowFeedback] = useState(false);
   const intro = raw('intro') as string[];
   const text = [...intro, t('groupsHeading')];
   const cfg = stageConfig[StageId.JoinUs];
@@ -65,6 +70,17 @@ export default function JoinUs() {
     locale in JOIN_GROUP_LINKS
       ? JOIN_GROUP_LINKS[locale as keyof typeof JOIN_GROUP_LINKS]
       : JOIN_GROUP_LINKS.sr;
+
+  useEffect(() => {
+    if (!showGroups) {
+      setShowFeedback(false);
+      return;
+    }
+    const id = window.setTimeout(() => {
+      setShowFeedback(true);
+    }, FEEDBACK_REVEAL_AFTER_GROUPS_MS);
+    return () => window.clearTimeout(id);
+  }, [showGroups]);
 
   return (
     <PageContainer
@@ -152,6 +168,11 @@ export default function JoinUs() {
           </a>
         </div>
       </ContentContainer>
+      <FeedbackFormLink
+        stage={StageId.JoinUs}
+        visible={showFeedback}
+        className="mt-6"
+      />
     </PageContainer>
   );
 }

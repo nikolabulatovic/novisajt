@@ -156,6 +156,12 @@ interface BaseStageConfig {
   body?: StageBodyAnimatedText;
   /** Next interaction translation namespace. */
   translationNamespace?: string;
+  /**
+   * Show the shared feedback-form link on this stage.
+   * When omitted, defaults to `true` for `nextInteraction: 'none'` (terminal stages),
+   * except where explicitly set to `false` (e.g. StayComfortable).
+   */
+  showFeedbackFormLink?: boolean;
 }
 
 type StageInteractionConfig =
@@ -618,6 +624,8 @@ export const stageConfig: Record<Stage, StageConfig> = {
     // Shared with Choice — first stage owns the file
     backgroundImage: stageBackground(StageId.Choice, 'webp'),
     opacity: 0.3,
+    nextInteraction: 'none',
+    showFeedbackFormLink: false,
   },
   [StageId.WouldYouLikeToBe]: {
     backgroundImage: stageBackground(StageId.WouldYouLikeToBe),
@@ -778,3 +786,12 @@ export const stageConfig: Record<Stage, StageConfig> = {
     },
   },
 };
+
+/** Whether this stage should show the shared Google Form feedback link. */
+export function stageShowsFeedbackFormLink(stage: Stage): boolean {
+  const cfg = stageConfig[stage];
+  if (typeof cfg.showFeedbackFormLink === 'boolean') {
+    return cfg.showFeedbackFormLink;
+  }
+  return cfg.nextInteraction === 'none';
+}
