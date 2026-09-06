@@ -5,7 +5,7 @@
       "question": "Šta ti je najvažnije?",
       "options": [
         {
-          "text": "Da ne povređujem druge svojim postupcima",
+          "text": "Da ne ugrožavam druge svojim postupcima",
           "value": "act"
         },
         {
@@ -17,7 +17,7 @@
           "value": "admit"
         },
         {
-          "text": "Da sebi ne otežavam život bez potrebe",
+          "text": "Da sebi ne komplikujem život bez potrebe",
           "value": "comfort"
         }
       ]
