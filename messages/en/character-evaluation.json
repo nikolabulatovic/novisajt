@@ -2,14 +2,14 @@
   "questions": [
     {
       "id": 1,
-      "question": "What matters most to you?",
+      "question": "If you compare the options offered, which matters most to you?",
       "options": [
         {
           "text": "Not harming others through my actions",
           "value": "act"
         },
         {
-          "text": "Fitting in and functioning normally in the world around me",
+          "text": "Fitting into the world around me",
           "value": "conform"
         },
         {
@@ -17,7 +17,7 @@
           "value": "admit"
         },
         {
-          "text": "Not making my life more complicated than it needs to be",
+          "text": "Not complicating my own life",
           "value": "comfort"
         }
       ]

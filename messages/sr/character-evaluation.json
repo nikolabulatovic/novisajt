@@ -2,14 +2,14 @@
   "questions": [
     {
       "id": 1,
-      "question": "Šta ti je najvažnije?",
+      "question": "Ako uporediš ponuđene izbore, koji ti je najvažniji?",
       "options": [
         {
           "text": "Da ne ugrožavam druge svojim postupcima",
           "value": "act"
         },
         {
-          "text": "Da se uklopim i normalno funkcionišem u svetu oko sebe",
+          "text": "Da se uklopim u svet oko sebe",
           "value": "conform"
         },
         {
@@ -17,7 +17,7 @@
           "value": "admit"
         },
         {
-          "text": "Da sebi ne komplikujem život bez potrebe",
+          "text": "Da sebi ne komplikujem život",
           "value": "comfort"
         }
       ]
