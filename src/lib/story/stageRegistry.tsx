@@ -17,6 +17,7 @@ import CharacterIncompatible from '@/src/components/CharacterIncompatible';
 import ChoiceStage from '@/src/components/ChoiceStage';
 import CourageousChoice from '@/src/components/CourageousChoice';
 import CowFate from '@/src/components/CowFate';
+import DespiteSocialNorm from '@/src/components/DespiteSocialNorm';
 import DishonestSelfOwnership from '@/src/components/DishonestSelfOwnership';
 import DoubleStandard from '@/src/components/DoubleStandard';
 import Excuse from '@/src/components/Excuse';
@@ -66,6 +67,7 @@ export const STAGE_REGISTRY: Record<Stage, ComponentType<any>> = {
   [StageId.HistoricalSlavery]: HistoricalSlavery,
   [StageId.HistoricalAuthoritarianism]: HistoricalAuthoritarianism,
   [StageId.PersonalAccountability]: PersonalAccountability,
+  [StageId.DespiteSocialNorm]: DespiteSocialNorm,
   [StageId.InjusticePersists]: InjusticePersists,
   [StageId.PersonalQuestion]: PersonalQuestion,
   [StageId.WouldYouLikeToBe]: WouldYouLikeToBe,

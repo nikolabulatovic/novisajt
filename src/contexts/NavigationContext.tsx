@@ -12,6 +12,7 @@ export const StageId = {
   HistoricalSlavery: 'historical-slavery',
   HistoricalAuthoritarianism: 'historical-authoritarianism',
   PersonalAccountability: 'personal-accountability',
+  DespiteSocialNorm: 'despite-social-norm',
   InjusticePersists: 'injustice-persists',
   PersonalQuestion: 'personal-question',
   WouldYouLikeToBe: 'would-you-like-to-be',

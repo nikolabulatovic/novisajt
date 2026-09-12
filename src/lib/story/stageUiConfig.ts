@@ -348,6 +348,23 @@ export const stageConfig: Record<Stage, StageConfig> = {
       { id: 'NO', labelKey: 'options.no' },
     ],
   },
+  [StageId.DespiteSocialNorm]: {
+    // Shared with PersonalAccountability — that stage owns the file
+    backgroundImage: stageBackground(StageId.PersonalAccountability),
+    backgroundPositionMd: '54% center',
+    backgroundPositionSm: '58% center',
+    opacity: 0.5,
+    textSurface: 'backdrop',
+    additionalUiConfig: {
+      backdropOpacity: 0.2,
+      backdropFade: 0.15,
+    },
+    nextInteraction: 'answer',
+    answerOptions: [
+      { id: 'YES', labelKey: 'options.yes' },
+      { id: 'NO', labelKey: 'options.no' },
+    ],
+  },
   [StageId.InjusticePersists]: {
     backgroundImage: stageBackground(StageId.InjusticePersists),
     backgroundPositionMd: '53% center',

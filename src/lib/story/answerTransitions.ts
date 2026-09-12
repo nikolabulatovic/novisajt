@@ -7,6 +7,12 @@ const isAny = (answer: string, aliases: readonly string[]) =>
 export function nextAfterPersonalAccountability(answer: string): Stage {
   return isAny(answer, [AnswerId.YES])
     ? StageId.PersonalQuestion
+    : StageId.DespiteSocialNorm;
+}
+
+export function nextAfterDespiteSocialNorm(answer: string): Stage {
+  return isAny(answer, [AnswerId.YES])
+    ? StageId.PersonalQuestion
     : StageId.InjusticePersists;
 }
 

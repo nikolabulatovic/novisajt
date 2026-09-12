@@ -6,6 +6,7 @@ import {
   nextAfterAddressingContradiction,
   nextAfterAlignBehaviour,
   nextAfterBreakingQuestion,
+  nextAfterDespiteSocialNorm,
   nextAfterDoubleStandard,
   nextAfterExcuse,
   nextAfterLetThemLive,
@@ -46,6 +47,7 @@ export const answerStageTransitions: Partial<
   Record<Stage, (answer: string) => Stage>
 > = {
   [StageId.PersonalAccountability]: nextAfterPersonalAccountability,
+  [StageId.DespiteSocialNorm]: nextAfterDespiteSocialNorm,
   [StageId.PersonalQuestion]: nextAfterPersonalQuestion,
   [StageId.WouldYouLikeToBe]: nextAfterWouldYouLikeToBe,
   [StageId.BreakingQuestion]: nextAfterBreakingQuestion,

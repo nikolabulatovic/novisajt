@@ -16,6 +16,7 @@ export const stageInteractionType: Record<Stage, StageInteractionType> = {
   [StageId.HistoricalSlavery]: 'next-pill',
   [StageId.HistoricalAuthoritarianism]: 'next-pill',
   [StageId.PersonalAccountability]: 'answer-options',
+  [StageId.DespiteSocialNorm]: 'answer-options',
   [StageId.InjusticePersists]: 'none',
   [StageId.PersonalQuestion]: 'answer-options',
   [StageId.WouldYouLikeToBe]: 'answer-options',

@@ -1,0 +1,10 @@
+{
+  "text": [
+    "We'll assume the person isn't coerced and has been given information about what they're doing.",
+    "Do they not bear responsibility only because other people behaved that way and considered it normal?"
+  ],
+  "options": {
+    "yes": "Bears responsibility",
+    "no": "Does not bear responsibility"
+  }
+}
