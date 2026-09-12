@@ -12,7 +12,6 @@ export const StageId = {
   HistoricalSlavery: 'historical-slavery',
   HistoricalAuthoritarianism: 'historical-authoritarianism',
   PersonalAccountability: 'personal-accountability',
-  DespiteSocialNorm: 'despite-social-norm',
   InjusticePersists: 'injustice-persists',
   PersonalQuestion: 'personal-question',
   WouldYouLikeToBe: 'would-you-like-to-be',
@@ -58,9 +57,17 @@ export const StageId = {
 
 export type Stage = (typeof StageId)[keyof typeof StageId];
 
+export type StepId = string;
+
+export const PersonalAccountabilityStepId = {
+  Initial: 'initial',
+  OnlyBecauseOthers: 'only-because-others',
+} as const;
+
 interface NavigationContextType {
   currentStage: Stage;
-  navigateToStage: (stage: Stage) => void;
+  currentStepId: StepId | null;
+  navigateToStage: (stage: Stage, stepId?: StepId | null) => void;
 }
 
 const NavigationContext = createContext<NavigationContextType | undefined>(
@@ -70,14 +77,18 @@ const NavigationContext = createContext<NavigationContextType | undefined>(
 export function NavigationProvider({
   children,
   currentStage,
+  currentStepId,
   navigateToStage,
 }: {
   children: ReactNode;
   currentStage: Stage;
-  navigateToStage: (stage: Stage) => void;
+  currentStepId: StepId | null;
+  navigateToStage: (stage: Stage, stepId?: StepId | null) => void;
 }) {
   return (
-    <NavigationContext.Provider value={{ currentStage, navigateToStage }}>
+    <NavigationContext.Provider
+      value={{ currentStage, currentStepId, navigateToStage }}
+    >
       {children}
     </NavigationContext.Provider>
   );

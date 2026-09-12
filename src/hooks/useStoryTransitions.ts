@@ -3,7 +3,11 @@
 import type { TransitionEvent } from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { type Stage, StageId } from '@/src/contexts/NavigationContext';
+import {
+  type Stage,
+  StageId,
+  type StepId,
+} from '@/src/contexts/NavigationContext';
 import type { StoryTransitionStyle } from '@/src/contexts/StoryFlowContext';
 import type { PillOrigin } from '@/src/lib/pillOrigin';
 import { stageInteractionType } from '@/src/lib/story/stageInteraction';
@@ -45,6 +49,7 @@ function isOwnOpacityTransition(event: TransitionEvent<HTMLDivElement>) {
  */
 export function useStoryTransitions() {
   const [stage, setStage] = useState<Stage>(StageId.Choice);
+  const [currentStepId, setCurrentStepId] = useState<StepId | null>(null);
 
   const [pendingNextStage, setPendingNextStage] = useState<Stage | null>(null);
   const [pendingPillOrigin, setPendingPillOrigin] = useState<PillOrigin | null>(
@@ -60,6 +65,10 @@ export function useStoryTransitions() {
     pendingNextStageRef.current = pendingNextStage;
   }, [pendingNextStage]);
 
+  const pendingCrossfadeStageRef = useRef<Stage | null>(null);
+  const pendingStepIdRef = useRef<StepId | null>(null);
+  const stageAfterFadeRef = useRef<Stage | null>(null);
+
   const leaveInFlightRef = useRef(false);
   const beginLeave = () => {
     if (leaveInFlightRef.current) return false;
@@ -70,16 +79,30 @@ export function useStoryTransitions() {
     leaveInFlightRef.current = false;
   };
 
+  /** Consume pending step once (safe if commit runs twice). */
+  const takePendingStepId = () => {
+    const stepId = pendingStepIdRef.current;
+    pendingStepIdRef.current = null;
+    return stepId;
+  };
+
   const handlePillTransitionComplete = useCallback(() => {
     const next = pendingNextStageRef.current;
     if (next) {
       setStage(next);
+      setCurrentStepId(takePendingStepId());
     }
     pendingNextStageRef.current = null;
     setPendingNextStage(null);
     setPendingPillOrigin(null);
     endLeave();
   }, []);
+
+  const queueCrossfadeTo = (newStage: Stage, stepId: StepId | null) => {
+    pendingStepIdRef.current = stepId;
+    pendingCrossfadeStageRef.current = newStage;
+    setPendingCrossfadeStage(newStage);
+  };
 
   const transitionToStage = useCallback(
     (
@@ -89,6 +112,8 @@ export function useStoryTransitions() {
     ) => {
       if (newStage === stage) return;
       if (!beginLeave()) return;
+      // Entering a new stage via story flow defaults to first step (null).
+      pendingStepIdRef.current = null;
       const shouldUsePillTransition = shouldUsePillTransitionForStage(
         stage,
         style,
@@ -98,7 +123,7 @@ export function useStoryTransitions() {
         pendingNextStageRef.current = newStage;
         setPendingNextStage(newStage);
       } else {
-        setPendingCrossfadeStage(newStage);
+        queueCrossfadeTo(newStage, null);
       }
     },
     [stage],
@@ -106,18 +131,21 @@ export function useStoryTransitions() {
 
   const transitionViaBlackOverlayTo = useCallback((targetStage: Stage) => {
     if (!beginLeave()) return;
+    pendingStepIdRef.current = null;
+    stageAfterFadeRef.current = targetStage;
     setStageAfterFade(targetStage);
     setBlackOverlay(true);
   }, []);
 
   const commitBlackOverlayStage = useCallback(() => {
-    setStageAfterFade((pending) => {
-      if (pending === null) return null;
-      setStage(pending);
-      setBlackOverlay(false);
-      endLeave();
-      return null;
-    });
+    const pending = stageAfterFadeRef.current;
+    if (pending === null) return;
+    stageAfterFadeRef.current = null;
+    setStageAfterFade(null);
+    setStage(pending);
+    setCurrentStepId(takePendingStepId());
+    setBlackOverlay(false);
+    endLeave();
   }, []);
 
   /** Fallback when `transitionend` never fires (common on low-end Android Chrome). */
@@ -138,21 +166,27 @@ export function useStoryTransitions() {
   };
 
   const navigateToStage = useCallback(
-    (newStage: Stage) => {
-      if (newStage === stage) return;
+    (newStage: Stage, stepId?: StepId | null) => {
+      const nextStep = stepId === undefined ? null : stepId;
+      if (newStage === stage) {
+        if (nextStep === currentStepId) return;
+        setCurrentStepId(nextStep);
+        return;
+      }
       if (!beginLeave()) return;
-      setPendingCrossfadeStage(newStage);
+      queueCrossfadeTo(newStage, nextStep);
     },
-    [stage],
+    [stage, currentStepId],
   );
 
   const commitCrossfadeStage = useCallback(() => {
-    setPendingCrossfadeStage((pending) => {
-      if (pending === null) return null;
-      setStage(pending);
-      endLeave();
-      return null;
-    });
+    const pending = pendingCrossfadeStageRef.current;
+    if (pending === null) return;
+    pendingCrossfadeStageRef.current = null;
+    setPendingCrossfadeStage(null);
+    setStage(pending);
+    setCurrentStepId(takePendingStepId());
+    endLeave();
   }, []);
 
   /** Fallback when `transitionend` never fires (common on low-end Android Chrome). */
@@ -169,11 +203,14 @@ export function useStoryTransitions() {
     event: TransitionEvent<HTMLDivElement>,
   ) => {
     if (!isOwnOpacityTransition(event)) return;
+    // Only commit the leave; ignore the fade-in transitionend.
+    if (pendingCrossfadeStageRef.current === null) return;
     commitCrossfadeStage();
   };
 
   return {
     stage,
+    currentStepId,
     navigateToStage,
     transitionToStage,
     transitionViaBlackOverlayTo,

@@ -14,7 +14,9 @@
     "historicalSlavery": "Istorijsko ropstvo",
     "historicalAuthoritarianism": "Istorijski autoritarizam",
     "personalAccountability": "Lična odgovornost",
-    "despiteSocialNorm": "Uprkos društvenoj normi",
+    "personalAccountabilitySteps": {
+      "onlyBecauseOthers": "Samo zato što drugi"
+    },
     "injusticePersists": "Nepravda opstaje",
     "personalQuestion": "Lično pitanje",
     "wouldYouLikeToBe": {

@@ -15,7 +15,6 @@ const MESSAGE_FILES = [
   'historical-slavery',
   'historical-authoritarianism',
   'personal-accountability',
-  'despite-social-norm',
   'injustice-persists',
   'spasa-story',
   'spasa-revelation',

@@ -1,22 +1,40 @@
-import { type Stage, StageId } from '@/src/contexts/NavigationContext';
+import {
+  PersonalAccountabilityStepId,
+  type Stage,
+  StageId,
+  type StepId,
+} from '@/src/contexts/NavigationContext';
 import { AnswerId } from '@/src/lib/answerIds';
+
+export type AnswerDestination =
+  | { type: 'stage'; stage: Stage }
+  | { type: 'step'; stepId: StepId };
 
 const isAny = (answer: string, aliases: readonly string[]) =>
   aliases.includes(answer);
 
-export function nextAfterPersonalAccountability(answer: string): Stage {
-  return isAny(answer, [AnswerId.YES])
-    ? StageId.PersonalQuestion
-    : StageId.DespiteSocialNorm;
+export function nextAfterPersonalAccountabilityStep(
+  stepId: StepId,
+  answer: string,
+): AnswerDestination {
+  if (stepId === PersonalAccountabilityStepId.Initial) {
+    return isAny(answer, [AnswerId.YES])
+      ? { type: 'stage', stage: StageId.PersonalQuestion }
+      : {
+          type: 'step',
+          stepId: PersonalAccountabilityStepId.OnlyBecauseOthers,
+        };
+  }
+
+  if (stepId === PersonalAccountabilityStepId.OnlyBecauseOthers) {
+    return isAny(answer, [AnswerId.YES])
+      ? { type: 'stage', stage: StageId.PersonalQuestion }
+      : { type: 'stage', stage: StageId.InjusticePersists };
+  }
+
+  return { type: 'stage', stage: StageId.InjusticePersists };
 }
 
-export function nextAfterDespiteSocialNorm(answer: string): Stage {
-  return isAny(answer, [AnswerId.YES])
-    ? StageId.PersonalQuestion
-    : StageId.InjusticePersists;
-}
-
-/** Branching after the “personal question” screen. */
 export function nextAfterPersonalQuestion(answer: string): Stage {
   return isAny(answer, [AnswerId.DONT_KNOW])
     ? StageId.WouldYouLikeToBe

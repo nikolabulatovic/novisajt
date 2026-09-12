@@ -1,16 +1,20 @@
-import { type Stage, StageId } from '@/src/contexts/NavigationContext';
 import {
+  type Stage,
+  StageId,
+  type StepId,
+} from '@/src/contexts/NavigationContext';
+import {
+  type AnswerDestination,
   nextAfterAcceptingSelfOwnership,
   nextAfterActResponsibly,
   nextAfterAdditionalResources,
   nextAfterAddressingContradiction,
   nextAfterAlignBehaviour,
   nextAfterBreakingQuestion,
-  nextAfterDespiteSocialNorm,
   nextAfterDoubleStandard,
   nextAfterExcuse,
   nextAfterLetThemLive,
-  nextAfterPersonalAccountability,
+  nextAfterPersonalAccountabilityStep,
   nextAfterPersonalQuestion,
   nextAfterSolutionChoice,
   nextAfterSolutionKnow,
@@ -46,8 +50,6 @@ export const directStageTransitions: Partial<Record<Stage, Stage>> = {
 export const answerStageTransitions: Partial<
   Record<Stage, (answer: string) => Stage>
 > = {
-  [StageId.PersonalAccountability]: nextAfterPersonalAccountability,
-  [StageId.DespiteSocialNorm]: nextAfterDespiteSocialNorm,
   [StageId.PersonalQuestion]: nextAfterPersonalQuestion,
   [StageId.WouldYouLikeToBe]: nextAfterWouldYouLikeToBe,
   [StageId.BreakingQuestion]: nextAfterBreakingQuestion,
@@ -64,4 +66,10 @@ export const answerStageTransitions: Partial<
   [StageId.DoubleStandard]: nextAfterDoubleStandard,
   [StageId.YouAreResponsible]: nextAfterYouAreResponsible,
   [StageId.ActResponsibly]: nextAfterActResponsibly,
+};
+
+export const answerStepTransitions: Partial<
+  Record<Stage, (stepId: StepId, answer: string) => AnswerDestination>
+> = {
+  [StageId.PersonalAccountability]: nextAfterPersonalAccountabilityStep,
 };

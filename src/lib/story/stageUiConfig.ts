@@ -1,4 +1,9 @@
-import { Stage, StageId } from '@/src/contexts/NavigationContext';
+import {
+  PersonalAccountabilityStepId,
+  Stage,
+  StageId,
+  type StepId,
+} from '@/src/contexts/NavigationContext';
 import { AnswerId } from '@/src/lib/answerIds';
 import {
   type GenderedContent,
@@ -109,6 +114,12 @@ export interface StageAnswerOptionConfig {
   labelKey: string;
 }
 
+export interface StageStepConfig {
+  id: StepId;
+  textKey?: string;
+  answerOptions: StageAnswerOptionConfig[];
+}
+
 interface BaseStageConfig {
   /**
    * Stage background path(s). A string, `{ male, female }`, and/or
@@ -168,15 +179,24 @@ type StageInteractionConfig =
   | {
       nextInteraction?: 'none';
       answerOptions?: never;
+      steps?: never;
     }
   | {
       nextInteraction: 'pill';
       answerOptions?: never;
+      steps?: never;
     }
   | {
       nextInteraction: 'answer';
-      /** Required when `nextInteraction` is `answer`. */
+      /** Single-shot answer stage (mutually exclusive with `steps`). */
       answerOptions: StageAnswerOptionConfig[];
+      steps?: never;
+    }
+  | {
+      nextInteraction: 'answer';
+      /** Multi-step answer stage (mutually exclusive with flat `answerOptions`). */
+      steps: StageStepConfig[];
+      answerOptions?: never;
     };
 
 export type StageConfig = BaseStageConfig & StageInteractionConfig;
@@ -343,26 +363,21 @@ export const stageConfig: Record<Stage, StageConfig> = {
       backdropFade: 0.15,
     },
     nextInteraction: 'answer',
-    answerOptions: [
-      { id: 'YES', labelKey: 'options.yes' },
-      { id: 'NO', labelKey: 'options.no' },
-    ],
-  },
-  [StageId.DespiteSocialNorm]: {
-    // Shared with PersonalAccountability — that stage owns the file
-    backgroundImage: stageBackground(StageId.PersonalAccountability),
-    backgroundPositionMd: '54% center',
-    backgroundPositionSm: '58% center',
-    opacity: 0.5,
-    textSurface: 'backdrop',
-    additionalUiConfig: {
-      backdropOpacity: 0.2,
-      backdropFade: 0.15,
-    },
-    nextInteraction: 'answer',
-    answerOptions: [
-      { id: 'YES', labelKey: 'options.yes' },
-      { id: 'NO', labelKey: 'options.no' },
+    steps: [
+      {
+        id: PersonalAccountabilityStepId.Initial,
+        answerOptions: [
+          { id: AnswerId.YES, labelKey: 'options.yes' },
+          { id: AnswerId.NO, labelKey: 'options.no' },
+        ],
+      },
+      {
+        id: PersonalAccountabilityStepId.OnlyBecauseOthers,
+        answerOptions: [
+          { id: AnswerId.YES, labelKey: 'options.yes' },
+          { id: AnswerId.NO, labelKey: 'options.no' },
+        ],
+      },
     ],
   },
   [StageId.InjusticePersists]: {

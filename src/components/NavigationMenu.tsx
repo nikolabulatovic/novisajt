@@ -3,8 +3,10 @@
 import { useEffect, useRef, useState } from 'react';
 
 import {
+  PersonalAccountabilityStepId,
   Stage,
   StageId,
+  type StepId,
   useNavigation,
 } from '@/src/contexts/NavigationContext';
 import { useGenderedTranslations } from '@/src/hooks/useGenderedTranslations';
@@ -19,7 +21,6 @@ const stageLabelKeys: Record<Stage, string> = {
   [StageId.HistoricalSlavery]: 'stages.historicalSlavery',
   [StageId.HistoricalAuthoritarianism]: 'stages.historicalAuthoritarianism',
   [StageId.PersonalAccountability]: 'stages.personalAccountability',
-  [StageId.DespiteSocialNorm]: 'stages.despiteSocialNorm',
   [StageId.InjusticePersists]: 'stages.injusticePersists',
   [StageId.PersonalQuestion]: 'stages.personalQuestion',
   [StageId.WouldYouLikeToBe]: 'stages.wouldYouLikeToBe',
@@ -66,6 +67,10 @@ const stageLabelKeys: Record<Stage, string> = {
 interface StageNavItem {
   stage: Stage;
   depth: number;
+  /** When set, opens this step inside `stage` (multi-step deep-link). */
+  stepId?: StepId;
+  /** Override label key; defaults to {@link stageLabelKeys}[stage]. */
+  labelKey?: string;
 }
 
 const stageNavItems: StageNavItem[] = [
@@ -78,9 +83,18 @@ const stageNavItems: StageNavItem[] = [
   { stage: StageId.HistoricalIntro, depth: 0 },
   { stage: StageId.HistoricalSlavery, depth: 0 },
   { stage: StageId.HistoricalAuthoritarianism, depth: 0 },
-  { stage: StageId.PersonalAccountability, depth: 0 },
-  { stage: StageId.DespiteSocialNorm, depth: 1 },
-  { stage: StageId.InjusticePersists, depth: 2 },
+  {
+    stage: StageId.PersonalAccountability,
+    depth: 0,
+    stepId: PersonalAccountabilityStepId.Initial,
+  },
+  {
+    stage: StageId.PersonalAccountability,
+    depth: 1,
+    stepId: PersonalAccountabilityStepId.OnlyBecauseOthers,
+    labelKey: 'stages.personalAccountabilitySteps.onlyBecauseOthers',
+  },
+  { stage: StageId.InjusticePersists, depth: 1 },
   { stage: StageId.PersonalQuestion, depth: 0 },
   { stage: StageId.WouldYouLikeToBe, depth: 1 },
   { stage: StageId.RecognizingInjustice, depth: 2 },
@@ -124,7 +138,7 @@ const stageNavItems: StageNavItem[] = [
 
 export default function NavigationMenu() {
   const { t, label } = useGenderedTranslations('navigation-menu');
-  const { currentStage, navigateToStage } = useNavigation();
+  const { currentStage, currentStepId, navigateToStage } = useNavigation();
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -151,8 +165,8 @@ export default function NavigationMenu() {
     };
   }, [isOpen]);
 
-  const handleStageClick = (stage: Stage) => {
-    navigateToStage(stage);
+  const handleNavClick = (stage: Stage, stepId?: StepId) => {
+    navigateToStage(stage, stepId ?? null);
     setIsOpen(false);
   };
 
@@ -201,13 +215,18 @@ export default function NavigationMenu() {
               {t('title')}
             </h3>
           </div>
-          {stageNavItems.map(({ stage, depth }) => {
-            const isActive = currentStage === stage;
+          {stageNavItems.map(({ stage, depth, stepId, labelKey }) => {
+            const isActive =
+              currentStage === stage &&
+              (stepId == null ||
+                (currentStepId ?? PersonalAccountabilityStepId.Initial) ===
+                  stepId);
             const hasIndent = depth > 0;
             return (
               <button
-                key={stage}
-                onClick={() => handleStageClick(stage)}
+                key={`${stage}:${stepId ?? ''}`}
+                type="button"
+                onClick={() => handleNavClick(stage, stepId)}
                 className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-200 mb-1 ${
                   isActive
                     ? 'bg-gray-800/60 border border-gray-700/50 text-gray-100'
@@ -228,7 +247,7 @@ export default function NavigationMenu() {
                       className="text-sm font-light"
                       style={{ fontFamily: 'var(--font-inter), sans-serif' }}
                     >
-                      {label(stageLabelKeys[stage])}
+                      {label(labelKey ?? stageLabelKeys[stage])}
                     </span>
                   </div>
                   {isActive && (

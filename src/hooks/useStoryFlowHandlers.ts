@@ -1,11 +1,17 @@
 import { type Dispatch, type SetStateAction, useMemo } from 'react';
 
-import { type Stage, StageId } from '@/src/contexts/NavigationContext';
+import {
+  type Stage,
+  StageId,
+  type StepId,
+} from '@/src/contexts/NavigationContext';
 import type { StoryTransitionStyle } from '@/src/contexts/StoryFlowContext';
 import type { PillOrigin } from '@/src/lib/pillOrigin';
 import { characterEvaluationAnswersMeetBar } from '@/src/lib/story/characterEvaluationBar';
+import { stageConfig } from '@/src/lib/story/stageUiConfig';
 import {
   answerStageTransitions,
+  answerStepTransitions,
   directStageTransitions,
 } from '@/src/lib/story/transitions';
 
@@ -15,6 +21,8 @@ export interface StoryFlowHandlerDeps {
     style?: StoryTransitionStyle,
     pillOrigin?: PillOrigin,
   ) => void;
+  navigateToStage: (stage: Stage, stepId?: StepId | null) => void;
+  currentStepId: StepId | null;
   setAnswers: Dispatch<SetStateAction<Record<string, string>>>;
   trackAnswerSelected: (stage: Stage, answer: string) => void;
 }
@@ -23,6 +31,8 @@ type StageCompletionAnswer = string | Record<string, string>;
 
 export function useStoryFlowHandlers({
   transitionToStage,
+  navigateToStage,
+  currentStepId,
   setAnswers,
   trackAnswerSelected,
 }: StoryFlowHandlerDeps) {
@@ -49,6 +59,29 @@ export function useStoryFlowHandlers({
         }
 
         if (typeof answer === 'string') {
+          const nextForStep = answerStepTransitions[completedStage];
+          if (nextForStep) {
+            const stepId =
+              currentStepId ?? stageConfig[completedStage].steps?.[0]?.id;
+            if (!stepId) {
+              return;
+            }
+
+            setAnswers((prev) => ({
+              ...prev,
+              [`${completedStage}:${stepId}`]: answer,
+            }));
+            trackAnswerSelected(completedStage, `${stepId}:${answer}`);
+
+            const destination = nextForStep(stepId, answer);
+            if (destination.type === 'step') {
+              navigateToStage(completedStage, destination.stepId);
+              return;
+            }
+            transitionToStage(destination.stage, 'auto', pillOrigin);
+            return;
+          }
+
           setAnswers((prev) => ({ ...prev, [completedStage]: answer }));
           trackAnswerSelected(completedStage, answer);
 
@@ -65,6 +98,12 @@ export function useStoryFlowHandlers({
         }
       },
     }),
-    [setAnswers, trackAnswerSelected, transitionToStage],
+    [
+      currentStepId,
+      navigateToStage,
+      setAnswers,
+      trackAnswerSelected,
+      transitionToStage,
+    ],
   );
 }

@@ -1,9 +1,25 @@
 {
-  "text": [
-    "Do you think an ordinary person who contributed to these injustices bears responsibility for their behavior, regardless of it being normal at the time?"
-  ],
-  "options": {
-    "yes": "Bears responsibility",
-    "no": "Does not bear responsibility"
-  }
+  "steps": [
+    {
+      "id": "initial",
+      "text": [
+        "Do you think an ordinary person who contributed to these injustices bears responsibility for their behavior, regardless of it being normal at the time?"
+      ],
+      "options": {
+        "yes": "Bears responsibility",
+        "no": "Does not bear responsibility"
+      }
+    },
+    {
+      "id": "only-because-others",
+      "text": [
+        "We'll assume the person isn't coerced and has been given information about what they're doing.",
+        "Do they not bear responsibility only because other people behaved that way and considered it normal?"
+      ],
+      "options": {
+        "yes": "Bears responsibility",
+        "no": "Does not bear responsibility"
+      }
+    }
+  ]
 }

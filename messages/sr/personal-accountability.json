@@ -1,9 +1,25 @@
 {
-  "text": [
-    "Da li misliš da običan čovek koji je doprinosio ovim nepravdama snosi odgovornost za svoje ponašanje, bez obzira što su se drugi ljudi tako ponašali i smatrali to normalnim?"
-  ],
-  "options": {
-    "yes": "Snosi odgovornost",
-    "no": "Ne snosi odgovornost"
-  }
+  "steps": [
+    {
+      "id": "initial",
+      "text": [
+        "Da li misliš da običan čovek koji je doprinosio ovim nepravdama snosi odgovornost za svoje ponašanje, bez obzira što su se drugi ljudi tako ponašali i smatrali to normalnim?"
+      ],
+      "options": {
+        "yes": "Snosi odgovornost",
+        "no": "Ne snosi odgovornost"
+      }
+    },
+    {
+      "id": "only-because-others",
+      "text": [
+        "Pretpostavićemo da osoba nije prisiljena i da joj je predstavljena informacija o tome šta radi.",
+        "Da li nije odgovorna samo zato što većina to radi?"
+      ],
+      "options": {
+        "yes": "Odgovorna je",
+        "no": "Nije odgovorna"
+      }
+    }
+  ]
 }

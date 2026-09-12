@@ -1,8 +1,9 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import type { Stage } from '@/src/contexts/NavigationContext';
+import { useNavigation } from '@/src/contexts/NavigationContext';
 import { useGenderedTranslations } from '@/src/hooks/useGenderedTranslations';
 import { useResolvedBackgroundImage } from '@/src/hooks/useResolvedBackgroundImage';
 import { AnimatedTextBlock } from '@/src/lib/i18n/animatedText';
@@ -35,6 +36,11 @@ const ANSWER_SHELL_STACK_GAP: Record<'sm' | 'md' | 'lg', string> = {
   lg: 'space-y-10',
 };
 
+type MessageStep = {
+  id: string;
+  text: AnimatedTextBlock;
+};
+
 export interface StoryStageChromeProps {
   stage: Stage;
 }
@@ -45,9 +51,26 @@ export default function StoryStageChrome({ stage }: StoryStageChromeProps) {
   const body = cfg.body;
   const ui = cfg.additionalUiConfig;
   const bodyTextKey = body?.textKey ?? DEFAULT_STAGE_BODY.textKey;
+  const { currentStepId } = useNavigation();
   const { raw: rawBody } = useGenderedTranslations(
     cfg.translationNamespace ?? stage,
   );
+
+  const configuredSteps = cfg.steps;
+  const activeStepId =
+    (currentStepId &&
+      configuredSteps?.some((step) => step.id === currentStepId) &&
+      currentStepId) ||
+    configuredSteps?.[0]?.id;
+
+  const bodyText = useMemo(() => {
+    if (!configuredSteps?.length || !activeStepId) {
+      return rawBody(bodyTextKey) as AnimatedTextBlock;
+    }
+    const messageSteps = rawBody('steps') as MessageStep[];
+    const messageStep = messageSteps.find((step) => step.id === activeStepId);
+    return messageStep?.text ?? (rawBody(bodyTextKey) as AnimatedTextBlock);
+  }, [activeStepId, bodyTextKey, configuredSteps, rawBody]);
 
   const [nextInteraction, setNextInteractionVisible] = useState(false);
   const [answerShellState, setAnswerShellState] = useState(() => ({
@@ -59,11 +82,11 @@ export default function StoryStageChrome({ stage }: StoryStageChromeProps) {
 
   useEffect(() => {
     setNextInteractionVisible(false);
-  }, [stage]);
+  }, [stage, activeStepId]);
 
   useEffect(() => {
     setAnswerShellState({ ...ANSWER_IDLE_SHELL_STATE });
-  }, [stage]);
+  }, [stage, activeStepId]);
 
   const revealNextInteraction = useCallback(
     () => setNextInteractionVisible(true),
@@ -101,7 +124,8 @@ export default function StoryStageChrome({ stage }: StoryStageChromeProps) {
         backdropColor={ui?.backdropColor}
       >
         <AnimatedText
-          text={rawBody(bodyTextKey) as AnimatedTextBlock}
+          key={activeStepId ?? stage}
+          text={bodyText}
           speed={body?.speed ?? DEFAULT_STAGE_BODY.speed}
           delayAfterComplete={
             body?.delayAfterComplete ?? DEFAULT_STAGE_BODY.delayAfterComplete
@@ -122,6 +146,7 @@ export default function StoryStageChrome({ stage }: StoryStageChromeProps) {
       </StageTextSurface>
       <StoryStageNextInteraction
         stage={stage}
+        stepId={activeStepId}
         visible={nextInteraction}
         onAnswerChoiceShellChange={
           wrapsAnswerShell ? setAnswerShellState : undefined

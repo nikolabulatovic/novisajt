@@ -24,6 +24,7 @@ export default function Home() {
   const [gender, setGender] = useState<UserGender | null>(null);
   const {
     stage,
+    currentStepId,
     navigateToStage,
     transitionToStage,
     transitionViaBlackOverlayTo,
@@ -45,6 +46,8 @@ export default function Home() {
 
   const { completeStage } = useStoryFlowHandlers({
     transitionToStage,
+    navigateToStage,
+    currentStepId,
     setAnswers,
     trackAnswerSelected,
   });
@@ -72,7 +75,11 @@ export default function Home() {
   const StageComponent = STAGE_REGISTRY[stage];
 
   return (
-    <NavigationProvider currentStage={stage} navigateToStage={navigateToStage}>
+    <NavigationProvider
+      currentStage={stage}
+      currentStepId={currentStepId}
+      navigateToStage={navigateToStage}
+    >
       <StoryFlowProvider value={flowContextValue}>
         <PillTransitionLayer
           pendingNextStage={pill.pendingNextStage}

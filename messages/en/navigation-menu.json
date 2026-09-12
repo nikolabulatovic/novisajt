@@ -11,7 +11,9 @@
     "historicalSlavery": "Historical slavery",
     "historicalAuthoritarianism": "Historical authoritarianism",
     "personalAccountability": "Personal accountability",
-    "despiteSocialNorm": "Despite social norm",
+    "personalAccountabilitySteps": {
+      "onlyBecauseOthers": "Only because others"
+    },
     "injusticePersists": "Injustice persists",
     "personalQuestion": "Personal question",
     "wouldYouLikeToBe": "Would you care?",
