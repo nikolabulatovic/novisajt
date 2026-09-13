@@ -1,5 +1,8 @@
 {
-  "text": ["Now let's look at the solution.", "Do you use animals?"],
+  "text": [
+    "Now let's look at the solution.",
+    "Do you use animals for food, clothing, entertainment, or other purposes?"
+  ],
   "options": {
     "yes": "Yes",
     "no": "No"

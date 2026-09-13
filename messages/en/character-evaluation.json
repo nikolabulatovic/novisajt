@@ -2,7 +2,7 @@
   "questions": [
     {
       "id": 1,
-      "question": "If you compare the options offered, which matters most to you?",
+      "question": "If you compare the options below, which matters most to you?",
       "options": [
         {
           "text": "Not harming others through my actions",
@@ -35,7 +35,7 @@
           "text": "Feel an inner conflict and keep coming back to it",
           "value": "admit"
         },
-        { "text": "Look for how to change it", "value": "act" }
+        { "text": "Figure out how to change it", "value": "act" }
       ]
     },
     {

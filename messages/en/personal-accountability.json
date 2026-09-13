@@ -3,7 +3,7 @@
     {
       "id": "initial",
       "text": [
-        "Do you think an ordinary person who contributed to these injustices bears responsibility for their behavior, regardless of it being normal at the time?"
+        "Do you think an ordinary person who contributed to these injustices is responsible for their behavior, even if other people behaved the same way and considered it normal?"
       ],
       "options": {
         "yes": "Bears responsibility",
@@ -17,8 +17,8 @@
         "Do they not bear responsibility only because other people behaved that way and considered it normal?"
       ],
       "options": {
-        "yes": "Bears responsibility",
-        "no": "Does not bear responsibility"
+        "yes": "They bear responsibility",
+        "no": "They do not bear responsibility"
       }
     }
   ]
