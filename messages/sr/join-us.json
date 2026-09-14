@@ -1,15 +1,66 @@
 {
-  "intro": {
-    "male": [
-      "Nisi sam. Sve je više ljudi koji poštuju životinje.",
-      "Mi nastojimo da ti pomognemo: da odgovaramo na pitanja, delimo praktične savete i budemo podrška.",
-      "Lepše je i lakše kada si povezan sa ljudima istih principa."
-    ],
-    "female": [
-      "Nisi sama. Sve je više ljudi koji poštuju životinje.",
-      "Mi nastojimo da ti pomognemo: da odgovaramo na pitanja, delimo praktične savete i budemo podrška.",
-      "Lepše je i lakše kada si povezana sa ljudima istih principa."
-    ]
-  },
-  "groupsHeading": "Pridruži nam se i pronađi nas u grupama!"
+  "next": "Dalje",
+  "steps": [
+    {
+      "id": "follow",
+      "text": {
+        "male": [
+          "Želiš da ostaneš u toku sa našim radom i dešavanjima u veganskom pokretu?",
+          "Zaprati nas na društvenim mrežama."
+        ],
+        "female": [
+          "Želiš da ostaneš u toku sa našim radom i dešavanjima u veganskom pokretu?",
+          "Zaprati nas na društvenim mrežama."
+        ]
+      },
+      "options": {
+        "yes": "Želim",
+        "no": "Radije ne bih"
+      },
+      "actions": {
+        "instagram": "Instagram",
+        "facebook": "Facebook",
+        "tiktok": "TikTok"
+      }
+    },
+    {
+      "id": "share",
+      "text": {
+        "male": [
+          "Ako ti je ovo iskustvo bilo važno, podeli ga sa drugima.",
+          "Pošalji link ili podeli priču."
+        ],
+        "female": [
+          "Ako ti je ovo iskustvo bilo važno, podeli ga sa drugima.",
+          "Pošalji link ili podeli priču."
+        ]
+      },
+      "options": {
+        "yes": "Želim",
+        "no": "Radije ne bih"
+      },
+      "actions": {
+        "facebook": "Facebook",
+        "whatsapp": "WhatsApp",
+        "telegram": "Telegram",
+        "instagram": "Instagram Story",
+        "viber": "Viber",
+        "signal": "Signal"
+      }
+    },
+    {
+      "id": "community",
+      "intro": {
+        "male": [
+          "Imaš pitanja ili želiš da upoznaš ljude koji su takođe prošli kroz ovo iskustvo?",
+          "Tu smo da povežemo, odgovorimo, delimo praktične savete i budemo podrška. Lepše je i lakše kada si povezan sa ljudima istih principa."
+        ],
+        "female": [
+          "Imaš pitanja ili želiš da upoznaš ljude koji su takođe prošli kroz ovo iskustvo?",
+          "Tu smo da povežemo, odgovorimo, delimo praktične savete i budemo podrška. Lepše je i lakše kada si povezana sa ljudima istih principa."
+        ]
+      },
+      "groupsHeading": "Pridruži nam se i pronađi nas u grupama!"
+    }
+  ]
 }

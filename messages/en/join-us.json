@@ -1,8 +1,48 @@
 {
-  "intro": [
-    "You're not alone. There are other people who have chosen veganism.",
-    "We strive to help you: to answer questions, to give practical advice, and to support you.",
-    "It's nicer and easier when you share this experience with someone. Join us!"
-  ],
-  "groupsHeading": "Find us in the groups"
+  "next": "Continue",
+  "steps": [
+    {
+      "id": "follow",
+      "text": [
+        "Want to stay up to date with our work and what's happening in the vegan movement?",
+        "Follow us on social media."
+      ],
+      "options": {
+        "yes": "I want to",
+        "no": "I'd rather not"
+      },
+      "actions": {
+        "instagram": "Instagram",
+        "facebook": "Facebook",
+        "tiktok": "TikTok"
+      }
+    },
+    {
+      "id": "share",
+      "text": [
+        "If this experience mattered to you, share it with others.",
+        "Send the link or share a story."
+      ],
+      "options": {
+        "yes": "I want to",
+        "no": "I'd rather not"
+      },
+      "actions": {
+        "facebook": "Facebook",
+        "whatsapp": "WhatsApp",
+        "telegram": "Telegram",
+        "instagram": "Instagram Story",
+        "viber": "Viber",
+        "signal": "Signal"
+      }
+    },
+    {
+      "id": "community",
+      "intro": [
+        "Do you have questions, or want to meet people who have also been through this experience?",
+        "We're here to connect, answer, share practical tips, and support you. It's nicer and easier when you're connected with people who share the same principles."
+      ],
+      "groupsHeading": "Find us in the groups"
+    }
+  ]
 }
