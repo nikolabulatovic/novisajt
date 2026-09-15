@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useLocale } from 'next-intl';
 
 import { STORY_STAGE_TEXT_TONE_CLASS } from '@/src/constants/storyStageTokens';
-import { StageId } from '@/src/contexts/NavigationContext';
+import { StageId, useNavigation } from '@/src/contexts/NavigationContext';
 import { useStoryFlow } from '@/src/contexts/StoryFlowContext';
 import { useGenderedTranslations } from '@/src/hooks/useGenderedTranslations';
 import { useResolvedBackgroundImage } from '@/src/hooks/useResolvedBackgroundImage';
@@ -106,13 +106,18 @@ function ActionPlaceholder({ label }: { label: string }) {
 export default function JoinUs() {
   const locale = useLocale();
   const { t, raw, gender } = useGenderedTranslations(StageId.JoinUs);
+  const { currentStepId, navigateToStage } = useNavigation();
   const { trackAnswerSelected, trackCommunityCtaClicked } = useTracking();
   const { trackAnswerSelected: trackFlowAnswer } = useStoryFlow();
   const schedule = useScheduledTimeouts();
   const answeringRef = useRef(false);
 
   const steps = raw('steps') as JoinUsStep[];
-  const [currentStep, setCurrentStep] = useState(0);
+  const currentStep = (() => {
+    if (!currentStepId) return 0;
+    const index = steps.findIndex((entry) => entry.id === currentStepId);
+    return index >= 0 ? index : 0;
+  })();
   const [showGroups, setShowGroups] = useState(false);
   const [showFeedback, setShowFeedback] = useState(false);
   const [showAnswers, setShowAnswers] = useState(false);
@@ -152,6 +157,8 @@ export default function JoinUs() {
     setShowExitContinue(false);
     setShowGroups(false);
     setShowFeedback(false);
+    setShellState({ ...ANSWER_IDLE_SHELL_STATE });
+    answeringRef.current = false;
   }, [currentStep]);
 
   useEffect(() => {
@@ -200,8 +207,9 @@ export default function JoinUs() {
 
     // AnswerOptions already faded the shell.
     if (currentStep < steps.length - 1) {
-      setCurrentStep((prev) => prev + 1);
+      const nextStepId = steps[currentStep + 1].id;
       setShellState({ isTransitioning: false, showContent: false });
+      navigateToStage(StageId.JoinUs, nextStepId);
       schedule(() => {
         setShellState({ ...ANSWER_IDLE_SHELL_STATE });
         answeringRef.current = false;

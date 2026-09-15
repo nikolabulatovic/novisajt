@@ -3,10 +3,13 @@
 import { useEffect, useRef, useState } from 'react';
 
 import {
+  CharacterEvaluationStepId,
+  JoinUsStepId,
   PersonalAccountabilityStepId,
   Stage,
   StageId,
   type StepId,
+  defaultStepIdForStage,
   useNavigation,
 } from '@/src/contexts/NavigationContext';
 import { useGenderedTranslations } from '@/src/hooks/useGenderedTranslations';
@@ -77,7 +80,24 @@ const stageNavItems: StageNavItem[] = [
   { stage: StageId.Choice, depth: 0 },
   { stage: StageId.StayComfortable, depth: 1 },
   { stage: StageId.Intro, depth: 0 },
-  { stage: StageId.Evaluation, depth: 0 },
+  {
+    stage: StageId.Evaluation,
+    depth: 0,
+    stepId: CharacterEvaluationStepId.Q1,
+    labelKey: 'stages.evaluationSteps.q1',
+  },
+  {
+    stage: StageId.Evaluation,
+    depth: 1,
+    stepId: CharacterEvaluationStepId.Q2,
+    labelKey: 'stages.evaluationSteps.q2',
+  },
+  {
+    stage: StageId.Evaluation,
+    depth: 1,
+    stepId: CharacterEvaluationStepId.Q3,
+    labelKey: 'stages.evaluationSteps.q3',
+  },
   { stage: StageId.CharacterIncompatible, depth: 1 },
   { stage: StageId.Explanation, depth: 0 },
   { stage: StageId.HistoricalIntro, depth: 0 },
@@ -133,8 +153,39 @@ const stageNavItems: StageNavItem[] = [
   { stage: StageId.VeganismPrinciple, depth: 0 },
   { stage: StageId.RighteousChoice, depth: 0 },
   { stage: StageId.CourageousChoice, depth: 0 },
-  { stage: StageId.JoinUs, depth: 0 },
+  {
+    stage: StageId.JoinUs,
+    depth: 0,
+    stepId: JoinUsStepId.Follow,
+    labelKey: 'stages.joinUsSteps.follow',
+  },
+  {
+    stage: StageId.JoinUs,
+    depth: 1,
+    stepId: JoinUsStepId.Share,
+    labelKey: 'stages.joinUsSteps.share',
+  },
+  {
+    stage: StageId.JoinUs,
+    depth: 1,
+    stepId: JoinUsStepId.Community,
+    labelKey: 'stages.joinUsSteps.community',
+  },
 ];
+
+function isNavItemActive(
+  item: StageNavItem,
+  currentStage: Stage,
+  currentStepId: StepId | null,
+): boolean {
+  if (currentStage !== item.stage) return false;
+  if (item.stepId == null) {
+    return currentStepId == null;
+  }
+  const effectiveStep =
+    currentStepId ?? defaultStepIdForStage(item.stage) ?? item.stepId;
+  return effectiveStep === item.stepId;
+}
 
 export default function NavigationMenu() {
   const { t, label } = useGenderedTranslations('navigation-menu');
@@ -215,12 +266,9 @@ export default function NavigationMenu() {
               {t('title')}
             </h3>
           </div>
-          {stageNavItems.map(({ stage, depth, stepId, labelKey }) => {
-            const isActive =
-              currentStage === stage &&
-              (stepId == null ||
-                (currentStepId ?? PersonalAccountabilityStepId.Initial) ===
-                  stepId);
+          {stageNavItems.map((item) => {
+            const { stage, depth, stepId, labelKey } = item;
+            const isActive = isNavItemActive(item, currentStage, currentStepId);
             const hasIndent = depth > 0;
             return (
               <button

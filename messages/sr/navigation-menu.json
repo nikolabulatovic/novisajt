@@ -5,6 +5,11 @@
     "choice": "Izbor",
     "intro": "Uvod",
     "evaluation": "Procena karaktera",
+    "evaluationSteps": {
+      "q1": "Procena · P1",
+      "q2": "Procena · P2",
+      "q3": "Procena · P3"
+    },
     "characterIncompatible": {
       "male": "Još nisi spreman",
       "female": "Još nisi spremna"
@@ -75,6 +80,11 @@
     "veganismPrinciple": "Princip veganstva",
     "righteousChoice": "Pravedan izbor",
     "courageousChoice": "Hrabar izbor",
-    "joinUs": "Pridruži nam se"
+    "joinUs": "Pridruži nam se",
+    "joinUsSteps": {
+      "follow": "Pridruži se · Prati",
+      "share": "Pridruži se · Podeli",
+      "community": "Pridruži se · Zajednica"
+    }
   }
 }

@@ -5,6 +5,11 @@
     "choice": "Choice",
     "intro": "Intro",
     "evaluation": "Character evaluation",
+    "evaluationSteps": {
+      "q1": "Evaluation · Q1",
+      "q2": "Evaluation · Q2",
+      "q3": "Evaluation · Q3"
+    },
     "characterIncompatible": "Not ready yet",
     "explanation": "Explanation",
     "historicalIntro": "Historical intro",
@@ -54,6 +59,11 @@
     "veganismPrinciple": "Veganism principle",
     "righteousChoice": "Righteous choice",
     "courageousChoice": "Courageous choice",
-    "joinUs": "Join us"
+    "joinUs": "Join us",
+    "joinUsSteps": {
+      "follow": "Join us · Follow",
+      "share": "Join us · Share",
+      "community": "Join us · Community"
+    }
   }
 }

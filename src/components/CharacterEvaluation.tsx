@@ -1,8 +1,14 @@
 'use client';
 
-import { MouseEvent, useRef, useState } from 'react';
+import { MouseEvent, useEffect, useRef, useState } from 'react';
 
 import { useGpuEffects } from '@/src/contexts/GpuEffectsContext';
+import {
+  CharacterEvaluationStepId,
+  StageId,
+  type StepId,
+  useNavigation,
+} from '@/src/contexts/NavigationContext';
 import { useStoryFlow } from '@/src/contexts/StoryFlowContext';
 import { useAnswerChoiceRipples } from '@/src/hooks/useAnswerChoiceRipples';
 import { useGenderedTranslations } from '@/src/hooks/useGenderedTranslations';
@@ -16,7 +22,6 @@ import {
   scheduleAnswerChoiceExit,
 } from '@/src/lib/ui/answerChoiceInteraction';
 
-import { StageId } from '../contexts/NavigationContext';
 import AnswerChoiceRippleSpans from './ui/AnswerChoiceRippleSpans';
 import AnswerOption from './ui/AnswerOption';
 import ProgressDots from './ui/ProgressDots';
@@ -33,8 +38,21 @@ interface EvaluationQuestion {
   options: EvaluationOption[];
 }
 
+const EVALUATION_STEP_IDS: StepId[] = [
+  CharacterEvaluationStepId.Q1,
+  CharacterEvaluationStepId.Q2,
+  CharacterEvaluationStepId.Q3,
+];
+
+function questionIndexFromStepId(stepId: StepId | null): number {
+  if (!stepId) return 0;
+  const index = EVALUATION_STEP_IDS.indexOf(stepId);
+  return index >= 0 ? index : 0;
+}
+
 export default function CharacterEvaluation() {
   const { completeStage, answers: existingAnswers = {} } = useStoryFlow();
+  const { currentStepId, navigateToStage } = useNavigation();
   const { allowsHeavyEffects } = useGpuEffects();
   const schedule = useScheduledTimeouts();
   const { ripples, createRipple, clearRipples } =
@@ -42,7 +60,7 @@ export default function CharacterEvaluation() {
 
   const { raw, gender } = useGenderedTranslations('character-evaluation');
   const questions = raw('questions') as EvaluationQuestion[];
-  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const currentQuestion = questionIndexFromStepId(currentStepId);
   const [answers, setAnswers] =
     useState<Record<string, string>>(existingAnswers);
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -52,6 +70,15 @@ export default function CharacterEvaluation() {
   );
   const [nonSelectedFading, setNonSelectedFading] = useState(false);
   const answeringRef = useRef(false);
+
+  useEffect(() => {
+    setIsTransitioning(false);
+    setShowContent(true);
+    setNonSelectedFading(false);
+    setSelectedOptionIndex(null);
+    clearRipples();
+    answeringRef.current = false;
+  }, [currentQuestion, clearRipples]);
 
   const handleAnswer = (
     value: string,
@@ -78,15 +105,10 @@ export default function CharacterEvaluation() {
       },
       () => {
         if (currentQuestion < questions.length - 1) {
-          setCurrentQuestion(currentQuestion + 1);
-          setIsTransitioning(false);
-          setNonSelectedFading(false);
-          setSelectedOptionIndex(null);
+          const nextStepId = EVALUATION_STEP_IDS[currentQuestion + 1];
           clearRipples();
           answeringRef.current = false;
-          schedule(() => {
-            setShowContent(true);
-          }, 50);
+          navigateToStage(StageId.Evaluation, nextStepId);
         } else {
           schedule(() => {
             completeStage(StageId.Evaluation, newAnswers);

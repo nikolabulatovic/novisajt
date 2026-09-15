@@ -64,6 +64,32 @@ export const PersonalAccountabilityStepId = {
   OnlyBecauseOthers: 'only-because-others',
 } as const;
 
+export const CharacterEvaluationStepId = {
+  Q1: 'q1',
+  Q2: 'q2',
+  Q3: 'q3',
+} as const;
+
+export const JoinUsStepId = {
+  Follow: 'follow',
+  Share: 'share',
+  Community: 'community',
+} as const;
+
+/** Default deep-link step when `currentStepId` is null for multi-step stages. */
+export function defaultStepIdForStage(stage: Stage): StepId | null {
+  switch (stage) {
+    case StageId.PersonalAccountability:
+      return PersonalAccountabilityStepId.Initial;
+    case StageId.Evaluation:
+      return CharacterEvaluationStepId.Q1;
+    case StageId.JoinUs:
+      return JoinUsStepId.Follow;
+    default:
+      return null;
+  }
+}
+
 interface NavigationContextType {
   currentStage: Stage;
   currentStepId: StepId | null;
