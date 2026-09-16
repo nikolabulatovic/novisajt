@@ -22,6 +22,7 @@ const MESSAGE_FILES = [
   'root-of-the-problem',
   'animals-treated-as-products',
   'breaking-question',
+  'still-want-to-know',
   'stay-comfortable',
   'apathetic-stance',
   'let-them-live',

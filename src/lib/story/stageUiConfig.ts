@@ -399,13 +399,30 @@ export const stageConfig: Record<Stage, StageConfig> = {
     answerOptions: [
       { id: 'YES', labelKey: 'options.yes' },
       { id: 'HOPEFULLY', labelKey: 'options.hopefully' },
-      { id: 'DONT_KNOW', labelKey: 'options.dontKnow' },
+      { id: 'NO', labelKey: 'options.no' },
     ],
     body: {
       textSize: 'xl',
     },
   },
   [StageId.BreakingQuestion]: {
+    backgroundImage: stageBackground(StageId.BreakingQuestion, {
+      gendered: true,
+    }),
+    textSurface: 'backdrop',
+    opacity: 0.5,
+    additionalUiConfig: {
+      backdropOpacity: 0.2,
+      backdropFade: 0.2,
+    },
+    nextInteraction: 'answer',
+    answerOptions: [
+      { id: 'ACCEPT', labelKey: 'options.accept.label' },
+      { id: 'REJECT', labelKey: 'options.reject.label' },
+    ],
+  },
+  [StageId.StillWantToKnow]: {
+    // Reuse breaking-question art until dedicated assets exist
     backgroundImage: stageBackground(StageId.BreakingQuestion, {
       gendered: true,
     }),

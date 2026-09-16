@@ -41,7 +41,21 @@ export function getNextStageCandidates(stage: Stage): Stage[] {
   const nextForAnswer = answerStageTransitions[stage];
   const options = stageConfig[stage]?.answerOptions;
   if (nextForAnswer && options?.length) {
-    return [...new Set(options.map((option) => nextForAnswer(option.id)))];
+    // Sample prior-answer contexts so answer-dependent forks are preloaded
+    const answerContexts: Record<string, string>[] = [
+      {},
+      { q1: 'act' },
+      { q1: 'admit' },
+      { q2: 'act' },
+      { q3: 'act' },
+    ];
+    return [
+      ...new Set(
+        options.flatMap((option) =>
+          answerContexts.map((ctx) => nextForAnswer(option.id, ctx)),
+        ),
+      ),
+    ];
   }
 
   return [];

@@ -1,10 +1,68 @@
 {
   "text": [
-    "Your answer is that you don't know whether you would have been against major injustices.",
-    "Is it generally important to you to be just and avoid harming innocent beings?"
+    {
+      "conditional": [
+        {
+          "when": { "q1": "act" },
+          "text": "Earlier you said it matters to you not to harm others through your actions."
+        },
+        {
+          "when": { "q2": "act" },
+          "text": "Earlier you said that when you realize you're doing something harmful to others, you look for how to change that, which means justice matters to you."
+        }
+      ]
+    },
+    {
+      "conditional": [
+        {
+          "when": {
+            "or": [
+              { "q1": "act" },
+              { "q2": "act" },
+              { "q3": "act" },
+              { "q2": "admit" }
+            ]
+          },
+          "text": "However, your answer now is that you would not have been against major injustices."
+        },
+        {
+          "when": {},
+          "text": "Your answer is that you would not have been against major injustices."
+        }
+      ]
+    },
+    {
+      "conditional": [
+        {
+          "when": {
+            "or": [{ "q1": "act" }, { "q2": "act" }]
+          },
+          "text": "Is it then truly important to you to be just — that is, not to harm the innocent?"
+        },
+        {
+          "when": {},
+          "text": "Is it generally important to you to be just — that is, not to harm the innocent?"
+        }
+      ]
+    }
   ],
   "options": {
     "agree": { "label": "Yes, it matters to me" },
-    "disagree": { "label": "It doesn't matter to me" }
+    "disagree": {
+      "label": {
+        "conditional": [
+          {
+            "when": {
+              "or": [{ "q1": "act" }, { "q2": "act" }]
+            },
+            "text": "Even so, it doesn't matter to me"
+          },
+          {
+            "when": {},
+            "text": "It doesn't matter to me"
+          }
+        ]
+      }
+    }
   }
 }

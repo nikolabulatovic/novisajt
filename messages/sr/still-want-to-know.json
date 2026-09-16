@@ -1,0 +1,122 @@
+{
+  "text": {
+    "male": [
+      {
+        "conditional": [
+          {
+            "when": { "q1": "act" },
+            "text": "Ranije si rekao da ti je važno da ne povređuješ druge svojim postupcima."
+          },
+          {
+            "when": { "q1": "admit" },
+            "text": "Ranije si rekao da ti je važno da ne lažeš sebe čak i kada je neprijatno."
+          },
+          {
+            "when": { "q2": "act" },
+            "text": "Ranije si rekao da kada shvatiš da radiš nešto loše drugima, gledaš kako to da promeniš."
+          },
+          {
+            "when": { "q3": "act" },
+            "text": "Ranije si rekao da kada naiđeš na neku istinu koja bi zahtevala da promeniš svoj odnos sa okruženjem smatraš da je važno suočiti se sa njom čak iako je neprijatno."
+          }
+        ]
+      },
+      {
+        "conditional": [
+          {
+            "when": { "q1": "act" },
+            "text": "Međutim, sada si izabrao da i dalje učestvuješ u nepravdi."
+          },
+          {
+            "when": { "q1": "admit" },
+            "text": "Međutim, sada si izabrao da nastaviš da ignorišeš istinu zato što je neprijatna."
+          },
+          {
+            "when": { "q2": "act" },
+            "text": "Međutim, tvoj izbor sada je da ignorišeš štetu koju činiš drugima."
+          },
+          {
+            "when": { "q3": "act" },
+            "text": "Međutim, sada si izabrao da je i dalje ignorišeš jer je neprijatna."
+          }
+        ]
+      },
+      {
+        "conditional": [
+          {
+            "when": {
+              "or": [
+                { "q1": "act" },
+                { "q1": "admit" },
+                { "q2": "act" },
+                { "q3": "act" }
+              ]
+            },
+            "text": "Da li bi ipak da znaš?"
+          }
+        ]
+      }
+    ],
+    "female": [
+      {
+        "conditional": [
+          {
+            "when": { "q1": "act" },
+            "text": "Ranije si rekla da ti je važno da ne povređuješ druge svojim postupcima."
+          },
+          {
+            "when": { "q1": "admit" },
+            "text": "Ranije si rekla da ti je važno da ne lažeš sebe čak i kada je neprijatno."
+          },
+          {
+            "when": { "q2": "act" },
+            "text": "Ranije si rekla da kada shvatiš da radiš nešto loše drugima, gledaš kako to da promeniš."
+          },
+          {
+            "when": { "q3": "act" },
+            "text": "Ranije si rekla da kada naiđeš na neku istinu koja bi zahtevala da promeniš svoj odnos sa okruženjem smatraš da je važno suočiti se sa njom čak iako je neprijatno."
+          }
+        ]
+      },
+      {
+        "conditional": [
+          {
+            "when": { "q1": "act" },
+            "text": "Međutim, sada si izabrala da i dalje učestvuješ u nepravdi."
+          },
+          {
+            "when": { "q1": "admit" },
+            "text": "Međutim, sada si izabrala da nastaviš da ignorišeš istinu zato što je neprijatna."
+          },
+          {
+            "when": { "q2": "act" },
+            "text": "Međutim, tvoj izbor sada je da ignorišeš štetu koju činiš drugima."
+          },
+          {
+            "when": { "q3": "act" },
+            "text": "Međutim, sada si izabrala da je i dalje ignorišeš jer je neprijatna."
+          }
+        ]
+      },
+      {
+        "conditional": [
+          {
+            "when": {
+              "or": [
+                { "q1": "act" },
+                { "q1": "admit" },
+                { "q2": "act" },
+                { "q3": "act" }
+              ]
+            },
+            "text": "Da li bi ipak da znaš?"
+          }
+        ]
+      }
+    ]
+  },
+  "options": {
+    "accept": { "label": "Ipak bih da znam" },
+    "reject": { "label": "Svejedno ne želim da znam" }
+  }
+}

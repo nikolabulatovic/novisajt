@@ -19,6 +19,8 @@ export interface StoryFlowContextValue {
    */
   gender: UserGender | null;
   setGender: (gender: UserGender) => void;
+  /** Merge answer keys into session state without advancing the stage. */
+  mergeAnswers: (partial: Record<string, string>) => void;
   /**
    * Advances / completes the flow for `stage`.
    * Pass `pillOrigin` when leaving via a red next-pill so the mask expands from that rect.

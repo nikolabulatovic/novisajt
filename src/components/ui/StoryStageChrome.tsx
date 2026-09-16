@@ -4,9 +4,15 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import type { Stage } from '@/src/contexts/NavigationContext';
 import { useNavigation } from '@/src/contexts/NavigationContext';
+import { useStoryFlow } from '@/src/contexts/StoryFlowContext';
 import { useGenderedTranslations } from '@/src/hooks/useGenderedTranslations';
 import { useResolvedBackgroundImage } from '@/src/hooks/useResolvedBackgroundImage';
 import { AnimatedTextBlock } from '@/src/lib/i18n/animatedText';
+import {
+  type StoryTextItem,
+  isStoryTextItemArray,
+  resolveStoryTextItems,
+} from '@/src/lib/story/conditionalText';
 import {
   DEFAULT_STAGE_BODY,
   DEFAULT_STAGE_SHELL,
@@ -38,7 +44,7 @@ const ANSWER_SHELL_STACK_GAP: Record<'sm' | 'md' | 'lg', string> = {
 
 type MessageStep = {
   id: string;
-  text: AnimatedTextBlock;
+  text: AnimatedTextBlock | StoryTextItem[];
 };
 
 export interface StoryStageChromeProps {
@@ -52,7 +58,8 @@ export default function StoryStageChrome({ stage }: StoryStageChromeProps) {
   const ui = cfg.additionalUiConfig;
   const bodyTextKey = body?.textKey ?? DEFAULT_STAGE_BODY.textKey;
   const { currentStepId } = useNavigation();
-  const { raw: rawBody } = useGenderedTranslations(
+  const { answers } = useStoryFlow();
+  const { raw: rawBody, gender } = useGenderedTranslations(
     cfg.translationNamespace ?? stage,
   );
 
@@ -64,13 +71,29 @@ export default function StoryStageChrome({ stage }: StoryStageChromeProps) {
     configuredSteps?.[0]?.id;
 
   const bodyText = useMemo(() => {
+    let text: string[] | AnimatedTextBlock | StoryTextItem[];
     if (!configuredSteps?.length || !activeStepId) {
-      return rawBody(bodyTextKey) as AnimatedTextBlock;
+      text = rawBody(bodyTextKey) as
+        | string[]
+        | AnimatedTextBlock
+        | StoryTextItem[];
+    } else {
+      const messageSteps = rawBody('steps') as MessageStep[];
+      const messageStep = messageSteps.find((step) => step.id === activeStepId);
+      text =
+        messageStep?.text ??
+        (rawBody(bodyTextKey) as
+          | string[]
+          | AnimatedTextBlock
+          | StoryTextItem[]);
     }
-    const messageSteps = rawBody('steps') as MessageStep[];
-    const messageStep = messageSteps.find((step) => step.id === activeStepId);
-    return messageStep?.text ?? (rawBody(bodyTextKey) as AnimatedTextBlock);
-  }, [activeStepId, bodyTextKey, configuredSteps, rawBody]);
+
+    if (isStoryTextItemArray(text)) {
+      return resolveStoryTextItems(text, answers, gender);
+    }
+
+    return text;
+  }, [activeStepId, answers, bodyTextKey, configuredSteps, gender, rawBody]);
 
   const [nextInteraction, setNextInteractionVisible] = useState(false);
   const [answerShellState, setAnswerShellState] = useState(() => ({
@@ -124,7 +147,12 @@ export default function StoryStageChrome({ stage }: StoryStageChromeProps) {
         backdropColor={ui?.backdropColor}
       >
         <AnimatedText
-          key={activeStepId ?? stage}
+          key={
+            Array.isArray(bodyText) &&
+            bodyText.every((item) => typeof item === 'string')
+              ? `${activeStepId ?? stage}:${bodyText.join('\0')}`
+              : (activeStepId ?? stage)
+          }
           text={bodyText}
           speed={body?.speed ?? DEFAULT_STAGE_BODY.speed}
           delayAfterComplete={

@@ -1,27 +1,21 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect } from 'react';
 
 import NavigationMenu from '@/src/components/NavigationMenu';
 import PillTransitionLayer from '@/src/components/ui/PillTransitionLayer';
 import { NavigationProvider, StageId } from '@/src/contexts/NavigationContext';
-import {
-  type StoryFlowContextValue,
-  StoryFlowProvider,
-} from '@/src/contexts/StoryFlowContext';
+import { StoryFlowProvider } from '@/src/contexts/StoryFlowContext';
 import { useDevNavAccess } from '@/src/hooks/useDevNavAccess';
 import { usePreloadNextStageImages } from '@/src/hooks/usePreloadNextStageImages';
-import { useStoryFlowHandlers } from '@/src/hooks/useStoryFlowHandlers';
+import { useStorySession } from '@/src/hooks/useStorySession';
 import { useStoryTransitions } from '@/src/hooks/useStoryTransitions';
 import { useTracking } from '@/src/hooks/useTracking';
-import type { UserGender } from '@/src/lib/gender';
 import { STAGE_REGISTRY } from '@/src/lib/story/stageRegistry';
 
-/** Locale story route: session state, transition chrome, and {@link StoryFlowContextValue}. */
+/** Locale story route: session state, transition chrome, and story flow context. */
 export default function Home() {
   const showDevNav = useDevNavAccess();
-  const [answers, setAnswers] = useState<Record<string, string>>({});
-  const [gender, setGender] = useState<UserGender | null>(null);
   const {
     stage,
     currentStepId,
@@ -35,6 +29,14 @@ export default function Home() {
   const { trackStageViewed, trackAnswerSelected, trackFlowCompleted } =
     useTracking();
 
+  const { answers, gender, flowContextValue } = useStorySession({
+    currentStepId,
+    navigateToStage,
+    transitionToStage,
+    transitionViaBlackOverlayTo,
+    trackAnswerSelected,
+  });
+
   usePreloadNextStageImages(stage, gender);
 
   useEffect(() => {
@@ -43,34 +45,6 @@ export default function Home() {
       trackFlowCompleted(answers);
     }
   }, [stage]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const { completeStage } = useStoryFlowHandlers({
-    transitionToStage,
-    navigateToStage,
-    currentStepId,
-    setAnswers,
-    trackAnswerSelected,
-  });
-
-  const flowContextValue = useMemo<StoryFlowContextValue>(
-    () => ({
-      answers,
-      gender,
-      setGender,
-      completeStage,
-      transitionToStage,
-      transitionViaBlackOverlayTo,
-      trackAnswerSelected,
-    }),
-    [
-      answers,
-      gender,
-      completeStage,
-      transitionToStage,
-      transitionViaBlackOverlayTo,
-      trackAnswerSelected,
-    ],
-  );
 
   const StageComponent = STAGE_REGISTRY[stage];
 

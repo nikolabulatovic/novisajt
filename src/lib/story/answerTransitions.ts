@@ -36,7 +36,7 @@ export function nextAfterPersonalAccountabilityStep(
 }
 
 export function nextAfterPersonalQuestion(answer: string): Stage {
-  return isAny(answer, [AnswerId.DONT_KNOW])
+  return isAny(answer, [AnswerId.NO])
     ? StageId.WouldYouLikeToBe
     : StageId.BreakingQuestion;
 }
@@ -47,7 +47,25 @@ export function nextAfterWouldYouLikeToBe(answer: string): Stage {
     : StageId.BreakingQuestion;
 }
 
-export function nextAfterBreakingQuestion(answer: string): Stage {
+export function nextAfterBreakingQuestion(
+  answer: string,
+  answers: Record<string, string> = {},
+): Stage {
+  if (!isAny(answer, [AnswerId.REJECT])) {
+    return StageId.SpasaStory;
+  }
+  if (
+    answers.q1 === 'act' ||
+    answers.q1 === 'admit' ||
+    answers.q2 === 'act' ||
+    answers.q3 === 'act'
+  ) {
+    return StageId.StillWantToKnow;
+  }
+  return StageId.ApatheticStance;
+}
+
+export function nextAfterStillWantToKnow(answer: string): Stage {
   return isAny(answer, [AnswerId.REJECT])
     ? StageId.ApatheticStance
     : StageId.SpasaStory;

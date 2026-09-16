@@ -21,6 +21,7 @@ export const stageInteractionType: Record<Stage, StageInteractionType> = {
   [StageId.WouldYouLikeToBe]: 'answer-options',
   [StageId.RecognizingInjustice]: 'none',
   [StageId.BreakingQuestion]: 'answer-options',
+  [StageId.StillWantToKnow]: 'answer-options',
   [StageId.StayComfortable]: 'none',
   [StageId.ApatheticStance]: 'none',
   [StageId.SpasaStory]: 'next-pill',

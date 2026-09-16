@@ -19,6 +19,7 @@ import {
   nextAfterSolutionChoice,
   nextAfterSolutionKnow,
   nextAfterSolutionUse,
+  nextAfterStillWantToKnow,
   nextAfterVeganDietHealth,
   nextAfterWouldYouLikeToBe,
   nextAfterYouAreResponsible,
@@ -48,11 +49,12 @@ export const directStageTransitions: Partial<Record<Stage, Stage>> = {
 };
 
 export const answerStageTransitions: Partial<
-  Record<Stage, (answer: string) => Stage>
+  Record<Stage, (answer: string, answers: Record<string, string>) => Stage>
 > = {
   [StageId.PersonalQuestion]: nextAfterPersonalQuestion,
   [StageId.WouldYouLikeToBe]: nextAfterWouldYouLikeToBe,
   [StageId.BreakingQuestion]: nextAfterBreakingQuestion,
+  [StageId.StillWantToKnow]: nextAfterStillWantToKnow,
   [StageId.LetThemLive]: nextAfterLetThemLive,
   [StageId.AcceptingSelfOwnership]: nextAfterAcceptingSelfOwnership,
   [StageId.SolutionUse]: nextAfterSolutionUse,

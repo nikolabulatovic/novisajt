@@ -4,6 +4,7 @@ import type { Stage, StepId } from '@/src/contexts/NavigationContext';
 import { useStoryFlow } from '@/src/contexts/StoryFlowContext';
 import { useGenderedTranslations } from '@/src/hooks/useGenderedTranslations';
 import { mapLocalizedAnswerOptions } from '@/src/lib/mapLocalizedAnswerOptions';
+import { resolveStoryLabel } from '@/src/lib/story/conditionalText';
 import { stageConfig } from '@/src/lib/story/stageUiConfig';
 import type { AnswerChoiceShellState } from '@/src/lib/ui/answerChoiceInteraction';
 
@@ -41,11 +42,11 @@ export default function StoryStageNextInteraction({
   visible,
   onAnswerChoiceShellChange,
 }: StoryStageNextInteractionProps) {
-  const { completeStage } = useStoryFlow();
+  const { completeStage, answers } = useStoryFlow();
   const stageCfg = stageConfig[stage];
   const nextInteraction = stageCfg.nextInteraction ?? 'pill';
   const translationNamespace = stageCfg.translationNamespace ?? stage;
-  const { label, raw } = useGenderedTranslations(translationNamespace);
+  const { label, raw, gender } = useGenderedTranslations(translationNamespace);
 
   if (!nextInteraction || nextInteraction === 'none' || !translationNamespace) {
     return null;
@@ -71,7 +72,7 @@ export default function StoryStageNextInteraction({
       answerOptions,
       messageStep
         ? (key) => labelFromStepOptions(key, messageStep.options)
-        : label,
+        : (key) => resolveStoryLabel(raw(key), answers, gender) ?? label(key),
     );
 
     return (

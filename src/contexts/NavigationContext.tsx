@@ -17,6 +17,7 @@ export const StageId = {
   WouldYouLikeToBe: 'would-you-like-to-be',
   RecognizingInjustice: 'recognizing-injustice',
   BreakingQuestion: 'breaking-question',
+  StillWantToKnow: 'still-want-to-know',
   StayComfortable: 'stay-comfortable',
   ApatheticStance: 'apathetic-stance',
   SpasaStory: 'spasa-story',

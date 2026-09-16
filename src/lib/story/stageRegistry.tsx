@@ -47,6 +47,7 @@ import SolutionUse from '@/src/components/SolutionUse';
 import SpasaRevelation from '@/src/components/SpasaRevelation';
 import SpasaStory from '@/src/components/SpasaStory';
 import StayComfortable from '@/src/components/StayComfortable';
+import StillWantToKnow from '@/src/components/StillWantToKnow';
 import VeganDietHealth from '@/src/components/VeganDietHealth';
 import VeganismPrinciple from '@/src/components/VeganismPrinciple';
 import ViciousCycle from '@/src/components/ViciousCycle';
@@ -71,6 +72,7 @@ export const STAGE_REGISTRY: Record<Stage, ComponentType<any>> = {
   [StageId.WouldYouLikeToBe]: WouldYouLikeToBe,
   [StageId.RecognizingInjustice]: RecognizingInjustice,
   [StageId.BreakingQuestion]: BreakingQuestion,
+  [StageId.StillWantToKnow]: StillWantToKnow,
   [StageId.StayComfortable]: StayComfortable,
   [StageId.ApatheticStance]: ApatheticStance,
   [StageId.SpasaStory]: SpasaStory,

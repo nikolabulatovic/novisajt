@@ -51,7 +51,11 @@ function questionIndexFromStepId(stepId: StepId | null): number {
 }
 
 export default function CharacterEvaluation() {
-  const { completeStage, answers: existingAnswers = {} } = useStoryFlow();
+  const {
+    completeStage,
+    mergeAnswers,
+    answers: existingAnswers = {},
+  } = useStoryFlow();
   const { currentStepId, navigateToStage } = useNavigation();
   const { allowsHeavyEffects } = useGpuEffects();
   const schedule = useScheduledTimeouts();
@@ -94,6 +98,8 @@ export default function CharacterEvaluation() {
     const questionId = `q${questions[currentQuestion].id}`;
     const newAnswers = { ...answers, [questionId]: value };
     setAnswers(newAnswers);
+    // Persist immediately so later stages (and nav jumps) can read evaluation answers.
+    mergeAnswers({ [questionId]: value });
 
     setNonSelectedFading(true);
 

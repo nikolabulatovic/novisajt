@@ -1,0 +1,63 @@
+{
+  "text": [
+    {
+      "conditional": [
+        {
+          "when": { "q1": "act" },
+          "text": "Earlier you said it matters to you not to harm others through your actions."
+        },
+        {
+          "when": { "q1": "admit" },
+          "text": "Earlier you said it matters to you not to lie to yourself even when it's uncomfortable."
+        },
+        {
+          "when": { "q2": "act" },
+          "text": "Earlier you said that when you realize you're doing something harmful to others, you look for how to change that."
+        },
+        {
+          "when": { "q3": "act" },
+          "text": "Earlier you said that when you encounter a truth that would require you to change your relationship with your surroundings, you consider it important to face it even if it's uncomfortable."
+        }
+      ]
+    },
+    {
+      "conditional": [
+        {
+          "when": { "q1": "act" },
+          "text": "However, you've now chosen to keep participating in injustice."
+        },
+        {
+          "when": { "q1": "admit" },
+          "text": "However, you've now chosen to keep ignoring the truth because it's uncomfortable."
+        },
+        {
+          "when": { "q2": "act" },
+          "text": "However, your choice now is to ignore the harm you cause to others."
+        },
+        {
+          "when": { "q3": "act" },
+          "text": "However, you've now chosen to keep ignoring it because it's uncomfortable."
+        }
+      ]
+    },
+    {
+      "conditional": [
+        {
+          "when": {
+            "or": [
+              { "q1": "act" },
+              { "q1": "admit" },
+              { "q2": "act" },
+              { "q3": "act" }
+            ]
+          },
+          "text": "Would you still like to know?"
+        }
+      ]
+    }
+  ],
+  "options": {
+    "accept": { "label": "I'd still like to know" },
+    "reject": { "label": "I still don't want to know" }
+  }
+}

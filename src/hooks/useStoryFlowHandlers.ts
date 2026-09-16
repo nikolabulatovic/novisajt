@@ -23,6 +23,7 @@ export interface StoryFlowHandlerDeps {
   ) => void;
   navigateToStage: (stage: Stage, stepId?: StepId | null) => void;
   currentStepId: StepId | null;
+  answers: Record<string, string>;
   setAnswers: Dispatch<SetStateAction<Record<string, string>>>;
   trackAnswerSelected: (stage: Stage, answer: string) => void;
 }
@@ -33,11 +34,15 @@ export function useStoryFlowHandlers({
   transitionToStage,
   navigateToStage,
   currentStepId,
+  answers,
   setAnswers,
   trackAnswerSelected,
 }: StoryFlowHandlerDeps) {
   return useMemo(
     () => ({
+      mergeAnswers: (partial: Record<string, string>) => {
+        setAnswers((prev) => ({ ...prev, ...partial }));
+      },
       completeStage: (
         completedStage: Stage,
         answer?: StageCompletionAnswer,
@@ -87,7 +92,11 @@ export function useStoryFlowHandlers({
 
           const nextForAnswer = answerStageTransitions[completedStage];
           if (nextForAnswer) {
-            transitionToStage(nextForAnswer(answer), 'auto', pillOrigin);
+            transitionToStage(
+              nextForAnswer(answer, answers),
+              'auto',
+              pillOrigin,
+            );
             return;
           }
         }
@@ -99,6 +108,7 @@ export function useStoryFlowHandlers({
       },
     }),
     [
+      answers,
       currentStepId,
       navigateToStage,
       setAnswers,
