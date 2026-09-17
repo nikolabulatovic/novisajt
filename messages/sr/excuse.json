@@ -13,9 +13,6 @@
   },
   "options": {
     "no": "Ne bi bio dovoljan",
-    "yes": {
-      "male": "Prihvatio bih",
-      "female": "Prihvatila bih"
-    }
+    "yes": "Bio bi dovoljan"
   }
 }
