@@ -9,6 +9,7 @@ import {
   DEFAULT_USER_GENDER,
   type UserGender,
   resolveGenderedContent,
+  resolveGenderedString,
 } from '@/src/lib/gender';
 
 /** Current story address gender (defaults to male until chosen). */
@@ -33,7 +34,7 @@ export function useGenderedTranslations(namespace: string) {
       resolveGenderedContent(t.raw(key) as GenderedRaw<T>, gender);
 
     const label = (key: string): string =>
-      resolveGenderedContent(t.raw(key) as GenderedRaw<string>, gender);
+      resolveGenderedString(t.raw(key) as GenderedRaw<string>, gender);
 
     return {
       t: genderedT,

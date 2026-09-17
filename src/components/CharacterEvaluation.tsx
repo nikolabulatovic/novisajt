@@ -15,7 +15,7 @@ import { useGenderedTranslations } from '@/src/hooks/useGenderedTranslations';
 import { useResolvedBackgroundImage } from '@/src/hooks/useResolvedBackgroundImage';
 import { useScheduledTimeouts } from '@/src/hooks/useScheduledTimeouts';
 import type { GenderedContent } from '@/src/lib/gender';
-import { resolveGenderedContent } from '@/src/lib/gender';
+import { resolveGenderedString } from '@/src/lib/gender';
 import { stageConfig } from '@/src/lib/story/stageUiConfig';
 import {
   answerChoiceShellClassName,
@@ -191,7 +191,7 @@ export default function CharacterEvaluation() {
                 return (
                   <AnswerOption
                     key={index}
-                    text={resolveGenderedContent(option.text, gender)}
+                    text={resolveGenderedString(option.text, gender)}
                     onClick={(e) => handleAnswer(option.value, e, index)}
                     isSelected={isSelected}
                     isDisabled={nonSelectedFading || isTransitioning}

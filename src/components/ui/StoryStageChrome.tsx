@@ -7,7 +7,11 @@ import { useNavigation } from '@/src/contexts/NavigationContext';
 import { useStoryFlow } from '@/src/contexts/StoryFlowContext';
 import { useGenderedTranslations } from '@/src/hooks/useGenderedTranslations';
 import { useResolvedBackgroundImage } from '@/src/hooks/useResolvedBackgroundImage';
-import { AnimatedTextBlock } from '@/src/lib/i18n/animatedText';
+import {
+  type AnimatedTextBlock,
+  isAnimatedTextBlock,
+  resolveAnimatedTextGender,
+} from '@/src/lib/i18n/animatedText';
 import {
   type StoryTextItem,
   isStoryTextItemArray,
@@ -90,6 +94,10 @@ export default function StoryStageChrome({ stage }: StoryStageChromeProps) {
 
     if (isStoryTextItemArray(text)) {
       return resolveStoryTextItems(text, answers, gender);
+    }
+
+    if (isAnimatedTextBlock(text)) {
+      return resolveAnimatedTextGender(text, gender);
     }
 
     return text;

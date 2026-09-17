@@ -1,10 +1,5 @@
 {
-  "text": {
-    "male": [
-      "Nisi bio iskren prema sebi. Imaj na umu da će tvoja neiskrenost koštati nevina bića."
-    ],
-    "female": [
-      "Nisi bila iskrena prema sebi. Imaj na umu da će tvoja neiskrenost koštati nevina bića."
-    ]
-  }
+  "text": [
+    "Nisi {g:bio|bila} {g:iskren|iskrena} prema sebi. Imaj na umu da će tvoja neiskrenost koštati nevina bića."
+  ]
 }

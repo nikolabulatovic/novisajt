@@ -1,108 +1,87 @@
 {
-  "text": {
-    "male": [
-      {
-        "conditional": [
-          {
-            "when": { "q1": "act" },
-            "text": "Ranije si rekao da ti je važno da ne ugrožavaš druge svojim postupcima."
+  "text": [
+    {
+      "conditional": [
+        {
+          "when": {
+            "q1": "act"
           },
-          {
-            "when": { "q2": "act" },
-            "text": "Ranije si rekao da kada shvatiš da radiš nešto loše drugima, gledaš kako to da promeniš, što znači da ti je stalo do pravde."
-          }
-        ]
-      },
-      {
-        "conditional": [
-          {
-            "when": {
-              "or": [
-                { "q1": "act" },
-                { "q2": "act" },
-                { "q3": "act" },
-                { "q2": "admit" }
-              ]
-            },
-            "text": "Međutim, tvoj odgovor sada je da ne bi bio protiv velikih nepravdi."
+          "text": "Ranije si {g:rekao|rekla} da ti je važno da ne ugrožavaš druge svojim postupcima."
+        },
+        {
+          "when": {
+            "q2": "act"
           },
-          {
-            "when": {},
-            "text": "Tvoj odgovor je da ne bi bio protiv velikih nepravdi."
-          }
-        ]
-      },
-      {
-        "conditional": [
-          {
-            "when": {
-              "or": [{ "q1": "act" }, { "q2": "act" }]
-            },
-            "text": "Da li ti je onda uistinu bitno da budeš pravedan, odnosno da ne ugrožavaš nevine?"
+          "text": "Ranije si {g:rekao|rekla} da kada shvatiš da radiš nešto loše drugima, gledaš kako to da promeniš, što znači da ti je stalo do pravde."
+        }
+      ]
+    },
+    {
+      "conditional": [
+        {
+          "when": {
+            "or": [
+              {
+                "q1": "act"
+              },
+              {
+                "q2": "act"
+              },
+              {
+                "q3": "act"
+              },
+              {
+                "q2": "admit"
+              }
+            ]
           },
-          {
-            "when": {},
-            "text": "Da li ti je inače bitno da budeš pravedan, odnosno da ne ugrožavaš nevine?"
-          }
-        ]
-      }
-    ],
-    "female": [
-      {
-        "conditional": [
-          {
-            "when": { "q1": "act" },
-            "text": "Ranije si rekla da ti je važno da ne ugrožavaš druge svojim postupcima."
+          "text": "Međutim, tvoj odgovor sada je da ne bi {g:bio|bila} protiv velikih nepravdi."
+        },
+        {
+          "when": {},
+          "text": "Tvoj odgovor je da ne bi {g:bio|bila} protiv velikih nepravdi."
+        }
+      ]
+    },
+    {
+      "conditional": [
+        {
+          "when": {
+            "or": [
+              {
+                "q1": "act"
+              },
+              {
+                "q2": "act"
+              }
+            ]
           },
-          {
-            "when": { "q2": "act" },
-            "text": "Ranije si rekla da kada shvatiš da radiš nešto loše drugima, gledaš kako to da promeniš, što znači da ti je stalo do pravde."
-          }
-        ]
-      },
-      {
-        "conditional": [
-          {
-            "when": {
-              "or": [
-                { "q1": "act" },
-                { "q2": "act" },
-                { "q3": "act" },
-                { "q2": "admit" }
-              ]
-            },
-            "text": "Međutim, tvoj odgovor sada je da ne bi bila protiv velikih nepravdi."
-          },
-          {
-            "when": {},
-            "text": "Tvoj odgovor je da ne bi bila protiv velikih nepravdi."
-          }
-        ]
-      },
-      {
-        "conditional": [
-          {
-            "when": {
-              "or": [{ "q1": "act" }, { "q2": "act" }]
-            },
-            "text": "Da li ti je onda uistinu bitno da budeš pravedna, odnosno da ne ugrožavaš nevine?"
-          },
-          {
-            "when": {},
-            "text": "Da li ti je inače bitno da budeš pravedna, odnosno da ne ugrožavaš nevine?"
-          }
-        ]
-      }
-    ]
-  },
+          "text": "Da li ti je onda uistinu bitno da budeš {g:pravedan|pravedna}, odnosno da ne ugrožavaš nevine?"
+        },
+        {
+          "when": {},
+          "text": "Da li ti je inače bitno da budeš {g:pravedan|pravedna}, odnosno da ne ugrožavaš nevine?"
+        }
+      ]
+    }
+  ],
   "options": {
-    "agree": { "label": "Da, bitno mi je" },
+    "agree": {
+      "label": "Da, bitno mi je"
+    },
     "disagree": {
       "label": {
         "conditional": [
           {
             "when": {
-              "or": [{ "q1": "act" }, { "q2": "act" }]
+              "or": [
+                {
+                  "q1": "act"
+                },
+                {
+                  "q2": "act"
+                }
+              ]
             },
             "text": "Ipak mi nije bitno"
           },

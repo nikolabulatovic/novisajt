@@ -1,6 +1,5 @@
 {
-  "text": {
-    "male": ["Neiskren si jer nisi taj koji je ugrožen."],
-    "female": ["Neiskrena si jer nisi ta koja je ugrožena."]
-  }
+  "text": [
+    "{g:Neiskren|Neiskrena} si jer nisi {g:taj|ta} {g:koji|koja} je {g:ugrožen|ugrožena}."
+  ]
 }

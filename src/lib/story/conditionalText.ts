@@ -1,6 +1,7 @@
 import {
   type GenderedContent,
   type UserGender,
+  resolveGenderSnippets,
   resolveGenderedContent,
 } from '@/src/lib/gender';
 
@@ -85,7 +86,10 @@ export function resolveConditionalSlot(
       continue;
     }
     if (answersMatchWhen(when as ConditionalTextWhen, answers)) {
-      return resolveGenderedContent(rule.text, gender);
+      return resolveGenderSnippets(
+        resolveGenderedContent(rule.text, gender),
+        gender,
+      );
     }
   }
   return null;
@@ -103,7 +107,7 @@ export function resolveStoryTextItems(
   const lines: string[] = [];
   for (const item of items) {
     if (typeof item === 'string') {
-      lines.push(item);
+      lines.push(resolveGenderSnippets(item, gender));
       continue;
     }
     if (isConditionalTextSlot(item)) {
@@ -128,7 +132,9 @@ export function resolveStoryLabel(
   answers: Record<string, string>,
   gender: UserGender,
 ): string | null {
-  if (typeof value === 'string') return value;
+  if (typeof value === 'string') {
+    return resolveGenderSnippets(value, gender);
+  }
   if (isConditionalTextSlot(value)) {
     return resolveConditionalSlot(value, answers, gender);
   }

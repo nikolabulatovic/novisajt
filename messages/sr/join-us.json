@@ -3,16 +3,10 @@
   "steps": [
     {
       "id": "follow",
-      "text": {
-        "male": [
-          "Želiš da ostaneš u toku sa našim radom i dešavanjima u veganskom pokretu?",
-          "Zaprati nas na društvenim mrežama."
-        ],
-        "female": [
-          "Želiš da ostaneš u toku sa našim radom i dešavanjima u veganskom pokretu?",
-          "Zaprati nas na društvenim mrežama."
-        ]
-      },
+      "text": [
+        "Želiš da ostaneš u toku sa našim radom i dešavanjima u veganskom pokretu?",
+        "Zaprati nas na društvenim mrežama."
+      ],
       "options": {
         "yes": "Želim",
         "no": "Radije ne bih"
@@ -25,16 +19,10 @@
     },
     {
       "id": "share",
-      "text": {
-        "male": [
-          "Ako ti je ovo iskustvo bilo važno, podeli ga sa drugima.",
-          "Pošalji link ili podeli priču."
-        ],
-        "female": [
-          "Ako ti je ovo iskustvo bilo važno, podeli ga sa drugima.",
-          "Pošalji link ili podeli priču."
-        ]
-      },
+      "text": [
+        "Ako ti je ovo iskustvo bilo važno, podeli ga sa drugima.",
+        "Pošalji link ili podeli priču."
+      ],
       "options": {
         "yes": "Želim",
         "no": "Radije ne bih"
@@ -50,16 +38,10 @@
     },
     {
       "id": "community",
-      "intro": {
-        "male": [
-          "Imaš pitanja ili želiš da upoznaš ljude koji su takođe prošli kroz ovo iskustvo?",
-          "Tu smo da povežemo, odgovorimo, delimo praktične savete i budemo podrška. Lepše je i lakše kada si povezan sa ljudima istih principa."
-        ],
-        "female": [
-          "Imaš pitanja ili želiš da upoznaš ljude koji su takođe prošli kroz ovo iskustvo?",
-          "Tu smo da povežemo, odgovorimo, delimo praktične savete i budemo podrška. Lepše je i lakše kada si povezana sa ljudima istih principa."
-        ]
-      },
+      "intro": [
+        "Imaš pitanja ili želiš da upoznaš ljude koji su takođe prošli kroz ovo iskustvo?",
+        "Tu smo da povežemo, odgovorimo, delimo praktične savete i budemo podrška. Lepše je i lakše kada si {g:povezan|povezana} sa ljudima istih principa."
+      ],
       "groupsHeading": "Pridruži nam se i pronađi nas u grupama!"
     }
   ]

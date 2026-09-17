@@ -22,16 +22,38 @@ export type GenderChoiceAnalytics =
  * Plain (unchanged):
  *   "text": ["…"]
  *
- * Gendered:
+ * Gendered tree (whole value):
  *   "text": {
  *     "male": ["Nisi bio iskren…"],
  *     "female": ["Nisi bila iskrena…"]
  *   }
  *
+ * Inline word-level gender (preferred when only a few words differ):
+ *   "Na početku si {g:rekao|rekla} da…"
+ *   → male: rekao, female: rekla
+ *   Resolved by `resolveGenderSnippets` (story text / labels).
+ *
  * For single ICU strings via `t()`, use:
  *   "{gender, select, female {…} male {…} other {…}}"
  */
 export type GenderedContent<T> = T | { male: T; female: T };
+
+/** `{g:maleForm|femaleForm}` — first branch is male, second is female. */
+const GENDER_SNIPPET_RE = /\{g:([^|{}]+)\|([^|{}]+)\}/g;
+
+/**
+ * Replaces inline `{g:male|female}` snippets in a string.
+ * Leaves the string unchanged when there are no snippets.
+ */
+export function resolveGenderSnippets(
+  text: string,
+  gender: UserGender,
+): string {
+  if (!text.includes('{g:')) return text;
+  return text.replace(GENDER_SNIPPET_RE, (_match, maleForm, femaleForm) =>
+    gender === 'female' ? femaleForm : maleForm,
+  );
+}
 
 function jsonKind(value: unknown): string {
   if (value === null) return 'null';
@@ -69,4 +91,22 @@ export function resolveGenderedContent<T>(
     return resolveGenderedContent(value[gender] as GenderedContent<T>, gender);
   }
   return value as T;
+}
+
+/** Tree pick + `{g:…}` snippets for a single string. */
+export function resolveGenderedString(
+  value: GenderedContent<string>,
+  gender: UserGender,
+): string {
+  return resolveGenderSnippets(resolveGenderedContent(value, gender), gender);
+}
+
+/** Tree pick + `{g:…}` snippets for a list of strings. */
+export function resolveGenderedStringList(
+  value: GenderedContent<string[]>,
+  gender: UserGender,
+): string[] {
+  return resolveGenderedContent(value, gender).map((line) =>
+    resolveGenderSnippets(line, gender),
+  );
 }

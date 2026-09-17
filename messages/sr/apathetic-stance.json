@@ -1,10 +1,5 @@
 {
-  "text": {
-    "male": [
-      "Ostani u neznanju i budi siguran da tvoj izbor ima ozbiljne posledice."
-    ],
-    "female": [
-      "Ostani u neznanju i budi sigurna da tvoj izbor ima ozbiljne posledice."
-    ]
-  }
+  "text": [
+    "Ostani u neznanju i budi {g:siguran|sigurna} da tvoj izbor ima ozbiljne posledice."
+  ]
 }

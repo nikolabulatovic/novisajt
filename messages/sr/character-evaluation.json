@@ -38,7 +38,10 @@
           "text": "Osećaš unutrašnji konflikt i vraćaš se tome u mislima",
           "value": "admit"
         },
-        { "text": "Gledaš kako to da promeniš", "value": "act" }
+        {
+          "text": "Gledaš kako to da promeniš",
+          "value": "act"
+        }
       ]
     },
     {
@@ -74,17 +77,11 @@
           "value": "comfort"
         },
         {
-          "text": {
-            "male": "Uglavnom sam dobar, sa nekim manama",
-            "female": "Uglavnom sam dobra, sa nekim manama"
-          },
+          "text": "Uglavnom sam {g:dobar|dobra}, sa nekim manama",
           "value": "conform"
         },
         {
-          "text": {
-            "male": "Pokušavam da budem saosećajan i da radim pravu stvar",
-            "female": "Pokušavam da budem saosećajna i da radim pravu stvar"
-          },
+          "text": "Pokušavam da budem {g:saosećajan|saosećajna} i da radim pravu stvar",
           "value": "act"
         },
         {
@@ -97,13 +94,16 @@
       "id": 2,
       "question": "Kada saznaš nešto neprijatno o sebi, ti:",
       "options": [
-        { "text": "Ignorišeš to i nastavljaš kao ranije", "value": "comfort" },
-        { "text": "Priznaš to, ali praviš izgovore", "value": "conform" },
         {
-          "text": {
-            "male": "Osećaš se konfliktno i nisi siguran šta da radiš",
-            "female": "Osećaš se konfliktno i nisi sigurna šta da radiš"
-          },
+          "text": "Ignorišeš to i nastavljaš kao ranije",
+          "value": "comfort"
+        },
+        {
+          "text": "Priznaš to, ali praviš izgovore",
+          "value": "conform"
+        },
+        {
+          "text": "Osećaš se konfliktno i nisi {g:siguran|sigurna} šta da radiš",
           "value": "admit"
         },
         {
@@ -116,12 +116,18 @@
       "id": 3,
       "question": "Šta ti je najvažnije?",
       "options": [
-        { "text": "Moj komfor i udobnost", "value": "comfort" },
+        {
+          "text": "Moj komfor i udobnost",
+          "value": "comfort"
+        },
         {
           "text": "Pridržavanje društvenih normi i uklapanje",
           "value": "conform"
         },
-        { "text": "Biti dobra osoba na svoj način", "value": "admit" },
+        {
+          "text": "Biti dobra osoba na svoj način",
+          "value": "admit"
+        },
         {
           "text": "Živeti u skladu sa svojim najdubljim vrednostima",
           "value": "act"
@@ -139,17 +145,11 @@
           "value": "comfort"
         },
         {
-          "text": {
-            "male": "Uglavnom sam dobar, sa nekim manama",
-            "female": "Uglavnom sam dobra, sa nekim manama"
-          },
+          "text": "Uglavnom sam {g:dobar|dobra}, sa nekim manama",
           "value": "conform"
         },
         {
-          "text": {
-            "male": "Pokušavam da budem saosećajan i da radim pravu stvar",
-            "female": "Pokušavam da budem saosećajna i da radim pravu stvar"
-          },
+          "text": "Pokušavam da budem {g:saosećajan|saosećajna} i da radim pravu stvar",
           "value": "act"
         },
         {
@@ -162,13 +162,16 @@
       "id": 2,
       "question": "Kada saznaš nešto neprijatno o sebi, ti:",
       "options": [
-        { "text": "Ignorišeš to i nastavljaš kao ranije", "value": "comfort" },
-        { "text": "Priznaš to, ali praviš izgovore", "value": "conform" },
         {
-          "text": {
-            "male": "Osećaš se konfliktno i nisi siguran šta da radiš",
-            "female": "Osećaš se konfliktno i nisi sigurna šta da radiš"
-          },
+          "text": "Ignorišeš to i nastavljaš kao ranije",
+          "value": "comfort"
+        },
+        {
+          "text": "Priznaš to, ali praviš izgovore",
+          "value": "conform"
+        },
+        {
+          "text": "Osećaš se konfliktno i nisi {g:siguran|sigurna} šta da radiš",
           "value": "admit"
         },
         {
@@ -181,12 +184,18 @@
       "id": 3,
       "question": "Šta ti je najvažnije?",
       "options": [
-        { "text": "Moj komfor i udobnost", "value": "comfort" },
+        {
+          "text": "Moj komfor i udobnost",
+          "value": "comfort"
+        },
         {
           "text": "Pridržavanje društvenih normi i uklapanje",
           "value": "conform"
         },
-        { "text": "Biti dobra osoba na svoj način", "value": "admit" },
+        {
+          "text": "Biti dobra osoba na svoj način",
+          "value": "admit"
+        },
         {
           "text": "Živeti u skladu sa svojim najdubljim vrednostima",
           "value": "act"

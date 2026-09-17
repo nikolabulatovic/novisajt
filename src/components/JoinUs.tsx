@@ -13,7 +13,7 @@ import { useScheduledTimeouts } from '@/src/hooks/useScheduledTimeouts';
 import { useTracking } from '@/src/hooks/useTracking';
 import { AnswerId } from '@/src/lib/answerIds';
 import type { GenderedContent } from '@/src/lib/gender';
-import { resolveGenderedContent } from '@/src/lib/gender';
+import { resolveGenderedStringList } from '@/src/lib/gender';
 import {
   DEFAULT_STAGE_BODY,
   DEFAULT_STAGE_SHELL,
@@ -245,11 +245,11 @@ export default function JoinUs() {
   };
 
   const communityText = isCommunityStep(step)
-    ? [...resolveGenderedContent(step.intro, gender), step.groupsHeading]
+    ? [...resolveGenderedStringList(step.intro, gender), step.groupsHeading]
     : [];
 
   const actionText = !isCommunityStep(step)
-    ? resolveGenderedContent(step.text, gender)
+    ? resolveGenderedStringList(step.text, gender)
     : [];
 
   return (
