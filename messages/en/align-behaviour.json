@@ -1,5 +1,25 @@
 {
   "text": [
+    {
+      "conditional": [
+        {
+          "when": { "q1": "act" },
+          "text": "At the beginning you said it matters to you not to harm others through your actions."
+        },
+        {
+          "when": { "q2": "act" },
+          "text": "At the beginning you said that when you realize you're doing something harmful to others, you look for how to change that."
+        },
+        {
+          "when": { "q3": "act" },
+          "text": "At the beginning you said that when you learn a truth that would require you to change your relationship with your surroundings, you consider it important to face it even if it's uncomfortable."
+        },
+        {
+          "when": {},
+          "text": "At the beginning you said you would have been against major injustices when they were actually happening. This injustice is still happening."
+        }
+      ]
+    },
     "Are you ready to align your behavior with your beliefs and stop exploiting animals?",
     "That means not consuming or using meat, milk, eggs, leather, and the rest — in other words, not treating animals as a resource."
   ],

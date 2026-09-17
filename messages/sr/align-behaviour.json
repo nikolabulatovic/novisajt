@@ -1,10 +1,50 @@
 {
   "text": {
     "male": [
+      {
+        "conditional": [
+          {
+            "when": { "q1": "act" },
+            "text": "Na početku si rekao da ti je važno da ne ugrožavaš druge svojim postupcima."
+          },
+          {
+            "when": { "q2": "act" },
+            "text": "Na početku si rekao da kada shvatiš da radiš nešto loše drugima ti gledaš kako to da promeniš."
+          },
+          {
+            "when": { "q3": "act" },
+            "text": "Na početku si rekao da kada saznaš neku istinu koja bi zahtevala da promeniš svoj odnos sa okruženjem smatraš da je važno suočiti se sa time iako je neprijatno."
+          },
+          {
+            "when": {},
+            "text": "Na početku si rekao da bi bio protiv velikih nepravdi kada su se zaista dešavale. Ova nepravda se i dalje dešava."
+          }
+        ]
+      },
       "Da li si spreman da usaglasiš svoje ponašanje sa svojim uverenjima i da prestaneš da iskorišćavaš životinje?",
       "To podrazumeva da ne konzumiraš ili koristiš meso, mleko, jaja, kožu i ostalo, odnosno da ne tretiraš životinje kao sredstvo."
     ],
     "female": [
+      {
+        "conditional": [
+          {
+            "when": { "q1": "act" },
+            "text": "Na početku si rekla da ti je važno da ne ugrožavaš druge svojim postupcima."
+          },
+          {
+            "when": { "q2": "act" },
+            "text": "Na početku si rekla da kada shvatiš da radiš nešto loše drugima ti gledaš kako to da promeniš."
+          },
+          {
+            "when": { "q3": "act" },
+            "text": "Na početku si rekla da kada saznaš neku istinu koja bi zahtevala da promeniš svoj odnos sa okruženjem smatraš da je važno suočiti se sa time iako je neprijatno."
+          },
+          {
+            "when": {},
+            "text": "Na početku si rekla da bi bila protiv velikih nepravdi kada su se zaista dešavale. Ova nepravda se i dalje dešava."
+          }
+        ]
+      },
       "Da li si spremna da usaglasiš svoje ponašanje sa svojim uverenjima i da prestaneš da iskorišćavaš životinje?",
       "To podrazumeva da ne konzumiraš ili koristiš meso, mleko, jaja, kožu i ostalo, odnosno da ne tretiraš životinje kao sredstvo."
     ]
