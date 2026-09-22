@@ -6,7 +6,8 @@ import type { GenderChoiceAnalytics } from '@/src/lib/gender';
 
 export type CommunityType = 'whatsapp' | 'discord' | 'telegram';
 
-export type StageExitType = 'next';
+/** How the user left a stage: advanced in-flow, or abandoned the page. */
+export type StageExitType = 'next' | 'leave';
 
 /**
  * After this much quiet time (no pointer/key/scroll), stage attention pauses.
@@ -96,15 +97,16 @@ export function buildFlowCompletedProperties(
 export function buildStageExitedProperties(
   stage: Stage,
   extras: {
-    next_stage: Stage;
     exit_type: StageExitType;
     time_spent_ms: number;
+    /** Present when advancing to another stage; omitted on page leave. */
+    next_stage?: Stage;
   },
 ) {
   return {
     stage,
-    next_stage: extras.next_stage,
     exit_type: extras.exit_type,
     time_spent_ms: extras.time_spent_ms,
+    ...(extras.next_stage != null ? { next_stage: extras.next_stage } : {}),
   };
 }

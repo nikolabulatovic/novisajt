@@ -1,6 +1,7 @@
+import type { PostHog } from 'posthog-js';
 import { usePostHog } from 'posthog-js/react';
 
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { Stage, StageId } from '@/src/contexts/NavigationContext';
 import { useStageAttentionClock } from '@/src/hooks/useStageAttentionClock';
@@ -13,12 +14,57 @@ import {
   isRecordingWorthyStage,
 } from '@/src/lib/tracking';
 
+/**
+ * Shared across `useTracking()` call sites (page, JoinUs, feedback, …) so page
+ * leave fires once with the stage last updated by `trackStageViewed`.
+ */
+const stageAbandon = {
+  stage: null as Stage | null,
+  posthog: undefined as PostHog | undefined,
+  takeElapsedMs: (() => 0) as () => number,
+  /** Prevents duplicate leave beacons for the same stage stay. */
+  leaveSentForStage: null as Stage | null,
+};
+
+let pageHideListenerAttached = false;
+
+function captureStageLeave() {
+  const stage = stageAbandon.stage;
+  const posthog = stageAbandon.posthog;
+  if (!stage || !posthog) return;
+  if (stageAbandon.leaveSentForStage === stage) return;
+  stageAbandon.leaveSentForStage = stage;
+
+  posthog.capture(
+    'stage_exited',
+    buildStageExitedProperties(stage, {
+      exit_type: 'leave',
+      time_spent_ms: stageAbandon.takeElapsedMs(),
+    }),
+    { transport: 'sendBeacon', send_instantly: true },
+  );
+}
+
+function ensurePageHideListener() {
+  if (pageHideListenerAttached || typeof window === 'undefined') return;
+  pageHideListenerAttached = true;
+  window.addEventListener('pagehide', (event) => {
+    // bfcache: page may come back — not a real abandon.
+    if (event.persisted) return;
+    captureStageLeave();
+  });
+}
+
 export function useTracking() {
   const posthog = usePostHog();
   const flowStartedAtRef = useRef<number | null>(null);
   const flowCompletedRef = useRef(false);
   const previousStageRef = useRef<Stage | null>(null);
   const attention = useStageAttentionClock();
+
+  useEffect(() => {
+    ensurePageHideListener();
+  }, []);
 
   const trackStageViewed = (stage: Stage) => {
     if (flowStartedAtRef.current === null) {
@@ -39,7 +85,14 @@ export function useTracking() {
       }
       previousStageRef.current = stage;
       attention.resetForStage();
+      stageAbandon.leaveSentForStage = null;
     }
+
+    // Sticky stage for `$pageleave` + unload `stage_exited` (leave).
+    posthog?.register({ stage });
+    stageAbandon.stage = stage;
+    stageAbandon.posthog = posthog;
+    stageAbandon.takeElapsedMs = () => attention.takeElapsedMs();
 
     if (isRecordingWorthyStage(stage)) {
       ensureSessionRecording(posthog);
