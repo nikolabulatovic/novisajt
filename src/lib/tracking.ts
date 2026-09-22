@@ -8,6 +8,15 @@ export type CommunityType = 'whatsapp' | 'discord' | 'telegram';
 
 export type StageExitType = 'next';
 
+/**
+ * After this much quiet time (no pointer/key/scroll), stage attention pauses.
+ * Quiet reading still counts up to this window after the last interaction.
+ */
+export const STAGE_ATTENTION_IDLE_MS = 60_000;
+
+/** Hard cap so one zombie session can’t dominate daily averages. */
+export const STAGE_ATTENTION_MAX_MS = 10 * 60_000;
+
 /** Locale-specific Google Forms for end-of-flow feedback. */
 export const FEEDBACK_FORM_URLS = {
   en: 'https://forms.gle/yV3uM7bB9woaFEEx9',

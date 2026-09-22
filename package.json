@@ -9,6 +9,8 @@
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "i18n:check": "node scripts/check-i18n.mjs",
     "format": "prettier . --write",
     "format:check": "prettier . --check",
@@ -36,7 +38,8 @@
     "lint-staged": "^16.4.0",
     "prettier": "^3.8.2",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^3.2.7"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,mjs,cjs,json,md,css}": [
