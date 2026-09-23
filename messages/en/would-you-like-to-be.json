@@ -37,11 +37,11 @@
           "when": {
             "or": [{ "q1": "act" }, { "q2": "act" }]
           },
-          "text": "Is it then truly important to you to be just — that is, not to harm the innocent?"
+          "text": "Is it then truly important to you to be just – that is, not to harm the innocent?"
         },
         {
           "when": {},
-          "text": "Is it generally important to you to be just — that is, not to harm the innocent?"
+          "text": "Is it generally important to you to be just – that is, not to harm the innocent?"
         }
       ]
     }

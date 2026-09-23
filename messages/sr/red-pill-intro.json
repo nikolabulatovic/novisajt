@@ -3,11 +3,11 @@
     "Tvoj izbor je da vidiš istinu i to zahteva hrabrost.",
     "Biće izazovno. Ovo iskustvo nije za svakoga.",
     "Postavićemo ti tri pitanja. Odgovori iskreno.",
-    "Za početak, izaberi svoj pol."
+    "Za početak, u kom rodu da ti se obraćamo?"
   ],
   "next": "Nastavi",
   "options": {
-    "chooseGender": "Izabraću pol",
+    "chooseGender": "Odabraću",
     "ratherNot": "Radije ne bih"
   }
 }
