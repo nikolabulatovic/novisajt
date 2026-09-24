@@ -6,6 +6,7 @@ import {
   STORY_STAGE_TEXT_SIZE_CLASS,
   type StoryStageTextSize,
 } from '@/src/constants/storyStageTokens';
+import { useDevNavAccess } from '@/src/hooks/useDevNavAccess';
 import { useWordAnimation } from '@/src/hooks/useWordAnimation';
 import { AnimatedTextBlock } from '@/src/lib/i18n/animatedText';
 
@@ -40,6 +41,11 @@ export default function AnimatedText({
   wordTransitionDuration = 3000,
   mode = 'word',
 }: AnimatedTextProps) {
+  // Same unlock as the stage NavigationMenu (`?nav=…` / session flag).
+  const skipPacing = useDevNavAccess();
+  const transitionDelayStep = skipPacing ? 0 : wordTransitionDelay;
+  const transitionDurationMs = skipPacing ? 0 : wordTransitionDuration;
+
   // Handle QuestionExplanation-style text with segments
   const isSegmentFormat =
     Array.isArray(text) &&
@@ -68,6 +74,7 @@ export default function AnimatedText({
     delayAfterComplete,
     onComplete,
     mode: isSegmentFormat ? 'word' : mode,
+    instant: skipPacing,
   });
 
   // Render QuestionExplanation-style format
@@ -109,7 +116,7 @@ export default function AnimatedText({
                   // Apply delay only when word becomes visible, not on every render
                   // Once visible, delay should be 0 to prevent re-animation
                   const transitionDelay = isVisible
-                    ? `${currentWordIndex * 15}ms`
+                    ? `${currentWordIndex * transitionDelayStep}ms`
                     : '0ms';
 
                   return (
@@ -122,7 +129,7 @@ export default function AnimatedText({
                       } ${segment.bold ? 'font-bold' : ''} ${segment.italic ? 'italic' : ''}`}
                       style={{
                         transitionDuration: isVisible
-                          ? `${wordTransitionDuration}ms`
+                          ? `${transitionDurationMs}ms`
                           : '0ms',
                         transitionDelay: isVisible ? transitionDelay : '0ms',
                       }}
@@ -179,10 +186,10 @@ export default function AnimatedText({
                   }`}
                   style={{
                     transitionDuration: isVisible
-                      ? `${wordTransitionDuration}ms`
+                      ? `${transitionDurationMs}ms`
                       : '0ms',
                     transitionDelay: isVisible
-                      ? `${currentUnitIndex * wordTransitionDelay}ms`
+                      ? `${currentUnitIndex * transitionDelayStep}ms`
                       : '0ms',
                   }}
                 >

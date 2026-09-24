@@ -2,6 +2,7 @@
 
 import { ReactNode, useEffect, useState } from 'react';
 
+import { useDevNavAccess } from '@/src/hooks/useDevNavAccess';
 import {
   ANSWER_ENTRANCE_EASING,
   ANSWER_ENTRANCE_MS,
@@ -17,11 +18,17 @@ interface AnswerRevealProps {
  * in when `show` becomes true — text above does not shift on reveal.
  */
 export default function AnswerReveal({ show, children }: AnswerRevealProps) {
+  const skipPacing = useDevNavAccess();
   const [revealed, setRevealed] = useState(false);
 
   useEffect(() => {
     if (!show) {
       setRevealed(false);
+      return;
+    }
+
+    if (skipPacing) {
+      setRevealed(true);
       return;
     }
 
@@ -34,7 +41,7 @@ export default function AnswerReveal({ show, children }: AnswerRevealProps) {
       cancelAnimationFrame(raf1);
       cancelAnimationFrame(raf2);
     };
-  }, [show]);
+  }, [show, skipPacing]);
 
   const interactive = show && revealed;
 
@@ -43,7 +50,7 @@ export default function AnswerReveal({ show, children }: AnswerRevealProps) {
       className="transition-opacity motion-reduce:transition-none"
       style={{
         opacity: interactive ? 1 : 0,
-        transitionDuration: `${ANSWER_ENTRANCE_MS}ms`,
+        transitionDuration: skipPacing ? '0ms' : `${ANSWER_ENTRANCE_MS}ms`,
         transitionTimingFunction: ANSWER_ENTRANCE_EASING,
         pointerEvents: interactive ? undefined : 'none',
       }}

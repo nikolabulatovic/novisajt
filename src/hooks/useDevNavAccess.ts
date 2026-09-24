@@ -14,6 +14,8 @@ import {
  * Whether the stage {@link NavigationMenu} should render.
  * Unlocks via `?nav=1` (or `NEXT_PUBLIC_DEV_NAV_SECRET`), then stays for this tab.
  * Turn off with `?nav=0` (also clears the session flag).
+ *
+ * When enabled, story pacing is also skipped (AnimatedText + answers/next show immediately).
  */
 export function useDevNavAccess(): boolean {
   const [enabled, setEnabled] = useState(false);

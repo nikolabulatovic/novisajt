@@ -6,6 +6,8 @@ interface UseWordAnimationOptions {
   delayAfterComplete?: number; // ms to wait after animation completes
   onComplete?: () => void;
   mode?: 'word' | 'char';
+  /** Skip typing + delay; show all units and fire onComplete immediately. */
+  instant?: boolean;
 }
 
 export function useWordAnimation({
@@ -14,6 +16,7 @@ export function useWordAnimation({
   delayAfterComplete = 1000,
   onComplete,
   mode = 'word',
+  instant = false,
 }: UseWordAnimationOptions) {
   const [visibleWordCount, setVisibleWordCount] = useState(0);
   const [showButton, setShowButton] = useState(false);
@@ -47,6 +50,14 @@ export function useWordAnimation({
     setShowButton(false);
     hasAnimatedRef.current = false;
 
+    if (instant) {
+      setVisibleWordCount(totalWords);
+      setShowButton(true);
+      hasAnimatedRef.current = true;
+      onCompleteRef.current?.();
+      return;
+    }
+
     let currentIndex = 0;
     let completeTimeoutId: ReturnType<typeof setTimeout> | undefined;
     const interval = setInterval(() => {
@@ -71,7 +82,7 @@ export function useWordAnimation({
         clearTimeout(completeTimeoutId);
       }
     };
-  }, [totalWords, speed, delayAfterComplete, textKey]);
+  }, [totalWords, speed, delayAfterComplete, textKey, instant]);
 
   return {
     visibleWordCount,
