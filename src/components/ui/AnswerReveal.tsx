@@ -2,7 +2,7 @@
 
 import { ReactNode, useEffect, useState } from 'react';
 
-import { useDevNavAccess } from '@/src/hooks/useDevNavAccess';
+import { useSkipStoryPacing } from '@/src/hooks/useSkipStoryPacing';
 import {
   ANSWER_ENTRANCE_EASING,
   ANSWER_ENTRANCE_MS,
@@ -18,7 +18,7 @@ interface AnswerRevealProps {
  * in when `show` becomes true — text above does not shift on reveal.
  */
 export default function AnswerReveal({ show, children }: AnswerRevealProps) {
-  const skipPacing = useDevNavAccess();
+  const skipPacing = useSkipStoryPacing();
   const [revealed, setRevealed] = useState(false);
 
   useEffect(() => {

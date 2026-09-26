@@ -6,7 +6,7 @@ import {
   STORY_STAGE_TEXT_SIZE_CLASS,
   type StoryStageTextSize,
 } from '@/src/constants/storyStageTokens';
-import { useDevNavAccess } from '@/src/hooks/useDevNavAccess';
+import { useSkipStoryPacing } from '@/src/hooks/useSkipStoryPacing';
 import { useWordAnimation } from '@/src/hooks/useWordAnimation';
 import {
   type AnimatedTextBlock,
@@ -74,8 +74,8 @@ export default function AnimatedText({
   wordTransitionDuration = 3000,
   mode = 'word',
 }: AnimatedTextProps) {
-  // Same unlock as the stage NavigationMenu (`?nav=…` / session flag).
-  const skipPacing = useDevNavAccess();
+  // Instant reveal when `?anim=0` / `?test=1` (independent of stage nav).
+  const skipPacing = useSkipStoryPacing();
   const transitionDelayStep = skipPacing ? 0 : wordTransitionDelay;
   const transitionDurationMs = skipPacing ? 0 : wordTransitionDuration;
 

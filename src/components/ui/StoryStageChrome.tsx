@@ -5,9 +5,9 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { Stage } from '@/src/contexts/NavigationContext';
 import { useNavigation } from '@/src/contexts/NavigationContext';
 import { useStoryFlow } from '@/src/contexts/StoryFlowContext';
-import { useDevNavAccess } from '@/src/hooks/useDevNavAccess';
 import { useGenderedTranslations } from '@/src/hooks/useGenderedTranslations';
 import { useResolvedBackgroundImage } from '@/src/hooks/useResolvedBackgroundImage';
+import { useSkipStoryPacing } from '@/src/hooks/useSkipStoryPacing';
 import {
   type AnimatedTextBlock,
   isAnimatedTextBlock,
@@ -111,10 +111,10 @@ export default function StoryStageChrome({ stage }: StoryStageChromeProps) {
 
   const wrapsAnswerShell = cfg.nextInteraction === 'answer';
   const contentSpacing = ui?.contentSpacing ?? DEFAULT_STORY_UI.contentSpacing;
-  const skipPacing = useDevNavAccess();
+  const skipPacing = useSkipStoryPacing();
 
   useEffect(() => {
-    // Dev nav: show answers/next immediately; otherwise wait for AnimatedText.
+    // Skip pacing: show answers/next immediately; otherwise wait for AnimatedText.
     setNextInteractionVisible(skipPacing);
   }, [stage, activeStepId, skipPacing]);
 
