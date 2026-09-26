@@ -7,6 +7,7 @@ import { useTranslations } from 'next-intl';
 import { StageId } from '@/src/contexts/NavigationContext';
 import { useStoryFlow } from '@/src/contexts/StoryFlowContext';
 import { useResolvedBackgroundImage } from '@/src/hooks/useResolvedBackgroundImage';
+import { useSkipStoryPacing } from '@/src/hooks/useSkipStoryPacing';
 import type { PillOrigin } from '@/src/lib/pillOrigin';
 import {
   DEFAULT_STAGE_SHELL,
@@ -23,6 +24,7 @@ export default function ChoiceStage() {
     trackAnswerSelected,
   } = useStoryFlow();
   const t = useTranslations(StageId.Choice);
+  const skipPacing = useSkipStoryPacing();
   const selectedPillRef = useRef<'red' | 'blue' | null>(null);
   const [selectedPill, setSelectedPill] = useState<'red' | 'blue' | null>(null);
 
@@ -59,7 +61,11 @@ export default function ChoiceStage() {
         <div className="absolute bottom-1/4 right-1/4 w-48 h-48 md:w-96 md:h-96 rounded-full blur-3xl animate-pulse delay-1000" />
       </div>
 
-      <div className="relative z-10 max-w-4xl mx-auto text-center space-y-12 animate-fade-in">
+      <div
+        className={`relative z-10 max-w-4xl mx-auto text-center space-y-12 ${
+          skipPacing ? '' : 'animate-fade-in'
+        }`}
+      >
         <div className="space-y-6 mt-48">
           <h1 className="text-3xl sm:text-5xl font-bold mb-4 bg-gradient-to-r from-gray-300 via-purple-400 to-gray-300 bg-clip-text text-transparent animate-gradient">
             {t('title')}

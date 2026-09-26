@@ -2,6 +2,7 @@
 
 import { useRef } from 'react';
 
+import { useSkipStoryPacing } from '@/src/hooks/useSkipStoryPacing';
 import { type PillOrigin, pillOriginFromRect } from '@/src/lib/pillOrigin';
 
 type PillBaseProps = {
@@ -41,6 +42,7 @@ export default function Pill({
   className = '',
   interactive = true,
 }: PillProps) {
+  const skipPacing = useSkipStoryPacing();
   const pillShapeRef = useRef<HTMLButtonElement>(null);
   const pendingClickTimeoutRef = useRef<number | null>(null);
   const isRed = color === 'red';
@@ -60,6 +62,11 @@ export default function Pill({
       ? pillOriginFromRect(el.getBoundingClientRect())
       : undefined;
 
+    if (skipPacing) {
+      onClick(origin);
+      return;
+    }
+
     pendingClickTimeoutRef.current = window.setTimeout(() => {
       pendingClickTimeoutRef.current = null;
       onClick(origin);
@@ -69,9 +76,10 @@ export default function Pill({
   if (isButton) {
     return (
       <div
-        className={`transition-opacity duration-500 ${className} ${
+        className={`transition-opacity ${className} ${
           show ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}
+        style={{ transitionDuration: skipPacing ? '0ms' : '500ms' }}
       >
         <button
           ref={pillShapeRef}

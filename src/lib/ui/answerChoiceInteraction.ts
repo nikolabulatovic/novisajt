@@ -59,12 +59,19 @@ export const ANSWER_IDLE_SHELL_STATE: AnswerChoiceShellState = {
 /**
  * Same scheduling as `CharacterEvaluation` after a choice: wait for non-selected fade,
  * start bulk transition (wrapper motion + selected option fade-out), then run commit.
+ * When `instant`, skip delays and commit immediately (no shell fade).
  */
 export function scheduleAnswerChoiceExit(
   schedule: (fn: () => void, delayMs: number) => void,
   onBulkTransitionStart: () => void,
   onCommit: () => void,
+  options?: { instant?: boolean },
 ): void {
+  if (options?.instant) {
+    onCommit();
+    return;
+  }
+
   schedule(() => {
     onBulkTransitionStart();
     schedule(onCommit, ANSWER_CHOICE_COMMIT_AFTER_BULK_MS);

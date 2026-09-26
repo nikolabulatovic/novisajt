@@ -9,6 +9,7 @@ import {
   type StepId,
 } from '@/src/contexts/NavigationContext';
 import type { StoryTransitionStyle } from '@/src/contexts/StoryFlowContext';
+import { useSkipStoryPacing } from '@/src/hooks/useSkipStoryPacing';
 import type { PillOrigin } from '@/src/lib/pillOrigin';
 import { stageInteractionType } from '@/src/lib/story/stageInteraction';
 
@@ -45,9 +46,11 @@ function isOwnOpacityTransition(event: TransitionEvent<HTMLDivElement>) {
 /**
  * Owns current stage and the three leave animations: pill mask, shell crossfade,
  * and fade-to-black. Only one leave can run at a time; later starts are ignored.
+ * When {@link useSkipStoryPacing} is on (`?anim=0` / `?test=1`), leaves cut instantly.
  * `Home` still owns session state (answers, gender, tracking).
  */
 export function useStoryTransitions() {
+  const skipPacing = useSkipStoryPacing();
   const [stage, setStage] = useState<Stage>(StageId.Choice);
   const [currentStepId, setCurrentStepId] = useState<StepId | null>(null);
 
@@ -111,6 +114,11 @@ export function useStoryTransitions() {
       pillOrigin?: PillOrigin,
     ) => {
       if (newStage === stage) return;
+      if (skipPacing) {
+        setStage(newStage);
+        setCurrentStepId(null);
+        return;
+      }
       if (!beginLeave()) return;
       // Entering a new stage via story flow defaults to first step (null).
       pendingStepIdRef.current = null;
@@ -126,16 +134,24 @@ export function useStoryTransitions() {
         queueCrossfadeTo(newStage, null);
       }
     },
-    [stage],
+    [stage, skipPacing],
   );
 
-  const transitionViaBlackOverlayTo = useCallback((targetStage: Stage) => {
-    if (!beginLeave()) return;
-    pendingStepIdRef.current = null;
-    stageAfterFadeRef.current = targetStage;
-    setStageAfterFade(targetStage);
-    setBlackOverlay(true);
-  }, []);
+  const transitionViaBlackOverlayTo = useCallback(
+    (targetStage: Stage) => {
+      if (skipPacing) {
+        setStage(targetStage);
+        setCurrentStepId(null);
+        return;
+      }
+      if (!beginLeave()) return;
+      pendingStepIdRef.current = null;
+      stageAfterFadeRef.current = targetStage;
+      setStageAfterFade(targetStage);
+      setBlackOverlay(true);
+    },
+    [skipPacing],
+  );
 
   const commitBlackOverlayStage = useCallback(() => {
     const pending = stageAfterFadeRef.current;
@@ -173,10 +189,15 @@ export function useStoryTransitions() {
         setCurrentStepId(nextStep);
         return;
       }
+      if (skipPacing) {
+        setStage(newStage);
+        setCurrentStepId(nextStep);
+        return;
+      }
       if (!beginLeave()) return;
       queueCrossfadeTo(newStage, nextStep);
     },
-    [stage, currentStepId],
+    [stage, currentStepId, skipPacing],
   );
 
   const commitCrossfadeStage = useCallback(() => {

@@ -14,6 +14,7 @@ import { useAnswerChoiceRipples } from '@/src/hooks/useAnswerChoiceRipples';
 import { useGenderedTranslations } from '@/src/hooks/useGenderedTranslations';
 import { useResolvedBackgroundImage } from '@/src/hooks/useResolvedBackgroundImage';
 import { useScheduledTimeouts } from '@/src/hooks/useScheduledTimeouts';
+import { useSkipStoryPacing } from '@/src/hooks/useSkipStoryPacing';
 import type { GenderedContent } from '@/src/lib/gender';
 import { resolveGenderedString } from '@/src/lib/gender';
 import { stageConfig } from '@/src/lib/story/stageUiConfig';
@@ -58,6 +59,7 @@ export default function CharacterEvaluation() {
   } = useStoryFlow();
   const { currentStepId, navigateToStage } = useNavigation();
   const { allowsHeavyEffects } = useGpuEffects();
+  const skipPacing = useSkipStoryPacing();
   const schedule = useScheduledTimeouts();
   const { ripples, createRipple, clearRipples } =
     useAnswerChoiceRipples<number>(schedule);
@@ -92,15 +94,34 @@ export default function CharacterEvaluation() {
     if (answeringRef.current) return;
     answeringRef.current = true;
 
-    createRipple(event, optionIndex);
-    setSelectedOptionIndex(optionIndex);
-
     const questionId = `q${questions[currentQuestion].id}`;
     const newAnswers = { ...answers, [questionId]: value };
     setAnswers(newAnswers);
     // Persist immediately so later stages (and nav jumps) can read evaluation answers.
     mergeAnswers({ [questionId]: value });
 
+    const goNext = () => {
+      if (currentQuestion < questions.length - 1) {
+        const nextStepId = EVALUATION_STEP_IDS[currentQuestion + 1];
+        clearRipples();
+        answeringRef.current = false;
+        navigateToStage(StageId.Evaluation, nextStepId);
+      } else if (skipPacing) {
+        completeStage(StageId.Evaluation, newAnswers);
+      } else {
+        schedule(() => {
+          completeStage(StageId.Evaluation, newAnswers);
+        }, 1500);
+      }
+    };
+
+    if (skipPacing) {
+      goNext();
+      return;
+    }
+
+    createRipple(event, optionIndex);
+    setSelectedOptionIndex(optionIndex);
     setNonSelectedFading(true);
 
     scheduleAnswerChoiceExit(
@@ -109,18 +130,7 @@ export default function CharacterEvaluation() {
         setIsTransitioning(true);
         setShowContent(false);
       },
-      () => {
-        if (currentQuestion < questions.length - 1) {
-          const nextStepId = EVALUATION_STEP_IDS[currentQuestion + 1];
-          clearRipples();
-          answeringRef.current = false;
-          navigateToStage(StageId.Evaluation, nextStepId);
-        } else {
-          schedule(() => {
-            completeStage(StageId.Evaluation, newAnswers);
-          }, 1500);
-        }
-      },
+      goNext,
     );
   };
 

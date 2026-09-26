@@ -9,6 +9,7 @@ import { StageId } from '@/src/contexts/NavigationContext';
 import { useStoryFlow } from '@/src/contexts/StoryFlowContext';
 import { useResolvedBackgroundImage } from '@/src/hooks/useResolvedBackgroundImage';
 import { useScheduledTimeouts } from '@/src/hooks/useScheduledTimeouts';
+import { useSkipStoryPacing } from '@/src/hooks/useSkipStoryPacing';
 import { useTracking } from '@/src/hooks/useTracking';
 import { AnswerId } from '@/src/lib/answerIds';
 import type { GenderChoiceAnalytics, UserGender } from '@/src/lib/gender';
@@ -44,6 +45,7 @@ export default function RedPillIntro() {
   const t = useTranslations(StageId.Intro);
   const { completeStage, setGender } = useStoryFlow();
   const { trackGenderChoice } = useTracking();
+  const skipPacing = useSkipStoryPacing();
   const schedule = useScheduledTimeouts();
 
   const [answersVisible, setAnswersVisible] = useState(false);
@@ -78,7 +80,6 @@ export default function RedPillIntro() {
 
   const handleGenderSelect = (choice: GenderModalChoice) => {
     setGenderModalOpen(false);
-    setAnswerShellState({ isTransitioning: true, showContent: false });
 
     const analytics: GenderChoiceAnalytics =
       choice === 'female'
@@ -93,6 +94,13 @@ export default function RedPillIntro() {
         : choice === 'not-important'
           ? AnswerId.NOT_IMPORTANT
           : AnswerId.MALE;
+
+    if (skipPacing) {
+      commitGender(analytics, grammatical, answer);
+      return;
+    }
+
+    setAnswerShellState({ isTransitioning: true, showContent: false });
 
     schedule(() => {
       commitGender(analytics, grammatical, answer);

@@ -4,6 +4,7 @@ import { MouseEvent, useEffect, useState } from 'react';
 
 import { useAnswerChoiceRipples } from '@/src/hooks/useAnswerChoiceRipples';
 import { useScheduledTimeouts } from '@/src/hooks/useScheduledTimeouts';
+import { useSkipStoryPacing } from '@/src/hooks/useSkipStoryPacing';
 import {
   ANSWER_CHOICE_NON_SELECTED_FADE_MS,
   type AnswerChoiceShellState,
@@ -65,6 +66,8 @@ export default function AnswerOptions({
   onAnswerChoiceShellChange,
   resolveSelectBehavior,
 }: AnswerOptionsProps) {
+  const skipPacing = useSkipStoryPacing();
+  const shouldAnimateBeforeSelect = animateBeforeSelect && !skipPacing;
   const schedule = useScheduledTimeouts();
   const { ripples, createRipple } = useAnswerChoiceRipples<string>(schedule);
 
@@ -74,10 +77,10 @@ export default function AnswerOptions({
   const [showContent, setShowContent] = useState(true);
 
   useEffect(() => {
-    if (!animateBeforeSelect || !onAnswerChoiceShellChange) return;
+    if (!shouldAnimateBeforeSelect || !onAnswerChoiceShellChange) return;
     onAnswerChoiceShellChange({ isTransitioning, showContent });
   }, [
-    animateBeforeSelect,
+    shouldAnimateBeforeSelect,
     isTransitioning,
     showContent,
     onAnswerChoiceShellChange,
@@ -125,7 +128,7 @@ export default function AnswerOptions({
   const compactStoryAnswerOptionClassName =
     'w-auto min-w-0 shrink rounded-xl !px-8 !py-4 sm:!px-8 sm:!py-4 md:!px-8 md:!py-4 lg:!px-8 lg:!py-4';
 
-  if (!animateBeforeSelect) {
+  if (!shouldAnimateBeforeSelect) {
     return (
       <div className={containerClassName}>
         {options.map((option) => {

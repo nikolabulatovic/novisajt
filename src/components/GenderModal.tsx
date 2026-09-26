@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 
 import { useAnswerChoiceRipples } from '@/src/hooks/useAnswerChoiceRipples';
 import { useScheduledTimeouts } from '@/src/hooks/useScheduledTimeouts';
+import { useSkipStoryPacing } from '@/src/hooks/useSkipStoryPacing';
 import { ANSWER_CHOICE_NON_SELECTED_FADE_MS } from '@/src/lib/ui/answerChoiceInteraction';
 
 import AnswerChoiceRippleSpans from './ui/AnswerChoiceRippleSpans';
@@ -22,9 +23,11 @@ const CARD_BTN =
 const PLAIN_BTN =
   'group relative overflow-hidden rounded-xl border border-gray-700/40 bg-gray-900/60 px-8 py-3 transition-all duration-300 hover:scale-[1.01] hover:border-gray-600/40 hover:bg-gray-800/70 cursor-pointer';
 
-function fadeStyle(fadingOut: boolean) {
+function fadeStyle(fadingOut: boolean, instant = false) {
   return {
-    transitionDuration: `${fadingOut ? FADE_OUT_MS : FADE_IN_MS}ms`,
+    transitionDuration: instant
+      ? '0ms'
+      : `${fadingOut ? FADE_OUT_MS : FADE_IN_MS}ms`,
     transitionTimingFunction: 'ease-out',
   };
 }
@@ -77,6 +80,7 @@ const FOCUSABLE_SELECTOR =
 
 export default function GenderModal({ open, onSelect }: GenderModalProps) {
   const t = useTranslations('gender');
+  const skipPacing = useSkipStoryPacing();
   const schedule = useScheduledTimeouts();
   const { ripples, createRipple } =
     useAnswerChoiceRipples<GenderModalChoice>(schedule);
@@ -98,6 +102,17 @@ export default function GenderModal({ open, onSelect }: GenderModalProps) {
     setSelected(null);
     setFadingOut(false);
     previouslyFocusedRef.current = document.activeElement as HTMLElement | null;
+
+    if (skipPacing) {
+      setVisible(true);
+      const first =
+        dialogRef.current?.querySelector<HTMLElement>(FOCUSABLE_SELECTOR);
+      first?.focus();
+      return () => {
+        previouslyFocusedRef.current?.focus();
+      };
+    }
+
     const id = requestAnimationFrame(() => {
       setVisible(true);
       const first =
@@ -108,7 +123,7 @@ export default function GenderModal({ open, onSelect }: GenderModalProps) {
       cancelAnimationFrame(id);
       previouslyFocusedRef.current?.focus();
     };
-  }, [open]);
+  }, [open, skipPacing]);
 
   useEffect(() => {
     if (!open) return;
@@ -145,6 +160,11 @@ export default function GenderModal({ open, onSelect }: GenderModalProps) {
     choice: GenderModalChoice,
   ) => {
     if (selected) return;
+
+    if (skipPacing) {
+      onSelect(choice);
+      return;
+    }
 
     createRipple(event, choice);
     setSelected(choice);
@@ -191,7 +211,7 @@ export default function GenderModal({ open, onSelect }: GenderModalProps) {
         fadingOut ? 'opacity-0' : visible ? 'opacity-100' : 'opacity-0'
       }`}
       style={{
-        ...fadeStyle(fadingOut),
+        ...fadeStyle(fadingOut, skipPacing),
         backgroundColor: 'rgba(0,0,0,0.55)',
         backdropFilter: 'blur(4px)',
       }}
@@ -204,7 +224,7 @@ export default function GenderModal({ open, onSelect }: GenderModalProps) {
         className={`w-full max-w-md rounded-3xl border border-white/10 bg-[#101014]/95 px-6 py-8 shadow-[0_24px_80px_rgba(0,0,0,0.55)] ring-1 ring-white/5 transition-all ease-out sm:px-8 sm:py-10 ${
           fadingOut ? 'scale-95 opacity-0' : 'scale-100 opacity-100'
         }`}
-        style={fadeStyle(fadingOut)}
+        style={fadeStyle(fadingOut, skipPacing)}
       >
         <div className="flex flex-col items-center gap-8">
           <p
