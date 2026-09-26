@@ -1,43 +1,7 @@
 {
   "next": "Razumem",
   "text": [
-    {
-      "line": [
-        {
-          "text": "Na osnovu tvojih odgovora, deluje kao da želiš da imaš ",
-          "bold": false,
-          "italic": false
-        },
-        {
-          "text": "iskrenu sliku o sebi",
-          "bold": true,
-          "italic": false
-        },
-        {
-          "text": ".",
-          "bold": false,
-          "italic": false
-        }
-      ]
-    },
-    {
-      "line": [
-        {
-          "text": "Ovo putovanje je za ljude koji žele da vide sebe onakvim kakvi jesu – a ne onakvim kakvima ",
-          "bold": false,
-          "italic": false
-        },
-        {
-          "text": "misle da jesu",
-          "bold": false,
-          "italic": true
-        },
-        {
-          "text": ".",
-          "bold": false,
-          "italic": false
-        }
-      ]
-    }
+    "Na osnovu tvojih odgovora, deluje kao da želiš da imaš {b:iskrenu sliku o sebi}.",
+    "Ovo putovanje je za ljude koji žele da vide sebe onakvim kakvi jesu – a ne onakvim kakvima {i:misle da jesu}."
   ]
 }

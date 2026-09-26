@@ -1,38 +1,7 @@
 {
   "text": [
-    {
-      "line": [
-        {
-          "text": "You agreed that a person is responsible for their behaviour regardless of what the current norms are and the behaviour of other people is.",
-          "bold": false,
-          "italic": false
-        }
-      ]
-    },
-    {
-      "line": [
-        {
-          "text": "You personally ",
-          "bold": true,
-          "italic": false
-        },
-        {
-          "text": "are responsible for the enslavement and killing of the animals ",
-          "bold": false,
-          "italic": false
-        },
-        {
-          "text": "you ",
-          "bold": true,
-          "italic": false
-        },
-        {
-          "text": "use.",
-          "bold": false,
-          "italic": false
-        }
-      ]
-    }
+    "You agreed that a person is responsible for their behaviour regardless of what the current norms are and the behaviour of other people is.",
+    "{b:You personally} are responsible for the enslavement and killing of the animals {b:you} use."
   ],
   "options": {
     "accept": "I accept",

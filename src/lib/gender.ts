@@ -33,6 +33,9 @@ export type GenderChoiceAnalytics =
  *   → male: rekao, female: rekla
  *   Resolved by `resolveGenderSnippets` (story text / labels).
  *
+ * Inline emphasis (bold / italic), same spirit — see `inlineEmphasis.ts`:
+ *   "{b:Ti lično} si {g:odgovoran|odgovorna}…"
+ *
  * For single ICU strings via `t()`, use:
  *   "{gender, select, female {…} male {…} other {…}}"
  */

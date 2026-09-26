@@ -8,7 +8,15 @@ import {
 } from '@/src/constants/storyStageTokens';
 import { useDevNavAccess } from '@/src/hooks/useDevNavAccess';
 import { useWordAnimation } from '@/src/hooks/useWordAnimation';
-import { AnimatedTextBlock } from '@/src/lib/i18n/animatedText';
+import {
+  type AnimatedTextBlock,
+  isAnimatedTextBlock,
+} from '@/src/lib/i18n/animatedText';
+import {
+  expandInlineEmphasisInBlock,
+  hasInlineEmphasis,
+  linesToEmphasizedBlock,
+} from '@/src/lib/i18n/inlineEmphasis';
 
 interface AnimatedTextProps {
   text: string | string[] | AnimatedTextBlock;
@@ -29,6 +37,31 @@ const alignmentClasses = {
   right: 'text-right',
 };
 
+/**
+ * Normalize copy into either a plain string list or an emphasized segment block.
+ * Supports `{b:…}` / `{i:…}` / `{bi:…}` in plain strings (and inside block segments).
+ */
+function normalizeAnimatedText(
+  text: string | string[] | AnimatedTextBlock,
+): string | string[] | AnimatedTextBlock {
+  if (isAnimatedTextBlock(text)) {
+    return expandInlineEmphasisInBlock(text);
+  }
+
+  if (Array.isArray(text) && text.every((item) => typeof item === 'string')) {
+    if (text.some((line) => hasInlineEmphasis(line))) {
+      return linesToEmphasizedBlock(text);
+    }
+    return text;
+  }
+
+  if (typeof text === 'string' && hasInlineEmphasis(text)) {
+    return linesToEmphasizedBlock([text]);
+  }
+
+  return text;
+}
+
 export default function AnimatedText({
   text,
   speed = 120,
@@ -46,27 +79,24 @@ export default function AnimatedText({
   const transitionDelayStep = skipPacing ? 0 : wordTransitionDelay;
   const transitionDurationMs = skipPacing ? 0 : wordTransitionDuration;
 
-  // Handle QuestionExplanation-style text with segments
-  const isSegmentFormat =
-    Array.isArray(text) &&
-    text.length > 0 &&
-    typeof text[0] === 'object' &&
-    'line' in text[0];
+  const normalized = useMemo(() => normalizeAnimatedText(text), [text]);
+
+  const isSegmentFormat = isAnimatedTextBlock(normalized);
 
   // Memoize text preparation to prevent unnecessary hook resets
   const textToAnimate = useMemo(() => {
     if (isSegmentFormat) {
       // Flatten segments for animation counting
-      const flattened = (text as AnimatedTextBlock).flatMap((item) =>
+      const flattened = (normalized as AnimatedTextBlock).flatMap((item) =>
         item.line.flatMap((segment) => segment.text.split(' ')),
       );
       return flattened.join(' ');
-    } else if (Array.isArray(text)) {
-      return text as string[];
+    } else if (Array.isArray(normalized)) {
+      return normalized as string[];
     } else {
-      return text as string;
+      return normalized as string;
     }
-  }, [text, isSegmentFormat]);
+  }, [normalized, isSegmentFormat]);
 
   const { visibleWordCount } = useWordAnimation({
     text: textToAnimate,
@@ -79,7 +109,7 @@ export default function AnimatedText({
 
   // Render QuestionExplanation-style format
   if (isSegmentFormat) {
-    const segmentText = text as AnimatedTextBlock;
+    const segmentText = normalized as AnimatedTextBlock;
 
     // Calculate word start indices for each item
     const wordStartIndices: number[] = [];
@@ -148,7 +178,7 @@ export default function AnimatedText({
   }
 
   // Render simple string array format
-  const textArray = Array.isArray(text) ? text : [text];
+  const textArray = Array.isArray(normalized) ? normalized : [normalized];
 
   // Calculate unit start indices for each sentence (units = words or chars depending on mode)
   const unitStartIndices: number[] = [];

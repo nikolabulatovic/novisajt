@@ -12,7 +12,6 @@ import { useScheduledTimeouts } from '@/src/hooks/useScheduledTimeouts';
 import { useTracking } from '@/src/hooks/useTracking';
 import { AnswerId } from '@/src/lib/answerIds';
 import type { GenderChoiceAnalytics, UserGender } from '@/src/lib/gender';
-import { AnimatedTextBlock } from '@/src/lib/i18n/animatedText';
 import { mapLocalizedAnswerOptions } from '@/src/lib/mapLocalizedAnswerOptions';
 import {
   DEFAULT_STAGE_BODY,
@@ -146,7 +145,7 @@ export default function RedPillIntro() {
               }
             >
               <AnimatedText
-                text={t.raw('text') as AnimatedTextBlock}
+                text={t.raw('text') as string[]}
                 speed={body?.speed ?? DEFAULT_STAGE_BODY.speed}
                 delayAfterComplete={
                   body?.delayAfterComplete ??
