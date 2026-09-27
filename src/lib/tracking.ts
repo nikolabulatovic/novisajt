@@ -2,6 +2,7 @@ import type { PostHog } from 'posthog-js';
 
 import { Stage, StageId } from '@/src/contexts/NavigationContext';
 import { AnswerId } from '@/src/lib/answerIds';
+import { applyDevAccessFromUrl } from '@/src/lib/applyDevAccessFromUrl';
 import type { GenderChoiceAnalytics } from '@/src/lib/gender';
 
 export type CommunityType = 'whatsapp' | 'discord' | 'telegram';
@@ -59,6 +60,18 @@ export function registerLocale(posthog: PostHog | undefined, locale: string) {
 
   posthog.register({ locale });
   posthog.people.set({ locale });
+}
+
+/**
+ * Sticky flag when nav, skip-pacing, or test mode is on for this tab.
+ * Always re-registers so a later normal visit clears a prior `true` in persistence.
+ * Filter campaign funnels with `is_dev_session = false`.
+ */
+export function registerDevSession(posthog: PostHog | undefined) {
+  if (!posthog || typeof window === 'undefined') return;
+
+  const { showNav, skipPacing } = applyDevAccessFromUrl();
+  posthog.register({ is_dev_session: showNav || skipPacing });
 }
 
 function genderChoiceFromIntroAnswer(
