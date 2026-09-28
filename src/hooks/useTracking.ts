@@ -1,12 +1,9 @@
-import type { PostHog } from 'posthog-js';
-import { usePostHog } from 'posthog-js/react';
-
 import { useEffect, useRef } from 'react';
 
 import { Stage, StageId } from '@/src/contexts/NavigationContext';
 import { useStageAttentionClock } from '@/src/hooks/useStageAttentionClock';
+import { type AnalyticsClient, useAnalytics } from '@/src/lib/analytics';
 import type { GenderChoiceAnalytics } from '@/src/lib/gender';
-import { ensureSessionRecording } from '@/src/lib/posthogSessionRecording';
 import {
   type CommunityType,
   buildFlowCompletedProperties,
@@ -20,7 +17,7 @@ import {
  */
 const stageAbandon = {
   stage: null as Stage | null,
-  posthog: undefined as PostHog | undefined,
+  analytics: undefined as AnalyticsClient | undefined,
   takeElapsedMs: (() => 0) as () => number,
   /** Prevents duplicate leave beacons for the same stage stay. */
   leaveSentForStage: null as Stage | null,
@@ -30,18 +27,18 @@ let pageHideListenerAttached = false;
 
 function captureStageLeave() {
   const stage = stageAbandon.stage;
-  const posthog = stageAbandon.posthog;
-  if (!stage || !posthog) return;
+  const analytics = stageAbandon.analytics;
+  if (!stage || !analytics) return;
   if (stageAbandon.leaveSentForStage === stage) return;
   stageAbandon.leaveSentForStage = stage;
 
-  posthog.capture(
+  analytics.capture(
     'stage_exited',
     buildStageExitedProperties(stage, {
       exit_type: 'leave',
       time_spent_ms: stageAbandon.takeElapsedMs(),
     }),
-    { transport: 'sendBeacon', send_instantly: true },
+    { transport: 'sendBeacon', sendInstantly: true },
   );
 }
 
@@ -56,7 +53,7 @@ function ensurePageHideListener() {
 }
 
 export function useTracking() {
-  const posthog = usePostHog();
+  const analytics = useAnalytics();
   const flowStartedAtRef = useRef<number | null>(null);
   const flowCompletedRef = useRef(false);
   const previousStageRef = useRef<Stage | null>(null);
@@ -74,7 +71,7 @@ export function useTracking() {
     const previousStage = previousStageRef.current;
     if (previousStage !== stage) {
       if (previousStage !== null) {
-        posthog?.capture(
+        analytics.capture(
           'stage_exited',
           buildStageExitedProperties(previousStage, {
             next_stage: stage,
@@ -88,23 +85,23 @@ export function useTracking() {
       stageAbandon.leaveSentForStage = null;
     }
 
-    // Sticky stage for `$pageleave` + unload `stage_exited` (leave).
-    posthog?.register({ stage });
+    // Sticky stage for pageleave + unload `stage_exited` (leave).
+    analytics.register({ stage });
     stageAbandon.stage = stage;
-    stageAbandon.posthog = posthog;
+    stageAbandon.analytics = analytics;
     stageAbandon.takeElapsedMs = () => attention.takeElapsedMs();
 
     if (isRecordingWorthyStage(stage)) {
-      ensureSessionRecording(posthog);
+      analytics.ensureSessionRecording();
     }
-    posthog?.capture('stage_viewed', { stage });
+    analytics.capture('stage_viewed', { stage });
   };
 
   const trackAnswerSelected = (stage: Stage, answer: string) => {
     if (stage === StageId.Choice && answer === 'red') {
-      ensureSessionRecording(posthog);
+      analytics.ensureSessionRecording();
     }
-    posthog?.capture('answer_selected', { stage, answer });
+    analytics.capture('answer_selected', { stage, answer });
   };
 
   /** Intended story end: user reached JoinUs. Fires at most once per session. */
@@ -116,30 +113,30 @@ export function useTracking() {
     const time_to_complete_ms =
       startedAt === null ? 0 : Math.max(0, Date.now() - startedAt);
 
-    posthog?.capture(
+    analytics.capture(
       'flow_completed',
       buildFlowCompletedProperties(answers, { time_to_complete_ms }),
     );
   };
 
   const trackCommunityCtaClicked = (community_type: CommunityType) => {
-    posthog?.capture('community_cta_clicked', { community_type });
+    analytics.capture('community_cta_clicked', { community_type });
   };
 
   const trackFeedbackFormClicked = (stage: Stage) => {
-    posthog?.capture('feedback_form_clicked', { stage });
+    analytics.capture('feedback_form_clicked', { stage });
   };
 
   const trackNarrativeAdvanceClicked = (stage: Stage) => {
-    ensureSessionRecording(posthog);
-    posthog?.capture('narrative_advance_clicked', { stage });
+    analytics.ensureSessionRecording();
+    analytics.capture('narrative_advance_clicked', { stage });
   };
 
   /** Sticky from Intro gender pick onward (super property + person property). */
   const trackGenderChoice = (genderChoice: GenderChoiceAnalytics) => {
-    posthog?.register({ gender_choice: genderChoice });
-    posthog?.people.set({ gender_choice: genderChoice });
-    posthog?.capture('gender_chosen', { gender_choice: genderChoice });
+    analytics.register({ gender_choice: genderChoice });
+    analytics.setPersonProperties({ gender_choice: genderChoice });
+    analytics.capture('gender_chosen', { gender_choice: genderChoice });
   };
 
   return {

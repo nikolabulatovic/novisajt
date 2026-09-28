@@ -8,7 +8,7 @@ import {
 import { Inter, Literata, Source_Serif_4 } from 'next/font/google';
 import { notFound } from 'next/navigation';
 
-import PostHogProvider from '@/src/components/PostHogProvider';
+import AnalyticsProvider from '@/src/components/AnalyticsProvider';
 import { GpuEffectsProvider } from '@/src/contexts/GpuEffectsContext';
 import { routing } from '@/src/i18n/routing';
 
@@ -75,11 +75,11 @@ export default async function LocaleLayout({
       <body
         className={`${literata.variable} ${sourceSerif4.variable} ${inter.variable} antialiased`}
       >
-        <PostHogProvider locale={locale}>
+        <AnalyticsProvider locale={locale}>
           <NextIntlClientProvider messages={messages}>
             <GpuEffectsProvider>{children}</GpuEffectsProvider>
           </NextIntlClientProvider>
-        </PostHogProvider>
+        </AnalyticsProvider>
       </body>
     </html>
   );

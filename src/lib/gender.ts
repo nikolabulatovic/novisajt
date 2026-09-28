@@ -8,7 +8,7 @@ export const DEFAULT_USER_GENDER: UserGender = 'male';
 
 /**
  * Raw gender-selection outcome for analytics (not collapsed to grammar).
- * Attached as PostHog super + person property `gender_choice` from selection onward.
+ * Attached as sticky + person property `gender_choice` from selection onward.
  */
 export type GenderChoiceAnalytics =
   | 'male'

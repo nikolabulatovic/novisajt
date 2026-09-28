@@ -1,11 +1,15 @@
 'use client';
 
 import posthog from 'posthog-js';
-import { PostHogProvider as PHProvider } from 'posthog-js/react';
 
-import { useEffect } from 'react';
+import { type ReactNode, useEffect, useState } from 'react';
 
-import { startQueuedSessionRecording } from '@/src/lib/posthogSessionRecording';
+import {
+  type AnalyticsClient,
+  AnalyticsContextProvider,
+  createPostHogAnalyticsClient,
+  noopAnalyticsClient,
+} from '@/src/lib/analytics';
 import {
   registerCampaignFromUrl,
   registerDevSession,
@@ -16,22 +20,30 @@ function isPostHogDisabled() {
   return process.env.NEXT_PUBLIC_POSTHOG_DISABLED === 'true';
 }
 
-export default function PostHogProvider({
+function shouldUsePostHog() {
+  return !isPostHogDisabled() && Boolean(process.env.NEXT_PUBLIC_POSTHOG_KEY);
+}
+
+function createAnalyticsClient(): AnalyticsClient {
+  return shouldUsePostHog()
+    ? createPostHogAnalyticsClient(posthog)
+    : noopAnalyticsClient;
+}
+
+export default function AnalyticsProvider({
   children,
   locale,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
   locale: string;
 }) {
+  const [client] = useState(createAnalyticsClient);
+
   useEffect(() => {
-    if (isPostHogDisabled()) {
-      return;
-    }
+    if (!shouldUsePostHog()) return;
 
     const key = process.env.NEXT_PUBLIC_POSTHOG_KEY;
-    if (!key) {
-      return;
-    }
+    if (!key) return;
 
     posthog.init(key, {
       api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
@@ -46,17 +58,21 @@ export default function PostHogProvider({
       },
       persistence: 'localStorage',
       loaded: () => {
-        registerCampaignFromUrl(posthog);
-        registerDevSession(posthog);
-        startQueuedSessionRecording(posthog);
+        registerCampaignFromUrl(client);
+        registerDevSession(client);
+        client.notifyReady?.();
       },
     });
-  }, []);
+  }, [client]);
 
   useEffect(() => {
-    if (isPostHogDisabled()) return;
-    registerLocale(posthog, locale);
-  }, [locale]);
+    if (!shouldUsePostHog()) return;
+    registerLocale(client, locale);
+  }, [client, locale]);
 
-  return <PHProvider client={posthog}>{children}</PHProvider>;
+  return (
+    <AnalyticsContextProvider client={client}>
+      {children}
+    </AnalyticsContextProvider>
+  );
 }

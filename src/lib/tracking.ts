@@ -1,6 +1,5 @@
-import type { PostHog } from 'posthog-js';
-
 import { Stage, StageId } from '@/src/contexts/NavigationContext';
+import type { AnalyticsClient } from '@/src/lib/analytics';
 import { AnswerId } from '@/src/lib/answerIds';
 import { applyDevAccessFromUrl } from '@/src/lib/applyDevAccessFromUrl';
 import type { GenderChoiceAnalytics } from '@/src/lib/gender';
@@ -39,27 +38,35 @@ export function isRecordingWorthyStage(stage: Stage) {
 
 /**
  * Persist `utm_campaign` from the landing URL onto subsequent events.
- * PostHog also auto-captures UTMs; this makes the value an explicit super property
- * for our custom funnel events.
+ * Some backends also auto-capture UTMs; this makes the value an explicit
+ * super property for our custom funnel events.
  */
-export function registerCampaignFromUrl(posthog: PostHog | undefined) {
-  if (!posthog || typeof window === 'undefined') return;
+export function registerCampaignFromUrl(
+  analytics: AnalyticsClient | undefined,
+) {
+  if (!analytics || typeof window === 'undefined') return;
 
   const campaign = new URLSearchParams(window.location.search).get(
     'utm_campaign',
   );
   if (!campaign) return;
 
-  posthog.register({ utm_campaign: campaign });
-  posthog.people.set_once({ initial_utm_campaign: campaign });
+  analytics.register({ utm_campaign: campaign });
+  analytics.setPersonProperties(
+    { initial_utm_campaign: campaign },
+    { once: true },
+  );
 }
 
 /** Sticky locale (`sr` / `en`) on all subsequent events for this session. */
-export function registerLocale(posthog: PostHog | undefined, locale: string) {
-  if (!posthog || !locale) return;
+export function registerLocale(
+  analytics: AnalyticsClient | undefined,
+  locale: string,
+) {
+  if (!analytics || !locale) return;
 
-  posthog.register({ locale });
-  posthog.people.set({ locale });
+  analytics.register({ locale });
+  analytics.setPersonProperties({ locale });
 }
 
 /**
@@ -67,11 +74,11 @@ export function registerLocale(posthog: PostHog | undefined, locale: string) {
  * Always re-registers so a later normal visit clears a prior `true` in persistence.
  * Filter campaign funnels with `is_dev_session = false`.
  */
-export function registerDevSession(posthog: PostHog | undefined) {
-  if (!posthog || typeof window === 'undefined') return;
+export function registerDevSession(analytics: AnalyticsClient | undefined) {
+  if (!analytics || typeof window === 'undefined') return;
 
   const { showNav, skipPacing } = applyDevAccessFromUrl();
-  posthog.register({ is_dev_session: showNav || skipPacing });
+  analytics.register({ is_dev_session: showNav || skipPacing });
 }
 
 function genderChoiceFromIntroAnswer(
