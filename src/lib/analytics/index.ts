@@ -3,6 +3,7 @@ export type {
   AnalyticsClient,
   AnalyticsProperties,
 } from '@/src/lib/analytics/types';
+export { consoleAnalyticsClient } from '@/src/lib/analytics/consoleClient';
 export { noopAnalyticsClient } from '@/src/lib/analytics/noopClient';
 export { createPostHogAnalyticsClient } from '@/src/lib/analytics/createPostHogClient';
 export {

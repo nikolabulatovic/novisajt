@@ -7,6 +7,7 @@ import { type ReactNode, useEffect, useState } from 'react';
 import {
   type AnalyticsClient,
   AnalyticsContextProvider,
+  consoleAnalyticsClient,
   createPostHogAnalyticsClient,
   noopAnalyticsClient,
 } from '@/src/lib/analytics';
@@ -16,18 +17,41 @@ import {
   registerLocale,
 } from '@/src/lib/tracking';
 
+type AnalyticsBackend = 'posthog' | 'console' | 'noop';
+
 function isPostHogDisabled() {
   return process.env.NEXT_PUBLIC_POSTHOG_DISABLED === 'true';
 }
 
-function shouldUsePostHog() {
+function canUsePostHog() {
   return !isPostHogDisabled() && Boolean(process.env.NEXT_PUBLIC_POSTHOG_KEY);
 }
 
-function createAnalyticsClient(): AnalyticsClient {
-  return shouldUsePostHog()
-    ? createPostHogAnalyticsClient(posthog)
-    : noopAnalyticsClient;
+/**
+ * `NEXT_PUBLIC_ANALYTICS_PROVIDER=console|noop|posthog` forces a backend.
+ * Default: PostHog when configured, otherwise noop.
+ */
+function resolveAnalyticsBackend(): AnalyticsBackend {
+  const explicit = process.env.NEXT_PUBLIC_ANALYTICS_PROVIDER;
+  if (explicit === 'console' || explicit === 'noop') return explicit;
+  if (explicit === 'posthog') return canUsePostHog() ? 'posthog' : 'noop';
+  return canUsePostHog() ? 'posthog' : 'noop';
+}
+
+function createClientFor(backend: AnalyticsBackend): AnalyticsClient {
+  switch (backend) {
+    case 'posthog':
+      return createPostHogAnalyticsClient(posthog);
+    case 'console':
+      return consoleAnalyticsClient;
+    case 'noop':
+      return noopAnalyticsClient;
+  }
+}
+
+function registerSessionStickyProps(client: AnalyticsClient) {
+  registerCampaignFromUrl(client);
+  registerDevSession(client);
 }
 
 export default function AnalyticsProvider({
@@ -37,10 +61,18 @@ export default function AnalyticsProvider({
   children: ReactNode;
   locale: string;
 }) {
-  const [client] = useState(createAnalyticsClient);
+  const [{ backend, client }] = useState(() => {
+    const backend = resolveAnalyticsBackend();
+    return { backend, client: createClientFor(backend) };
+  });
 
   useEffect(() => {
-    if (!shouldUsePostHog()) return;
+    if (backend === 'noop') return;
+
+    if (backend === 'console') {
+      registerSessionStickyProps(client);
+      return;
+    }
 
     const key = process.env.NEXT_PUBLIC_POSTHOG_KEY;
     if (!key) return;
@@ -58,17 +90,16 @@ export default function AnalyticsProvider({
       },
       persistence: 'localStorage',
       loaded: () => {
-        registerCampaignFromUrl(client);
-        registerDevSession(client);
+        registerSessionStickyProps(client);
         client.notifyReady?.();
       },
     });
-  }, [client]);
+  }, [backend, client]);
 
   useEffect(() => {
-    if (!shouldUsePostHog()) return;
+    if (backend === 'noop') return;
     registerLocale(client, locale);
-  }, [client, locale]);
+  }, [backend, client, locale]);
 
   return (
     <AnalyticsContextProvider client={client}>
