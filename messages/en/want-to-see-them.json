@@ -1,0 +1,24 @@
+{
+  "steps": [
+    {
+      "id": "prompt",
+      "text": [
+        "The industry does not hate animals. The industry does not see them.",
+        "Do you want to see them?"
+      ],
+      "warning": "(Warning: graphic content)",
+      "options": {
+        "yes": "I want to",
+        "no": "I don't want to"
+      }
+    },
+    {
+      "id": "watch"
+    },
+    {
+      "id": "decline",
+      "text": ["Think about why you don't want to see"]
+    }
+  ],
+  "next": "Continue"
+}

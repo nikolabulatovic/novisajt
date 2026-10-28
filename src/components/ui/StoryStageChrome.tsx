@@ -22,6 +22,7 @@ import {
   DEFAULT_STAGE_BODY,
   DEFAULT_STAGE_SHELL,
   DEFAULT_STORY_UI,
+  resolveStepNextInteraction,
   stageConfig,
 } from '@/src/lib/story/stageUiConfig';
 import {
@@ -49,8 +50,16 @@ const ANSWER_SHELL_STACK_GAP: Record<'sm' | 'md' | 'lg', string> = {
 
 type MessageStep = {
   id: string;
-  text: AnimatedTextBlock | StoryTextItem[];
+  text?: AnimatedTextBlock | StoryTextItem[];
+  warning?: string;
 };
+
+function hasBodyCopy(
+  text: string[] | AnimatedTextBlock | StoryTextItem[],
+): boolean {
+  if (Array.isArray(text)) return text.length > 0;
+  return true;
+}
 
 export interface StoryStageChromeProps {
   stage: Stage;
@@ -75,6 +84,13 @@ export default function StoryStageChrome({ stage }: StoryStageChromeProps) {
       currentStepId) ||
     configuredSteps?.[0]?.id;
 
+  const activeMessageStep = useMemo(() => {
+    if (!configuredSteps?.length || !activeStepId) return undefined;
+    return (rawBody('steps') as MessageStep[] | undefined)?.find(
+      (step) => step.id === activeStepId,
+    );
+  }, [activeStepId, configuredSteps, rawBody]);
+
   const bodyText = useMemo(() => {
     let text: string[] | AnimatedTextBlock | StoryTextItem[];
     if (!configuredSteps?.length || !activeStepId) {
@@ -82,11 +98,12 @@ export default function StoryStageChrome({ stage }: StoryStageChromeProps) {
         | string[]
         | AnimatedTextBlock
         | StoryTextItem[];
+    } else if (activeMessageStep && !('text' in activeMessageStep)) {
+      // Pill-only steps may omit `text` — don't fall back to a stage-level key.
+      text = [];
     } else {
-      const messageSteps = rawBody('steps') as MessageStep[];
-      const messageStep = messageSteps.find((step) => step.id === activeStepId);
       text =
-        messageStep?.text ??
+        activeMessageStep?.text ??
         (rawBody(bodyTextKey) as
           | string[]
           | AnimatedTextBlock
@@ -102,21 +119,32 @@ export default function StoryStageChrome({ stage }: StoryStageChromeProps) {
     }
 
     return text;
-  }, [activeStepId, answers, bodyTextKey, configuredSteps, gender, rawBody]);
+  }, [
+    activeMessageStep,
+    activeStepId,
+    answers,
+    bodyTextKey,
+    configuredSteps,
+    gender,
+    rawBody,
+  ]);
 
   const [nextInteraction, setNextInteractionVisible] = useState(false);
   const [answerShellState, setAnswerShellState] = useState(() => ({
     ...ANSWER_IDLE_SHELL_STATE,
   }));
 
-  const wrapsAnswerShell = cfg.nextInteraction === 'answer';
+  const wrapsAnswerShell =
+    resolveStepNextInteraction(cfg, activeStepId) === 'answer';
   const contentSpacing = ui?.contentSpacing ?? DEFAULT_STORY_UI.contentSpacing;
   const skipPacing = useSkipStoryPacing();
+  const showBody = hasBodyCopy(bodyText);
+  const stepWarning = activeMessageStep?.warning;
 
   useEffect(() => {
-    // Skip pacing: show answers/next immediately; otherwise wait for AnimatedText.
-    setNextInteractionVisible(skipPacing);
-  }, [stage, activeStepId, skipPacing]);
+    // Skip pacing / no body copy: show answers/next immediately.
+    setNextInteractionVisible(skipPacing || !showBody);
+  }, [stage, activeStepId, skipPacing, showBody]);
 
   useEffect(() => {
     setAnswerShellState({ ...ANSWER_IDLE_SHELL_STATE });
@@ -138,51 +166,62 @@ export default function StoryStageChrome({ stage }: StoryStageChromeProps) {
 
   const storyBody = (
     <>
-      <StageTextSurface
-        stage={stage}
-        surface={cfg.textSurface}
-        glassVariant={cfg.glassVariant}
-        className={
-          STORY_STAGE_SURFACE_FRAME_CLASS[
-            ui?.textSurfaceFrame ?? DEFAULT_STORY_UI.textSurfaceFrame
-          ]
-        }
-        contentClassName={
-          STORY_STAGE_TEXT_PADDING_CLASS[
-            ui?.textPadding ?? DEFAULT_STORY_UI.textPadding
-          ]
-        }
-        backdropType={ui?.backdropType}
-        backdropOpacity={ui?.backdropOpacity}
-        backdropFade={ui?.backdropFade}
-        backdropColor={ui?.backdropColor}
-      >
-        <AnimatedText
-          key={
-            Array.isArray(bodyText) &&
-            bodyText.every((item) => typeof item === 'string')
-              ? `${activeStepId ?? stage}:${bodyText.join('\0')}`
-              : (activeStepId ?? stage)
-          }
-          text={bodyText}
-          speed={body?.speed ?? DEFAULT_STAGE_BODY.speed}
-          delayAfterComplete={
-            body?.delayAfterComplete ?? DEFAULT_STAGE_BODY.delayAfterComplete
-          }
-          textSize={body?.textSize ?? DEFAULT_STAGE_BODY.textSize}
-          alignment={body?.alignment ?? DEFAULT_STAGE_BODY.alignment}
-          wordTransitionDuration={
-            body?.wordTransitionDuration ??
-            DEFAULT_STAGE_BODY.wordTransitionDuration
-          }
+      {showBody ? (
+        <StageTextSurface
+          stage={stage}
+          surface={cfg.textSurface}
+          glassVariant={cfg.glassVariant}
           className={
-            STORY_STAGE_TEXT_TONE_CLASS[
-              body?.textTone ?? DEFAULT_STAGE_BODY.textTone
+            STORY_STAGE_SURFACE_FRAME_CLASS[
+              ui?.textSurfaceFrame ?? DEFAULT_STORY_UI.textSurfaceFrame
             ]
           }
-          onComplete={revealNextInteraction}
-        />
-      </StageTextSurface>
+          contentClassName={
+            STORY_STAGE_TEXT_PADDING_CLASS[
+              ui?.textPadding ?? DEFAULT_STORY_UI.textPadding
+            ]
+          }
+          backdropType={ui?.backdropType}
+          backdropOpacity={ui?.backdropOpacity}
+          backdropFade={ui?.backdropFade}
+          backdropColor={ui?.backdropColor}
+        >
+          <AnimatedText
+            key={
+              Array.isArray(bodyText) &&
+              bodyText.every((item) => typeof item === 'string')
+                ? `${activeStepId ?? stage}:${bodyText.join('\0')}`
+                : (activeStepId ?? stage)
+            }
+            text={bodyText}
+            speed={body?.speed ?? DEFAULT_STAGE_BODY.speed}
+            delayAfterComplete={
+              body?.delayAfterComplete ?? DEFAULT_STAGE_BODY.delayAfterComplete
+            }
+            textSize={body?.textSize ?? DEFAULT_STAGE_BODY.textSize}
+            alignment={body?.alignment ?? DEFAULT_STAGE_BODY.alignment}
+            wordTransitionDuration={
+              body?.wordTransitionDuration ??
+              DEFAULT_STAGE_BODY.wordTransitionDuration
+            }
+            className={
+              STORY_STAGE_TEXT_TONE_CLASS[
+                body?.textTone ?? DEFAULT_STAGE_BODY.textTone
+              ]
+            }
+            onComplete={revealNextInteraction}
+          />
+          {stepWarning ? (
+            <p
+              className={`mt-4 text-center text-sm sm:text-base md:text-lg font-light text-gray-400 transition-opacity duration-500 ${
+                nextInteraction ? 'opacity-100' : 'opacity-0'
+              }`}
+            >
+              {stepWarning}
+            </p>
+          ) : null}
+        </StageTextSurface>
+      ) : null}
       <StoryStageNextInteraction
         stage={stage}
         stepId={activeStepId}

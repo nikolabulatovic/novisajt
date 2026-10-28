@@ -27,6 +27,7 @@ export const stageInteractionType: Record<Stage, StageInteractionType> = {
   [StageId.SpasaStory]: 'next-pill',
   [StageId.SpasaRevelation]: 'next-pill',
   [StageId.OtherPigs]: 'next-pill',
+  [StageId.WantToSeeThem]: 'next-pill',
   [StageId.RootOfTheProblem]: 'next-pill',
   [StageId.AnimalsTreatedAsProducts]: 'next-pill',
   [StageId.LetThemLive]: 'answer-options',

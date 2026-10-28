@@ -51,6 +51,7 @@ import StillWantToKnow from '@/src/components/StillWantToKnow';
 import VeganDietHealth from '@/src/components/VeganDietHealth';
 import VeganismPrinciple from '@/src/components/VeganismPrinciple';
 import ViciousCycle from '@/src/components/ViciousCycle';
+import WantToSeeThem from '@/src/components/WantToSeeThem';
 import WouldYouLikeToBe from '@/src/components/WouldYouLikeToBe';
 import YouAreResponsible from '@/src/components/YouAreResponsible';
 import type { Stage } from '@/src/contexts/NavigationContext';
@@ -78,6 +79,7 @@ export const STAGE_REGISTRY: Record<Stage, ComponentType<any>> = {
   [StageId.SpasaStory]: SpasaStory,
   [StageId.SpasaRevelation]: SpasaRevelation,
   [StageId.OtherPigs]: OtherPigs,
+  [StageId.WantToSeeThem]: WantToSeeThem,
   [StageId.RootOfTheProblem]: RootOfTheProblem,
   [StageId.AnimalsTreatedAsProducts]: AnimalsTreatedAsProducts,
   [StageId.LetThemLive]: LetThemLive,

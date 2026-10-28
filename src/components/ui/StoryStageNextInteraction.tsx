@@ -5,7 +5,10 @@ import { useStoryFlow } from '@/src/contexts/StoryFlowContext';
 import { useGenderedTranslations } from '@/src/hooks/useGenderedTranslations';
 import { mapLocalizedAnswerOptions } from '@/src/lib/mapLocalizedAnswerOptions';
 import { resolveStoryLabel } from '@/src/lib/story/conditionalText';
-import { stageConfig } from '@/src/lib/story/stageUiConfig';
+import {
+  resolveStepNextInteraction,
+  stageConfig,
+} from '@/src/lib/story/stageUiConfig';
 import type { AnswerChoiceShellState } from '@/src/lib/ui/answerChoiceInteraction';
 
 import AnswerOptions from './AnswerOptions';
@@ -44,7 +47,7 @@ export default function StoryStageNextInteraction({
 }: StoryStageNextInteractionProps) {
   const { completeStage, answers } = useStoryFlow();
   const stageCfg = stageConfig[stage];
-  const nextInteraction = stageCfg.nextInteraction ?? 'pill';
+  const nextInteraction = resolveStepNextInteraction(stageCfg, stepId);
   const translationNamespace = stageCfg.translationNamespace ?? stage;
   const { label, raw, gender } = useGenderedTranslations(translationNamespace);
 
@@ -87,7 +90,7 @@ export default function StoryStageNextInteraction({
   }
 
   return (
-    <AnswerReveal show={visible}>
+    <AnswerReveal key={stepId ?? stage} show={visible}>
       <StoryStageNextPill stage={stage} visible={visible} />
     </AnswerReveal>
   );

@@ -30,6 +30,11 @@
     "spasaStory": "Spasa's story",
     "spasaRevelation": "Spasa reveal",
     "otherPigs": "Other piglets",
+    "wantToSeeThem": "Do you want to see them?",
+    "wantToSeeThemSteps": {
+      "watch": "Video",
+      "decline": "Think about why"
+    },
     "rootOfTheProblem": "Root of the problem",
     "animalsTreatedAsProducts": "Where animals are used",
     "letThemLive": "Let them live",

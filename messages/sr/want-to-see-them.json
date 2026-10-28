@@ -1,0 +1,24 @@
+{
+  "steps": [
+    {
+      "id": "prompt",
+      "text": [
+        "Industrija ne mrzi životinje. Industrija ih ne vidi.",
+        "Da li ti želiš da ih vidiš?"
+      ],
+      "warning": "(Upozorenje: grafički sadržaj)",
+      "options": {
+        "yes": "Želim",
+        "no": "Ne želim"
+      }
+    },
+    {
+      "id": "watch"
+    },
+    {
+      "id": "decline",
+      "text": ["Razmisli zašto ne želiš da vidiš."]
+    }
+  ],
+  "next": "Nastavi"
+}

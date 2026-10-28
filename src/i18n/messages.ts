@@ -19,6 +19,7 @@ const MESSAGE_FILES = [
   'spasa-story',
   'spasa-revelation',
   'other-pigs',
+  'want-to-see-them',
   'root-of-the-problem',
   'animals-treated-as-products',
   'breaking-question',

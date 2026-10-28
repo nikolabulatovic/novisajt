@@ -30,6 +30,11 @@
     "spasaStory": "Spasina priča",
     "spasaRevelation": "Spasino otkriće",
     "otherPigs": "Ostali prasići",
+    "wantToSeeThem": "Da li želiš da ih vidiš?",
+    "wantToSeeThemSteps": {
+      "watch": "Video",
+      "decline": "Razmisli zašto"
+    },
     "rootOfTheProblem": "Koren problema",
     "animalsTreatedAsProducts": "Gde se koriste",
     "letThemLive": "Da žive svoj život",

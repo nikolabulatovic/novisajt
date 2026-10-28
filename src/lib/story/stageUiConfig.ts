@@ -3,6 +3,7 @@ import {
   Stage,
   StageId,
   type StepId,
+  WantToSeeThemStepId,
 } from '@/src/contexts/NavigationContext';
 import { AnswerId } from '@/src/lib/answerIds';
 import {
@@ -114,10 +115,16 @@ export interface StageAnswerOptionConfig {
   labelKey: string;
 }
 
+export type StageNextInteraction = 'none' | 'pill' | 'answer';
+
 export interface StageStepConfig {
   id: StepId;
   textKey?: string;
-  answerOptions: StageAnswerOptionConfig[];
+  /**
+   * Answer choices for this step. When omitted or empty, the step uses the
+   * red next pill instead (typical for a final reflection / continue step).
+   */
+  answerOptions?: StageAnswerOptionConfig[];
 }
 
 interface BaseStageConfig {
@@ -200,6 +207,30 @@ type StageInteractionConfig =
     };
 
 export type StageConfig = BaseStageConfig & StageInteractionConfig;
+
+/**
+ * Effective next interaction for a stage, optionally scoped to the active step.
+ * Multi-step answer stages may end on a pill step (no `answerOptions`).
+ */
+export function resolveStepNextInteraction(
+  stageCfg: StageConfig,
+  stepId?: StepId | null,
+): StageNextInteraction {
+  const stageInteraction: StageNextInteraction =
+    stageCfg.nextInteraction ?? 'pill';
+  if (stageInteraction !== 'answer') {
+    return stageInteraction;
+  }
+
+  if (stepId != null && stageCfg.steps?.length) {
+    const step = stageCfg.steps.find((s) => s.id === stepId);
+    if (step && !step.answerOptions?.length) {
+      return 'pill';
+    }
+  }
+
+  return 'answer';
+}
 
 type StageBackgroundExt = 'jpg' | 'webp' | 'png';
 type StageBackgroundOptions = { gendered?: boolean };
@@ -466,6 +497,31 @@ export const stageConfig: Record<Stage, StageConfig> = {
     additionalUiConfig: {
       backdropOpacity: 0.45,
       backdropFade: 0.25,
+    },
+  },
+  [StageId.WantToSeeThem]: {
+    // Reuse other-pigs art until dedicated assets exist
+    backgroundImage: stageBackground(StageId.OtherPigs),
+    opacity: 0.55,
+    textSurface: 'backdrop',
+    additionalUiConfig: {
+      backdropOpacity: 0.4,
+      backdropFade: 0.2,
+    },
+    nextInteraction: 'answer',
+    steps: [
+      {
+        id: WantToSeeThemStepId.Prompt,
+        answerOptions: [
+          { id: AnswerId.YES, labelKey: 'options.yes' },
+          { id: AnswerId.NO, labelKey: 'options.no' },
+        ],
+      },
+      { id: WantToSeeThemStepId.Watch },
+      { id: WantToSeeThemStepId.Decline },
+    ],
+    body: {
+      textSize: 'xl',
     },
   },
   [StageId.RootOfTheProblem]: {

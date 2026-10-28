@@ -21,6 +21,7 @@ import {
   nextAfterSolutionUse,
   nextAfterStillWantToKnow,
   nextAfterVeganDietHealth,
+  nextAfterWantToSeeThemStep,
   nextAfterWouldYouLikeToBe,
   nextAfterYouAreResponsible,
 } from '@/src/lib/story/answerTransitions';
@@ -35,7 +36,8 @@ export const directStageTransitions: Partial<Record<Stage, Stage>> = {
   [StageId.HistoricalAuthoritarianism]: StageId.PersonalAccountability,
   [StageId.SpasaStory]: StageId.SpasaRevelation,
   [StageId.SpasaRevelation]: StageId.OtherPigs,
-  [StageId.OtherPigs]: StageId.RootOfTheProblem,
+  [StageId.OtherPigs]: StageId.WantToSeeThem,
+  [StageId.WantToSeeThem]: StageId.RootOfTheProblem,
   [StageId.RootOfTheProblem]: StageId.AnimalsTreatedAsProducts,
   [StageId.AnimalsTreatedAsProducts]: StageId.LetThemLive,
   [StageId.FromTheWild]: StageId.ReproductionControl,
@@ -74,4 +76,5 @@ export const answerStepTransitions: Partial<
   Record<Stage, (stepId: StepId, answer: string) => AnswerDestination>
 > = {
   [StageId.PersonalAccountability]: nextAfterPersonalAccountabilityStep,
+  [StageId.WantToSeeThem]: nextAfterWantToSeeThemStep,
 };

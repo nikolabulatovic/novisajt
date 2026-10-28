@@ -28,7 +28,7 @@ export function getNextStageCandidates(stage: Stage): Stage[] {
   if (nextForStep && steps?.length) {
     const destinations: Stage[] = [];
     for (const step of steps) {
-      for (const option of step.answerOptions) {
+      for (const option of step.answerOptions ?? []) {
         const destination = nextForStep(step.id, option.id);
         if (destination.type === 'stage') {
           destinations.push(destination.stage);

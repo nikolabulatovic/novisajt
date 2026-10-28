@@ -23,6 +23,7 @@ export const StageId = {
   SpasaStory: 'spasa-story',
   SpasaRevelation: 'spasa-revelation',
   OtherPigs: 'other-pigs',
+  WantToSeeThem: 'want-to-see-them',
   RootOfTheProblem: 'root-of-the-problem',
   AnimalsTreatedAsProducts: 'animals-treated-as-products',
   LetThemLive: 'let-them-live',
@@ -77,6 +78,12 @@ export const JoinUsStepId = {
   Community: 'community',
 } as const;
 
+export const WantToSeeThemStepId = {
+  Prompt: 'prompt',
+  Watch: 'watch',
+  Decline: 'decline',
+} as const;
+
 /** Default deep-link step when `currentStepId` is null for multi-step stages. */
 export function defaultStepIdForStage(stage: Stage): StepId | null {
   switch (stage) {
@@ -86,6 +93,8 @@ export function defaultStepIdForStage(stage: Stage): StepId | null {
       return CharacterEvaluationStepId.Q1;
     case StageId.JoinUs:
       return JoinUsStepId.Follow;
+    case StageId.WantToSeeThem:
+      return WantToSeeThemStepId.Prompt;
     default:
       return null;
   }

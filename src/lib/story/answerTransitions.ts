@@ -3,6 +3,7 @@ import {
   type Stage,
   StageId,
   type StepId,
+  WantToSeeThemStepId,
 } from '@/src/contexts/NavigationContext';
 import { AnswerId } from '@/src/lib/answerIds';
 
@@ -33,6 +34,22 @@ export function nextAfterPersonalAccountabilityStep(
   }
 
   return { type: 'stage', stage: StageId.InjusticePersists };
+}
+
+export function nextAfterWantToSeeThemStep(
+  stepId: StepId,
+  answer: string,
+): AnswerDestination {
+  if (stepId === WantToSeeThemStepId.Prompt) {
+    return {
+      type: 'step',
+      stepId: isAny(answer, [AnswerId.YES])
+        ? WantToSeeThemStepId.Watch
+        : WantToSeeThemStepId.Decline,
+    };
+  }
+
+  return { type: 'stage', stage: StageId.RootOfTheProblem };
 }
 
 export function nextAfterPersonalQuestion(answer: string): Stage {
