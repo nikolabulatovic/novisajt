@@ -1,0 +1,27 @@
+{
+  "steps": [
+    {
+      "id": "explanation",
+      "text": [
+        "Među tvojim odgovorima postoji kontradiktornost. Pokušavaš da nastaviš da živiš na način koji si živeo do sada, iako se to kosi sa tvojim uverenjima - ta pojava se naziva kognitivna disonanca.",
+        "Ako si do sada {g:bio iskren|bila iskrena}, očligledno je da imaš osećaj za pravdu i empatiju prema životinjama.",
+        "Razumemo da može delovati teško promeniti navike, pogotovo u okruženju koja te navike smatra normalnim."
+      ],
+      "options": {
+        "continue": "Dalje"
+      }
+    },
+    {
+      "id": "seven-days",
+      "text": [
+        "Zamisli svet u kojem je potpuno normalno i prihvaćeno da se životinje ne koriste.",
+        "Da li bi tada koristio životinje?",
+        "Ako se plašiš osude i izopštavanja, znaj da su mnogi ljudi imali taj strah"
+      ],
+      "options": {
+        "yes": "Da",
+        "no": "Ne"
+      }
+    }
+  ]
+}

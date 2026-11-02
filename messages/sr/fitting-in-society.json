@@ -1,0 +1,11 @@
+{
+  "text": [
+    "To znači da nisi {g:spreman|spremna} da prestaneš da koristiš životinje samo zato što ih većina koristi.",
+    "Ranije si {g:rekao|rekla} da bi {g:voleo|volela} da budeš protiv velikih nepravdi tada kada su se zaista dešavale, bez obzira na to da li je većina ljudi učestvovala u njima.",
+    "Sada stvarno imaš priliku da pokažeš sebi da li si {g:takav kakvim|takva kakvom} se smatraš."
+  ],
+  "options": {
+    "yes": "Ipak sam {g:spreman|spremna}",
+    "no": "Nisam {g:spreman|spremna}"
+  }
+}

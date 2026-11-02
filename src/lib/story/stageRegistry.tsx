@@ -15,11 +15,13 @@ import BreakingQuestion from '@/src/components/BreakingQuestion';
 import CharacterEvaluation from '@/src/components/CharacterEvaluation';
 import CharacterIncompatible from '@/src/components/CharacterIncompatible';
 import ChoiceStage from '@/src/components/ChoiceStage';
+import CognitiveDissonance from '@/src/components/CognitiveDissonance';
 import CourageousChoice from '@/src/components/CourageousChoice';
 import CowFate from '@/src/components/CowFate';
 import DishonestSelfOwnership from '@/src/components/DishonestSelfOwnership';
 import DoubleStandard from '@/src/components/DoubleStandard';
 import Excuse from '@/src/components/Excuse';
+import FittingInSociety from '@/src/components/FittingInSociety';
 import FromTheWild from '@/src/components/FromTheWild';
 import HistoricalAuthoritarianism from '@/src/components/HistoricalAuthoritarianism';
 import HistoricalIntro from '@/src/components/HistoricalIntro';
@@ -49,6 +51,7 @@ import SpasaStory from '@/src/components/SpasaStory';
 import StayComfortable from '@/src/components/StayComfortable';
 import StillWantToKnow from '@/src/components/StillWantToKnow';
 import VeganDietHealth from '@/src/components/VeganDietHealth';
+import VeganSociety from '@/src/components/VeganSociety';
 import VeganismPrinciple from '@/src/components/VeganismPrinciple';
 import ViciousCycle from '@/src/components/ViciousCycle';
 import WantToSeeThem from '@/src/components/WantToSeeThem';
@@ -99,10 +102,13 @@ export const STAGE_REGISTRY: Record<Stage, ComponentType<any>> = {
   [StageId.AddressingContradiction]: AddressingContradiction,
   [StageId.NotHonest]: NotHonest,
   [StageId.AlignBehaviour]: AlignBehaviour,
+  [StageId.VeganSociety]: VeganSociety,
+  [StageId.FittingInSociety]: FittingInSociety,
   [StageId.Excuse]: Excuse,
   [StageId.DoubleStandard]: DoubleStandard,
   [StageId.NotThreatened]: NotThreatened,
   [StageId.YouAreResponsible]: YouAreResponsible,
+  [StageId.CognitiveDissonance]: CognitiveDissonance,
   [StageId.ActResponsibly]: ActResponsibly,
   [StageId.NotWhoYouThink]: NotWhoYouThink,
   [StageId.AvoidingResponsibility]: AvoidingResponsibility,

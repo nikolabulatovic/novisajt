@@ -15,6 +15,7 @@ export const AnswerId = {
   CHOOSE_GENDER: 'CHOOSE_GENDER',
   SKIP_GENDER: 'SKIP_GENDER',
   NOT_IMPORTANT: 'NOT_IMPORTANT',
+  CONTINUE: 'CONTINUE',
 } as const;
 
 export type AnswerId = (typeof AnswerId)[keyof typeof AnswerId];

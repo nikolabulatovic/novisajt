@@ -1,0 +1,27 @@
+{
+  "steps": [
+    {
+      "id": "explanation",
+      "text": [
+        "There is a contradiction among your answers. You are trying to keep living the way you have lived so far, even though it clashes with your beliefs — that phenomenon is called cognitive dissonance.",
+        "If you have been honest so far, it is clear that you have a sense of justice and empathy toward animals.",
+        "We understand that changing habits can feel hard, especially in an environment that treats those habits as normal."
+      ],
+      "options": {
+        "continue": "Continue"
+      }
+    },
+    {
+      "id": "seven-days",
+      "text": [
+        "Imagine a world where it is completely normal and accepted not to use animals.",
+        "Would you use animals then?",
+        "If you fear judgment and exclusion, know that many people have had that fear"
+      ],
+      "options": {
+        "yes": "Yes",
+        "no": "No"
+      }
+    }
+  ]
+}

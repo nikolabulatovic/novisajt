@@ -1,4 +1,5 @@
 import {
+  CognitiveDissonanceStepId,
   PersonalAccountabilityStepId,
   Stage,
   StageId,
@@ -125,6 +126,12 @@ export interface StageStepConfig {
    * red next pill instead (typical for a final reflection / continue step).
    */
   answerOptions?: StageAnswerOptionConfig[];
+  /**
+   * When this is a pill step, advance to this step instead of leaving the stage.
+   * Use for linear multi-step flows (intro pill → question). Branching pill
+   * exits (e.g. WantToSeeThem watch/decline) omit this and use direct transitions.
+   */
+  nextStepId?: StepId;
 }
 
 interface BaseStageConfig {
@@ -722,6 +729,28 @@ export const stageConfig: Record<Stage, StageConfig> = {
       { id: 'NO', labelKey: 'options.no' },
     ],
   },
+  [StageId.VeganSociety]: {
+    // No dedicated background yet
+    nextInteraction: 'answer',
+    answerOptions: [
+      { id: AnswerId.YES, labelKey: 'options.yes' },
+      { id: AnswerId.NO, labelKey: 'options.no' },
+    ],
+    body: {
+      textSize: 'md',
+    },
+  },
+  [StageId.FittingInSociety]: {
+    // No dedicated background yet
+    nextInteraction: 'answer',
+    answerOptions: [
+      { id: AnswerId.YES, labelKey: 'options.yes' },
+      { id: AnswerId.NO, labelKey: 'options.no' },
+    ],
+    body: {
+      delayAfterComplete: 800,
+    },
+  },
   [StageId.VeganismPrinciple]: {
     nextInteraction: 'pill',
   },
@@ -812,6 +841,27 @@ export const stageConfig: Record<Stage, StageConfig> = {
     answerOptions: [
       { id: 'ACCEPT', labelKey: 'options.accept' },
       { id: 'REJECT', labelKey: 'options.reject' },
+    ],
+    body: {
+      delayAfterComplete: 800,
+    },
+  },
+  [StageId.CognitiveDissonance]: {
+    nextInteraction: 'answer',
+    steps: [
+      {
+        id: CognitiveDissonanceStepId.Explanation,
+        answerOptions: [
+          { id: AnswerId.CONTINUE, labelKey: 'options.continue' },
+        ],
+      },
+      {
+        id: CognitiveDissonanceStepId.SevenDays,
+        answerOptions: [
+          { id: AnswerId.YES, labelKey: 'options.yes' },
+          { id: AnswerId.NO, labelKey: 'options.no' },
+        ],
+      },
     ],
     body: {
       delayAfterComplete: 800,

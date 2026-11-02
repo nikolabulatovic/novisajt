@@ -54,10 +54,16 @@
     "addressingContradiction": "Kontradiktornost",
     "notHonest": "Nisi {g:iskren|iskrena}",
     "alignBehaviour": "Usaglašavanje ponašanja",
+    "veganSociety": "Vegansko društvo",
+    "fittingInSociety": "Uklapanje u društvo",
     "excuse": "Izgovor",
     "doubleStandard": "Dvostruki standard",
     "notThreatened": "Nisi ti {g:ugrožen|ugrožena}",
     "youAreResponsible": "Ti si {g:odgovoran|odgovorna}",
+    "cognitiveDissonance": "Kognitivna disonanca",
+    "cognitiveDissonanceSteps": {
+      "sevenDays": "Sedam dana"
+    },
     "actResponsibly": "Postupi odgovorno",
     "notWhoYouThink": "Nisi osoba za koju se smatraš",
     "avoidingResponsibility": "Izbegavanje odgovornosti",

@@ -54,10 +54,16 @@
     "addressingContradiction": "Contradiction",
     "notHonest": "Not honest",
     "alignBehaviour": "Aligning behavior",
+    "veganSociety": "Vegan society",
+    "fittingInSociety": "Fitting into society",
     "excuse": "Excuse",
     "doubleStandard": "Double standard",
     "notThreatened": "Not threatened",
     "youAreResponsible": "You are responsible",
+    "cognitiveDissonance": "Cognitive dissonance",
+    "cognitiveDissonanceSteps": {
+      "sevenDays": "Seven days"
+    },
     "actResponsibly": "Act responsibly",
     "notWhoYouThink": "Not who you think you are",
     "avoidingResponsibility": "Avoiding responsibility",

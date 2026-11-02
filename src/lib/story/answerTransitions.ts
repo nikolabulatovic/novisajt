@@ -1,4 +1,5 @@
 import {
+  CognitiveDissonanceStepId,
   PersonalAccountabilityStepId,
   type Stage,
   StageId,
@@ -137,10 +138,20 @@ export function nextAfterAddressingContradiction(answer: string): Stage {
     : StageId.AlignBehaviour;
 }
 
-export function nextAfterAlignBehaviour(answer: string): Stage {
-  return isAny(answer, [AnswerId.NO])
+export function nextAfterAlignBehaviour(_answer: string): Stage {
+  return StageId.VeganSociety;
+}
+
+export function nextAfterVeganSociety(answer: string): Stage {
+  return isAny(answer, [AnswerId.YES])
     ? StageId.Excuse
-    : StageId.VeganismPrinciple;
+    : StageId.FittingInSociety;
+}
+
+export function nextAfterFittingInSociety(answer: string): Stage {
+  return isAny(answer, [AnswerId.YES])
+    ? StageId.VeganismPrinciple
+    : StageId.Excuse;
 }
 
 export function nextAfterExcuse(answer: string): Stage {
@@ -165,7 +176,27 @@ export function nextAfterDoubleStandard(answer: string): Stage {
 export function nextAfterYouAreResponsible(answer: string): Stage {
   return isAny(answer, [AnswerId.ACCEPT])
     ? StageId.ActResponsibly
-    : StageId.AvoidingResponsibility;
+    : StageId.CognitiveDissonance;
+}
+
+export function nextAfterCognitiveDissonanceStep(
+  stepId: StepId,
+  answer: string,
+): AnswerDestination {
+  if (stepId === CognitiveDissonanceStepId.Explanation) {
+    return {
+      type: 'step',
+      stepId: CognitiveDissonanceStepId.SevenDays,
+    };
+  }
+
+  if (stepId === CognitiveDissonanceStepId.SevenDays) {
+    return isAny(answer, [AnswerId.YES])
+      ? { type: 'stage', stage: StageId.VeganismPrinciple }
+      : { type: 'stage', stage: StageId.AvoidingResponsibility };
+  }
+
+  return { type: 'stage', stage: StageId.AvoidingResponsibility };
 }
 
 export function nextAfterActResponsibly(answer: string): Stage {

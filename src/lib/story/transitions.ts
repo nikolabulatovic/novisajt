@@ -11,8 +11,10 @@ import {
   nextAfterAddressingContradiction,
   nextAfterAlignBehaviour,
   nextAfterBreakingQuestion,
+  nextAfterCognitiveDissonanceStep,
   nextAfterDoubleStandard,
   nextAfterExcuse,
+  nextAfterFittingInSociety,
   nextAfterLetThemLive,
   nextAfterPersonalAccountabilityStep,
   nextAfterPersonalQuestion,
@@ -21,6 +23,7 @@ import {
   nextAfterSolutionUse,
   nextAfterStillWantToKnow,
   nextAfterVeganDietHealth,
+  nextAfterVeganSociety,
   nextAfterWantToSeeThemStep,
   nextAfterWouldYouLikeToBe,
   nextAfterYouAreResponsible,
@@ -66,6 +69,8 @@ export const answerStageTransitions: Partial<
   [StageId.SolutionChoice]: nextAfterSolutionChoice,
   [StageId.AddressingContradiction]: nextAfterAddressingContradiction,
   [StageId.AlignBehaviour]: nextAfterAlignBehaviour,
+  [StageId.VeganSociety]: nextAfterVeganSociety,
+  [StageId.FittingInSociety]: nextAfterFittingInSociety,
   [StageId.Excuse]: nextAfterExcuse,
   [StageId.DoubleStandard]: nextAfterDoubleStandard,
   [StageId.YouAreResponsible]: nextAfterYouAreResponsible,
@@ -77,4 +82,5 @@ export const answerStepTransitions: Partial<
 > = {
   [StageId.PersonalAccountability]: nextAfterPersonalAccountabilityStep,
   [StageId.WantToSeeThem]: nextAfterWantToSeeThemStep,
+  [StageId.CognitiveDissonance]: nextAfterCognitiveDissonanceStep,
 };

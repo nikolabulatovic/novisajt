@@ -43,10 +43,13 @@ export const StageId = {
   AddressingContradiction: 'addressing-contradiction',
   NotHonest: 'not-honest',
   AlignBehaviour: 'align-behaviour',
+  VeganSociety: 'vegan-society',
+  FittingInSociety: 'fitting-in-society',
   Excuse: 'excuse',
   DoubleStandard: 'double-standard',
   NotThreatened: 'not-threatened',
   YouAreResponsible: 'you-are-responsible',
+  CognitiveDissonance: 'cognitive-dissonance',
   ActResponsibly: 'act-responsibly',
   NotWhoYouThink: 'not-who-you-think',
   AvoidingResponsibility: 'avoiding-responsibility',
@@ -84,6 +87,11 @@ export const WantToSeeThemStepId = {
   Decline: 'decline',
 } as const;
 
+export const CognitiveDissonanceStepId = {
+  Explanation: 'explanation',
+  SevenDays: 'seven-days',
+} as const;
+
 /** Default deep-link step when `currentStepId` is null for multi-step stages. */
 export function defaultStepIdForStage(stage: Stage): StepId | null {
   switch (stage) {
@@ -95,6 +103,8 @@ export function defaultStepIdForStage(stage: Stage): StepId | null {
       return JoinUsStepId.Follow;
     case StageId.WantToSeeThem:
       return WantToSeeThemStepId.Prompt;
+    case StageId.CognitiveDissonance:
+      return CognitiveDissonanceStepId.Explanation;
     default:
       return null;
   }

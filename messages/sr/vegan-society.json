@@ -1,0 +1,10 @@
+{
+  "text": [
+    "Zamisli da živiš u svetu u kom većina ljudi ne iskorišćava životinje, a biljni i životinjski proizvodi su jednako dostupni kao danas.",
+    "Da li bi tada {g:izabrao|izabrala} da koristiš životinje?"
+  ],
+  "options": {
+    "yes": "Da",
+    "no": "Ne"
+  }
+}

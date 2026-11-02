@@ -101,6 +101,17 @@ export function useStoryFlowHandlers({
           }
         }
 
+        // Pill on a multi-step stage may advance to a later step before leaving.
+        const steps = stageConfig[completedStage]?.steps;
+        if (steps?.length) {
+          const stepId = currentStepId ?? steps[0]?.id ?? null;
+          const step = stepId ? steps.find((s) => s.id === stepId) : undefined;
+          if (step?.nextStepId) {
+            navigateToStage(completedStage, step.nextStepId);
+            return;
+          }
+        }
+
         const nextStage = directStageTransitions[completedStage];
         if (nextStage) {
           transitionToStage(nextStage, 'auto', pillOrigin);
