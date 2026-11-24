@@ -159,7 +159,7 @@ export function nextAfterFittingInSociety(answer: string): Stage {
 export function nextAfterExcuse(answer: string): Stage {
   return isAny(answer, [AnswerId.NO])
     ? StageId.DoubleStandard
-    : StageId.NotThreatened;
+    : StageId.CognitiveDissonance;
 }
 
 export function nextAfterDoubleStandard(answer: string): Stage {
@@ -169,10 +169,9 @@ export function nextAfterDoubleStandard(answer: string): Stage {
   if (isAny(answer, [AnswerId.NOT_RESPONSIBLE])) {
     return StageId.YouAreResponsible;
   }
-  if (isAny(answer, [AnswerId.NOT_IN_THEIR_PLACE])) {
-    return StageId.OkWithInjustice;
-  }
-  return StageId.NotThreatened;
+  // NOT_IN_THEIR_PLACE: the branch-specific ending is chosen after
+  // Cognitive Dissonance — see resolveCognitiveDissonanceExit.
+  return StageId.CognitiveDissonance;
 }
 
 export function nextAfterYouAreResponsible(answer: string): Stage {
@@ -181,9 +180,50 @@ export function nextAfterYouAreResponsible(answer: string): Stage {
     : StageId.CognitiveDissonance;
 }
 
+/**
+ * Session-answer key holding the stage that led into Cognitive Dissonance.
+ * Written on every answer transition into the stage; the dev nav menu clears
+ * it on each jump, so an older branch can't leak into the exit.
+ */
+export const COGNITIVE_DISSONANCE_ORIGIN_KEY = `${StageId.CognitiveDissonance}:origin`;
+
+/** Ending for a declined Vegan Challenge, by the stage that led into Cognitive Dissonance. */
+const cognitiveDissonanceExits: Partial<Record<Stage, Stage>> = {
+  [StageId.Excuse]: StageId.NotThreatened,
+  [StageId.DoubleStandard]: StageId.OkWithInjustice,
+  [StageId.YouAreResponsible]: StageId.AvoidingResponsibility,
+  [StageId.ActResponsibly]: StageId.NotWhoYouThink,
+};
+
+export const COGNITIVE_DISSONANCE_ORIGINS = Object.keys(
+  cognitiveDissonanceExits,
+) as Stage[];
+
+/** Stage whose Cognitive Dissonance branch ends on `exit`, if any. */
+export function cognitiveDissonanceOriginOf(exit: Stage): Stage | undefined {
+  return COGNITIVE_DISSONANCE_ORIGINS.find(
+    (origin) => cognitiveDissonanceExits[origin] === exit,
+  );
+}
+
+/**
+ * Terminal exit for the branch that entered Cognitive Dissonance.
+ * Falls back to AvoidingResponsibility when the origin is missing or not a
+ * known branch (e.g. after a dev nav menu jump straight into the stage).
+ */
+export function resolveCognitiveDissonanceExit(
+  answers: Record<string, string>,
+): Stage {
+  const origin = answers[COGNITIVE_DISSONANCE_ORIGIN_KEY];
+  return origin && Object.hasOwn(cognitiveDissonanceExits, origin)
+    ? cognitiveDissonanceExits[origin as Stage]!
+    : StageId.AvoidingResponsibility;
+}
+
 export function nextAfterCognitiveDissonanceStep(
   stepId: StepId,
   answer: string,
+  answers: Record<string, string> = {},
 ): AnswerDestination {
   if (stepId === CognitiveDissonanceStepId.Explanation) {
     return {
@@ -202,14 +242,17 @@ export function nextAfterCognitiveDissonanceStep(
   if (stepId === CognitiveDissonanceStepId.VeganChallenge) {
     return isAny(answer, [AnswerId.YES])
       ? { type: 'stage', stage: StageId.VeganChallenge }
-      : { type: 'stage', stage: StageId.AvoidingResponsibility };
+      : { type: 'stage', stage: resolveCognitiveDissonanceExit(answers) };
   }
 
-  return { type: 'stage', stage: StageId.AvoidingResponsibility };
+  return {
+    type: 'stage',
+    stage: resolveCognitiveDissonanceExit(answers),
+  };
 }
 
 export function nextAfterActResponsibly(answer: string): Stage {
   return isAny(answer, [AnswerId.YES])
     ? StageId.VeganismPrinciple
-    : StageId.NotWhoYouThink;
+    : StageId.CognitiveDissonance;
 }

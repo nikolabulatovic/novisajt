@@ -7,6 +7,7 @@ import {
 } from '@/src/contexts/NavigationContext';
 import type { StoryTransitionStyle } from '@/src/contexts/StoryFlowContext';
 import type { PillOrigin } from '@/src/lib/pillOrigin';
+import { COGNITIVE_DISSONANCE_ORIGIN_KEY } from '@/src/lib/story/answerTransitions';
 import { characterEvaluationAnswersMeetBar } from '@/src/lib/story/characterEvaluationBar';
 import { stageConfig } from '@/src/lib/story/stageUiConfig';
 import {
@@ -43,6 +44,15 @@ export function useStoryFlowHandlers({
       mergeAnswers: (partial: Record<string, string>) => {
         setAnswers((prev) => ({ ...prev, ...partial }));
       },
+      forgetAnswers: (keys: readonly string[]) => {
+        setAnswers((prev) =>
+          keys.some((key) => key in prev)
+            ? Object.fromEntries(
+                Object.entries(prev).filter(([key]) => !keys.includes(key)),
+              )
+            : prev,
+        );
+      },
       completeStage: (
         completedStage: Stage,
         answer?: StageCompletionAnswer,
@@ -78,7 +88,7 @@ export function useStoryFlowHandlers({
             }));
             trackAnswerSelected(completedStage, `${stepId}:${answer}`);
 
-            const destination = nextForStep(stepId, answer);
+            const destination = nextForStep(stepId, answer, answers);
             if (destination.type === 'step') {
               navigateToStage(completedStage, destination.stepId);
               return;
@@ -87,16 +97,21 @@ export function useStoryFlowHandlers({
             return;
           }
 
-          setAnswers((prev) => ({ ...prev, [completedStage]: answer }));
+          const nextForAnswer = answerStageTransitions[completedStage];
+          const nextStage = nextForAnswer?.(answer, answers);
+
+          setAnswers((prev) => ({
+            ...prev,
+            [completedStage]: answer,
+            // Remember which branch entered so its ending can be resolved later.
+            ...(nextStage === StageId.CognitiveDissonance && {
+              [COGNITIVE_DISSONANCE_ORIGIN_KEY]: completedStage,
+            }),
+          }));
           trackAnswerSelected(completedStage, answer);
 
-          const nextForAnswer = answerStageTransitions[completedStage];
-          if (nextForAnswer) {
-            transitionToStage(
-              nextForAnswer(answer, answers),
-              'auto',
-              pillOrigin,
-            );
+          if (nextStage) {
+            transitionToStage(nextStage, 'auto', pillOrigin);
             return;
           }
         }

@@ -78,7 +78,14 @@ export const answerStageTransitions: Partial<
 };
 
 export const answerStepTransitions: Partial<
-  Record<Stage, (stepId: StepId, answer: string) => AnswerDestination>
+  Record<
+    Stage,
+    (
+      stepId: StepId,
+      answer: string,
+      answers: Record<string, string>,
+    ) => AnswerDestination
+  >
 > = {
   [StageId.PersonalAccountability]: nextAfterPersonalAccountabilityStep,
   [StageId.WantToSeeThem]: nextAfterWantToSeeThemStep,

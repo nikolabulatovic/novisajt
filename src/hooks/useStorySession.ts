@@ -37,7 +37,7 @@ export function useStorySession({
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [gender, setGender] = useState<UserGender | null>(null);
 
-  const { completeStage, mergeAnswers } = useStoryFlowHandlers({
+  const { completeStage, mergeAnswers, forgetAnswers } = useStoryFlowHandlers({
     transitionToStage,
     navigateToStage,
     currentStepId,
@@ -52,6 +52,7 @@ export function useStorySession({
       gender,
       setGender,
       mergeAnswers,
+      forgetAnswers,
       completeStage,
       transitionToStage,
       transitionViaBlackOverlayTo,
@@ -61,6 +62,7 @@ export function useStorySession({
       answers,
       gender,
       mergeAnswers,
+      forgetAnswers,
       completeStage,
       transitionToStage,
       transitionViaBlackOverlayTo,

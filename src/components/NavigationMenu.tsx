@@ -14,7 +14,12 @@ import {
   defaultStepIdForStage,
   useNavigation,
 } from '@/src/contexts/NavigationContext';
+import { useStoryFlow } from '@/src/contexts/StoryFlowContext';
 import { useGenderedTranslations } from '@/src/hooks/useGenderedTranslations';
+import {
+  COGNITIVE_DISSONANCE_ORIGIN_KEY,
+  cognitiveDissonanceOriginOf,
+} from '@/src/lib/story/answerTransitions';
 
 const stageLabelKeys: Record<Stage, string> = {
   [StageId.Choice]: 'stages.choice',
@@ -171,31 +176,33 @@ const stageNavItems: StageNavItem[] = [
   { stage: StageId.VeganSociety, depth: 1 },
   { stage: StageId.FittingInSociety, depth: 2 },
   { stage: StageId.Excuse, depth: 2 },
-  { stage: StageId.NotThreatened, depth: 3 },
-  { stage: StageId.DoubleStandard, depth: 3 },
-  { stage: StageId.YouAreResponsible, depth: 4 },
+  { stage: StageId.DoubleStandard, depth: 2 },
+  { stage: StageId.YouAreResponsible, depth: 3 },
+  { stage: StageId.ActResponsibly, depth: 3 },
+  // Shared by Excuse, DoubleStandard, YouAreResponsible and ActResponsibly.
   {
     stage: StageId.CognitiveDissonance,
-    depth: 5,
+    depth: 3,
     stepId: CognitiveDissonanceStepId.Explanation,
   },
   {
     stage: StageId.CognitiveDissonance,
-    depth: 6,
+    depth: 4,
     stepId: CognitiveDissonanceStepId.SevenDays,
     labelKey: 'stages.cognitiveDissonanceSteps.sevenDays',
   },
   {
     stage: StageId.CognitiveDissonance,
-    depth: 7,
+    depth: 4,
     stepId: CognitiveDissonanceStepId.VeganChallenge,
     labelKey: 'stages.cognitiveDissonanceSteps.veganChallenge',
   },
-  { stage: StageId.VeganChallenge, depth: 8 },
-  { stage: StageId.AvoidingResponsibility, depth: 8 },
-  { stage: StageId.ActResponsibly, depth: 5 },
-  { stage: StageId.NotWhoYouThink, depth: 6 },
-  { stage: StageId.OkWithInjustice, depth: 4 },
+  { stage: StageId.VeganChallenge, depth: 5 },
+  // Declined challenge → ending for the branch that entered (in branch order).
+  { stage: StageId.NotThreatened, depth: 5 },
+  { stage: StageId.OkWithInjustice, depth: 5 },
+  { stage: StageId.AvoidingResponsibility, depth: 5 },
+  { stage: StageId.NotWhoYouThink, depth: 5 },
   { stage: StageId.VeganismPrinciple, depth: 0 },
   { stage: StageId.RighteousChoice, depth: 0 },
   { stage: StageId.CourageousChoice, depth: 0 },
@@ -236,6 +243,7 @@ function isNavItemActive(
 export default function NavigationMenu() {
   const { t, label } = useGenderedTranslations('navigation-menu');
   const { currentStage, currentStepId, navigateToStage } = useNavigation();
+  const { forgetAnswers } = useStoryFlow();
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -263,6 +271,8 @@ export default function NavigationMenu() {
   }, [isOpen]);
 
   const handleNavClick = (stage: Stage, stepId?: StepId) => {
+    // A jump skips the answer that records the branch; don't let an old one win.
+    forgetAnswers([COGNITIVE_DISSONANCE_ORIGIN_KEY]);
     navigateToStage(stage, stepId ?? null);
     setIsOpen(false);
   };
@@ -316,6 +326,9 @@ export default function NavigationMenu() {
             const { stage, depth, stepId, labelKey } = item;
             const isActive = isNavItemActive(item, currentStage, currentStepId);
             const hasIndent = depth > 0;
+            // Endings shared via Cognitive Dissonance: show which branch they belong to.
+            const originStage =
+              stepId == null ? cognitiveDissonanceOriginOf(stage) : undefined;
             return (
               <button
                 key={`${stage}:${stepId ?? ''}`}
@@ -331,18 +344,28 @@ export default function NavigationMenu() {
                 }}
               >
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
+                  {/* Baseline keeps └ on the label line when a hint wraps below */}
+                  <div
+                    className={`flex gap-2 ${originStage ? 'items-baseline' : 'items-center'}`}
+                  >
                     {hasIndent ? (
                       <span className="text-gray-500 text-xs leading-none">
                         └
                       </span>
                     ) : null}
-                    <span
-                      className="text-sm font-light"
+                    <div
+                      className="flex flex-col"
                       style={{ fontFamily: 'var(--font-inter), sans-serif' }}
                     >
-                      {label(labelKey ?? stageLabelKeys[stage])}
-                    </span>
+                      <span className="text-sm font-light">
+                        {label(labelKey ?? stageLabelKeys[stage])}
+                      </span>
+                      {originStage ? (
+                        <span className="text-xs font-light text-gray-500">
+                          ← {label(stageLabelKeys[originStage])}
+                        </span>
+                      ) : null}
+                    </div>
                   </div>
                   {isActive && (
                     <div className="w-2 h-2 rounded-full bg-red-500/80"></div>
