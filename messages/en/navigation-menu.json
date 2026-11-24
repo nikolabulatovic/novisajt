@@ -62,8 +62,10 @@
     "youAreResponsible": "You are responsible",
     "cognitiveDissonance": "Cognitive dissonance",
     "cognitiveDissonanceSteps": {
-      "sevenDays": "Seven days"
+      "sevenDays": "Seven days",
+      "veganChallenge": "Would you like to try it?"
     },
+    "veganChallenge": "Vegan Challenge",
     "actResponsibly": "Act responsibly",
     "notWhoYouThink": "Not who you think you are",
     "avoidingResponsibility": "Avoiding responsibility",

@@ -191,8 +191,15 @@ export function nextAfterCognitiveDissonanceStep(
   }
 
   if (stepId === CognitiveDissonanceStepId.SevenDays) {
+    return {
+      type: 'step',
+      stepId: CognitiveDissonanceStepId.VeganChallenge,
+    };
+  }
+
+  if (stepId === CognitiveDissonanceStepId.VeganChallenge) {
     return isAny(answer, [AnswerId.YES])
-      ? { type: 'stage', stage: StageId.VeganismPrinciple }
+      ? { type: 'stage', stage: StageId.VeganChallenge }
       : { type: 'stage', stage: StageId.AvoidingResponsibility };
   }
 

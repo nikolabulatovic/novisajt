@@ -54,6 +54,7 @@ export const stageInteractionType: Record<Stage, StageInteractionType> = {
   [StageId.NotThreatened]: 'none',
   [StageId.YouAreResponsible]: 'answer-options',
   [StageId.CognitiveDissonance]: 'answer-options',
+  [StageId.VeganChallenge]: 'none',
   [StageId.ActResponsibly]: 'answer-options',
   [StageId.NotWhoYouThink]: 'none',
   [StageId.AvoidingResponsibility]: 'none',

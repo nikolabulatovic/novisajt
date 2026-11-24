@@ -116,7 +116,14 @@ export interface StageAnswerOptionConfig {
   labelKey: string;
 }
 
-export type StageNextInteraction = 'none' | 'pill' | 'answer';
+export type StageNextInteraction = 'none' | 'pill' | 'answer' | 'external-link';
+
+export interface StageExternalLinkConfig {
+  href: string;
+  labelKey: string;
+  /** Optional body copy shown under the link after it reveals. */
+  afterLinkKey?: string;
+}
 
 export interface StageStepConfig {
   id: StepId;
@@ -194,23 +201,34 @@ type StageInteractionConfig =
       nextInteraction?: 'none';
       answerOptions?: never;
       steps?: never;
+      externalLink?: never;
     }
   | {
       nextInteraction: 'pill';
       answerOptions?: never;
       steps?: never;
+      externalLink?: never;
     }
   | {
       nextInteraction: 'answer';
       /** Single-shot answer stage (mutually exclusive with `steps`). */
       answerOptions: StageAnswerOptionConfig[];
       steps?: never;
+      externalLink?: never;
     }
   | {
       nextInteraction: 'answer';
       /** Multi-step answer stage (mutually exclusive with flat `answerOptions`). */
       steps: StageStepConfig[];
       answerOptions?: never;
+      externalLink?: never;
+    }
+  | {
+      /** Terminal stage with a single outbound link (revealed after body text). */
+      nextInteraction: 'external-link';
+      externalLink: StageExternalLinkConfig;
+      answerOptions?: never;
+      steps?: never;
     };
 
 export type StageConfig = BaseStageConfig & StageInteractionConfig;
@@ -858,11 +876,29 @@ export const stageConfig: Record<Stage, StageConfig> = {
       {
         id: CognitiveDissonanceStepId.SevenDays,
         answerOptions: [
+          { id: AnswerId.CONTINUE, labelKey: 'options.continue' },
+        ],
+      },
+      {
+        id: CognitiveDissonanceStepId.VeganChallenge,
+        answerOptions: [
           { id: AnswerId.YES, labelKey: 'options.yes' },
           { id: AnswerId.NO, labelKey: 'options.no' },
         ],
       },
     ],
+    body: {
+      delayAfterComplete: 800,
+    },
+  },
+  [StageId.VeganChallenge]: {
+    // No dedicated background yet
+    nextInteraction: 'external-link',
+    externalLink: {
+      href: 'https://utm.io/Veganizazov',
+      labelKey: 'linkLabel',
+      afterLinkKey: 'afterLink',
+    },
     body: {
       delayAfterComplete: 800,
     },
@@ -948,5 +984,7 @@ export function stageShowsFeedbackFormLink(stage: Stage): boolean {
   if (typeof cfg.showFeedbackFormLink === 'boolean') {
     return cfg.showFeedbackFormLink;
   }
-  return cfg.nextInteraction === 'none';
+  return (
+    cfg.nextInteraction === 'none' || cfg.nextInteraction === 'external-link'
+  );
 }

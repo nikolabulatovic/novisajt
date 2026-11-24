@@ -3,8 +3,7 @@
     {
       "id": "explanation",
       "text": [
-        "There is a contradiction among your answers. You are trying to keep living the way you have lived so far, even though it clashes with your beliefs — that phenomenon is called cognitive dissonance.",
-        "If you have been honest so far, it is clear that you have a sense of justice and empathy toward animals.",
+        "There is a contradiction among your answers. You are trying to keep living the way you have lived so far, even though it clashes with your beliefs.",
         "We understand that changing habits can feel hard, especially in an environment that treats those habits as normal."
       ],
       "options": {
@@ -14,9 +13,20 @@
     {
       "id": "seven-days",
       "text": [
-        "Imagine a world where it is completely normal and accepted not to use animals.",
-        "Would you use animals then?",
-        "If you fear judgment and exclusion, know that many people have had that fear"
+        "It seems you have a sense of justice and empathy toward animals and do not want to use them, but you worry about how people around you will react.",
+        "That is a very common fear.",
+        "It is clear that it is not easy to be different, and that our environment influences us and our choices. That is why we would offer you an environment that encourages and helps you make the right decision."
+      ],
+      "options": {
+        "continue": "Continue"
+      }
+    },
+    {
+      "id": "vegan-challenge",
+      "text": [
+        "Vegan Challenge is a free online support network for people who want to respect animals or get to know a diet that excludes using them.",
+        "Over 10 days, it shows how easy it actually is to live without exploiting animals and provides a safe place and practical advice for those who want to do the right thing.",
+        "Would you like to try it?"
       ],
       "options": {
         "yes": "Yes",

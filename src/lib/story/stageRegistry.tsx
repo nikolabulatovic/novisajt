@@ -50,6 +50,7 @@ import SpasaRevelation from '@/src/components/SpasaRevelation';
 import SpasaStory from '@/src/components/SpasaStory';
 import StayComfortable from '@/src/components/StayComfortable';
 import StillWantToKnow from '@/src/components/StillWantToKnow';
+import VeganChallenge from '@/src/components/VeganChallenge';
 import VeganDietHealth from '@/src/components/VeganDietHealth';
 import VeganSociety from '@/src/components/VeganSociety';
 import VeganismPrinciple from '@/src/components/VeganismPrinciple';
@@ -109,6 +110,7 @@ export const STAGE_REGISTRY: Record<Stage, ComponentType<any>> = {
   [StageId.NotThreatened]: NotThreatened,
   [StageId.YouAreResponsible]: YouAreResponsible,
   [StageId.CognitiveDissonance]: CognitiveDissonance,
+  [StageId.VeganChallenge]: VeganChallenge,
   [StageId.ActResponsibly]: ActResponsibly,
   [StageId.NotWhoYouThink]: NotWhoYouThink,
   [StageId.AvoidingResponsibility]: AvoidingResponsibility,

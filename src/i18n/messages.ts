@@ -44,6 +44,7 @@ const MESSAGE_FILES = [
   'not-threatened',
   'you-are-responsible',
   'cognitive-dissonance',
+  'vegan-challenge',
   'act-responsibly',
   'not-who-you-think',
   'avoiding-responsibility',

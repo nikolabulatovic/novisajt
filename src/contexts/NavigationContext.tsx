@@ -50,6 +50,7 @@ export const StageId = {
   NotThreatened: 'not-threatened',
   YouAreResponsible: 'you-are-responsible',
   CognitiveDissonance: 'cognitive-dissonance',
+  VeganChallenge: 'vegan-challenge',
   ActResponsibly: 'act-responsibly',
   NotWhoYouThink: 'not-who-you-think',
   AvoidingResponsibility: 'avoiding-responsibility',
@@ -90,6 +91,7 @@ export const WantToSeeThemStepId = {
 export const CognitiveDissonanceStepId = {
   Explanation: 'explanation',
   SevenDays: 'seven-days',
+  VeganChallenge: 'vegan-challenge',
 } as const;
 
 /** Default deep-link step when `currentStepId` is null for multi-step stages. */

@@ -62,8 +62,10 @@
     "youAreResponsible": "Ti si {g:odgovoran|odgovorna}",
     "cognitiveDissonance": "Kognitivna disonanca",
     "cognitiveDissonanceSteps": {
-      "sevenDays": "Sedam dana"
+      "sevenDays": "Sedam dana",
+      "veganChallenge": "Da li želiš da probaš?"
     },
+    "veganChallenge": "Vegan izazov",
     "actResponsibly": "Postupi odgovorno",
     "notWhoYouThink": "Nisi osoba za koju se smatraš",
     "avoidingResponsibility": "Izbegavanje odgovornosti",

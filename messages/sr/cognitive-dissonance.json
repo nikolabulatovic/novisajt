@@ -3,9 +3,8 @@
     {
       "id": "explanation",
       "text": [
-        "Među tvojim odgovorima postoji kontradiktornost. Pokušavaš da nastaviš da živiš na način koji si živeo do sada, iako se to kosi sa tvojim uverenjima - ta pojava se naziva kognitivna disonanca.",
-        "Ako si do sada {g:bio iskren|bila iskrena}, očligledno je da imaš osećaj za pravdu i empatiju prema životinjama.",
-        "Razumemo da može delovati teško promeniti navike, pogotovo u okruženju koja te navike smatra normalnim."
+        "Među tvojim odgovorima postoji kontradiktornost. Pokušavaš da nastaviš da živiš na način koji si {g:živeo|živela} do sada, iako se to kosi sa tvojim uverenjima.",
+        "Razumemo da može delovati teško promeniti navike, pogotovo u okruženju koje te navike smatra normalnim."
       ],
       "options": {
         "continue": "Dalje"
@@ -14,9 +13,20 @@
     {
       "id": "seven-days",
       "text": [
-        "Zamisli svet u kojem je potpuno normalno i prihvaćeno da se životinje ne koriste.",
-        "Da li bi tada koristio životinje?",
-        "Ako se plašiš osude i izopštavanja, znaj da su mnogi ljudi imali taj strah"
+        "Izgleda da imaš osećaj za pravdu i empatiju prema životinjama i ne želiš da ih koristiš, ali te brine reakcija okoline.",
+        "To je veoma čest strah.",
+        "Jasno je da nije lako biti {g:drugačiji|drugačija} i da sredina utiče na nas i naše izbore. Zbog toga bismo ti ponudili okruženje koje podstiče i pomaže donošenju ispravne odluke."
+      ],
+      "options": {
+        "continue": "Dalje"
+      }
+    },
+    {
+      "id": "vegan-challenge",
+      "text": [
+        "Vegan izazov je besplatna onlajn mreža podrške ljudima koji žele da poštuju životinje ili da se bolje upoznaju sa ishranom koja isključuje njihovo korišćenje.",
+        "U trajanju od 10 dana pokazuje koliko je zapravo lako živeti bez iskorišćavanja životinja i pruža bezbedno mesto i praktične savete za one koji nastoje da postupe ispravno.",
+        "Da li želiš da probaš?"
       ],
       "options": {
         "yes": "Da",
