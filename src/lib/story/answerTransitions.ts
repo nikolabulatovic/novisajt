@@ -138,8 +138,10 @@ export function nextAfterAddressingContradiction(answer: string): Stage {
     : StageId.AlignBehaviour;
 }
 
-export function nextAfterAlignBehaviour(_answer: string): Stage {
-  return StageId.VeganSociety;
+export function nextAfterAlignBehaviour(answer: string): Stage {
+  return isAny(answer, [AnswerId.NO])
+    ? StageId.VeganSociety
+    : StageId.VeganismPrinciple;
 }
 
 export function nextAfterVeganSociety(answer: string): Stage {
